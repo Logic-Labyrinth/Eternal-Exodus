@@ -16,16 +16,15 @@ namespace Exodus.ProceduralTools
         [TabGroup("Level Settings")]
         [PropertyTooltip("The number of tiles in the x direction.")]
         [Range(1, 20)]
-        public int tileX;
+        public int tileX = 10;
         [TabGroup("Level Settings")]
         [PropertyTooltip("The number of tiles in the y direction.")]
         [Range(1, 20)]
-        public int tileY;
+        public int tileY = 10;
         [TabGroup("Level Settings")]
         public Vector2 baseTileSize;
-
         [TabGroup("Block Prefabs")]
-        public List<GameObject> blockPrefabs;
+        public List<LevelBlockScriptableObject> blockPrefabs;
 
         // Start is called before the first frame update
         void Start()
