@@ -1,47 +1,64 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
-public class LevelManager : MonoBehaviour
+namespace Exodus.ProceduralTools
 {
-    public string seedString;
-    public int seed;
-    public bool useRandomSeed;
-    public int levelWidth;
-    public int levelHeight;
-
-    // Start is called before the first frame update
-    void Start()
+    public class LevelManager : MonoBehaviour
     {
-        InitializeLevel();
-        for (int i = 0; i < 10; i++)
+        [TabGroup("Level Settings")]
+        [DisableIf("useRandomSeed")]
+        public string seedString;
+        private int seed;
+        [TabGroup("Level Settings")]
+        public bool useRandomSeed;
+        [TabGroup("Level Settings")]
+        [PropertyTooltip("The number of tiles in the x direction.")]
+        [Range(1, 20)]
+        public int tileX;
+        [TabGroup("Level Settings")]
+        [PropertyTooltip("The number of tiles in the y direction.")]
+        [Range(1, 20)]
+        public int tileY;
+        [TabGroup("Level Settings")]
+        public Vector2 baseTileSize;
+
+        [TabGroup("Block Prefabs")]
+        public List<GameObject> blockPrefabs;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            Debug.Log("Test Seed: " + TestSeed());
+            InitializeLevel();
+            for (int i = 0; i < 10; i++)
+            {
+                Debug.Log("Test Seed: " + TestSeed());
+            }
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
+        // Update is called once per frame
+        void Update() { }
 
-    }
-
-    void InitializeLevel()
-    {
-        if (useRandomSeed)
+        void InitializeLevel()
         {
-            seed = Random.Range(0, 1000000);
-            seedString = seed.ToString();
-        } else
-        {
-            seed = seedString.GetHashCode();
+            if (useRandomSeed)
+            {
+                seed = Random.Range(0, 1000000);
+                seedString = seed.ToString();
+            }
+            else
+            {
+                seed = seedString.GetHashCode();
+            }
+            Random.InitState(seed);
+
+            Debug.Log("Seed: " + seedString);
         }
-        Random.InitState(seed);
 
-        Debug.Log("Seed: " + seedString);
-    }
-
-    int TestSeed() {
-        return Random.Range(0, 1000000);
+        int TestSeed()
+        {
+            return Random.Range(0, 1000000);
+        }
     }
 }
