@@ -10,16 +10,16 @@ public class Movement : MonoBehaviour {
     public float normalGravity;
     public float jumpHeight;
     public float runSpeed, airSpeed, crouchSpeed;
-    public float crouchCameraTimer;
     public float maxSlideTimer, slideSpeedIncrease, slideSpeedDecrease;
     public float fastFOV;
 
     CharacterController controller;
-    Vector3 move, input, velocityY, forwardDirection;
+    Vector3 move, input, velocityY, forwardDirection, lastPosition;
     // Vector3 crouchingCenter = new Vector3(0f, 0.5f, 0f);
     // Vector3 standingCenter = new Vector3(0f, 0, 0f);
     float speed, gravity, startHeight, slideTimer, normalFOV;
     float crouchHeight = 0.5f;
+    float forwardVelocity = 0f;
     int jumpCharges;
     bool isGrounded, isCrouching, isSliding;
 
@@ -27,6 +27,7 @@ public class Movement : MonoBehaviour {
         controller = GetComponent<CharacterController>();
         startHeight = transform.localScale.y;
         normalFOV = cam.fieldOfView;
+        lastPosition = controller.transform.position;
     }
 
     void Update() {
@@ -36,6 +37,8 @@ public class Movement : MonoBehaviour {
         controller.Move(move * Time.deltaTime);
         ApplyGravity();
         CameraEffects();
+
+        CalculateForwardVelocity();
     }
 
     void HandleInput() {
@@ -49,11 +52,8 @@ public class Movement : MonoBehaviour {
     }
 
     void CameraEffects() {
-        // float fov = isSliding ? fastFOV : normalFOV;
-        // camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, fov, Time.deltaTime * 10f);
-        float targetFOV = Mathf.Lerp(normalFOV, fastFOV, controller.velocity.magnitude / runSpeed);
+        float targetFOV = Mathf.Lerp(normalFOV, fastFOV, forwardVelocity / runSpeed);
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, Time.deltaTime * 10f);
-        CrouchCamera();
     }
 
     void GroundMovement() {
@@ -104,15 +104,13 @@ public class Movement : MonoBehaviour {
     }
 
     void Crouch() {
-        // Debug.Log("Crouching");
-        // float height = Mathf.Lerp(startHeight, crouchHeight, Time.deltaTime * 10f);
-        // controller.height = height;
-        // controller.center = crouchingCenter;
+        controller.height = crouchHeight;
+        transform.localScale = new Vector3(transform.localScale.x, crouchHeight, transform.localScale.z);
 
-        // controller.height = crouchHeight;
-        // transform.localScale = new Vector3(transform.localScale.x, crouchHeight, transform.localScale.z);
         isCrouching = true;
-        if (speed > runSpeed * 0.8) {
+        Debug.Log("Velocity: " + forwardVelocity + " RunSpeed: " + runSpeed);
+        if (forwardVelocity > runSpeed * 0.8) {
+            Debug.Log("Slide");
             isSliding = true;
             forwardDirection = transform.forward;
             if (isGrounded) IncreaseSpeed(slideSpeedIncrease);
@@ -121,26 +119,11 @@ public class Movement : MonoBehaviour {
     }
 
     void ExitCrouch() {
-        // float height = Mathf.Lerp(crouchHeight, startHeight * 2, Time.deltaTime * 10f);
-        // controller.height = height;
-        // controller.center = standingCenter;
+        controller.height = startHeight * 2;
+        transform.localScale = new Vector3(transform.localScale.x, startHeight, transform.localScale.z);
 
-        // controller.height = startHeight * 2;
-        // transform.localScale = new Vector3(transform.localScale.x, startHeight, transform.localScale.z);
         isCrouching = false;
         isSliding = false;
-    }
-
-    void CrouchCamera() {
-        if (isCrouching || isSliding) {
-            float height = Mathf.Lerp(startHeight, crouchHeight, Time.deltaTime * 10f);
-            controller.height = height;
-            transform.localScale = new Vector3(transform.localScale.x, height, transform.localScale.z);
-        } else {
-            float height = Mathf.Lerp(crouchHeight, startHeight, Time.deltaTime * 10f);
-            controller.height = height * 2;
-            transform.localScale = new Vector3(transform.localScale.x, height, transform.localScale.z);
-        }
     }
 
     void IncreaseSpeed(float speedIncrease) {
@@ -154,5 +137,11 @@ public class Movement : MonoBehaviour {
     void SlideMovement() {
         move += forwardDirection;
         move = Vector3.ClampMagnitude(move, speed);
+    }
+
+    void CalculateForwardVelocity(){
+        Vector3 currentVelocity = (controller.transform.position - lastPosition) / Time.deltaTime;
+        lastPosition = controller.transform.position;
+        forwardVelocity = Vector3.Dot(currentVelocity, controller.transform.forward);
     }
 }
