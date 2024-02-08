@@ -28,6 +28,16 @@ namespace Exodus.ProceduralTools
         [PropertyTooltip("The size of the small levelBlock.\nMedium and large tiles should have a scale of 2x1 and 2x2 respectively")]
         public Vector2 baseTileSize;
         [TabGroup("Level Blocks")]
+        [LabelWidth(200)]
+        public int smallBlockWeight = 3;
+        [TabGroup("Level Blocks")]
+        [LabelWidth(200)]
+        public int mediumBlockWeight = 2;
+        [TabGroup("Level Blocks")]
+        [LabelWidth(200)]
+        public int largeBlockWeight = 1;
+        [TabGroup("Level Blocks")]
+        [PropertySpace]
         [TableList(ShowPaging = true)]
         public List<LevelBlockScriptableObject> levelBlocks;
 
@@ -77,6 +87,8 @@ namespace Exodus.ProceduralTools
             var baseTileX = baseTileSize.x;
             var basTileY = baseTileSize.y;
 
+            var levelParent = CreateLevelParent();
+
             // First pass
             for (int x = 0; x < xSize; x++) {
                 for (int y = 0; y < ySize; y++) {
@@ -85,7 +97,7 @@ namespace Exodus.ProceduralTools
                     LevelBlockScriptableObject selectedBlock = SelectRandomBlock(levelBlocks, random);
                     Vector2Int blockDimension = GetBlockDimension(selectedBlock.blockType);
                     if (CanPlaceBlock(x, y, blockDimension, levelGrid, xSize, ySize)) {
-                        PlaceBlock(x, y, selectedBlock, random);
+                        PlaceBlock(x, y, selectedBlock, random, levelParent);
                         MarkGrid(x, y, blockDimension, ref levelGrid); // Mark the grid as occupied
                     }
                 }
@@ -98,7 +110,7 @@ namespace Exodus.ProceduralTools
 
                     LevelBlockScriptableObject smallBlock = GetSmallBlock(levelBlocks);
                     if (smallBlock != null) {
-                        PlaceBlock(x, y, smallBlock, random);
+                        PlaceBlock(x, y, smallBlock, random, levelParent);
                         MarkGrid(x, y, new Vector2Int(1, 1), ref levelGrid);
                     }
                 }
@@ -123,7 +135,7 @@ namespace Exodus.ProceduralTools
             return true; // The block can be placed
         }
 
-        void PlaceBlock(int x, int y, LevelBlockScriptableObject block, System.Random random) {
+        void PlaceBlock(int x, int y, LevelBlockScriptableObject block, System.Random random, GameObject levelParent) {
             Vector3 worldPosition = GridToWorldPosition(x, y);
 
             // Adjust the position based on the actual size of the block
@@ -134,7 +146,7 @@ namespace Exodus.ProceduralTools
 
             GameObject blockInstance = Instantiate(block.blockPrefab, adjustedPosition, Quaternion.identity);
             blockInstance.name = block.blockName + $" ({x}, {y})";
-            blockInstance.transform.SetParent(this.transform, true);
+            blockInstance.transform.SetParent(levelParent.transform, true);
         }
 
         LevelBlockScriptableObject GetSmallBlock(List<LevelBlockScriptableObject> blocks) {
@@ -143,11 +155,8 @@ namespace Exodus.ProceduralTools
         }
 
         Vector3 GridToWorldPosition(int x, int y) {
-            // Convert grid coordinates to world space coordinates
-            // This depends on how your grid and world space are set up.
-            // For example:
-            float worldX = x * baseTileSize.x;
-            float worldY = y * baseTileSize.y;
+            float worldX = x * baseTileSize.x + this.transform.position.x;
+            float worldY = y * baseTileSize.y + this.transform.position.z;
             return new Vector3(worldX, 0, worldY);
         }
 
@@ -173,9 +182,41 @@ namespace Exodus.ProceduralTools
         }
 
         LevelBlockScriptableObject SelectRandomBlock(List<LevelBlockScriptableObject> blocks, System.Random random) {
-            // Randomly select and return a block from the list
             if(blocks.Count == 0) return null;
-            return blocks[random.Next(blocks.Count)];
+
+            // Calculate total weight
+            int totalWeight = 0;
+            foreach (var block in blocks) {
+                int weight = GetWeightForBlock(block);
+                totalWeight += weight;
+            }
+
+            // Random selection based on weight
+            int randomNumber = random.Next(totalWeight);
+            int currentWeightSum = 0;
+            foreach (var block in blocks) {
+                currentWeightSum += GetWeightForBlock(block);
+                if (randomNumber < currentWeightSum) {
+                    return block;
+                }
+            }
+
+            return null;
+        }
+
+        int GetWeightForBlock(LevelBlockScriptableObject block) {
+            // Define the weight based on the block size
+            // For example, smaller blocks could have a higher weight
+            switch (block.blockType) {
+                case BlockType.Small:
+                    return smallBlockWeight; // Higher weight for small blocks
+                case BlockType.Medium:
+                    return mediumBlockWeight;
+                case BlockType.Large:
+                    return largeBlockWeight;
+                default:
+                    return 1;
+            }
         }
 
         [TabGroup("Level Settings")]
@@ -184,7 +225,7 @@ namespace Exodus.ProceduralTools
         void ClearLevel() {
             for (int i = transform.childCount - 1; i >= 0; i--) {
                 #if UNITY_EDITOR
-            DestroyImmediate(transform.GetChild(i).gameObject);
+                DestroyImmediate(transform.GetChild(i).gameObject);
                 #else
                 Destroy(transform.GetChild(i).gameObject);
                 #endif
@@ -196,6 +237,19 @@ namespace Exodus.ProceduralTools
         [Button(ButtonSizes.Large, ButtonAlignment = 1f)]
         void ResetSeed() {
             isSeedInitialised = false;
+        }
+
+        GameObject CreateLevelParent() {
+            // Instantiate an empty GameObject
+            GameObject newLevel = new GameObject();
+
+            newLevel.name = "Level";
+
+            newLevel.transform.position = new Vector3(0, 0, 0);
+            newLevel.transform.rotation = Quaternion.identity;
+            newLevel.transform.SetParent(this.transform, true);
+
+            return newLevel;
         }
     }
 }
