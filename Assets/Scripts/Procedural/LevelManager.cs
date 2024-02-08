@@ -6,8 +6,10 @@ using Sirenix.OdinInspector;
 
 namespace Exodus.ProceduralTools
 {
-    public class LevelManager : MonoBehaviour
-    {
+    public class LevelManager : MonoBehaviour {
+        private System.Random random;
+        private bool isSeedInitialised = false;
+
         [TabGroup("Level Settings")]
         [DisableIf("useRandomSeed")]
         public string seedString;
@@ -53,9 +55,8 @@ namespace Exodus.ProceduralTools
             {
                 seed = seedString.GetHashCode();
             }
-            Random.InitState(seed);
-
-            Debug.Log("Seed: " + seedString);
+            random = new System.Random(seed);
+            isSeedInitialised = true;
         }
 
         int TestSeed()
@@ -67,32 +68,14 @@ namespace Exodus.ProceduralTools
         [PropertySpace]
         [Button(ButtonSizes.Large, ButtonAlignment = 1f)]
         void GenerateLevel() {
+            if (!isSeedInitialised) InitializeLevel();
+
             var xSize = tileX;
             var ySize = tileY;
             int[,] levelGrid = new int[xSize, ySize];
 
-            System.Random random = new System.Random(seed);
-
             var baseTileX = baseTileSize.x;
             var basTileY = baseTileSize.y;
-
-            int smallBlockCount = 0;
-            int mediumBlockCount = 0;
-            int largeBlockCount = 0;
-
-            foreach (var block in levelBlocks) {
-                switch (block.blockType) {
-                    case BlockType.Small:
-                        smallBlockCount++;
-                        break;
-                    case BlockType.Medium:
-                        mediumBlockCount++;
-                        break;
-                    case BlockType.Large:
-                        largeBlockCount++;
-                        break;
-                }
-            }
 
             // First pass
             for (int x = 0; x < xSize; x++) {
@@ -206,6 +189,13 @@ namespace Exodus.ProceduralTools
                 Destroy(transform.GetChild(i).gameObject);
                 #endif
             }
+        }
+
+        [TabGroup("Level Settings")]
+        [PropertySpace]
+        [Button(ButtonSizes.Large, ButtonAlignment = 1f)]
+        void ResetSeed() {
+            isSeedInitialised = false;
         }
     }
 }
