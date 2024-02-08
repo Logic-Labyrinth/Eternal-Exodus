@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -434,7 +434,7 @@ GameObject:
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -450,11 +450,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe970425ba27ee343a3cc866de03ad98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seedString: GoogleHash
-  seed: 0
+  seedString: Exodus
   useRandomSeed: 0
-  levelWidth: 0
-  levelHeight: 0
+  tileX: 10
+  tileY: 10
+  baseTileSize: {x: 10, y: 10}
+  levelBlocks:
+  - {fileID: 11400000, guid: b3304fd3cb8713542ae213e3a5e68243, type: 2}
+  - {fileID: 11400000, guid: 06016b2af153fad42ad3dc5d032e1060, type: 2}
+  - {fileID: 11400000, guid: 37f6fe51a4a03984ba6a33485ddb7b61, type: 2}
 --- !u!4 &1123963362
 Transform:
   m_ObjectHideFlags: 0

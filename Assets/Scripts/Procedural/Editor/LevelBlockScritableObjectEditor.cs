@@ -6,9 +6,13 @@ public class LevelBlockScriptableObjectEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        // DrawDefaultInspector();
 
         LevelBlockScriptableObject scriptableObj = (LevelBlockScriptableObject)target;
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Block Name");
+        scriptableObj.blockName = GUILayout.TextField(scriptableObj.blockName);
+        GUILayout.EndHorizontal();
 
         scriptableObj.blockType = (BlockType)
             EditorGUILayout.EnumPopup("Block Type", scriptableObj.blockType);
