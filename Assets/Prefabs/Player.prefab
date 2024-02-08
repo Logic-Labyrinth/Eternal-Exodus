@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8602341687110919872}
   - component: {fileID: 8291371754154807483}
   - component: {fileID: 4608248117287681618}
+  - component: {fileID: 8434003138394711385}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -180,6 +181,20 @@ MonoBehaviour:
   slideSpeedIncrease: 2.5
   slideSpeedDecrease: 3
   fastFOV: 90
+--- !u!114 &8434003138394711385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536889557721158385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45735dd2a07cda74d873ce1bf8b0b3a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashDistance: 0
+  dashDuration: 0
 --- !u!1 &4226410637225365201
 GameObject:
   m_ObjectHideFlags: 0

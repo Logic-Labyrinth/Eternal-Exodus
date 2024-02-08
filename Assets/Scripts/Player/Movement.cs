@@ -22,12 +22,14 @@ public class Movement : MonoBehaviour {
     float forwardVelocity = 0f;
     int jumpCharges;
     bool isGrounded, isCrouching, isSliding;
+    bool useNormalGravity;
 
     void Start() {
         controller = GetComponent<CharacterController>();
         startHeight = transform.localScale.y;
         normalFOV = cam.fieldOfView;
         lastPosition = controller.transform.position;
+        useNormalGravity = true;
     }
 
     void Update() {
@@ -73,7 +75,7 @@ public class Movement : MonoBehaviour {
     }
 
     void ApplyGravity() {
-        gravity = normalGravity;
+        if (useNormalGravity) gravity = normalGravity;
         velocityY.y -= gravity * Time.deltaTime;
         controller.Move(velocityY * Time.deltaTime);
     }
@@ -96,10 +98,15 @@ public class Movement : MonoBehaviour {
         if (isGrounded && !isSliding) GroundMovement();
         else if (!isGrounded) AirMovement();
         else if (isSliding) {
+            useNormalGravity = false;
+            gravity = 0;
             SlideMovement();
             DecreaseSpeed(slideSpeedDecrease);
             slideTimer -= Time.deltaTime;
-            if (slideTimer <= 0) isSliding = false;
+            if (slideTimer <= 0) {
+                isSliding = false;
+                useNormalGravity = true;
+            }
         }
     }
 
@@ -108,9 +115,7 @@ public class Movement : MonoBehaviour {
         transform.localScale = new Vector3(transform.localScale.x, crouchHeight, transform.localScale.z);
 
         isCrouching = true;
-        Debug.Log("Velocity: " + forwardVelocity + " RunSpeed: " + runSpeed);
         if (forwardVelocity > runSpeed * 0.8) {
-            Debug.Log("Slide");
             isSliding = true;
             forwardDirection = transform.forward;
             if (isGrounded) IncreaseSpeed(slideSpeedIncrease);
@@ -124,6 +129,7 @@ public class Movement : MonoBehaviour {
 
         isCrouching = false;
         isSliding = false;
+        useNormalGravity = true;
     }
 
     void IncreaseSpeed(float speedIncrease) {
@@ -139,7 +145,7 @@ public class Movement : MonoBehaviour {
         move = Vector3.ClampMagnitude(move, speed);
     }
 
-    void CalculateForwardVelocity(){
+    void CalculateForwardVelocity() {
         Vector3 currentVelocity = (controller.transform.position - lastPosition) / Time.deltaTime;
         lastPosition = controller.transform.position;
         forwardVelocity = Vector3.Dot(currentVelocity, controller.transform.forward);
