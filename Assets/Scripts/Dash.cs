@@ -36,7 +36,6 @@ public class Dash : MonoBehaviour {
 
         if (Physics.CapsuleCast(p1, p2, controller.radius * 0.9f, transform.forward, out hit, dashDistance)) {
             if (hit.distance > 0.3) {
-                Debug.Log("Hit! Old: " + dashDistance + " New: " + hit.distance);
                 dashHitDistance = hit.distance;
             }
         }
