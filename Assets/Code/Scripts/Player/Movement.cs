@@ -13,6 +13,9 @@ public class Movement : MonoBehaviour {
     [TitleGroup("Settings/Speeds")]
     [SerializeField]
     float crouchSpeed;
+    [TitleGroup("Settings/Speeds")]
+    [SerializeField, Range(0f, 1f)]
+    float airControl = 1f;
 
     [TitleGroup("Settings/Slide")]
     [SerializeField]
@@ -106,7 +109,7 @@ public class Movement : MonoBehaviour {
         move.x = input.x == 0 ? 0 : input.x * speed;
         move.z = input.z == 0 ? 0 : input.z * speed;
 
-        move = Vector3.ClampMagnitude(move, speed);
+        move = Vector3.ClampMagnitude(move * airControl, speed);
     }
 
     void ApplyGravity() {

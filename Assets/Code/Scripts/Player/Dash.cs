@@ -21,7 +21,7 @@ public class Dash : MonoBehaviour {
 
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(dashEndLocation, 0.05f);
+        Gizmos.DrawSphere(dashEndLocation, 0.5f);
     }
 
     void Start() {
@@ -60,11 +60,9 @@ public class Dash : MonoBehaviour {
     IEnumerator DashToPosition() {
         float dashTimer = 0;
         Vector3 startPos = transform.position;
-        // float dashSpeed = 3f;
 
         while (dashTimer < dashDurationScaled) {
             transform.position = Vector3.Lerp(startPos, dashEndLocation, dashTimer / dashDurationScaled);
-
             dashTimer += Time.deltaTime;
             yield return null;
         }

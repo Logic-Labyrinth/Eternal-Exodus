@@ -369,8 +369,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e4941ae67e240459743fae2709a2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensivity: 3
   cameraPitch: {x: -46.81587, y: 66.85611}
+  sensivity: 3
   cam: {fileID: 2258562699756320115}
   settingsUI: {fileID: 8956207624825190662}
 --- !u!114 &4608248117287681618
@@ -385,19 +385,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33a9eef1871bb2247a97cf21bf033701, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 2258562699756320115}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 8
-  normalGravity: 13
-  jumpHeight: 3
   runSpeed: 12
   airSpeed: 12
   crouchSpeed: 5
+  airControl: 1
+  slideCooldown: 2
   maxSlideTimer: 2
   slideSpeedIncrease: 2.5
   slideSpeedDecrease: 3
+  jumpHeight: 3
+  jumpCharges: 2
   fastFOV: 90
+  normalGravity: 13
+  crouchHeight: 0.5
+  cam: {fileID: 2258562699756320115}
 --- !u!114 &8434003138394711385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,6 +413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dashDistance: 0
   dashDuration: 0
+  dashCooldown: 2
 --- !u!1 &1877218575916790773
 GameObject:
   m_ObjectHideFlags: 0
