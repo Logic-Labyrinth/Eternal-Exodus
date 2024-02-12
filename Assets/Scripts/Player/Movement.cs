@@ -15,10 +15,8 @@ public class Movement : MonoBehaviour {
 
     CharacterController controller;
     Vector3 move, input, velocityY, forwardDirection, lastPosition;
-    // Vector3 crouchingCenter = new Vector3(0f, 0.5f, 0f);
-    // Vector3 standingCenter = new Vector3(0f, 0, 0f);
     float speed, gravity, startHeight, slideTimer, normalFOV;
-    float crouchHeight = 0.5f;
+    readonly float crouchHeight = 0.5f;
     float forwardVelocity = 0f;
     int jumpCharges;
     bool isGrounded, isCrouching, isSliding;
@@ -81,10 +79,9 @@ public class Movement : MonoBehaviour {
     }
 
     void CheckGround() {
-        isGrounded = Physics.CheckSphere(groundCheck.position, 0.2f, groundMask);
-        if (isGrounded) {
-            jumpCharges = 1;
-        }
+        // isGrounded = Physics.CheckSphere(groundCheck.position, 0.2f, groundMask);
+        isGrounded = Physics.CheckSphere(groundCheck.position, 0.2f);
+        if (isGrounded) jumpCharges = 1;
     }
 
     void Jump() {

@@ -15,7 +15,7 @@ public class Dash : MonoBehaviour {
 
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(dashEndLocation, 1);
+        Gizmos.DrawSphere(dashEndLocation, 0.05f);
     }
 
     void Start() {
@@ -27,17 +27,14 @@ public class Dash : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.LeftShift)) StartDash();
     }
 
-    void calculateDashEndLocation() {
+    void CalculateDashEndLocation() {
         dashHitDistance = dashDistance;
 
-        RaycastHit hit;
-        Vector3 p1 = transform.position + controller.center + Vector3.up * -controller.height * 0.5f;
+        Vector3 p1 = transform.position + controller.center + -controller.height * 0.5f * Vector3.up;
         Vector3 p2 = p1 + Vector3.up * controller.height;
 
-        if (Physics.CapsuleCast(p1, p2, controller.radius * 0.9f, transform.forward, out hit, dashDistance)) {
-            if (hit.distance > 0.3) {
-                dashHitDistance = hit.distance;
-            }
+        if (Physics.CapsuleCast(p1, p2, controller.radius * 0.9f, transform.forward, out RaycastHit hit, dashDistance)) {
+            if (hit.distance > 0.3) dashHitDistance = hit.distance;
         }
 
         dashDurationScaled = dashDuration * (dashHitDistance / dashDistance);
@@ -45,7 +42,7 @@ public class Dash : MonoBehaviour {
     }
 
     void StartDash() {
-        calculateDashEndLocation();
+        CalculateDashEndLocation();
         if (dashHitDistance == 0) return;
         Debug.DrawLine(transform.position, dashEndLocation, Color.red, 10);
         StartCoroutine(DashToPosition());
@@ -54,11 +51,11 @@ public class Dash : MonoBehaviour {
     IEnumerator DashToPosition() {
         float dashTimer = 0;
         Vector3 startPos = transform.position;
+        // float dashSpeed = 3f;
 
         while (dashTimer < dashDurationScaled) {
-            float t = dashTimer / dashDurationScaled;
-            // dashEndLocation.y = transform.position.y;
-            transform.position = Vector3.Lerp(startPos, dashEndLocation, t);
+            transform.position = Vector3.Lerp(startPos, dashEndLocation, dashTimer / dashDurationScaled);
+
             dashTimer += Time.deltaTime;
             yield return null;
         }
