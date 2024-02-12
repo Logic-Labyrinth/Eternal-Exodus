@@ -455,9 +455,9 @@ MonoBehaviour:
   tileX: 20
   tileY: 20
   baseTileSize: {x: 10, y: 10}
-  smallBlockWeight: 13
-  mediumBlockWeight: 1
-  largeBlockWeight: 2
+  smallBlockWeight: 3
+  mediumBlockWeight: 2
+  largeBlockWeight: 1
   levelBlocks:
   - {fileID: 11400000, guid: b3304fd3cb8713542ae213e3a5e68243, type: 2}
   - {fileID: 11400000, guid: 06016b2af153fad42ad3dc5d032e1060, type: 2}
@@ -662,8 +662,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1536889557721158385, guid: 5d46244e87e42be41aefd68bc9dcb0ae,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1342210961}
   m_SourcePrefab: {fileID: 100100000, guid: 5d46244e87e42be41aefd68bc9dcb0ae, type: 3}
+--- !u!1 &1342210960 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1536889557721158385, guid: 5d46244e87e42be41aefd68bc9dcb0ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1342210959}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1342210961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342210960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3d47ec86b34d704f9ad62009a24c296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons:
+  - {fileID: 11400000, guid: 13acd6b867ed2fd4a8a3cfaa1d4ada2a, type: 2}
 --- !u!43 &1937963618
 Mesh:
   m_ObjectHideFlags: 0
