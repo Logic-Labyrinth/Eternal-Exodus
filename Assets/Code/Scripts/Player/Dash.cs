@@ -1,15 +1,23 @@
 using System.Collections;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-
 public class Dash : MonoBehaviour {
-    public float dashDistance;
-    public float dashDuration;
+    [BoxGroup("Settings")]
+    [SerializeField]
+    float dashDistance = 10f;
+    [BoxGroup("Settings")]
+    [SerializeField]
+    float dashDuration = 0.2f;
+    [BoxGroup("Settings")]
+    [SerializeField]
+    float dashCooldown = 2f;
 
     CharacterController controller;
     Vector3 dashEndLocation;
     float dashHitDistance, dashDurationScaled;
+    float lastDashedTime;
 
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
@@ -19,10 +27,13 @@ public class Dash : MonoBehaviour {
     void Start() {
         controller = GetComponent<CharacterController>();
         dashEndLocation = Vector3.zero;
+        lastDashedTime = Time.time;
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.LeftShift)) StartDash();
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+            if (dashCooldown < Time.time - lastDashedTime) StartDash();
+        }
     }
 
     void CalculateDashEndLocation() {

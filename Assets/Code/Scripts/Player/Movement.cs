@@ -1,23 +1,60 @@
-using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-
 public class Movement : MonoBehaviour {
-    public Camera cam;
-    public LayerMask groundMask;
-    public float normalGravity;
-    public float jumpHeight;
-    public float runSpeed, airSpeed, crouchSpeed;
-    public float maxSlideTimer, slideSpeedIncrease, slideSpeedDecrease;
-    public float fastFOV;
+    [BoxGroup("Settings")]
+    [TitleGroup("Settings/Speeds")]
+    [SerializeField]
+    float runSpeed;
+    [TitleGroup("Settings/Speeds")]
+    [SerializeField]
+    float airSpeed;
+    [TitleGroup("Settings/Speeds")]
+    [SerializeField]
+    float crouchSpeed;
 
+    [TitleGroup("Settings/Slide")]
+    [SerializeField]
+    float slideCooldown = 2f;
+    [TitleGroup("Settings/Slide")]
+    [SerializeField]
+    float maxSlideTimer = 2f;
+    [TitleGroup("Settings/Slide")]
+    [SerializeField]
+    float slideSpeedIncrease = 2.5f;
+    [TitleGroup("Settings/Slide")]
+    [SerializeField]
+    float slideSpeedDecrease = 3f;
+
+    [TitleGroup("Settings/Jump")]
+    [SerializeField]
+    float jumpHeight;
+    [TitleGroup("Settings/Jump")]
+    [SerializeField]
+    int jumpCharges = 2;
+    
+    [TitleGroup("Settings/Miscellaneous")]
+    [SerializeField]
+    float fastFOV;
+    [TitleGroup("Settings/Miscellaneous")]
+    [SerializeField]
+    float normalGravity;
+    [TitleGroup("Settings/Miscellaneous")]
+    [SerializeField]
+    float crouchHeight = 0.5f;
+
+    [Space(30)]
+    [Title("Extra")]
+    [SerializeField]
+    Camera cam;
+    
     CharacterController controller;
     Vector3 move, input, velocityY, forwardDirection, lastPosition;
     float speed, gravity, startHeight, slideTimer, normalFOV;
-    readonly float crouchHeight = 0.5f;
     float forwardVelocity = 0f;
-    int jumpCharges;
+    float lastSlideTime;
+    int jumpChargesLeft;
     bool isGrounded, isCrouching, isSliding;
     bool useNormalGravity;
 
@@ -27,6 +64,7 @@ public class Movement : MonoBehaviour {
         normalFOV = cam.fieldOfView;
         lastPosition = controller.transform.position;
         useNormalGravity = true;
+        lastSlideTime = Time.time;
     }
 
     void Update() {
@@ -45,7 +83,7 @@ public class Movement : MonoBehaviour {
         input = transform.TransformDirection(input);
         input = Vector3.ClampMagnitude(input, 1f);
 
-        if (Input.GetButtonDown("Jump") && jumpCharges > 0) Jump();
+        if (Input.GetButtonDown("Jump") && jumpChargesLeft > 1) Jump();
         if (Input.GetButtonDown("Crouch")) Crouch();
         if (Input.GetButtonUp("Crouch")) ExitCrouch();
     }
@@ -79,13 +117,12 @@ public class Movement : MonoBehaviour {
 
     void CheckGround() {
         isGrounded = Physics.Raycast(transform.position + (0.5f * controller.height * -Vector3.up), -Vector3.up, 0.2f);
-        if (isGrounded) jumpCharges = 1;
+        if (isGrounded) jumpChargesLeft = jumpCharges;
     }
 
     void Jump() {
         velocityY.y = Mathf.Sqrt(jumpHeight * 2 * normalGravity);
-        jumpCharges--;
-
+        jumpChargesLeft--;
         if (isCrouching) ExitCrouch();
     }
 
@@ -106,6 +143,7 @@ public class Movement : MonoBehaviour {
     }
 
     void Crouch() {
+        if (lastSlideTime > Time.time - slideCooldown) return;
         controller.height = crouchHeight;
         transform.localScale = new Vector3(transform.localScale.x, crouchHeight, transform.localScale.z);
 
