@@ -79,13 +79,14 @@ public class Movement : MonoBehaviour {
     }
 
     void CheckGround() {
-        // isGrounded = Physics.CheckSphere(groundCheck.position, 0.2f, groundMask);
-        isGrounded = Physics.CheckSphere(groundCheck.position, 0.2f);
+        isGrounded = Physics.Raycast(transform.position + (0.5f * controller.height * -Vector3.up), -Vector3.up, 0.2f);
+        // isGrounded = Physics.CheckSphere(groundCheck.position, 0.2f);
         if (isGrounded) jumpCharges = 1;
     }
 
     void Jump() {
         velocityY.y = Mathf.Sqrt(jumpHeight * 2 * normalGravity);
+        Debug.Log("" + jumpCharges);
         jumpCharges--;
 
         if (isCrouching) ExitCrouch();
