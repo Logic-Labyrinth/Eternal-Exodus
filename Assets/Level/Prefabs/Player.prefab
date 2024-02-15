@@ -255,8 +255,8 @@ GameObject:
   - component: {fileID: 4667013445205772960}
   - component: {fileID: 8602341687110919872}
   - component: {fileID: 8291371754154807483}
-  - component: {fileID: 4608248117287681618}
   - component: {fileID: 8434003138394711385}
+  - component: {fileID: 1121848594421606799}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -369,11 +369,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e4941ae67e240459743fae2709a2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPitch: {x: -46.81587, y: 66.85611}
+  cameraPitch: {x: -46, y: 66}
   sensivity: 3
   cam: {fileID: 2258562699756320115}
   settingsUI: {fileID: 8956207624825190662}
---- !u!114 &4608248117287681618
+--- !u!114 &8434003138394711385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536889557721158385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45735dd2a07cda74d873ce1bf8b0b3a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashDistance: 10
+  dashDuration: 0.2
+  dashCooldown: 2
+--- !u!114 &1121848594421606799
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -399,21 +414,6 @@ MonoBehaviour:
   normalGravity: 13
   crouchHeight: 0.5
   cam: {fileID: 2258562699756320115}
---- !u!114 &8434003138394711385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1536889557721158385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45735dd2a07cda74d873ce1bf8b0b3a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashDistance: 10
-  dashDuration: 0.2
-  dashCooldown: 2
 --- !u!1 &1877218575916790773
 GameObject:
   m_ObjectHideFlags: 0

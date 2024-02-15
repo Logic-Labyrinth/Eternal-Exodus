@@ -36,7 +36,7 @@ public class Movement : MonoBehaviour {
     [TitleGroup("Settings/Jump")]
     [SerializeField]
     int jumpCharges = 2;
-    
+
     [TitleGroup("Settings/Miscellaneous")]
     [SerializeField]
     float fastFOV;
@@ -51,14 +51,14 @@ public class Movement : MonoBehaviour {
     [Title("Extra")]
     [SerializeField]
     Camera cam;
-    
+
     CharacterController controller;
     Vector3 move, input, velocityY, forwardDirection, lastPosition;
     float speed, gravity, startHeight, slideTimer, normalFOV;
     float forwardVelocity = 0f;
     float lastSlideTime;
     int jumpChargesLeft;
-    bool isGrounded, isCrouching, isSliding;
+    bool isGrounded, isCrouching, isSliding, wantsToUncrouch;
     bool useNormalGravity;
 
     void Start() {
@@ -67,6 +67,7 @@ public class Movement : MonoBehaviour {
         normalFOV = cam.fieldOfView;
         lastPosition = controller.transform.position;
         useNormalGravity = true;
+        wantsToUncrouch = false;
         lastSlideTime = Time.time;
     }
 
@@ -126,10 +127,11 @@ public class Movement : MonoBehaviour {
     void Jump() {
         velocityY.y = Mathf.Sqrt(jumpHeight * 2 * normalGravity);
         jumpChargesLeft--;
-        if (isCrouching) ExitCrouch();
+        if (isCrouching) wantsToUncrouch = true;
     }
 
     void HandleMovement() {
+        TryUncrouch();
         if (isGrounded && !isSliding) GroundMovement();
         else if (!isGrounded) AirMovement();
         else if (isSliding) {
@@ -143,6 +145,14 @@ public class Movement : MonoBehaviour {
                 useNormalGravity = true;
             }
         }
+    }
+
+    void TryUncrouch() {
+        if (!isCrouching) return;
+        if (!wantsToUncrouch) return;
+        bool checkAbove = Physics.Raycast(transform.position + (0.5f * controller.height * -Vector3.up), Vector3.up, startHeight * 2);
+        if(!checkAbove) return;
+        ExitCrouch();
     }
 
     void Crouch() {
@@ -165,6 +175,7 @@ public class Movement : MonoBehaviour {
 
         isCrouching = false;
         isSliding = false;
+        wantsToUncrouch = false;
         useNormalGravity = true;
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour {
     [BoxGroup("Settings")]
     [MinMaxSlider(-89, 89, true)]
-    public Vector2 cameraPitch = new(-89, 89);
+    public Vector2Int cameraPitch = new(-89, 89);
     [BoxGroup("Settings")]
     [SerializeField]
     float sensivity = 3;
