@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -61,6 +62,16 @@ public class Movement : MonoBehaviour {
     bool isGrounded, isCrouching, isSliding, wantsToUncrouch;
     bool useNormalGravity;
 
+    private void OnGUI() {
+        GUILayout.TextArea("Wants to uncrouch: " + wantsToUncrouch);
+        GUILayout.TextArea("Player pos: " + controller.transform.position);
+        GUILayout.TextArea("Fwd vector: " + forwardVelocity);
+        GUILayout.TextArea("FOV: " + cam.fieldOfView);
+        GUILayout.TextArea("Jump charges: " + (jumpChargesLeft - 1));
+        GUILayout.TextArea("Height: " + controller.height);
+        GUILayout.TextArea("Start height: " + startHeight);
+    }
+
     void Start() {
         controller = GetComponent<CharacterController>();
         startHeight = transform.localScale.y;
@@ -89,7 +100,7 @@ public class Movement : MonoBehaviour {
 
         if (Input.GetButtonDown("Jump") && jumpChargesLeft > 1) Jump();
         if (Input.GetButtonDown("Crouch")) Crouch();
-        if (Input.GetButtonUp("Crouch")) ExitCrouch();
+        if (Input.GetButtonUp("Crouch")) wantsToUncrouch = true;
     }
 
     void CameraEffects() {
@@ -127,7 +138,7 @@ public class Movement : MonoBehaviour {
     void Jump() {
         velocityY.y = Mathf.Sqrt(jumpHeight * 2 * normalGravity);
         jumpChargesLeft--;
-        if (isCrouching) wantsToUncrouch = true;
+        // if (isCrouching) wantsToUncrouch = true;
     }
 
     void HandleMovement() {
@@ -150,8 +161,9 @@ public class Movement : MonoBehaviour {
     void TryUncrouch() {
         if (!isCrouching) return;
         if (!wantsToUncrouch) return;
+        if (wantsToUncrouch && controller.height == startHeight * 2) { wantsToUncrouch = false; isCrouching = false; }
         bool checkAbove = Physics.Raycast(transform.position + (0.5f * controller.height * -Vector3.up), Vector3.up, startHeight * 2);
-        if(!checkAbove) return;
+        if (checkAbove) return;
         ExitCrouch();
     }
 
