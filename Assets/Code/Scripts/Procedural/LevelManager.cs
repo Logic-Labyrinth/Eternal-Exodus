@@ -45,10 +45,10 @@ namespace Exodus.ProceduralTools
         void Start()
         {
             InitializeLevel();
-            for (int i = 0; i < 10; i++)
-            {
-                Debug.Log("Test Seed: " + TestSeed());
-            }
+            // for (int i = 0; i < 10; i++)
+            // {
+            //     Debug.Log("Test Seed: " + TestSeed());
+            // }
         }
 
         // Update is called once per frame
@@ -69,10 +69,11 @@ namespace Exodus.ProceduralTools
             isSeedInitialised = true;
         }
 
-        int TestSeed()
-        {
-            return Random.Range(0, 1000000);
-        }
+        // Previously used for testing the consistency of seeds, currently no longer required
+        // int TestSeed()
+        // {
+        //     return Random.Range(0, 1000000);
+        // }
 
         [TabGroup("Level Settings")]
         [PropertySpace]
