@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -28,15 +29,15 @@ public class Movement : MonoBehaviour {
 
   CharacterController controller;
   Vector3 move, input, velocityY, forwardDirection, lastPosition;
-  float speed, gravity, startHeight, slideTimer, normalFOV;
+  float speed, startHeight, slideTimer, normalFOV;
   float forwardVelocity = 0f;
-  float lastSlideTime;
+  float lastSlideTime = Mathf.NegativeInfinity;
   int jumpChargesLeft;
   bool isGrounded, isCrouching, isSliding, wantsToUncrouch;
-  bool useNormalGravity;
 
   private void OnGUI() {
     GUILayout.TextArea("Wants to uncrouch: " + wantsToUncrouch);
+    GUILayout.TextArea("Crouching: " + isCrouching);
     GUILayout.TextArea("Player pos: " + controller.transform.position);
     GUILayout.TextArea("Fwd vector: " + forwardVelocity);
     GUILayout.TextArea("FOV: " + cam.fieldOfView);
@@ -47,10 +48,9 @@ public class Movement : MonoBehaviour {
 
   void Start() {
     controller = GetComponent<CharacterController>();
-    startHeight = transform.localScale.y;
+    startHeight = controller.height;
     normalFOV = cam.fieldOfView;
     lastPosition = controller.transform.position;
-    useNormalGravity = true;
     wantsToUncrouch = false;
     lastSlideTime = Time.time;
   }
@@ -98,8 +98,7 @@ public class Movement : MonoBehaviour {
   }
 
   void ApplyGravity() {
-    if (useNormalGravity) gravity = normalGravity;
-    velocityY.y -= gravity * Time.deltaTime;
+    velocityY.y -= normalGravity * Time.deltaTime;
     controller.Move(velocityY * Time.deltaTime);
   }
 
@@ -119,29 +118,28 @@ public class Movement : MonoBehaviour {
     if (isGrounded && !isSliding) GroundMovement();
     else if (!isGrounded) AirMovement();
     else if (isSliding) {
-      useNormalGravity = false;
-      gravity = 0;
       SlideMovement();
       DecreaseSpeed(slideSpeedDecrease);
       slideTimer -= Time.deltaTime;
-      if (slideTimer <= 0) {
-        isSliding = false;
-        useNormalGravity = true;
-      }
+      if (slideTimer <= 0) isSliding = false;
     }
   }
 
   void TryUncrouch() {
-    if (!isCrouching) return;
-    if (!wantsToUncrouch) return;
-    if (wantsToUncrouch && controller.height == startHeight * 2) { wantsToUncrouch = false; isCrouching = false; }
-    bool checkAbove = Physics.Raycast(transform.position + (0.5f * controller.height * -Vector3.up), Vector3.up, startHeight * 2);
+    if (!wantsToUncrouch) {
+      if (!isCrouching) wantsToUncrouch = false;
+      return;
+    }
+    bool checkAbove = Physics.Raycast(transform.position + (0.5f * controller.height * -Vector3.up), Vector3.up, startHeight);
     if (checkAbove) return;
     ExitCrouch();
   }
 
   void Crouch() {
+    Debug.Log(lastSlideTime);
+    Debug.Log(Time.time - slideCooldown);
     if (lastSlideTime > Time.time - slideCooldown) return;
+    Debug.Log("2");
     controller.height = crouchHeight;
     transform.localScale = new Vector3(transform.localScale.x, crouchHeight, transform.localScale.z);
 
@@ -155,13 +153,12 @@ public class Movement : MonoBehaviour {
   }
 
   void ExitCrouch() {
-    controller.height = startHeight * 2;
-    transform.localScale = new Vector3(transform.localScale.x, startHeight, transform.localScale.z);
+    controller.height = startHeight;
+    transform.localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
 
     isCrouching = false;
     isSliding = false;
     wantsToUncrouch = false;
-    useNormalGravity = true;
   }
 
   void IncreaseSpeed(float speedIncrease) {
