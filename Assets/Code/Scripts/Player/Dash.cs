@@ -42,7 +42,7 @@ public class Dash : MonoBehaviour {
         Vector3 p1 = transform.position + controller.center + -controller.height * 0.5f * Vector3.up;
         Vector3 p2 = p1 + Vector3.up * controller.height;
 
-        if (Physics.CapsuleCast(p1, p2, controller.radius * 0.9f, transform.forward, out RaycastHit hit, dashDistance)) {
+        if (Physics.CapsuleCast(p1, p2, controller.radius, transform.forward, out RaycastHit hit, dashDistance)) {
             if (hit.distance > 0.3) dashHitDistance = hit.distance;
         }
 
@@ -52,7 +52,7 @@ public class Dash : MonoBehaviour {
 
     void StartDash() {
         CalculateDashEndLocation();
-        if (dashHitDistance == 0) return;
+        if (dashHitDistance < 0.1f) return;
         Debug.DrawLine(transform.position, dashEndLocation, Color.red, 10);
         StartCoroutine(DashToPosition());
     }
