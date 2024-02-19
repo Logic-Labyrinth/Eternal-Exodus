@@ -31,9 +31,9 @@ public class Dash : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.LeftShift)) {
-            if (dashCooldown < Time.time - lastDashedTime) StartDash();
-        }
+        // if (Input.GetKeyDown(KeyCode.LeftShift)) {
+        //     StartDash();
+        // }
     }
 
     void CalculateDashEndLocation() {
@@ -50,7 +50,8 @@ public class Dash : MonoBehaviour {
         dashEndLocation = transform.position + transform.forward * dashHitDistance;
     }
 
-    void StartDash() {
+    public void StartDash() {
+        if (dashCooldown > Time.time - lastDashedTime) return;
         CalculateDashEndLocation();
         if (dashHitDistance < 0.1f) return;
         Debug.DrawLine(transform.position, dashEndLocation, Color.red, 10);

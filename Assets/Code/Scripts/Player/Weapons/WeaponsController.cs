@@ -14,6 +14,8 @@ public class WeaponsController : MonoBehaviour
     public List<Weapon> weapons;
     [SerializeField]
     private List<GameObject> weaponObjects;
+    [SerializeField]
+    private GameObject playerReference;
 
     /// <summary>
     /// Instantiates weapons and sets the active weapon
@@ -59,14 +61,20 @@ public class WeaponsController : MonoBehaviour
         {
             CycleToPreviousWeapon();
         }
-        if (Input.GetButton("Select Weapon 1")) {
+        if (Input.GetButtonDown("Select Weapon 1")) {
             SetActiveWeapon(0);
         }
-        if (Input.GetButton("Select Weapon 2")) {
+        if (Input.GetButtonDown("Select Weapon 2")) {
             SetActiveWeapon(1);
         }
-        if (Input.GetButton("Select Weapon 3")) {
+        if (Input.GetButtonDown("Select Weapon 3")) {
             SetActiveWeapon(2);
+        }
+        if (Input.GetButtonDown("Basic Attack")) {
+            activeWeapon.BasicAttack(playerReference);
+        }
+        if (Input.GetButtonDown("Special Attack")) {
+            activeWeapon.SpecialAttack(playerReference);
         }
     }
 

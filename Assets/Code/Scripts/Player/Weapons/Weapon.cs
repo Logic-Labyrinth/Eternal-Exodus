@@ -72,11 +72,11 @@ public class Weapon : ScriptableObject {
         return isLocked;
     }
 
-    public virtual void BasicAttack() {
+    public virtual void BasicAttack(GameObject player) {
         // Basic attack logic
     }
 
-    public virtual void SpecialAttack() {
+    public virtual void SpecialAttack(GameObject player) {
         // Special attack logic
     }
 }
