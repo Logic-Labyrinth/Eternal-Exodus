@@ -9,6 +9,7 @@ public class Weapon : ScriptableObject {
     [TableColumnWidth(90, Resizable = false)]
     [DisableIf("isLocked")]
     public GameObject weaponObject;
+
     [VerticalGroup("Weapon Stats")]
     [TableColumnWidth(70)]
     [ProgressBar(1, 100)]
@@ -16,18 +17,21 @@ public class Weapon : ScriptableObject {
     [PropertyTooltip("Base Damage")]
     [DisableIf("isLocked")]
     public int baseDamage;
+
     [VerticalGroup("Weapon Stats")]
     [ProgressBar(1f, 10f)]
     [LabelText("S. Multiplier")]
     [PropertyTooltip("Speed Damage Multiplier")]
     [DisableIf("isLocked")]
     public float speedDamageMultiplier;
+
     [VerticalGroup("Weapon Stats")]
     [ProgressBar(0f, 10f)]
     [LabelText("A. Speed")]
     [PropertyTooltip("Attack Speed")]
     [DisableIf("isLocked")]
     public float attackSpeed;
+
     [VerticalGroup("Weapon Stats")]
     [ProgressBar(0f, 10f)]
     [LabelText("SA. Cooldown")]
@@ -39,7 +43,7 @@ public class Weapon : ScriptableObject {
 
     [Button("", ButtonSizes.Large, Icon = SdfIconType.LockFill, Stretch = false)]
     [ShowIf("IsLocked")]
-    [VerticalGroup("Lock Weapon")]
+    [VerticalGroup("Lock")]
     [TableColumnWidth(40, Resizable = false)]
     private void UnlockButton()
     {
@@ -48,7 +52,7 @@ public class Weapon : ScriptableObject {
 
     [Button("", ButtonSizes.Large, Icon = SdfIconType.UnlockFill, Stretch = false)]
     [HideIf("IsLocked")]
-    [VerticalGroup("Lock Weapon")]
+    [VerticalGroup("Lock")]
     private void LockButton()
     {
         isLocked = true;
