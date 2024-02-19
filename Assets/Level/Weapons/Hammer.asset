@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 630b5875e75b8d54c86082a14f54967f, type: 3}
+  m_Script: {fileID: 11500000, guid: ee3147074cebe0d44b6d1671bdcef9d5, type: 3}
   m_Name: Hammer
   m_EditorClassIdentifier: 
-  weaponObject: {fileID: 919132149155446097, guid: 48e52d2b21c53e94bb9c4ba4b0cc50f0,
-    type: 3}
-  baseDamage: 20
-  speedDamageMultiplier: 2.212608
+  weaponObject: {fileID: 0}
+  baseDamage: 0
+  speedDamageMultiplier: 0
   attackSpeed: 0
   specialAttackCooldown: 0
+  localPosition: {x: 0, y: 0, z: 0}
+  localRotation: {x: 0, y: 0, z: 0, w: 0}
+  playerMovement: {fileID: 0}

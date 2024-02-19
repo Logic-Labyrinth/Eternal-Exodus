@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 
-[CreateAssetMenu(fileName = "New Weapon", menuName = "ExodusTools/Weapon")]
+
 public class Weapon : ScriptableObject {
     [PreviewField(70, ObjectFieldAlignment.Center)]
     [TableColumnWidth(90, Resizable = false)]
@@ -39,6 +40,14 @@ public class Weapon : ScriptableObject {
     [DisableIf("isLocked")]
     public float specialAttackCooldown;
 
+    [VerticalGroup("Weapon Transform")]
+    [LabelText("Position")]
+    public Vector3 localPosition;
+
+    [VerticalGroup("Weapon Transform")]
+    [LabelText("Rotation")]
+    public Quaternion localRotation;
+
     private bool isLocked = false;
 
     [Button("", ButtonSizes.Large, Icon = SdfIconType.LockFill, Stretch = false)]
@@ -69,11 +78,5 @@ public class Weapon : ScriptableObject {
 
     public virtual void SpecialAttack() {
         // Special attack logic
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
