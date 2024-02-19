@@ -1,15 +1,24 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class CameraControl : MonoBehaviour {
-    public float sensivity;
-    [Range(-1, -89)]
-    public int minX = -60;
-    [Range(1, 89)]
-    public int maxX = 60;
-    public Camera cam;
+    [BoxGroup("Settings")]
+    [MinMaxSlider(-89, 89, true)]
+    public Vector2Int cameraPitch = new(-89, 89);
+    [BoxGroup("Settings")]
+    [SerializeField]
+    float sensivity = 3;
+
+    [Space(30)]
+    [Title("Extra")]
+    [SerializeField]
+    Camera cam;
+    [SerializeField]
+    GameObject settingsUI;
 
     float rotX = 0f;
     float rotY = 0f;
+    bool paused = false;
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
@@ -17,12 +26,21 @@ public class CameraControl : MonoBehaviour {
     }
 
     void Update() {
-        rotY += Input.GetAxis("Mouse X") * sensivity;
-        rotX += Input.GetAxis("Mouse Y") * sensivity;
+        if (!paused) {
+            rotY += Input.GetAxis("Mouse X") * sensivity;
+            rotX += Input.GetAxis("Mouse Y") * sensivity;
 
-        rotX = Mathf.Clamp(rotX, minX, maxX);
+            rotX = Mathf.Clamp(rotX, cameraPitch.x, cameraPitch.y);
 
-        cam.transform.localRotation = Quaternion.Euler(-rotX, 0, 0);
-        transform.rotation = Quaternion.Euler(0, rotY, 0);
+            cam.transform.localRotation = Quaternion.Euler(-rotX, 0, 0);
+            transform.rotation = Quaternion.Euler(0, rotY, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P)) {
+            paused = !paused;
+            Cursor.lockState = paused ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = paused;
+            settingsUI.SetActive(paused);
+        }
     }
 }
