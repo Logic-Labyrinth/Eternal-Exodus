@@ -227,6 +227,7 @@ public class PlayerMovement : MonoBehaviour {
     // turn gravity off while on slope
     rb.useGravity = !OnSlope();
   }
+
   private void SpeedControl() {
     // limiting speed on slope
     if (OnSlope() && !exitingSlope) {
