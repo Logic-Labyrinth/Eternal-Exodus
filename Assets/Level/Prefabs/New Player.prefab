@@ -79,10 +79,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1d239dae5d4a647a38b389509ad7dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 7
-  sprintSpeed: 10
+  walkSpeed: 15
+  sprintSpeed: 15
   slideSpeed: 30
-  speedIncreaseMultiplier: 1.5
+  speedIncreaseMultiplier: 5
   slopeIncreaseMultiplier: 2.5
   groundDrag: 4
   jumpForce: 20
@@ -95,7 +95,6 @@ MonoBehaviour:
     m_Bits: 8
   maxSlopeAngle: 45
   orientation: {fileID: 8116624518591215350}
-  rb: {fileID: 0}
   playerObj: {fileID: 3860829231055732677}
   state: 0
   sliding: 0
@@ -117,7 +116,7 @@ MonoBehaviour:
   playerObj: {fileID: 3860829231055732677}
   slideForce: 200
   slideYScale: 0.5
---- !u!114 &8692104148180328049
+--- !u!114 &942469302357330022
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
