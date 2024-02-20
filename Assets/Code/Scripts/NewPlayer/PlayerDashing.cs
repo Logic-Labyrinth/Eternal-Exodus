@@ -20,12 +20,12 @@ public class PlayerDashing : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Mouse1)) Dash();
+        // if (Input.GetKeyDown(KeyCode.Mouse1)) Dash();
         if (dashCDTimer > 0) dashCDTimer -= Time.deltaTime;
     }
 
     Vector3 delayedForceToApply;
-    void Dash() {
+    public void Dash() {
         if (dashCDTimer > 0) return;
         else dashCDTimer = dashCooldown;
 
