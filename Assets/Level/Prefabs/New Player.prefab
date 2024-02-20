@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 1278043405697263559}
   - component: {fileID: 1368537601166487836}
   - component: {fileID: 7008466091617601656}
+  - component: {fileID: 1619070431646823693}
   - component: {fileID: 655155484836370427}
-  - component: {fileID: 8692104148180328049}
   - component: {fileID: 6934077616723515495}
   - component: {fileID: 6477248989041040824}
+  - component: {fileID: 942469302357330022}
   m_Layer: 0
   m_Name: New Player
   m_TagString: Player
@@ -96,10 +97,28 @@ MonoBehaviour:
   maxSlopeAngle: 45
   orientation: {fileID: 8116624518591215350}
   playerObj: {fileID: 3860829231055732677}
-  state: 0
+  rb: {fileID: 0}
+  lastState: 0
   sliding: 0
   crouching: 0
+  dashing: 0
   wantsToUncrouch: 0
+--- !u!114 &1619070431646823693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39063422859432571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69c49f95f93e4cb46affbfe669e1c0af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 8116624518591215350}
+  dashForce: 100
+  dashDuration: 0.5
+  dashCooldown: 1
 --- !u!114 &655155484836370427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,22 +135,6 @@ MonoBehaviour:
   playerObj: {fileID: 3860829231055732677}
   slideForce: 200
   slideYScale: 0.5
---- !u!114 &942469302357330022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 39063422859432571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54eae6c714d1e8b4396327573876dee5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chargeTime: 0.5
-  impactArea: {fileID: 6934077616723515495}
-  hammerForce: 25
-  enemyBounceMultiplier: 2
 --- !u!65 &6934077616723515495
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -172,6 +175,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bd7007531d794764f8c116154f83a3c4, type: 2}
   weaponObjects: []
   playerReference: {fileID: 39063422859432571}
+--- !u!114 &942469302357330022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39063422859432571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54eae6c714d1e8b4396327573876dee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chargeTime: 0.5
+  impactArea: {fileID: 6934077616723515495}
+  hammerForce: 25
+  enemyBounceMultiplier: 2
 --- !u!1 &1105330558934455332
 GameObject:
   m_ObjectHideFlags: 0
