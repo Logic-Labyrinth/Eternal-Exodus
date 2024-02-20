@@ -76,6 +76,9 @@ public class WeaponsController : MonoBehaviour
         if (Input.GetButtonDown("Special Attack")) {
             activeWeapon.SpecialAttack(playerReference);
         }
+        if (Input.GetButtonUp("Special Attack")) {
+                activeWeapon.SpecialRelease(playerReference);
+        }
     }
 
     private void SetActiveWeapon(int index) {

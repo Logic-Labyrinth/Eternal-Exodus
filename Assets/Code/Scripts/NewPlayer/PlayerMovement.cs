@@ -38,10 +38,10 @@ public class PlayerMovement : MonoBehaviour {
   float horizontalInput;
   float verticalInput;
 
-  Transform orientation;
+  public Transform orientation;
   Vector3 moveDirection;
   Vector3 flatVelocity;
-  Rigidbody rb;
+  public Rigidbody rb;
   MovementState state;
 
   public enum MovementState {
