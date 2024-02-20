@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour {
   Rigidbody rb;
 
   public MovementState state;
+  public MovementState lastState;
   public enum MovementState {
     Walk,
     Sprint,
@@ -53,7 +54,9 @@ public class PlayerMovement : MonoBehaviour {
 
   public bool sliding;
   public bool crouching;
+  public bool dashing;
   public bool wantsToUncrouch;
+  bool keepMomentum;
 
   void OnGUI() {
     GUILayout.TextArea($"State: {state}");
@@ -64,6 +67,7 @@ public class PlayerMovement : MonoBehaviour {
     GUILayout.TextArea($"Ready to jump: {canJump}");
     GUILayout.TextArea($"Move direction: {moveDirection}");
     GUILayout.TextArea($"Current speed: {rb.velocity.magnitude}");
+    GUILayout.TextArea($"Desired speed: {desiredMoveSpeed}");
   }
 
   private void Start() {
@@ -82,7 +86,9 @@ public class PlayerMovement : MonoBehaviour {
     SpeedControl();
     StateHandler();
 
-    rb.drag = isGrounded ? groundDrag : 0;
+    if(dashing) rb.drag = 0;
+    else if (state == MovementState.Walk || state == MovementState.Sprint || state == MovementState.Crouch) rb.drag = groundDrag;
+    else rb.drag = 0;
   }
 
   private void FixedUpdate() {
@@ -93,23 +99,13 @@ public class PlayerMovement : MonoBehaviour {
     horizontalInput = Input.GetAxisRaw("Horizontal");
     verticalInput = Input.GetAxisRaw("Vertical");
 
-    // when to jump
     if (Input.GetKey(KeyCode.Space) && canJump && isGrounded) {
       canJump = false;
-
       Jump();
       Invoke(nameof(ResetJump), jumpCooldown);
     }
 
-    // start crouch
-    // if (crouching) {
-    //   StartCrouch();
-    // }
-
-    // stop crouch
-    // if (crouching && wantsToUncrouch) {
     TryUncrouch();
-    // }
   }
 
   public void StartCrouch() {
@@ -141,35 +137,55 @@ public class PlayerMovement : MonoBehaviour {
   }
 
   private void StateHandler() {
-    // Mode - Sliding
-    if (sliding) {
+    if (dashing) {
+      desiredMoveSpeed = slideSpeed;
+
+    } else if (sliding) {
       state = MovementState.Slide;
       if (OnSlope() && rb.velocity.y < 0.1f) desiredMoveSpeed = slideSpeed;
       else desiredMoveSpeed = crouchSpeed;
+
     } else if (crouching) {
       state = MovementState.Crouch;
       desiredMoveSpeed = crouchSpeed;
+
     } else if (isGrounded && Input.GetKey(KeyCode.LeftShift)) {
       state = MovementState.Sprint;
       desiredMoveSpeed = sprintSpeed;
+
     } else if (isGrounded) {
       state = MovementState.Walk;
       desiredMoveSpeed = walkSpeed;
+
     } else {
       state = MovementState.Glide;
+      if (desiredMoveSpeed < sprintSpeed) desiredMoveSpeed = walkSpeed;
+      else desiredMoveSpeed = sprintSpeed;
+    }
+
+    if (lastState == MovementState.Slide || lastState == MovementState.Walk ) keepMomentum = true;
+    bool speedChanged = desiredMoveSpeed != lastDesiredMoveSpeed;
+    if (speedChanged) {
+      if (keepMomentum) {
+        StopAllCoroutines();
+        StartCoroutine(SmoothlyLerpMoveSpeed());
+      } else {
+        StopAllCoroutines();
+        moveSpeed = desiredMoveSpeed;
+      }
     }
 
     // check if desired move speed has changed drastically
-    if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0) {
-      StopAllCoroutines();
-      StartCoroutine(SmoothlyLerpMoveSpeed());
-    } else moveSpeed = desiredMoveSpeed;
+    // if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0) {
+    //   StopAllCoroutines();
+    //   StartCoroutine(SmoothlyLerpMoveSpeed());
+    // } else moveSpeed = desiredMoveSpeed;
 
     lastDesiredMoveSpeed = desiredMoveSpeed;
+    lastState = state;
   }
 
   private IEnumerator SmoothlyLerpMoveSpeed() {
-    // smoothly lerp movementSpeed to desired value
     float time = 0;
     float difference = Mathf.Abs(desiredMoveSpeed - moveSpeed);
     float startValue = moveSpeed;
@@ -189,9 +205,12 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     moveSpeed = desiredMoveSpeed;
+    keepMomentum = false;
   }
 
   private void MovePlayer() {
+    if (dashing) return;
+
     // calculate movement direction
     moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
@@ -200,10 +219,8 @@ public class PlayerMovement : MonoBehaviour {
       rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 20f, ForceMode.Force);
       if (rb.velocity.y > 0) rb.AddForce(Vector3.down * 80f, ForceMode.Force);
     }
-
     // on ground
     else if (isGrounded) rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-
     // in air
     else if (!isGrounded) rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
 
