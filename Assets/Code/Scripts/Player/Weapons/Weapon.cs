@@ -79,4 +79,8 @@ public class Weapon : ScriptableObject {
     public virtual void SpecialAttack(GameObject player) {
         // Special attack logic
     }
+
+    public virtual void SpecialRelease(GameObject player) {
+        // Special attack release logic
+    }
 }
