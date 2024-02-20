@@ -43,7 +43,6 @@ public class PlayerMovement : MonoBehaviour {
   public Rigidbody rb;
   [SerializeField] Transform playerObj;
 
-
   public MovementState state;
   public enum MovementState {
     Walk,
