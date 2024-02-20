@@ -1,28 +1,26 @@
 using UnityEngine;
 
 public class PlayerSliding : MonoBehaviour {
-  [Header("Sliding")]
-  [SerializeField] float maxSlideTime = 0.75f;
-  [SerializeField] float slideForce = 200;
-  [SerializeField] float slideYScale = 0.5f;
-  float startYScale;
-  float slideTimer;
-
-  float horizontalInput;
-  float verticalInput;
-  bool isSliding;
-
-  Transform orientation;
-  Transform player;
+  [Header("References")]
+  public Transform orientation;
+  public Transform playerObj;
   Rigidbody rb;
   PlayerMovement pm;
 
+  [Header("Sliding")]
+  [SerializeField] float slideForce = 200f;
+  [SerializeField] float slideYScale = 0.5f;
+  float startYScale;
+
+  [Header("Input")]
+  float horizontalInput;
+  float verticalInput;
+
   private void Start() {
-    orientation = transform.Find("Orientation");
-    player = transform.Find("Player");
     rb = GetComponent<Rigidbody>();
     pm = GetComponent<PlayerMovement>();
-    startYScale = player.localScale.y;
+
+    startYScale = playerObj.localScale.y;
   }
 
   private void Update() {
@@ -30,40 +28,50 @@ public class PlayerSliding : MonoBehaviour {
     verticalInput = Input.GetAxisRaw("Vertical");
 
     // if (Input.GetKeyDown(KeyCode.LeftControl) && (horizontalInput != 0 || verticalInput != 0))
-    if (Input.GetKeyDown(KeyCode.LeftControl) && rb.velocity.magnitude > pm.crouchSpeed * 1.1f)
-      StartSlide();
-
-    if (Input.GetKeyUp(KeyCode.LeftControl) && isSliding)
-      StopSlide();
-  }
-
-  void FixedUpdate() {
-    if (isSliding) SlidingMovement();
-  }
-
-  void StartSlide() {
-    isSliding = true;
-    player.localScale = new Vector3(player.localScale.x, slideYScale, player.localScale.z);
-    rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-
-    slideTimer = maxSlideTime;
-  }
-
-  void SlidingMovement() {
-    Vector3 direction = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
-    if (!pm.OnSlope() || rb.velocity.y > -0.1f) {
-      rb.AddForce(direction.normalized * slideForce, ForceMode.Force);
-      slideTimer -= Time.deltaTime;
-    } else {
-      rb.AddForce(pm.GetSlopeMoveDirection(direction) * slideForce, ForceMode.Force);
+    if (Input.GetKeyDown(KeyCode.LeftControl)) {
+      pm.wantsToUncrouch = false;
+      if (rb.velocity.magnitude > pm.crouchSpeed * 1.1f) StartSlide();
+      else pm.StartCrouch();
     }
 
-    if (slideTimer <= 0 || rb.velocity.y <= pm.crouchSpeed * 1.1f) StopSlide();
+    if (Input.GetKeyUp(KeyCode.LeftControl)) {
+      if (pm.sliding) StopSlide();
+      pm.StartCrouch();
+      pm.wantsToUncrouch = true;
+      // if (pm.crouching) pm.wantsToUncrouch = true;
+    }
   }
 
-  void StopSlide() {
-    isSliding = false;
-    player.localScale = new Vector3(player.localScale.x, startYScale, player.localScale.z);
+  private void FixedUpdate() {
+    if (pm.sliding)
+      SlidingMovement();
+  }
+
+  public void StartSlide() {
+    Debug.Log("Sliding");
+    pm.sliding = true;
+
+    playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
+    rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+    rb.AddForce(orientation.forward.normalized * 1000f, ForceMode.Force);
+  }
+
+  private void SlidingMovement() {
+    Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+    if (!pm.OnSlope() || rb.velocity.y > -0.1f) rb.AddForce(inputDirection.normalized * slideForce, ForceMode.Force);
+    else rb.AddForce(pm.GetSlopeMoveDirection(inputDirection) * slideForce, ForceMode.Force);
+
+    if (rb.velocity.magnitude <= pm.crouchSpeed) {
+      StopSlide();
+      pm.sliding = false;
+      pm.StartCrouch();
+    }
+  }
+
+  public void StopSlide() {
+    Debug.Log("Not Sliding");
+    pm.sliding = false;
+    playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
   }
 }
