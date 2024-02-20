@@ -37,12 +37,12 @@ public class PlayerMovement : MonoBehaviour {
   float horizontalInput;
   float verticalInput;
 
-  [SerializeField] Transform orientation;
+  public Transform orientation;
   [SerializeField] Transform playerObj;
   Vector3 moveDirection;
-  Rigidbody rb;
-
-  public MovementState state;
+  Vector3 flatVelocity;
+  public Rigidbody rb;
+  MovementState state;
   public MovementState lastState;
   public enum MovementState {
     Walk,
@@ -246,7 +246,7 @@ public class PlayerMovement : MonoBehaviour {
     }
   }
 
-  private void Jump() {
+  public void Jump() {
     exitingSlope = true;
 
     // reset y velocity
