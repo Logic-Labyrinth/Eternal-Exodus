@@ -1,6 +1,5 @@
 using System;
 using Sirenix.OdinInspector;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -31,7 +30,7 @@ public class Movement : MonoBehaviour {
   Vector3 move, input, velocityY, forwardDirection, lastPosition;
   float speed, startHeight, slideTimer, normalFOV;
   float forwardVelocity = 0f;
-  float lastSlideTime = Mathf.NegativeInfinity;
+  float lastSlideTime;
   int jumpChargesLeft;
   bool isGrounded, isCrouching, isSliding, wantsToUncrouch;
 
@@ -52,7 +51,7 @@ public class Movement : MonoBehaviour {
     normalFOV = cam.fieldOfView;
     lastPosition = controller.transform.position;
     wantsToUncrouch = false;
-    lastSlideTime = Time.time;
+    lastSlideTime = Mathf.NegativeInfinity;
   }
 
   void Update() {
@@ -66,6 +65,7 @@ public class Movement : MonoBehaviour {
     CalculateForwardVelocity();
   }
 
+  // HandleInput function to process input and perform corresponding actions.
   void HandleInput() {
     input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
     input = transform.TransformDirection(input);
@@ -76,11 +76,13 @@ public class Movement : MonoBehaviour {
     if (Input.GetButtonUp("Crouch")) wantsToUncrouch = true;
   }
 
+  // A function to handle camera effects.
   void CameraEffects() {
     float targetFOV = Mathf.Lerp(normalFOV, fastFOV, forwardVelocity / runSpeed);
     cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, Time.deltaTime * 10f);
   }
 
+  // Function for handling ground movement, adjusting speed based on crouching state and input, and clamping the movement vector.
   void GroundMovement() {
     speed = isCrouching ? crouchSpeed : runSpeed;
     move.x = input.x == 0 ? 0 : input.x * speed;
@@ -89,6 +91,7 @@ public class Movement : MonoBehaviour {
     move = Vector3.ClampMagnitude(move, speed);
   }
 
+  // A function to handle air movement, setting the speed based on airSpeed, and calculating the movement in the x and z directions using the input and speed. The resulting movement is then clamped to the specified airControl and speed.
   void AirMovement() {
     speed = airSpeed;
     move.x = input.x == 0 ? 0 : input.x * speed;
@@ -97,22 +100,29 @@ public class Movement : MonoBehaviour {
     move = Vector3.ClampMagnitude(move * airControl, speed);
   }
 
+  // ApplyGravity function applies a gravitational force to the object's velocity in the y-axis and moves the controller accordingly.
   void ApplyGravity() {
     velocityY.y -= normalGravity * Time.deltaTime;
     controller.Move(velocityY * Time.deltaTime);
   }
 
+  // CheckGround function performs a raycast to check if the object is grounded, and updates the jump charges left if the object is grounded.
   void CheckGround() {
-    isGrounded = Physics.Raycast(transform.position + (0.5f * controller.height * -Vector3.up), -Vector3.up, 0.2f);
+    Vector3 bottomPos = transform.position + (0.5f * controller.height * -Vector3.up);
+    isGrounded = Physics.Raycast(bottomPos, -Vector3.up, 0.2f);
+    Debug.DrawRay(bottomPos, -Vector3.up);
+
     if (isGrounded) jumpChargesLeft = jumpCharges;
   }
 
+  // A function to perform a jump action, adjusting the Y velocity and decrementing the remaining jump charges.
   void Jump() {
     velocityY.y = Mathf.Sqrt(jumpHeight * 2 * normalGravity);
     jumpChargesLeft--;
     // if (isCrouching) wantsToUncrouch = true;
   }
 
+  // HandleMovement function handles the movement of the character. It tries to uncrouch, and then based on the character's state, it either performs ground movement, air movement, or slide movement. It also decreases the slide speed and checks if the sliding should stop.
   void HandleMovement() {
     TryUncrouch();
     if (isGrounded && !isSliding) GroundMovement();
@@ -125,23 +135,25 @@ public class Movement : MonoBehaviour {
     }
   }
 
+  // This function attempts to uncrouch the character, checking if it is possible to do so without colliding with any obstacles. It does not take any parameters and does not return any value.
   void TryUncrouch() {
     if (!wantsToUncrouch) {
       if (!isCrouching) wantsToUncrouch = false;
       return;
     }
-    bool checkAbove = Physics.Raycast(transform.position + (0.5f * controller.height * -Vector3.up), Vector3.up, startHeight);
+
+    Vector3 startPos = transform.position + (0.5f * controller.height * Vector3.up);
+    Debug.DrawRay(startPos, Vector3.up * (startHeight - controller.height));
+    bool checkAbove = Physics.Raycast(startPos, Vector3.up, startHeight - controller.height);
     if (checkAbove) return;
     ExitCrouch();
   }
 
+  // A function to crouch, adjusting the player's height and triggering sliding if moving at a high velocity.
   void Crouch() {
-    Debug.Log(lastSlideTime);
-    Debug.Log(Time.time - slideCooldown);
     if (lastSlideTime > Time.time - slideCooldown) return;
-    Debug.Log("2");
     controller.height = crouchHeight;
-    transform.localScale = new Vector3(transform.localScale.x, crouchHeight, transform.localScale.z);
+    transform.localScale = new Vector3(transform.localScale.x, crouchHeight * 0.5f, transform.localScale.z);
 
     isCrouching = true;
     if (forwardVelocity > runSpeed * 0.8) {
@@ -152,6 +164,7 @@ public class Movement : MonoBehaviour {
     }
   }
 
+  // Function to exit the crouching state, restoring the original height and scale while resetting crouching and sliding flags.
   void ExitCrouch() {
     controller.height = startHeight;
     transform.localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
@@ -161,6 +174,7 @@ public class Movement : MonoBehaviour {
     wantsToUncrouch = false;
   }
 
+  // Increases the speed of the object by the specified amount.
   void IncreaseSpeed(float speedIncrease) {
     speed += speedIncrease;
   }
@@ -169,11 +183,13 @@ public class Movement : MonoBehaviour {
     speed -= speedDecrease * Time.deltaTime;
   }
 
+  // A function to handle the movement of an object in the game world.
   void SlideMovement() {
     move += forwardDirection;
     move = Vector3.ClampMagnitude(move, speed);
   }
 
+  // Calculate the forward velocity based on the current velocity, last position, and time difference.
   void CalculateForwardVelocity() {
     Vector3 currentVelocity = (controller.transform.position - lastPosition) / Time.deltaTime;
     lastPosition = controller.transform.position;
