@@ -99,6 +99,7 @@ public class WeaponsController : MonoBehaviour {
     private void CycleToNextWeapon() {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(false);
+        currentWeapon.weapon.Reset();
         activeWeaponIndex = (activeWeaponIndex + 1) % weapons.Count;
         currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(true);
@@ -107,6 +108,7 @@ public class WeaponsController : MonoBehaviour {
     private void CycleToPreviousWeapon() {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(false);
+        currentWeapon.weapon.Reset();
         activeWeaponIndex = (activeWeaponIndex - 1 + weapons.Count) % weapons.Count;
         currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(true);

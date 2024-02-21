@@ -76,4 +76,8 @@ public class Weapon : ScriptableObject {
     public virtual void SpecialRelease(GameObject player) {
         // Special attack release logic
     }
+
+    public virtual void Reset() {
+        // Reset various variables for each weapon
+    }
 }

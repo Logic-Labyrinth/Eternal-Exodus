@@ -27,4 +27,8 @@ public class Hammer : Weapon {
 
         hammer.ActivateHammerAbility();
     }
+
+    public override void Reset() {
+        hammer.Reset();
+    }
 }
