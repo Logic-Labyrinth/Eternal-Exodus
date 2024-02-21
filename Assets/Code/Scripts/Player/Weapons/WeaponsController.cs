@@ -80,7 +80,7 @@ public class WeaponsController : MonoBehaviour {
             if (!weaponObjects[activeWeaponIndex].canUseSpecialAttack) return;
             weaponObjects[activeWeaponIndex].PutOnCD();
             weaponObjects[activeWeaponIndex].weapon.SpecialAttack(playerReference);
-            StartCoroutine(ResetSpecialAbility(weaponObjects[activeWeaponIndex]));
+            StartCoroutine(ResetSpecialAbility(activeWeaponIndex));
         }
 
         if (Input.GetButtonUp("Special Attack")) {
@@ -112,8 +112,10 @@ public class WeaponsController : MonoBehaviour {
         currentWeapon.weaponObj.SetActive(true);
     }
 
-    IEnumerator ResetSpecialAbility(WeaponObject weaponObject) {
-        yield return new WaitForSeconds(weaponObject.cooldown);
-        weaponObjects[activeWeaponIndex].PutOffCD();
+    IEnumerator ResetSpecialAbility(int weaponIndex) {
+        int index = weaponIndex;
+        yield return new WaitForSeconds(weaponObjects[index].cooldown);
+        Debug.Log("Reset Special Ability");
+        weaponObjects[index].PutOffCD();
     }
 }
