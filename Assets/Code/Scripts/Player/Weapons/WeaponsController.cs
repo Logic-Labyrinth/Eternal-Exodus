@@ -77,7 +77,6 @@ public class WeaponsController : MonoBehaviour {
             currentWeapon.weapon.BasicAttack(playerReference);
 
         if (Input.GetButtonDown("Special Attack")) {
-            Debug.Log(weaponObjects[activeWeaponIndex].canUseSpecialAttack);
             if (!weaponObjects[activeWeaponIndex].canUseSpecialAttack) return;
             weaponObjects[activeWeaponIndex].PutOnCD();
             weaponObjects[activeWeaponIndex].weapon.SpecialAttack(playerReference);
