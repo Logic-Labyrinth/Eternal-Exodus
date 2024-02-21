@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-struct WeaponObject {
+class WeaponObject {
     public GameObject weaponObj;
     public Weapon weapon;
     public bool canUseSpecialAttack;
@@ -16,19 +16,24 @@ struct WeaponObject {
         canUseSpecialAttack = true;
         cooldown = weapon.specialAttackCooldown;
     }
+
+    public void PutOnCD() {
+        canUseSpecialAttack = false;
+    }
+
+    public void PutOffCD() {
+        canUseSpecialAttack = true;
+    }
 }
 
 public class WeaponsController : MonoBehaviour {
-    // private Weapon activeWeapon;
     private int activeWeaponIndex;
     [SerializeField]
     private GameObject hand;
-    // int currentWeaponIndex;
 
     [TableList(AlwaysExpanded = true)]
     public List<Weapon> weapons;
     [SerializeField]
-    // private List<GameObject> weaponObjects;
     private List<WeaponObject> weaponObjects;
     [SerializeField]
     private GameObject playerReference;
@@ -70,23 +75,17 @@ public class WeaponsController : MonoBehaviour {
 
         if (Input.GetButtonDown("Basic Attack"))
             currentWeapon.weapon.BasicAttack(playerReference);
-        // activeWeapon.BasicAttack(playerReference);
 
         if (Input.GetButtonDown("Special Attack")) {
-            Debug.Log(currentWeapon.canUseSpecialAttack);
-            if (!currentWeapon.canUseSpecialAttack) return;
-            // Debug.Log("Special Attack");
-            // activeWeapon.canUseSpecialAttack = false;
-            // activeWeapon.SpecialAttack(playerReference);
-            currentWeapon.canUseSpecialAttack = false;
-            Debug.Log(currentWeapon.canUseSpecialAttack);
-            currentWeapon.weapon.SpecialAttack(playerReference);
-            StartCoroutine(ResetSpecialAbility(currentWeapon));
+            Debug.Log(weaponObjects[activeWeaponIndex].canUseSpecialAttack);
+            if (!weaponObjects[activeWeaponIndex].canUseSpecialAttack) return;
+            weaponObjects[activeWeaponIndex].PutOnCD();
+            weaponObjects[activeWeaponIndex].weapon.SpecialAttack(playerReference);
+            StartCoroutine(ResetSpecialAbility(weaponObjects[activeWeaponIndex]));
         }
 
         if (Input.GetButtonUp("Special Attack")) {
-            currentWeapon.weapon.SpecialAttack(playerReference);
-            // activeWeapon.SpecialRelease(playerReference);
+            weaponObjects[activeWeaponIndex].weapon.SpecialRelease(playerReference);
         }
     }
 
@@ -94,7 +93,6 @@ public class WeaponsController : MonoBehaviour {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(false);
         activeWeaponIndex = index;
-        // activeWeapon = weapons[activeWeaponIndex];
         currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(true);
     }
@@ -103,7 +101,6 @@ public class WeaponsController : MonoBehaviour {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(false);
         activeWeaponIndex = (activeWeaponIndex + 1) % weapons.Count;
-        // activeWeapon = weapons[activeWeaponIndex];
         currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(true);
     }
@@ -112,15 +109,12 @@ public class WeaponsController : MonoBehaviour {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(false);
         activeWeaponIndex = (activeWeaponIndex - 1 + weapons.Count) % weapons.Count;
-        // activeWeapon = weapons[activeWeaponIndex];
         currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(true);
     }
 
     IEnumerator ResetSpecialAbility(WeaponObject weaponObject) {
-        Debug.Log("Waiting");
         yield return new WaitForSeconds(weaponObject.cooldown);
-        Debug.Log("Something");
-        // weaponObject.canUseSpecialAttack = true;
+        weaponObjects[activeWeaponIndex].PutOffCD();
     }
 }
