@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using Unity.VisualScripting;
-
 
 public class Weapon : ScriptableObject {
     [PreviewField(70, ObjectFieldAlignment.Center)]
@@ -54,21 +50,18 @@ public class Weapon : ScriptableObject {
     [ShowIf("IsLocked")]
     [VerticalGroup("Lock")]
     [TableColumnWidth(40, Resizable = false)]
-    private void UnlockButton()
-    {
+    private void UnlockButton() {
         isLocked = false;
     }
 
     [Button("", ButtonSizes.Large, Icon = SdfIconType.UnlockFill, Stretch = false)]
     [HideIf("IsLocked")]
     [VerticalGroup("Lock")]
-    private void LockButton()
-    {
+    private void LockButton() {
         isLocked = true;
     }
 
-    private bool IsLocked()
-    {
+    private bool IsLocked() {
         return isLocked;
     }
 
