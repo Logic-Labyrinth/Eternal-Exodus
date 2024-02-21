@@ -101,6 +101,7 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
+    - _ColourThreshold: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DeepShadow: 1.99
@@ -123,11 +124,14 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Highlight: 0
+    - _LineThickness: 2
     - _Metallic: 0
     - _Neutral: 0
+    - _NormalThreshold: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _Post_Steps: 4
+    - _PostBlend: 0
+    - _Post_Steps: 3.06
     - _Posterize: 1
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -149,6 +153,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColour: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &352765642438833034
