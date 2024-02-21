@@ -48,7 +48,6 @@ public class PlayerSliding : MonoBehaviour {
   }
 
   public void StartSlide() {
-    Debug.Log("Sliding");
     pm.sliding = true;
 
     playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
@@ -70,7 +69,6 @@ public class PlayerSliding : MonoBehaviour {
   }
 
   public void StopSlide() {
-    Debug.Log("Not Sliding");
     pm.sliding = false;
     playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
   }
