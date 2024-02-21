@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class HammerAbility : MonoBehaviour
-{
+public class HammerAbility : MonoBehaviour {
     [SerializeField]
     private float chargeTime = 1f;
     [SerializeField]
@@ -20,6 +20,10 @@ public class HammerAbility : MonoBehaviour
     private Rigidbody rb;
     private Transform orientation;
 
+    public Slider slider;
+    public Image handle, background;
+    float timer = 0;
+
     void Start() {
         rb = transform.GetComponent<Rigidbody>();
         orientation = transform.Find("Orientation");
@@ -27,28 +31,40 @@ public class HammerAbility : MonoBehaviour
         groundLayer = LayerMask.GetMask("Ground");
     }
 
-    IEnumerator ChargeHammerCoroutine()
-    {
-        yield return new WaitForSeconds(chargeTime);
-
+    void Stuff() {
         if (isCharging) isCharged = true;
     }
 
-    public void ChargeHammer()
-    {
+    public void ChargeHammer() {
         isCharging = true;
-        StartCoroutine(ChargeHammerCoroutine());
+        Invoke("Stuff", chargeTime);
+        timer = 0;
+        handle.color = Color.white;
+        background.color = Color.white;
+        slider.value = 0;
+        slider.gameObject.SetActive(true);
     }
 
-    public void ActivateHammerAbility()
-    {
-        if (isCharged)
-        {
+    private void Update() {
+        if (isCharging) {
+            if (timer <= chargeTime) {
+                slider.value = timer / chargeTime;
+                timer += Time.deltaTime;
+            } else {
+                slider.value = 1;
+                handle.color = Color.green;
+                background.color = Color.green;
+            }
+        }
+    }
+
+    public void ActivateHammerAbility() {
+        if (isCharged) {
             // Check if impact area is colliding with either a ground layer or enemy layer
             if (Physics.CheckBox(impactArea.transform.position, impactArea.size * 0.5f, Quaternion.identity, enemyLayer)) {
                 // Stop player y velocity whilst keeping the other velocity axes
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                rb.AddForce((Vector3.up + orientation.forward * 3f * enemyBounceMultiplier) * hammerForce, ForceMode.Impulse);
+                rb.AddForce((Vector3.up + 3f * enemyBounceMultiplier * orientation.forward) * hammerForce, ForceMode.Impulse);
                 isCharged = false;
             } else if (Physics.CheckBox(impactArea.transform.position, impactArea.size * 0.5f, Quaternion.identity, groundLayer)) {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
@@ -59,11 +75,6 @@ public class HammerAbility : MonoBehaviour
 
         isCharged = false;
         isCharging = false;
-        StopCoroutine(ChargeHammerCoroutine());
-    }
-
-    void OnGUI() {
-        GUILayout.TextArea($"Hammer charging: {isCharging}");
-        GUILayout.TextArea($"Hammer charged: {isCharged}");
+        slider.gameObject.SetActive(false);
     }
 }
