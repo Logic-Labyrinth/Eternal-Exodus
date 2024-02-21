@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
 
 [CreateAssetMenu(fileName = "Hammer", menuName = "ExodusTools/Weapon/Hammer")]
 public class Hammer : Weapon {
