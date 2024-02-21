@@ -85,7 +85,7 @@ public class WeaponsController : MonoBehaviour {
         }
 
         if (Input.GetButtonUp("Special Attack")) {
-            currentWeapon.weapon.SpecialAttack(playerReference);
+            currentWeapon.weapon.SpecialRelease(playerReference);
             // activeWeapon.SpecialRelease(playerReference);
         }
     }
@@ -120,7 +120,7 @@ public class WeaponsController : MonoBehaviour {
     IEnumerator ResetSpecialAbility(WeaponObject weaponObject) {
         Debug.Log("Waiting");
         yield return new WaitForSeconds(weaponObject.cooldown);
-        Debug.Log("Something");
+        Debug.Log("Cooldown finished. Setting canUseSpecialAttack to true for weapon: " + weaponObject.weapon.name);
         // weaponObject.canUseSpecialAttack = true;
     }
 }
