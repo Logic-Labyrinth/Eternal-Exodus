@@ -84,13 +84,13 @@ MonoBehaviour:
   walkSpeed: 15
   sprintSpeed: 15
   slideSpeed: 30
-  speedIncreaseMultiplier: 5
+  speedIncreaseMultiplier: 10
   slopeIncreaseMultiplier: 2.5
-  groundDrag: 4
+  groundDrag: 7
   jumpForce: 20
   jumpCooldown: 0.25
   airMultiplier: 0.4
-  crouchSpeed: 3.5
+  crouchSpeed: 7
   crouchYScale: 0.5
   groundMask:
     serializedVersion: 2
@@ -138,8 +138,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 8116624518591215350}
   playerObj: {fileID: 3860829231055732677}
+  cam: {fileID: 5930028184045412752}
   slideForce: 200
   slideYScale: 0.5
+  slideFOV: 75
 --- !u!65 &6934077616723515495
 BoxCollider:
   m_ObjectHideFlags: 0
