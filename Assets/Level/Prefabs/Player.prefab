@@ -117,8 +117,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orientation: {fileID: 8116624518591215350}
-  dashForce: 100
-  dashDuration: 0.5
+  cam: {fileID: 5930028184045412752}
+  dashForce: 50
+  dashDuration: 0.25
+  dashFOV: 75
+  dashLowerLimit: -90
+  dashUpperLimit: 90
   dashCooldown: 1
 --- !u!114 &655155484836370427
 MonoBehaviour:
@@ -155,8 +159,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.1536255, y: 3.7126124, z: 3.36623}
-  m_Center: {x: 0.008163452, y: -0.3370384, z: 1.183115}
+  m_Size: {x: 2.1536255, y: 4.1461663, z: 4.011572}
+  m_Center: {x: 0.008179702, y: -0.4950049, z: 1.0714762}
 --- !u!114 &6477248989041040824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,7 +530,7 @@ RectTransform:
   m_Father: {fileID: 1914659741706598420}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.514, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -719,8 +723,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2636296512408233499}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.514, y: 0}
-  m_AnchorMax: {x: 0.514, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
