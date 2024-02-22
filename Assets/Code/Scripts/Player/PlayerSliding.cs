@@ -27,18 +27,16 @@ public class PlayerSliding : MonoBehaviour {
     horizontalInput = Input.GetAxisRaw("Horizontal");
     verticalInput = Input.GetAxisRaw("Vertical");
 
-    // if (Input.GetKeyDown(KeyCode.LeftControl) && (horizontalInput != 0 || verticalInput != 0))
-    if (Input.GetKeyDown(KeyCode.LeftControl)) {
+    if (Input.GetButtonDown("Crouch")) {
       pm.wantsToUncrouch = false;
       if (rb.velocity.magnitude > pm.crouchSpeed * 1.1f) StartSlide();
       else pm.StartCrouch();
     }
 
-    if (Input.GetKeyUp(KeyCode.LeftControl)) {
+    if (Input.GetButtonUp("Crouch")) {
       if (pm.sliding) StopSlide();
       pm.StartCrouch();
       pm.wantsToUncrouch = true;
-      // if (pm.crouching) pm.wantsToUncrouch = true;
     }
   }
 

@@ -41,7 +41,6 @@ public class PlayerDashing : MonoBehaviour {
     }
 
     void ResetDash() {
-        Debug.Log("Reset Dash");
         pm.dashing = false;
         rb.useGravity = true;
     }

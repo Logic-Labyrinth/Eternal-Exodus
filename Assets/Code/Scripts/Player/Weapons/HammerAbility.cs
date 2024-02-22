@@ -112,6 +112,7 @@ public class HammerAbility : MonoBehaviour {
     public void Reset() {
         isCharged = false;
         isCharging = false;
+        if(slider)
         slider.gameObject.SetActive(false);
     }
 }
