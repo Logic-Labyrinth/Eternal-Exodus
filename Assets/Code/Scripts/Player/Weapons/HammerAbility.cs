@@ -1,11 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HammerAbility : MonoBehaviour
-{
+public class HammerAbility : MonoBehaviour {
     [SerializeField]
     private float chargeTime = 1f;
 
@@ -30,23 +27,20 @@ public class HammerAbility : MonoBehaviour
         background;
     float timer = 0;
 
-    void Start()
-    {
+    void Start() {
         rb = transform.GetComponent<Rigidbody>();
         orientation = transform.Find("Orientation");
         enemyLayer = LayerMask.GetMask("Enemy");
         groundLayer = LayerMask.GetMask("Ground");
     }
 
-    IEnumerator CompleteCharge()
-    {
+    IEnumerator CompleteCharge() {
         yield return new WaitForSeconds(chargeTime);
 
         isCharged = isCharging;
     }
 
-    public void ChargeHammer()
-    {
+    public void ChargeHammer() {
         isCharging = true;
         storedCoroutine = StartCoroutine(CompleteCharge());
         timer = 0;
@@ -57,19 +51,14 @@ public class HammerAbility : MonoBehaviour
     }
 
     // Update the charging progress if the charging flag is true
-    private void Update()
-    {
-        if (isCharging)
-        { // Check if the object is currently charging
-            if (timer <= chargeTime)
-            { // Check if the charging time has not exceeded the maximum charge time
+    private void Update() {
+        if (isCharging) { // Check if the object is currently charging
+            if (timer <= chargeTime) { // Check if the charging time has not exceeded the maximum charge time
                 // Update the slider value based on the charging progress
                 slider.value = timer / chargeTime;
                 // Increment the timer based on the elapsed time
                 timer += Time.deltaTime;
-            }
-            else
-            {
+            } else {
                 // Set the slider value to maximum
                 slider.value = 1;
                 // Set the handle and background color to green to indicate full charge
@@ -79,10 +68,8 @@ public class HammerAbility : MonoBehaviour
         }
     }
 
-    public void ActivateHammerAbility()
-    {
-        if (isCharged)
-        {
+    public void ActivateHammerAbility() {
+        if (isCharged) {
             // Check if impact area is colliding with either a ground layer or enemy layer
             if (
                 Physics.CheckBox(
@@ -91,8 +78,7 @@ public class HammerAbility : MonoBehaviour
                     Quaternion.identity,
                     enemyLayer
                 )
-            )
-            {
+            ) {
                 // Stop player y velocity whilst keeping the other velocity axes
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
@@ -100,16 +86,14 @@ public class HammerAbility : MonoBehaviour
                     ForceMode.Impulse
                 );
                 isCharged = false;
-            }
-            else if (
-                Physics.CheckBox(
-                    impactArea.transform.position,
-                    impactArea.size * 0.5f,
-                    Quaternion.identity,
-                    groundLayer
-                )
-            )
-            {
+            } else if (
+                  Physics.CheckBox(
+                      impactArea.transform.position,
+                      impactArea.size * 0.5f,
+                      Quaternion.identity,
+                      groundLayer
+                  )
+              ) {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
                     (Vector3.up + orientation.forward * 3f) * hammerForce,
@@ -123,5 +107,12 @@ public class HammerAbility : MonoBehaviour
         isCharging = false;
         slider.gameObject.SetActive(false);
         StopCoroutine(storedCoroutine);
+    }
+
+    public void Reset() {
+        isCharged = false;
+        isCharging = false;
+        if(slider)
+        slider.gameObject.SetActive(false);
     }
 }

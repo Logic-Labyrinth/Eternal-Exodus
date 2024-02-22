@@ -66,24 +66,24 @@ public class WeaponsController : MonoBehaviour {
 
     private void HandleInput() {
         var currentWeapon = weaponObjects[activeWeaponIndex];
-        if (Input.GetAxis("Cycle Weapons") > 0 || Input.GetKeyDown(KeyCode.E)) CycleToNextWeapon();
-        if (Input.GetAxis("Cycle Weapons") < 0 || Input.GetKeyDown(KeyCode.Q)) CycleToPreviousWeapon();
+        if (Input.GetAxis("Cycle Weapons") > 0 || Input.GetButtonDown("Cycle Next Weapon")) CycleToNextWeapon();
+        if (Input.GetAxis("Cycle Weapons") < 0 || Input.GetButtonDown("Cycle Prev Weapon")) CycleToPreviousWeapon();
 
         if (Input.GetButtonDown("Select Weapon 1")) SetActiveWeapon(0);
         if (Input.GetButtonDown("Select Weapon 2")) SetActiveWeapon(1);
         if (Input.GetButtonDown("Select Weapon 3")) SetActiveWeapon(2);
 
-        if (Input.GetButtonDown("Basic Attack"))
+        if (Input.GetButtonDown("Basic Attack") || GetTriggerDown(false))
             currentWeapon.weapon.BasicAttack(playerReference);
 
-        if (Input.GetButtonDown("Special Attack")) {
+        if (Input.GetButtonDown("Special Attack") || GetTriggerDown(true)) {
             if (!weaponObjects[activeWeaponIndex].canUseSpecialAttack) return;
             weaponObjects[activeWeaponIndex].PutOnCD();
             weaponObjects[activeWeaponIndex].weapon.SpecialAttack(playerReference);
             StartCoroutine(ResetSpecialAbility(activeWeaponIndex));
         }
 
-        if (Input.GetButtonUp("Special Attack")) {
+        if (Input.GetButtonUp("Special Attack") || GetTriggerUp(true)) {
             weaponObjects[activeWeaponIndex].weapon.SpecialRelease(playerReference);
         }
     }
@@ -99,6 +99,7 @@ public class WeaponsController : MonoBehaviour {
     private void CycleToNextWeapon() {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(false);
+        currentWeapon.weapon.Reset();
         activeWeaponIndex = (activeWeaponIndex + 1) % weapons.Count;
         currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(true);
@@ -107,6 +108,7 @@ public class WeaponsController : MonoBehaviour {
     private void CycleToPreviousWeapon() {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(false);
+        currentWeapon.weapon.Reset();
         activeWeaponIndex = (activeWeaponIndex - 1 + weapons.Count) % weapons.Count;
         currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(true);
@@ -115,7 +117,44 @@ public class WeaponsController : MonoBehaviour {
     IEnumerator ResetSpecialAbility(int weaponIndex) {
         int index = weaponIndex;
         yield return new WaitForSeconds(weaponObjects[index].cooldown);
-        Debug.Log("Reset Special Ability");
         weaponObjects[index].PutOffCD();
+    }
+
+    bool isLeftTriggerDown = false;
+    bool isRightTriggerDown = false;
+    bool GetTriggerDown(bool left) {
+        if (left) {
+            float value = Input.GetAxisRaw("Special Attack Controller");
+            if (!isLeftTriggerDown && value > 0) {
+                isLeftTriggerDown = true;
+                return true;
+            }
+            return false;
+        } else {
+            float value = Input.GetAxisRaw("Basic Attack Controller");
+            if (!isRightTriggerDown && value > 0) {
+                isRightTriggerDown = true;
+                return true;
+            }
+            return false;
+        }
+    }
+
+    bool GetTriggerUp(bool left) {
+        if (left) {
+            float value = Input.GetAxisRaw("Special Attack Controller");
+            if (isLeftTriggerDown && value == 0) {
+                isLeftTriggerDown = false;
+                return true;
+            }
+            return false;
+        } else {
+            float value = Input.GetAxisRaw("Basic Attack Controller");
+            if (isRightTriggerDown && value == 0) {
+                isRightTriggerDown = false;
+                return true;
+            }
+            return false;
+        }
     }
 }

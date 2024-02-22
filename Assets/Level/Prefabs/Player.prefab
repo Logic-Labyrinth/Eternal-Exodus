@@ -83,13 +83,13 @@ MonoBehaviour:
   walkSpeed: 15
   sprintSpeed: 15
   slideSpeed: 30
-  speedIncreaseMultiplier: 5
+  speedIncreaseMultiplier: 10
   slopeIncreaseMultiplier: 2.5
-  groundDrag: 4
+  groundDrag: 7
   jumpForce: 20
   jumpCooldown: 0.25
   airMultiplier: 0.4
-  crouchSpeed: 3.5
+  crouchSpeed: 7
   crouchYScale: 0.5
   groundMask:
     serializedVersion: 2
@@ -116,8 +116,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orientation: {fileID: 8116624518591215350}
-  dashForce: 100
-  dashDuration: 0.5
+  cam: {fileID: 5930028184045412752}
+  dashForce: 50
+  dashDuration: 0.25
+  dashFOV: 75
+  dashLowerLimit: -90
+  dashUpperLimit: 90
   dashCooldown: 1
 --- !u!114 &655155484836370427
 MonoBehaviour:
@@ -133,8 +137,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 8116624518591215350}
   playerObj: {fileID: 3860829231055732677}
+  cam: {fileID: 5930028184045412752}
   slideForce: 200
   slideYScale: 0.5
+  slideFOV: 75
+--- !u!65 &6934077616723515495
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39063422859432571}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.1536255, y: 4.1461663, z: 4.011572}
+  m_Center: {x: 0.008179702, y: -0.4950049, z: 1.0714762}
 --- !u!114 &6477248989041040824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,7 +531,7 @@ RectTransform:
   m_Father: {fileID: 1914659741706598420}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.514, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -719,8 +746,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2636296512408233499}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.514, y: 0}
-  m_AnchorMax: {x: 0.514, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -917,7 +944,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Build: 2.0'
+  m_text: 'Build: 2.1
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1063,7 +1092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
