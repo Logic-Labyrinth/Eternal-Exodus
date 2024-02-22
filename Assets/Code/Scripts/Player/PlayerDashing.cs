@@ -42,6 +42,7 @@ public class PlayerDashing : MonoBehaviour {
         rb.useGravity = false;
         pm.dashing = true;
         Invoke(nameof(ResetDash), dashDuration);
+        StartCoroutine(LerpFOV(dashFOV, 0.1f));
     }
 
     void DashingMovement() {
@@ -50,7 +51,6 @@ public class PlayerDashing : MonoBehaviour {
         float Y = Map(cam.transform.forward.y, -1, 1, dashLowerLimit / 90, dashUpperLimit / 90);
         Vector3 direction = new(cam.transform.forward.x, Y, cam.transform.forward.z);
         rb.AddForce(direction * dashForce, ForceMode.Impulse);
-        StartCoroutine(LerpFOV(dashFOV, 0.1f));
     }
 
     void DelayedDashForce() {
