@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7008466091617601656}
   - component: {fileID: 1619070431646823693}
   - component: {fileID: 655155484836370427}
-  - component: {fileID: 6934077616723515495}
   - component: {fileID: 6477248989041040824}
   - component: {fileID: 942469302357330022}
   - component: {fileID: 4234434347396099140}
@@ -194,7 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chargeTime: 0.5
-  impactArea: {fileID: 6934077616723515495}
+  impactArea: {fileID: 5616751054639681098}
   hammerForce: 25
   enemyBounceMultiplier: 2
   slider: {fileID: 4271470963855138554}
@@ -621,6 +620,7 @@ GameObject:
   - component: {fileID: 8780180770392928806}
   - component: {fileID: 492988303631804462}
   - component: {fileID: 4517488733264896163}
+  - component: {fileID: 5616751054639681098}
   m_Layer: 0
   m_Name: Temp Hand
   m_TagString: Untagged
@@ -693,6 +693,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5616751054639681098
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490751541575942790}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10.153625, y: 20.146166, z: 20.011572}
+  m_Center: {x: 0.008179702, y: -0.4950049, z: 1.0714762}
 --- !u!1 &5025175263844372276
 GameObject:
   m_ObjectHideFlags: 0
