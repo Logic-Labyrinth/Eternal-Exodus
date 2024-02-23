@@ -6,13 +6,11 @@ public class Hammer : Weapon {
     private bool isCharging = false;
     private bool isCharged = false;
 
-    public override void BasicAttack(GameObject player) {
-        if (hammer == null) {
-            hammer = player.GetComponent<HammerAbility>();
-        }
+    public override void BasicAttack(GameObject player, HealthSystem healthSystem) {
+        healthSystem.TakeDamage(baseDamage, WeaponDamageType.HAMMER);
     }
 
-    public override void SpecialAttack(GameObject player) {
+    public override void SpecialAttack(GameObject player, HealthSystem healthSystem) {
         if (hammer == null) {
             hammer = player.GetComponent<HammerAbility>();
         }
@@ -20,7 +18,7 @@ public class Hammer : Weapon {
         hammer.ChargeHammer();
     }
 
-    public override void SpecialRelease(GameObject player) {
+    public override void SpecialRelease(GameObject player, HealthSystem healthSystem) {
         if (hammer == null) {
             hammer = player.GetComponent<HammerAbility>();
         }

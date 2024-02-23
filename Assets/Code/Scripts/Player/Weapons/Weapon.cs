@@ -16,6 +16,14 @@ public class Weapon : ScriptableObject {
     public int baseDamage;
 
     [VerticalGroup("Weapon Stats")]
+    [TableColumnWidth(70)]
+    [ProgressBar(0.1, 10)]
+    [LabelText("Range")]
+    [PropertyTooltip("Attack Range")]
+    [DisableIf("isLocked")]
+    public float attackRange;
+
+    [VerticalGroup("Weapon Stats")]
     [ProgressBar(1f, 10f)]
     [LabelText("S. Multiplier")]
     [PropertyTooltip("Speed Damage Multiplier")]
@@ -65,15 +73,15 @@ public class Weapon : ScriptableObject {
         return isLocked;
     }
 
-    public virtual void BasicAttack(GameObject player) {
+    public virtual void BasicAttack(GameObject player, HealthSystem healthSystem) {
         // Basic attack logic
     }
 
-    public virtual void SpecialAttack(GameObject player) {
+    public virtual void SpecialAttack(GameObject player, HealthSystem healthSystem) {
         // Special attack logic
     }
 
-    public virtual void SpecialRelease(GameObject player) {
+    public virtual void SpecialRelease(GameObject player, HealthSystem healthSystem) {
         // Special attack release logic
     }
 
