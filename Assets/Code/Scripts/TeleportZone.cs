@@ -9,7 +9,6 @@ public class TeleportZone : MonoBehaviour {
     }
 
     private void OnTriggerExit(Collider other) {
-        Debug.Log("Teleporting");
         if(other.gameObject.CompareTag("Player")) {
             player.transform.position = startingPosition;
             player.GetComponent<Rigidbody>().velocity = Vector3.zero;

@@ -17,8 +17,8 @@ public class PlayerCamera : MonoBehaviour {
   }
 
   private void Update() {
-    float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivityX;
-    float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivityY;
+    float mouseX = (Input.GetAxisRaw("Mouse X") + Input.GetAxisRaw("Controller X")) * Time.deltaTime * sensitivityX;
+    float mouseY = (Input.GetAxisRaw("Mouse Y") + Input.GetAxisRaw("Controller Y")) * Time.deltaTime * sensitivityY;
 
     rotationY += mouseX;
     rotationX -= mouseY;

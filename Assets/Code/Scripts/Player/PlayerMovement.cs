@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour {
 
   [Header("Ground Check")]
   [SerializeField] LayerMask groundMask;
-  float playerHeight = 2f;
+  readonly float playerHeight = 2f;
   bool isGrounded;
 
   [Header("Slope Handling")]
@@ -96,10 +96,10 @@ public class PlayerMovement : MonoBehaviour {
   }
 
   private void MyInput() {
-    horizontalInput = Input.GetAxisRaw("Horizontal");
-    verticalInput = Input.GetAxisRaw("Vertical");
+    horizontalInput = Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Horizontal Controller");
+    verticalInput = Input.GetAxisRaw("Vertical") + Input.GetAxisRaw("Vertical Controller");
 
-    if (Input.GetKey(KeyCode.Space) && canJump && isGrounded) {
+    if (Input.GetButton("Jump") && canJump && isGrounded) {
       canJump = false;
       Jump();
       Invoke(nameof(ResetJump), jumpCooldown);
@@ -109,14 +109,12 @@ public class PlayerMovement : MonoBehaviour {
   }
 
   public void StartCrouch() {
-    Debug.Log("Starting crouch");
     crouching = true;
     playerObj.localScale = new Vector3(playerObj.localScale.x, crouchYScale, playerObj.localScale.z);
     rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
   }
 
   void StopCrouch() {
-    Debug.Log("Stopping crouch");
     if (!crouching) return;
 
     playerObj.localScale = new Vector3(playerObj.localScale.x, 1, playerObj.localScale.z);
@@ -149,7 +147,7 @@ public class PlayerMovement : MonoBehaviour {
       state = MovementState.Crouch;
       desiredMoveSpeed = crouchSpeed;
 
-    } else if (isGrounded && Input.GetKey(KeyCode.LeftShift)) {
+    } else if (isGrounded && Input.GetButton("Crouch")) {
       state = MovementState.Sprint;
       desiredMoveSpeed = sprintSpeed;
 
@@ -174,12 +172,6 @@ public class PlayerMovement : MonoBehaviour {
         moveSpeed = desiredMoveSpeed;
       }
     }
-
-    // check if desired move speed has changed drastically
-    // if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0) {
-    //   StopAllCoroutines();
-    //   StartCoroutine(SmoothlyLerpMoveSpeed());
-    // } else moveSpeed = desiredMoveSpeed;
 
     lastDesiredMoveSpeed = desiredMoveSpeed;
     lastState = state;
