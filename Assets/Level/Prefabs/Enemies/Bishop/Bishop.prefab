@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 5577581915225375562}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -359,7 +359,7 @@ GameObject:
   m_Layer: 0
   m_Name: Bishop
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -395,8 +395,8 @@ MonoBehaviour:
   maxHealth: 100
   weaknessFactor: 50
   resistanceFactor: 50
-  weakness: 0
-  resistance: 1
+  weakness: 1
+  resistance: 2
   hasShield: 0
   healthText: {fileID: 1332135766407863261}
   shieldedText: {fileID: 1364371657596794928}

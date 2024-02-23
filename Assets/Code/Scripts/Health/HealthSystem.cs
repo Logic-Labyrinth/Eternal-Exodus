@@ -9,7 +9,7 @@ public enum WeaponDamageType {
 }
 
 public class HealthSystem : MonoBehaviour {
-    [SerializeField] int maxHealth  = 100;
+    [SerializeField] int maxHealth = 100;
     [SerializeField, Range(0, 100)] int weaknessFactor = 50;
     [SerializeField, Range(0, 100)] int resistanceFactor = 50;
     [SerializeField] WeaponDamageType weakness;
@@ -24,9 +24,13 @@ public class HealthSystem : MonoBehaviour {
     public int GetMaxHealth() { return maxHealth; }
     public bool HasShield() { return hasShield; }
 
-    private void Update() {
+    void Start() {
+        currentHealth = maxHealth;
+    }
+
+    void Update() {
         healthText.text = currentHealth.ToString();
-        if(hasShield) {
+        if (hasShield) {
             shieldedText.text = "Shielded";
             shieldedText.color = Color.blue;
         } else {
@@ -36,18 +40,20 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void TakeDamage(int damage, WeaponDamageType damageType) {
-        if(hasShield) {
+        Debug.Log("Damage: " + damage + " Type: " + damageType);
+        if (hasShield) {
             BreakShield();
             return;
         }
 
         int dam = damage;
         if (damageType == weakness) {
-            dam *= weaknessFactor / 100;
+            dam += (int)Math.Floor(dam * weaknessFactor / 100.0f);
         } else if (damageType == resistance) {
-            dam /= resistanceFactor / 100;
+            dam -= (int)Math.Floor(dam * resistanceFactor / 100.0f);
         }
 
+        Debug.Log("Dam: " + dam);
         currentHealth -= dam;
         if (currentHealth <= 0) Kill();
     }
@@ -69,11 +75,11 @@ public class HealthSystem : MonoBehaviour {
         Debug.Log("Overheal: " + overheal);
     }
 
-    public void Shield(){
+    public void Shield() {
         hasShield = true;
     }
 
-    void BreakShield(){
+    void BreakShield() {
         // Stuff for breaking the shield
         hasShield = false;
     }
