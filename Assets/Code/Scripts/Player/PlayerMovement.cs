@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour {
 
   [Header("Ground Check")]
   [SerializeField] LayerMask groundMask;
-  float playerHeight = 2f;
+  readonly float playerHeight = 2f;
   bool isGrounded;
 
   [Header("Slope Handling")]

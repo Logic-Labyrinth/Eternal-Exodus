@@ -37,6 +37,8 @@ public class WeaponsController : MonoBehaviour {
     private List<WeaponObject> weaponObjects;
     [SerializeField]
     private GameObject playerReference;
+    [SerializeField]
+    private Camera cameraReference;
 
     /// <summary>
     /// Instantiates weapons and sets the active weapon
@@ -73,18 +75,22 @@ public class WeaponsController : MonoBehaviour {
         if (Input.GetButtonDown("Select Weapon 2")) SetActiveWeapon(1);
         if (Input.GetButtonDown("Select Weapon 3")) SetActiveWeapon(2);
 
-        if (Input.GetButtonDown("Basic Attack") || GetTriggerDown(false))
-            currentWeapon.weapon.BasicAttack(playerReference);
+        if (Input.GetButtonDown("Basic Attack") || GetTriggerDown(false)) {
+            if (Physics.Raycast(cameraReference.transform.position, cameraReference.transform.forward, out RaycastHit hit, currentWeapon.weapon.attackRange)) {
+                if (!hit.collider.CompareTag("Enemy")) return;
+                currentWeapon.weapon.BasicAttack(playerReference, hit.collider.transform.parent.GetComponent<HealthSystem>());
+            }
+        }
 
         if (Input.GetButtonDown("Special Attack") || GetTriggerDown(true)) {
-            if (!weaponObjects[activeWeaponIndex].canUseSpecialAttack) return;
-            weaponObjects[activeWeaponIndex].PutOnCD();
-            weaponObjects[activeWeaponIndex].weapon.SpecialAttack(playerReference);
+            if (!currentWeapon.canUseSpecialAttack) return;
+            currentWeapon.PutOnCD();            
+            currentWeapon.weapon.SpecialAttack(playerReference, null);
             StartCoroutine(ResetSpecialAbility(activeWeaponIndex));
         }
 
         if (Input.GetButtonUp("Special Attack") || GetTriggerUp(true)) {
-            weaponObjects[activeWeaponIndex].weapon.SpecialRelease(playerReference);
+            currentWeapon.weapon.SpecialRelease(playerReference, null);
         }
     }
 
