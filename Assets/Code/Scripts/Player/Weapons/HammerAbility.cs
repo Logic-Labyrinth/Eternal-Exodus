@@ -79,6 +79,7 @@ public class HammerAbility : MonoBehaviour {
                     enemyLayer
                 )
             ) {
+                Debug.Log("Enemy Hit");
                 // Stop player y velocity whilst keeping the other velocity axes
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
@@ -94,6 +95,7 @@ public class HammerAbility : MonoBehaviour {
                       groundLayer
                   )
               ) {
+                Debug.Log("Ground Hit");
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
                     (Vector3.up + orientation.forward * 3f) * hammerForce,
