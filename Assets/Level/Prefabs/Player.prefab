@@ -118,9 +118,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 8116624518591215350}
   cam: {fileID: 5930028184045412752}
-  dashForce: 50
-  dashDuration: 0.25
-  dashFOV: 75
+  dashForce: 40
+  dashDuration: 0.18
+  dashFOV: 68
   dashLowerLimit: -90
   dashUpperLimit: 90
   dashCooldown: 1
@@ -925,7 +925,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Build: 2.2
+  m_text: 'Build: 4.0
 
 '
   m_isRightToLeft: 0
@@ -1283,7 +1283,7 @@ GameObject:
   - component: {fileID: 6839953159645278597}
   m_Layer: 0
   m_Name: Player Obj
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
