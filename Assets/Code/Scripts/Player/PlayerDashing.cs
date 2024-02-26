@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ public class PlayerDashing : MonoBehaviour {
     [SerializeField, Range(0, -90)] int dashLowerLimit;
     [SerializeField, Range(0, 90)] int dashUpperLimit;
     float originalFOV;
+    Vector3 dashDirection;
 
     [Header("Cooldown")]
     [SerializeField] float dashCooldown;
@@ -41,16 +43,20 @@ public class PlayerDashing : MonoBehaviour {
 
         rb.useGravity = false;
         pm.dashing = true;
+
+        float camAngle = cam.transform.localEulerAngles.x;
+        float XAngle = camAngle >= 0 && camAngle <= 90 ? -camAngle : (camAngle <= 360 ? 360 - camAngle : 0);
+        float Y = Map(XAngle, -89, 89, dashLowerLimit, dashUpperLimit);
+        dashDirection = Quaternion.AngleAxis(Y, cam.transform.right) * cam.transform.forward;
+
         Invoke(nameof(ResetDash), dashDuration);
         StartCoroutine(LerpFOV(dashFOV, 0.1f));
     }
 
     void DashingMovement() {
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        
-        float Y = Map(cam.transform.forward.y, -1, 1, dashLowerLimit / 90, dashUpperLimit / 90);
-        Vector3 direction = new(cam.transform.forward.x, Y, cam.transform.forward.z);
-        rb.AddForce(direction * dashForce, ForceMode.Impulse);
+        // Vector3 direction = new(cam.transform.forward.x, Y, cam.transform.forward.z);
+        rb.AddForce(dashDirection * dashForce, ForceMode.Impulse);
     }
 
     void DelayedDashForce() {
