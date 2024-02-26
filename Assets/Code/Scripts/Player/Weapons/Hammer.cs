@@ -27,6 +27,7 @@ public class Hammer : Weapon {
     }
 
     public override void Reset() {
+        if(hammer == null) return;
         hammer.Reset();
     }
 }
