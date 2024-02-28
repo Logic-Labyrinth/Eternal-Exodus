@@ -92,7 +92,13 @@ namespace Exodus.ProceduralTools
         [TabGroup("Level Settings")]
         [PropertySpace]
         [Button(ButtonSizes.Large, ButtonAlignment = 1f)]
-        public void GenerateLevel()
+        public void GenerateNewLevel()
+        {
+            StopAllCoroutines();
+            StartCoroutine(GenerateLevel());
+        }
+
+        public IEnumerator GenerateLevel()
         {
             // If the seed is not initialized, initialize the level
             if (!isSeedInitialised)
@@ -131,7 +137,10 @@ namespace Exodus.ProceduralTools
                         PlaceBlock(x, y, selectedBlock, random, levelParent);
                         // Mark the grid as occupied by the block
                         MarkGrid(x, y, blockDimension, ref levelGrid);
+
+                        yield return new WaitForSeconds(0.05f);
                     }
+
                 }
             }
 
@@ -151,7 +160,10 @@ namespace Exodus.ProceduralTools
                         PlaceBlock(x, y, smallBlock, random, levelParent);
                         // Mark the grid as occupied by the small block
                         MarkGrid(x, y, new Vector2Int(1, 1), ref levelGrid);
+
+                        yield return new WaitForSeconds(0.05f);
                     }
+
                 }
             }
         }
