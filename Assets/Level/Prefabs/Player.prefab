@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chargeTime: 0.5
-  impactArea: {fileID: 2408739476293940219}
+  impactArea: {fileID: 6113852916091723159}
   hammerForce: 25
   enemyBounceMultiplier: 2
   slider: {fileID: 4271470963855138554}
@@ -647,7 +647,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 985165226464664740}
-  - component: {fileID: 2408739476293940219}
   m_Layer: 0
   m_Name: Anim_Spear_Dash
   m_TagString: Untagged
@@ -672,27 +671,6 @@ Transform:
   - {fileID: 3438990848507752114}
   m_Father: {fileID: 1530868618163750386}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!65 &2408739476293940219
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 629440522504557029}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.94102365, y: 0.85899794, z: 1.4025284}
-  m_Center: {x: -0.029494144, y: -0.14101799, z: -0.56248194}
 --- !u!1 &639106272221158557
 GameObject:
   m_ObjectHideFlags: 0
@@ -8755,6 +8733,7 @@ GameObject:
   - component: {fileID: 3316122808550969390}
   - component: {fileID: 326464032799270572}
   - component: {fileID: 3531472167803244246}
+  - component: {fileID: 6113852916091723159}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -8909,6 +8888,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trans: {fileID: 2341739296048381292}
+--- !u!65 &6113852916091723159
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066305198477131074}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 72
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0752535, y: 1.705588, z: 2.953204}
+  m_Center: {x: -0.000000025154137, y: -0.25849092, z: 1.145945}
 --- !u!1 &8083076045653560582
 GameObject:
   m_ObjectHideFlags: 0
