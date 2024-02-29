@@ -65,7 +65,7 @@ namespace Exodus.ProceduralTools
         // Update is called once per frame
         void Update() { }
 
-        void InitializeLevel()
+        public void InitializeLevel()
         {
             if (useRandomSeed)
             {
@@ -92,7 +92,7 @@ namespace Exodus.ProceduralTools
         [TabGroup("Level Settings")]
         [PropertySpace]
         [Button(ButtonSizes.Large, ButtonAlignment = 1f)]
-        void GenerateLevel()
+        public void GenerateLevel()
         {
             // If the seed is not initialized, initialize the level
             if (!isSeedInitialised)
@@ -310,7 +310,7 @@ namespace Exodus.ProceduralTools
         [TabGroup("Level Settings")]
         [PropertySpace]
         [Button(ButtonSizes.Large, ButtonAlignment = 1f)]
-        void ClearLevel()
+        public void ClearLevel()
         {
             for (int i = transform.childCount - 1; i >= 0; i--)
             {

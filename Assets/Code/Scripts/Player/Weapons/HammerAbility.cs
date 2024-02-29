@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,9 +39,11 @@ public class HammerAbility : MonoBehaviour {
         yield return new WaitForSeconds(chargeTime);
 
         isCharged = isCharging;
+        Debug.Log($"Hammer Charged: {isCharged}");
     }
 
     public void ChargeHammer() {
+        Debug.Log("Charging Hammer");
         isCharging = true;
         storedCoroutine = StartCoroutine(CompleteCharge());
         timer = 0;
@@ -69,12 +72,14 @@ public class HammerAbility : MonoBehaviour {
     }
 
     public void ActivateHammerAbility() {
+        Debug.Log(impactArea.size * 0.5f);
         if (isCharged) {
+            Debug.Log("BOOP");
             // Check if impact area is colliding with either a ground layer or enemy layer
             if (
                 Physics.CheckBox(
                     impactArea.transform.position,
-                    impactArea.size * 0.5f,
+                    impactArea.size * 0.5f * impactArea.transform.localScale.x,
                     Quaternion.identity,
                     enemyLayer
                 )
@@ -85,21 +90,20 @@ public class HammerAbility : MonoBehaviour {
                     (Vector3.up + 3f * enemyBounceMultiplier * orientation.forward) * hammerForce,
                     ForceMode.Impulse
                 );
-                isCharged = false;
             } else if (
                   Physics.CheckBox(
                       impactArea.transform.position,
-                      impactArea.size * 0.5f,
+                      impactArea.size * 0.5f * impactArea.transform.localScale.x,
                       Quaternion.identity,
                       groundLayer
                   )
               ) {
+                Debug.Log("Ground Hit");
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
                     (Vector3.up + orientation.forward * 3f) * hammerForce,
                     ForceMode.Impulse
                 );
-                isCharged = false;
             }
         }
 
@@ -112,7 +116,6 @@ public class HammerAbility : MonoBehaviour {
     public void Reset() {
         isCharged = false;
         isCharging = false;
-        if(slider)
-        slider.gameObject.SetActive(false);
+        if (slider) slider.gameObject.SetActive(false);
     }
 }
