@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,9 +39,11 @@ public class HammerAbility : MonoBehaviour {
         yield return new WaitForSeconds(chargeTime);
 
         isCharged = isCharging;
+        Debug.Log($"Hammer Charged: {isCharged}");
     }
 
     public void ChargeHammer() {
+        Debug.Log("Charging Hammer");
         isCharging = true;
         storedCoroutine = StartCoroutine(CompleteCharge());
         timer = 0;
@@ -70,6 +73,7 @@ public class HammerAbility : MonoBehaviour {
 
     public void ActivateHammerAbility() {
         if (isCharged) {
+            Debug.Log("BOOP");
             // Check if impact area is colliding with either a ground layer or enemy layer
             if (
                 Physics.CheckBox(
@@ -114,7 +118,7 @@ public class HammerAbility : MonoBehaviour {
     public void Reset() {
         isCharged = false;
         isCharging = false;
-        if(slider)
-        slider.gameObject.SetActive(false);
+        if (slider)
+            slider.gameObject.SetActive(false);
     }
 }
