@@ -84,7 +84,7 @@ public class WeaponsController : MonoBehaviour {
 
         if (Input.GetButtonDown("Special Attack") || GetTriggerDown(true)) {
             if (!currentWeapon.canUseSpecialAttack) return;
-            currentWeapon.PutOnCD();            
+            currentWeapon.PutOnCD();
             currentWeapon.weapon.SpecialAttack(playerReference, null);
             StartCoroutine(ResetSpecialAbility(activeWeaponIndex));
         }
