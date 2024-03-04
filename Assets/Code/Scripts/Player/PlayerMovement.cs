@@ -60,9 +60,11 @@ public class PlayerMovement : MonoBehaviour {
   public bool wantsToUncrouch;
   bool keepMomentum;
 
+  [Header("VFX")]
   bool lastFrameGrounded;
   float lastFrameVerticalVelocity;
   [SerializeField] GameObject landingVFXPrefab;
+  [SerializeField] SpeedLinesVFX speedLinesVFX;
 
   void OnGUI() {
     // GUILayout.TextArea($"State: {state}");
@@ -89,6 +91,7 @@ public class PlayerMovement : MonoBehaviour {
 
   private void Update() {
     MyInput();
+    speedLinesVFX.SetSpeed(rb.velocity.magnitude);
   }
 
   private void FixedUpdate() {

@@ -137,6 +137,7 @@ MonoBehaviour:
   wantsToUncrouch: 0
   landingVFXPrefab: {fileID: 3699252618953430724, guid: 7c0fc954840298a45a79bad9589ee852,
     type: 3}
+  speedLinesVFX: {fileID: 7204468019249344231}
 --- !u!114 &1619070431646823693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9690,6 +9691,7 @@ GameObject:
   - component: {fileID: 6773958494306382054}
   - component: {fileID: 3916118678473276213}
   - component: {fileID: 6413581565144616373}
+  - component: {fileID: 7204468019249344231}
   m_Layer: 0
   m_Name: VG_SpeedLines
   m_TagString: Untagged
@@ -9790,6 +9792,21 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &7204468019249344231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9057717827179401639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ead5f86b79d33c41951abefed672cd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vfx: {fileID: 0}
+  threshold: 5
+  speed: 0
 --- !u!1 &9079486300017087800
 GameObject:
   m_ObjectHideFlags: 0
