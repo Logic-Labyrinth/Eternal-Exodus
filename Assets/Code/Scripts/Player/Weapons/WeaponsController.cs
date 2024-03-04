@@ -67,7 +67,7 @@ public class WeaponsController : MonoBehaviour {
       if (Physics.Raycast(cameraReference.transform.position, cameraReference.transform.forward, out RaycastHit hit, currentWeapon.weapon.attackRange)) {
         if (!hit.collider.CompareTag("Enemy")) return;
 
-        Instantiate(hitVFXPrefab, hit.point, Quaternion.identity).GetComponent<HitVFX>().Play();
+        Instantiate(hitVFXPrefab, hit.point, Quaternion.identity).GetComponent<HitVFX>().Play(1f);//todo
         currentWeapon.weapon.BasicAttack(playerReference, hit.collider.transform.parent.GetComponent<HealthSystem>());
       }
     }
