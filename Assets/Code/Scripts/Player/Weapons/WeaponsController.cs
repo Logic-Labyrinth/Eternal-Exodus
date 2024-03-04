@@ -27,46 +27,34 @@ class WeaponObject {
 }
 
 public class WeaponsController : MonoBehaviour {
-    private int activeWeaponIndex;
-    [SerializeField]
-    private GameObject hand;
+    int activeWeaponIndex;
+    [SerializeField] GameObject hand;
 
-    [TableList(AlwaysExpanded = true)]
-    public List<Weapon> weapons;
-    [SerializeField]
-    private List<WeaponObject> weaponObjects;
-    [SerializeField]
-    private GameObject playerReference;
-    [SerializeField]
-    private Camera cameraReference;
+    [TableList(AlwaysExpanded = true)] public List<Weapon> weapons;
+    [SerializeField] List<WeaponObject> weaponObjects;
+    [SerializeField] GameObject playerReference;
+    [SerializeField] Camera cameraReference;
+    [SerializeField] GameObject hitVFXPrefab;
 
-    /// <summary>
-    /// Instantiates weapons and sets the active weapon
-    /// </summary>
-    private void Start() {
+    void Start() {
         activeWeaponIndex = 0;
         weaponObjects = new List<WeaponObject>();
-        // Loop through each weapon to create game objects
         for (int i = 0; i < weapons.Count; i++) {
             var weapon = weapons[i];
-            // Create game object
             GameObject weaponObject = Instantiate(weapon.weaponObject);
-            // Set parent
             weaponObject.transform.SetParent(hand.transform);
-            // Set position & rotation
             weaponObject.transform.SetLocalPositionAndRotation(weapon.localPosition, weapon.localRotation);
-            // Add to weapon objects list
             weaponObjects.Add(new WeaponObject(weaponObject, weapon));
         }
 
         weaponObjects[activeWeaponIndex].weaponObj.SetActive(true);
     }
 
-    private void Update() {
+    void Update() {
         HandleInput();
     }
 
-    private void HandleInput() {
+    void HandleInput() {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         if (Input.GetAxis("Cycle Weapons") > 0 || Input.GetButtonDown("Cycle Next Weapon")) CycleToNextWeapon();
         if (Input.GetAxis("Cycle Weapons") < 0 || Input.GetButtonDown("Cycle Prev Weapon")) CycleToPreviousWeapon();
@@ -78,6 +66,7 @@ public class WeaponsController : MonoBehaviour {
         if (Input.GetButtonDown("Basic Attack") || GetTriggerDown(false)) {
             if (Physics.Raycast(cameraReference.transform.position, cameraReference.transform.forward, out RaycastHit hit, currentWeapon.weapon.attackRange)) {
                 if (!hit.collider.CompareTag("Enemy")) return;
+
                 currentWeapon.weapon.BasicAttack(playerReference, hit.collider.transform.parent.GetComponent<HealthSystem>());
             }
         }
@@ -94,7 +83,7 @@ public class WeaponsController : MonoBehaviour {
         }
     }
 
-    private void SetActiveWeapon(int index) {
+    void SetActiveWeapon(int index) {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(false);
         activeWeaponIndex = index;
@@ -102,7 +91,7 @@ public class WeaponsController : MonoBehaviour {
         currentWeapon.weaponObj.SetActive(true);
     }
 
-    private void CycleToNextWeapon() {
+    void CycleToNextWeapon() {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(false);
         currentWeapon.weapon.Reset();
@@ -111,7 +100,7 @@ public class WeaponsController : MonoBehaviour {
         currentWeapon.weaponObj.SetActive(true);
     }
 
-    private void CycleToPreviousWeapon() {
+    void CycleToPreviousWeapon() {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(false);
         currentWeapon.weapon.Reset();
