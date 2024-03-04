@@ -7,7 +7,6 @@ public class LandingVFX : MonoBehaviour {
   [SerializeField, Range(0, 50)] int threshold = 5;
 
   public void Play(float intensity) {
-    Debug.Log("VFX: " + intensity);
     if (intensity < threshold) { Stop(); return; }
 
     gameObject.transform.localScale = intensity / threshold * Vector3.one;
