@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,17 +31,19 @@ public class HammerAbility : MonoBehaviour {
     void Start() {
         rb = transform.GetComponent<Rigidbody>();
         orientation = transform.Find("Orientation");
-        enemyLayer = LayerMask.GetMask("Enemy");
-        groundLayer = LayerMask.GetMask("Ground");
+        enemyLayer = LayerMask.NameToLayer("Enemy");
+        groundLayer = LayerMask.NameToLayer("Ground");
     }
 
     IEnumerator CompleteCharge() {
         yield return new WaitForSeconds(chargeTime);
 
         isCharged = isCharging;
+        // Debug.Log($"Hammer Charged: {isCharged}");
     }
 
     public void ChargeHammer() {
+        // Debug.Log("Charging Hammer");
         isCharging = true;
         storedCoroutine = StartCoroutine(CompleteCharge());
         timer = 0;
@@ -85,7 +88,6 @@ public class HammerAbility : MonoBehaviour {
                     (Vector3.up + 3f * enemyBounceMultiplier * orientation.forward) * hammerForce,
                     ForceMode.Impulse
                 );
-                isCharged = false;
             } else if (
                   Physics.CheckBox(
                       impactArea.transform.position,
@@ -94,12 +96,12 @@ public class HammerAbility : MonoBehaviour {
                       groundLayer
                   )
               ) {
+                Debug.Log("Ground Hit");
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
                     (Vector3.up + orientation.forward * 3f) * hammerForce,
                     ForceMode.Impulse
                 );
-                isCharged = false;
             }
         }
 
@@ -112,6 +114,6 @@ public class HammerAbility : MonoBehaviour {
     public void Reset() {
         isCharged = false;
         isCharging = false;
-        slider.gameObject.SetActive(false);
+        if (slider) slider.gameObject.SetActive(false);
     }
 }

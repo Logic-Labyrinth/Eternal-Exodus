@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PlayerMovement : MonoBehaviour {
   [Header("Movement")]
@@ -26,7 +28,7 @@ public class PlayerMovement : MonoBehaviour {
 
   [Header("Ground Check")]
   [SerializeField] LayerMask groundMask;
-  float playerHeight = 2f;
+  readonly float playerHeight = 2f;
   bool isGrounded;
 
   [Header("Slope Handling")]
@@ -58,16 +60,25 @@ public class PlayerMovement : MonoBehaviour {
   public bool wantsToUncrouch;
   bool keepMomentum;
 
+  [Header("VFX")]
+  bool lastFrameGrounded;
+  float lastFrameVerticalVelocity;
+  [SerializeField] GameObject landingVFXPrefab;
+  [SerializeField] SpeedLinesVFX speedLinesVFX;
+
   void OnGUI() {
-    GUILayout.TextArea($"State: {state}");
-    GUILayout.TextArea($"Grounded: {isGrounded}");
-    GUILayout.TextArea($"Wants to uncrouch: {wantsToUncrouch}");
-    GUILayout.TextArea($"Player height: {playerHeight}");
-    GUILayout.TextArea($"Player scale: {playerObj.localScale}");
-    GUILayout.TextArea($"Ready to jump: {canJump}");
-    GUILayout.TextArea($"Move direction: {moveDirection}");
-    GUILayout.TextArea($"Current speed: {rb.velocity.magnitude}");
-    GUILayout.TextArea($"Desired speed: {desiredMoveSpeed}");
+    // GUILayout.TextArea($"State: {state}");
+    // GUILayout.TextArea($"Grounded: {isGrounded}");
+    // GUILayout.TextArea($"Wants to uncrouch: {wantsToUncrouch}");
+    // GUILayout.TextArea($"Sliding: {sliding}");
+    // GUILayout.TextArea($"Crouching: {crouching}");
+    // GUILayout.TextArea($"Dashing: {dashing}");
+    // GUILayout.TextArea($"Player height: {playerHeight}");
+    // GUILayout.TextArea($"Player scale: {playerObj.localScale}");
+    // GUILayout.TextArea($"Ready to jump: {canJump}");
+    // GUILayout.TextArea($"Move direction: {moveDirection}");
+    // GUILayout.TextArea($"Current speed: {rb.velocity.magnitude}");
+    // GUILayout.TextArea($"Desired speed: {desiredMoveSpeed}");
   }
 
   private void Start() {
@@ -75,31 +86,49 @@ public class PlayerMovement : MonoBehaviour {
     rb.freezeRotation = true;
     startYScale = playerObj.localScale.y;
     wantsToUncrouch = false;
+    lastFrameVerticalVelocity = 0;
   }
 
   private void Update() {
-    // ground check
-    isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.2f, groundMask);
-    Debug.DrawRay(transform.position, Vector3.down * 1.2f, Color.magenta);
-
     MyInput();
+    speedLinesVFX.SetSpeed(rb.velocity.magnitude);
+  }
+
+  private void FixedUpdate() {
+    GroundCheck();
+    MovePlayer();
     SpeedControl();
     StateHandler();
 
-    if(dashing) rb.drag = 0;
+    if (dashing) rb.drag = 0;
     else if (state == MovementState.Walk || state == MovementState.Sprint || state == MovementState.Crouch) rb.drag = groundDrag;
     else rb.drag = 0;
   }
 
-  private void FixedUpdate() {
-    MovePlayer();
+  private void GroundCheck() {
+    isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.2f, groundMask);
+    Debug.DrawRay(transform.position, Vector3.down * 1.2f, Color.magenta);
+
+    if (!lastFrameGrounded && isGrounded) {
+      Landed();
+    }
+
+    lastFrameGrounded = isGrounded;
+    lastFrameVerticalVelocity = rb.velocity.y;
+  }
+
+  private void Landed() {
+    // Debug.Log("Landed " + lastFrameVerticalVelocity);
+
+    LandingVFX landingVFX = Instantiate(landingVFXPrefab, new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z), Quaternion.identity).GetComponent<LandingVFX>();
+    landingVFX.Play(Math.Abs(lastFrameVerticalVelocity));
   }
 
   private void MyInput() {
-    horizontalInput = Input.GetAxisRaw("Horizontal");
-    verticalInput = Input.GetAxisRaw("Vertical");
+    horizontalInput = Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Horizontal Controller");
+    verticalInput = Input.GetAxisRaw("Vertical") + Input.GetAxisRaw("Vertical Controller");
 
-    if (Input.GetKey(KeyCode.Space) && canJump && isGrounded) {
+    if (Input.GetButton("Jump") && canJump && isGrounded) {
       canJump = false;
       Jump();
       Invoke(nameof(ResetJump), jumpCooldown);
@@ -109,14 +138,12 @@ public class PlayerMovement : MonoBehaviour {
   }
 
   public void StartCrouch() {
-    Debug.Log("Starting crouch");
     crouching = true;
     playerObj.localScale = new Vector3(playerObj.localScale.x, crouchYScale, playerObj.localScale.z);
     rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
   }
 
   void StopCrouch() {
-    Debug.Log("Stopping crouch");
     if (!crouching) return;
 
     playerObj.localScale = new Vector3(playerObj.localScale.x, 1, playerObj.localScale.z);
@@ -149,7 +176,7 @@ public class PlayerMovement : MonoBehaviour {
       state = MovementState.Crouch;
       desiredMoveSpeed = crouchSpeed;
 
-    } else if (isGrounded && Input.GetKey(KeyCode.LeftShift)) {
+    } else if (isGrounded && Input.GetButton("Crouch")) {
       state = MovementState.Sprint;
       desiredMoveSpeed = sprintSpeed;
 
@@ -163,7 +190,7 @@ public class PlayerMovement : MonoBehaviour {
       else desiredMoveSpeed = sprintSpeed;
     }
 
-    if (lastState == MovementState.Slide || lastState == MovementState.Walk ) keepMomentum = true;
+    if (lastState == MovementState.Slide || lastState == MovementState.Walk) keepMomentum = true;
     bool speedChanged = desiredMoveSpeed != lastDesiredMoveSpeed;
     if (speedChanged) {
       if (keepMomentum) {
@@ -174,12 +201,6 @@ public class PlayerMovement : MonoBehaviour {
         moveSpeed = desiredMoveSpeed;
       }
     }
-
-    // check if desired move speed has changed drastically
-    // if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0) {
-    //   StopAllCoroutines();
-    //   StartCoroutine(SmoothlyLerpMoveSpeed());
-    // } else moveSpeed = desiredMoveSpeed;
 
     lastDesiredMoveSpeed = desiredMoveSpeed;
     lastState = state;

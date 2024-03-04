@@ -1,15 +1,19 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerSliding : MonoBehaviour {
   [Header("References")]
   public Transform orientation;
   public Transform playerObj;
+  public Camera cam;
   Rigidbody rb;
   PlayerMovement pm;
+  float originalFOV;
 
   [Header("Sliding")]
   [SerializeField] float slideForce = 200f;
   [SerializeField] float slideYScale = 0.5f;
+  [SerializeField] float slideFOV = 75;
   float startYScale;
 
   [Header("Input")]
@@ -21,24 +25,23 @@ public class PlayerSliding : MonoBehaviour {
     pm = GetComponent<PlayerMovement>();
 
     startYScale = playerObj.localScale.y;
+    originalFOV = cam.fieldOfView;
   }
 
   private void Update() {
     horizontalInput = Input.GetAxisRaw("Horizontal");
     verticalInput = Input.GetAxisRaw("Vertical");
 
-    // if (Input.GetKeyDown(KeyCode.LeftControl) && (horizontalInput != 0 || verticalInput != 0))
-    if (Input.GetKeyDown(KeyCode.LeftControl)) {
+    if (Input.GetButtonDown("Crouch")) {
       pm.wantsToUncrouch = false;
       if (rb.velocity.magnitude > pm.crouchSpeed * 1.1f) StartSlide();
       else pm.StartCrouch();
     }
 
-    if (Input.GetKeyUp(KeyCode.LeftControl)) {
+    if (Input.GetButtonUp("Crouch")) {
       if (pm.sliding) StopSlide();
       pm.StartCrouch();
       pm.wantsToUncrouch = true;
-      // if (pm.crouching) pm.wantsToUncrouch = true;
     }
   }
 
@@ -56,10 +59,16 @@ public class PlayerSliding : MonoBehaviour {
   }
 
   private void SlidingMovement() {
+    rb.AddForce(orientation.forward.normalized * 200f, ForceMode.Force);
     Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
     if (!pm.OnSlope() || rb.velocity.y > -0.1f) rb.AddForce(inputDirection.normalized * slideForce, ForceMode.Force);
     else rb.AddForce(pm.GetSlopeMoveDirection(inputDirection) * slideForce, ForceMode.Force);
+
+      if(rb.velocity.magnitude > pm.crouchSpeed){
+      float f = pm.crouchSpeed / rb.velocity.magnitude;
+      cam.fieldOfView = Mathf.Lerp(slideFOV, originalFOV, f);
+    }
 
     if (rb.velocity.magnitude <= pm.crouchSpeed) {
       StopSlide();
@@ -71,5 +80,17 @@ public class PlayerSliding : MonoBehaviour {
   public void StopSlide() {
     pm.sliding = false;
     playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
+  }
+
+  IEnumerator LerpFOV(float targetFOV, float duration) {
+    float t = 0;
+    float startingFOV = cam.fieldOfView;
+
+    while (t < duration) {
+      float fov = Mathf.Lerp(startingFOV, targetFOV, t / duration);
+      cam.fieldOfView = fov;
+      t += Time.deltaTime;
+      yield return null;
+    }
   }
 }
