@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.VFX;
 
 public class PlayerMovement : MonoBehaviour {
   [Header("Movement")]
@@ -64,10 +63,10 @@ public class PlayerMovement : MonoBehaviour {
   bool lastFrameGrounded;
   float lastFrameVerticalVelocity;
   [SerializeField] GameObject landingVFXPrefab;
-  [SerializeField] SpeedLinesVFX speedLinesVFX;
+  [SerializeField] DustTrailVFX dustTrailVFX;
 
   void OnGUI() {
-    // GUILayout.TextArea($"State: {state}");
+    GUILayout.TextArea($"State: {state}");
     // GUILayout.TextArea($"Grounded: {isGrounded}");
     // GUILayout.TextArea($"Wants to uncrouch: {wantsToUncrouch}");
     // GUILayout.TextArea($"Sliding: {sliding}");
@@ -91,7 +90,7 @@ public class PlayerMovement : MonoBehaviour {
 
   private void Update() {
     MyInput();
-    speedLinesVFX.SetSpeed(rb.velocity.magnitude);
+    HandleVFX();
   }
 
   private void FixedUpdate() {
@@ -103,6 +102,11 @@ public class PlayerMovement : MonoBehaviour {
     if (dashing) rb.drag = 0;
     else if (state == MovementState.Walk || state == MovementState.Sprint || state == MovementState.Crouch) rb.drag = groundDrag;
     else rb.drag = 0;
+  }
+
+  void HandleVFX() {
+    dustTrailVFX.SetSpeed(rb.velocity.magnitude);
+    dustTrailVFX.SetCanPlay(isGrounded);
   }
 
   private void GroundCheck() {

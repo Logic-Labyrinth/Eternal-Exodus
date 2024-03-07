@@ -2,8 +2,8 @@ using UnityEngine;
 using UnityEngine.VFX;
 
 public class SpeedLinesVFX : MonoBehaviour {
-  [SerializeField] VisualEffect vfx;
   [SerializeField, Range(0, 50)] int threshold = 5;
+  VisualEffect vfx;
   public float speed;
 
   void Start() {
@@ -19,7 +19,7 @@ public class SpeedLinesVFX : MonoBehaviour {
     }
   }
 
-  public void SetSpeed(float s){
+  public void SetSpeed(float s) {
     speed = s;
   }
 }
