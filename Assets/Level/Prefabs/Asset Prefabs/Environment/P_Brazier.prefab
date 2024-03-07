@@ -84,7 +84,7 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 0.73
+      - m_Value: 0.33
         m_Name: sizeMax
         m_Overridden: 1
       - m_Value: 0.01
@@ -99,7 +99,7 @@ VisualEffect:
       - m_Value: 1
         m_Name: softParticleFactor_F
         m_Overridden: 1
-      - m_Value: 0.17
+      - m_Value: 0.03
         m_Name: colourIntensity
         m_Overridden: 1
     m_Vector2f:
@@ -112,7 +112,7 @@ VisualEffect:
       m_Array: []
     m_Int:
       m_Array:
-      - m_Value: 10
+      - m_Value: 50
         m_Name: flameAggressiveness
         m_Overridden: 1
     m_Matrix4x4f:
@@ -120,7 +120,71 @@ VisualEffect:
     m_AnimationCurve:
       m_Array: []
     m_Gradient:
-      m_Array: []
+      m_Array:
+      - m_Value:
+          serializedVersion: 2
+          key0: {r: 0.30526873, g: 1.2105261, b: 1.8490566, a: 0}
+          key1: {r: 2.7954397, g: 0.61841065, b: 0, a: 1}
+          key2: {r: 0.4154976, g: 0.08474841, b: 0.023929179, a: 0.6431373}
+          key3: {r: 0, g: 0, b: 0, a: 0}
+          key4: {r: 0, g: 0, b: 0, a: 0}
+          key5: {r: 0, g: 0, b: 0, a: 0}
+          key6: {r: 0, g: 0, b: 0, a: 0}
+          key7: {r: 0, g: 0, b: 0, a: 0}
+          ctime0: 4653
+          ctime1: 18119
+          ctime2: 38936
+          ctime3: 65535
+          ctime4: 0
+          ctime5: 0
+          ctime6: 0
+          ctime7: 0
+          atime0: 0
+          atime1: 4626
+          atime2: 39128
+          atime3: 65535
+          atime4: 0
+          atime5: 0
+          atime6: 0
+          atime7: 0
+          m_Mode: 0
+          m_ColorSpace: 1
+          m_NumColorKeys: 4
+          m_NumAlphaKeys: 4
+        m_Name: flamethrowerGradient
+        m_Overridden: 1
+      - m_Value:
+          serializedVersion: 2
+          key0: {r: 0, g: 0.05884556, b: 0.13275054, a: 0}
+          key1: {r: 0, g: 0, b: 0, a: 0.7254902}
+          key2: {r: 0, g: 0, b: 0, a: 0.46666667}
+          key3: {r: 0, g: 0, b: 0, a: 0}
+          key4: {r: 0, g: 0, b: 0, a: 0}
+          key5: {r: 0, g: 0, b: 0, a: 0}
+          key6: {r: 0, g: 0, b: 0, a: 0}
+          key7: {r: 0, g: 0, b: 0, a: 0}
+          ctime0: 0
+          ctime1: 5975
+          ctime2: 15998
+          ctime3: 42212
+          ctime4: 0
+          ctime5: 0
+          ctime6: 0
+          ctime7: 0
+          atime0: 0
+          atime1: 4626
+          atime2: 42020
+          atime3: 65535
+          atime4: 0
+          atime5: 0
+          atime6: 0
+          atime7: 0
+          m_Mode: 0
+          m_ColorSpace: -1
+          m_NumColorKeys: 4
+          m_NumAlphaKeys: 4
+        m_Name: smokeGradient
+        m_Overridden: 0
     m_NamedObject:
       m_Array: []
     m_Bool:
