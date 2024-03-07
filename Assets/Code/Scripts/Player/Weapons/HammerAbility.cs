@@ -31,19 +31,19 @@ public class HammerAbility : MonoBehaviour {
     void Start() {
         rb = transform.GetComponent<Rigidbody>();
         orientation = transform.Find("Orientation");
-        enemyLayer = LayerMask.GetMask("Enemy");
-        groundLayer = LayerMask.GetMask("Ground");
+        enemyLayer = LayerMask.NameToLayer("Enemy");
+        groundLayer = LayerMask.NameToLayer("Ground");
     }
 
     IEnumerator CompleteCharge() {
         yield return new WaitForSeconds(chargeTime);
 
         isCharged = isCharging;
-        Debug.Log($"Hammer Charged: {isCharged}");
+        // Debug.Log($"Hammer Charged: {isCharged}");
     }
 
     public void ChargeHammer() {
-        Debug.Log("Charging Hammer");
+        // Debug.Log("Charging Hammer");
         isCharging = true;
         storedCoroutine = StartCoroutine(CompleteCharge());
         timer = 0;
@@ -72,14 +72,12 @@ public class HammerAbility : MonoBehaviour {
     }
 
     public void ActivateHammerAbility() {
-        Debug.Log(impactArea.size * 0.5f);
         if (isCharged) {
-            Debug.Log("BOOP");
             // Check if impact area is colliding with either a ground layer or enemy layer
             if (
                 Physics.CheckBox(
                     impactArea.transform.position,
-                    impactArea.size * 0.5f * impactArea.transform.localScale.x,
+                    impactArea.size * 0.5f,
                     Quaternion.identity,
                     enemyLayer
                 )
@@ -93,7 +91,7 @@ public class HammerAbility : MonoBehaviour {
             } else if (
                   Physics.CheckBox(
                       impactArea.transform.position,
-                      impactArea.size * 0.5f * impactArea.transform.localScale.x,
+                      impactArea.size * 0.5f,
                       Quaternion.identity,
                       groundLayer
                   )

@@ -40,7 +40,7 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void TakeDamage(int damage, WeaponDamageType damageType) {
-        Debug.Log("Damage: " + damage + " Type: " + damageType);
+        Debug.Log("Damage: " + damage + ", Type: " + damageType);
         if (hasShield) {
             BreakShield();
             return;
