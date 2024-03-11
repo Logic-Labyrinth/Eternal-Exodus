@@ -27,7 +27,7 @@ public class PlayerDashing : MonoBehaviour {
         pm = GetComponent<PlayerMovement>();
         originalFOV = cam.fieldOfView;
     }
-
+    
     public void FixedUpdate() {
         if (dashCDTimer > 0) dashCDTimer -= Time.deltaTime;
         if (pm.dashing) DashingMovement();
@@ -42,12 +42,9 @@ public class PlayerDashing : MonoBehaviour {
         pm.dashing = true;
 
         float camAngle = cam.transform.localEulerAngles.x;
-        Debug.Log("" + cam.gameObject.transform.rotation);
         float XAngle = camAngle >= 0 && camAngle <= 90 ? -camAngle : (camAngle <= 360 ? 360 - camAngle : 0);
         float Y = Map(XAngle, -89, 89, dashLowerLimit, dashUpperLimit);
         dashDirection = Quaternion.AngleAxis(Y, cam.transform.right) * cam.transform.forward;
-
-        Debug.Log("" + dashDirection);
 
         Invoke(nameof(ResetDash), dashDuration);
         StartCoroutine(LerpFOV(dashFOV, 0.1f));
