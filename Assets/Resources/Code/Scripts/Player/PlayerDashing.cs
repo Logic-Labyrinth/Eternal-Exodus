@@ -27,12 +27,9 @@ public class PlayerDashing : MonoBehaviour {
         pm = GetComponent<PlayerMovement>();
         originalFOV = cam.fieldOfView;
     }
-
-    void Update() {
-        if (dashCDTimer > 0) dashCDTimer -= Time.deltaTime;
-    }
-
+    
     public void FixedUpdate() {
+        if (dashCDTimer > 0) dashCDTimer -= Time.deltaTime;
         if (pm.dashing) DashingMovement();
     }
 

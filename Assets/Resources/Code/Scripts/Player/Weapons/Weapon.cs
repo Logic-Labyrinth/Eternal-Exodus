@@ -73,7 +73,7 @@ public class Weapon : ScriptableObject {
         return isLocked;
     }
 
-    public virtual void BasicAttack(GameObject player, HealthSystem healthSystem) {
+    public virtual void BasicAttack(GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
         // Basic attack logic
     }
 

@@ -275,7 +275,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6648451769610664350}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.4649874, z: -0, w: 0.8853173}
+  m_LocalRotation: {x: 0, y: 0.46498874, z: 0, w: 0.8853166}
   m_LocalPosition: {x: 8.21, y: 135.48, z: 16.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -349,6 +349,7 @@ MonoBehaviour:
   landingVFXPrefab: {fileID: 3699252618953430724, guid: 7c0fc954840298a45a79bad9589ee852,
     type: 3}
   dustTrailVFX: {fileID: 1347139185121705897}
+  speedLinesVFX: {fileID: 0}
 --- !u!114 &6167175214731165895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,7 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orientation: {fileID: 6945575724338057856}
-  cam: {fileID: 4017837360531164285, guid: 3e7116876a7fc2d469aa198b69aa5eaf, type: 3}
+  cam: {fileID: 0}
   dashForce: 40
   dashDuration: 0.18
   dashFOV: 68

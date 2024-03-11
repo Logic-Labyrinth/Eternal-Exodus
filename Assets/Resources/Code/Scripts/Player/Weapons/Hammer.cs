@@ -6,8 +6,8 @@ public class Hammer : Weapon {
     private bool isCharging = false;
     private bool isCharged = false;
 
-    public override void BasicAttack(GameObject player, HealthSystem healthSystem) {
-        healthSystem.TakeDamage(baseDamage, WeaponDamageType.HAMMER);
+    public override void BasicAttack(GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
+        healthSystem.TakeDamage(baseDamage, WeaponDamageType.HAMMER, hitLocation);
     }
 
     public override void SpecialAttack(GameObject player, HealthSystem healthSystem) {

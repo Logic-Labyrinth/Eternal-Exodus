@@ -64,6 +64,7 @@ public class PlayerMovement : MonoBehaviour {
   float lastFrameVerticalVelocity;
   [SerializeField] GameObject landingVFXPrefab;
   [SerializeField] DustTrailVFX dustTrailVFX;
+  [SerializeField] SpeedLinesVFX speedLinesVFX;
 
   void OnGUI() {
     GUILayout.TextArea($"State: {state}");
@@ -76,7 +77,7 @@ public class PlayerMovement : MonoBehaviour {
     // GUILayout.TextArea($"Player scale: {playerObj.localScale}");
     // GUILayout.TextArea($"Ready to jump: {canJump}");
     // GUILayout.TextArea($"Move direction: {moveDirection}");
-    // GUILayout.TextArea($"Current speed: {rb.velocity.magnitude}");
+    GUILayout.TextArea($"Current speed: {rb.velocity.magnitude}");
     // GUILayout.TextArea($"Desired speed: {desiredMoveSpeed}");
   }
 
@@ -107,6 +108,7 @@ public class PlayerMovement : MonoBehaviour {
   void HandleVFX() {
     dustTrailVFX.SetSpeed(rb.velocity.magnitude);
     dustTrailVFX.SetCanPlay(isGrounded);
+    speedLinesVFX.SetSpeed(rb.velocity.magnitude);
   }
 
   private void GroundCheck() {

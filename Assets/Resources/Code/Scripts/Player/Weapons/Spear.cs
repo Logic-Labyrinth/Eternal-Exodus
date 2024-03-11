@@ -4,9 +4,9 @@ using UnityEngine;
 public class Spear : Weapon {
     private PlayerDashing playerDash;
 
-    public override void BasicAttack(GameObject player, HealthSystem healthSystem) {
+    public override void BasicAttack(GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
         // Basic attack logic
-        healthSystem.TakeDamage(baseDamage, WeaponDamageType.SPEAR);
+        healthSystem.TakeDamage(baseDamage, WeaponDamageType.SPEAR, hitLocation);
     }
 
     public override void SpecialAttack(GameObject player, HealthSystem healthSystem) {

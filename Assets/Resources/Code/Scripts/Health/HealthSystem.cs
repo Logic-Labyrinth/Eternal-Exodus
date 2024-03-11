@@ -39,7 +39,7 @@ public class HealthSystem : MonoBehaviour {
         }
     }
 
-    public void TakeDamage(int damage, WeaponDamageType damageType) {
+    public void TakeDamage(int damage, WeaponDamageType damageType, Vector3 hitLocation) {
         Debug.Log("Damage: " + damage + ", Type: " + damageType);
         if (hasShield) {
             BreakShield();
@@ -54,6 +54,8 @@ public class HealthSystem : MonoBehaviour {
         }
 
         Debug.Log("Dam: " + dam);
+        GameObject hitVFXPrefab = Resources.Load<GameObject>("Level/Prefabs/VFX/HitVFX");
+        Instantiate(hitVFXPrefab, hitLocation, Quaternion.identity).GetComponent<HitVFX>().Play(dam);
         currentHealth -= dam;
         if (currentHealth <= 0) Kill();
     }

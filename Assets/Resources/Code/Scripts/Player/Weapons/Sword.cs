@@ -4,9 +4,9 @@ using UnityEngine;
 public class Sword : Weapon {
     private PlayerMovement playerMovement;
 
-    public override void BasicAttack(GameObject player, HealthSystem healthSystem) {
+    public override void BasicAttack(GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
         // Basic attack logic
-        healthSystem.TakeDamage(baseDamage, WeaponDamageType.SWORD);
+        healthSystem.TakeDamage(baseDamage, WeaponDamageType.SWORD, hitLocation);
     }
 
     public override void SpecialAttack(GameObject player, HealthSystem healthSystem) {
