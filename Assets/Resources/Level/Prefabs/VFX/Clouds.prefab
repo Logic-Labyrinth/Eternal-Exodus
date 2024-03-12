@@ -310,7 +310,7 @@ Transform:
   m_GameObject: {fileID: 3339834621198767471}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -51, y: -17.6, z: 32.9}
+  m_LocalPosition: {x: -51, y: -9.6, z: 32.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -334,8 +334,20 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 2.5
+      - m_Value: 0.94
         m_Name: lightningThickness
+        m_Overridden: 1
+      - m_Value: 8
+        m_Name: Octaves
+        m_Overridden: 0
+      - m_Value: 1
+        m_Name: Roughness
+        m_Overridden: 0
+      - m_Value: 11.44
+        m_Name: Frequency
+        m_Overridden: 0
+      - m_Value: 0.23
+        m_Name: noisePower
         m_Overridden: 1
     m_Vector2f:
       m_Array: []
@@ -361,7 +373,13 @@ VisualEffect:
     m_Uint:
       m_Array: []
     m_Int:
-      m_Array: []
+      m_Array:
+      - m_Value: 2
+        m_Name: minDelay
+        m_Overridden: 1
+      - m_Value: 6
+        m_Name: maxDelay
+        m_Overridden: 1
     m_Matrix4x4f:
       m_Array: []
     m_AnimationCurve:
@@ -371,7 +389,19 @@ VisualEffect:
     m_NamedObject:
       m_Array: []
     m_Bool:
-      m_Array: []
+      m_Array:
+      - m_Value: 1
+        m_Name: BeamActive
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 1
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 2
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: BeamActive 3
+        m_Overridden: 1
 --- !u!73398921 &5964116557736370642
 VFXRenderer:
   serializedVersion: 1
@@ -463,9 +493,21 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 2.5
+      - m_Value: 1.97
         m_Name: lightningThickness
         m_Overridden: 1
+      - m_Value: 0.3
+        m_Name: lightningSpeed
+        m_Overridden: 0
+      - m_Value: 8
+        m_Name: Octaves
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: Roughness
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: Frequency
+        m_Overridden: 0
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -473,10 +515,10 @@ VisualEffect:
       - m_Value: {x: 11.44, y: -1.04, z: -4.95}
         m_Name: Pos2
         m_Overridden: 1
-      - m_Value: {x: 25.4, y: -9.66, z: -6.42}
+      - m_Value: {x: 30.76, y: -9.66, z: -6.42}
         m_Name: Pos3
         m_Overridden: 1
-      - m_Value: {x: 17.37, y: 4.95, z: -11.29}
+      - m_Value: {x: 17.37, y: 4.95, z: -26.9}
         m_Name: Pos4
         m_Overridden: 1
       - m_Value: {x: 0, y: 0, z: -2.84}
@@ -490,7 +532,13 @@ VisualEffect:
     m_Uint:
       m_Array: []
     m_Int:
-      m_Array: []
+      m_Array:
+      - m_Value: 1
+        m_Name: minDelay
+        m_Overridden: 1
+      - m_Value: 5
+        m_Name: maxDelay
+        m_Overridden: 1
     m_Matrix4x4f:
       m_Array: []
     m_AnimationCurve:
@@ -500,7 +548,19 @@ VisualEffect:
     m_NamedObject:
       m_Array: []
     m_Bool:
-      m_Array: []
+      m_Array:
+      - m_Value: 1
+        m_Name: BeamActive
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 1
+        m_Overridden: 0
+      - m_Value: 1
+        m_Name: BeamActive 2
+        m_Overridden: 0
+      - m_Value: 1
+        m_Name: BeamActive 3
+        m_Overridden: 0
 --- !u!73398921 &7588517033901764518
 VFXRenderer:
   serializedVersion: 1
@@ -568,7 +628,7 @@ Transform:
   m_GameObject: {fileID: 5828506602475150453}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -36.43031, y: -17.6, z: 47.656578}
+  m_LocalPosition: {x: -36.43031, y: -21.7, z: 47.656578}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -594,7 +654,16 @@ VisualEffect:
       m_Array:
       - m_Value: 2.5
         m_Name: lightningThickness
+        m_Overridden: 0
+      - m_Value: 8
+        m_Name: Octaves
         m_Overridden: 1
+      - m_Value: 1
+        m_Name: Roughness
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: Frequency
+        m_Overridden: 0
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -629,7 +698,19 @@ VisualEffect:
     m_NamedObject:
       m_Array: []
     m_Bool:
-      m_Array: []
+      m_Array:
+      - m_Value: 1
+        m_Name: BeamActive
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 1
+        m_Overridden: 0
+      - m_Value: 1
+        m_Name: BeamActive 2
+        m_Overridden: 0
+      - m_Value: 1
+        m_Name: BeamActive 3
+        m_Overridden: 0
 --- !u!73398921 &459844431748499346
 VFXRenderer:
   serializedVersion: 1
@@ -697,7 +778,7 @@ Transform:
   m_GameObject: {fileID: 7354555999892216761}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -34.76035, y: -17.6, z: -9.574022}
+  m_LocalPosition: {x: -34.76035, y: -7.59, z: -9.574022}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -721,8 +802,20 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 2.5
+      - m_Value: 2.72
         m_Name: lightningThickness
+        m_Overridden: 1
+      - m_Value: 8
+        m_Name: Octaves
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: Roughness
+        m_Overridden: 1
+      - m_Value: 45.4
+        m_Name: Frequency
+        m_Overridden: 1
+      - m_Value: 3.98
+        m_Name: noisePower
         m_Overridden: 1
     m_Vector2f:
       m_Array: []
@@ -731,10 +824,10 @@ VisualEffect:
       - m_Value: {x: -150, y: 6.85, z: -101.6}
         m_Name: Pos1
         m_Overridden: 1
-      - m_Value: {x: 58.2, y: -22.2, z: 104.9}
+      - m_Value: {x: 58.2, y: -85.6, z: 104.9}
         m_Name: Pos2
         m_Overridden: 1
-      - m_Value: {x: 95.18, y: 26.03, z: -4.1}
+      - m_Value: {x: 95.18, y: 43.9, z: -4.1}
         m_Name: Pos3
         m_Overridden: 1
       - m_Value: {x: 140.8, y: -2.01, z: -27.4}
@@ -742,13 +835,19 @@ VisualEffect:
         m_Overridden: 1
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 8.253251, y: 0.40349045, z: 25.688938, w: 1}
+      - m_Value: {x: 6.1176248, y: 0.7025178, z: 44.727047, w: 1}
         m_Name: lightningColour
         m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:
-      m_Array: []
+      m_Array:
+      - m_Value: 10
+        m_Name: minDelay
+        m_Overridden: 1
+      - m_Value: 15
+        m_Name: maxDelay
+        m_Overridden: 1
     m_Matrix4x4f:
       m_Array: []
     m_AnimationCurve:
@@ -758,7 +857,19 @@ VisualEffect:
     m_NamedObject:
       m_Array: []
     m_Bool:
-      m_Array: []
+      m_Array:
+      - m_Value: 1
+        m_Name: BeamActive
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 1
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 2
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 3
+        m_Overridden: 1
 --- !u!73398921 &6505827747748004812
 VFXRenderer:
   serializedVersion: 1
@@ -852,6 +963,18 @@ VisualEffect:
       m_Array:
       - m_Value: 2.5
         m_Name: lightningThickness
+        m_Overridden: 0
+      - m_Value: 8
+        m_Name: Octaves
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: Roughness
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: Frequency
+        m_Overridden: 0
+      - m_Value: 0.7
+        m_Name: noisePower
         m_Overridden: 1
     m_Vector2f:
       m_Array: []
@@ -877,7 +1000,10 @@ VisualEffect:
     m_Uint:
       m_Array: []
     m_Int:
-      m_Array: []
+      m_Array:
+      - m_Value: 4
+        m_Name: minDelay
+        m_Overridden: 1
     m_Matrix4x4f:
       m_Array: []
     m_AnimationCurve:
@@ -887,7 +1013,19 @@ VisualEffect:
     m_NamedObject:
       m_Array: []
     m_Bool:
-      m_Array: []
+      m_Array:
+      - m_Value: 1
+        m_Name: BeamActive
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 1
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 2
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 3
+        m_Overridden: 1
 --- !u!73398921 &7663382653440730510
 VFXRenderer:
   serializedVersion: 1
@@ -981,7 +1119,16 @@ VisualEffect:
       m_Array:
       - m_Value: 2.5
         m_Name: lightningThickness
+        m_Overridden: 0
+      - m_Value: 6
+        m_Name: Octaves
         m_Overridden: 1
+      - m_Value: 1
+        m_Name: Roughness
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: Frequency
+        m_Overridden: 0
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -995,7 +1142,7 @@ VisualEffect:
       - m_Value: {x: 0, y: 0, z: 63.96}
         m_Name: Pos1
         m_Overridden: 1
-      - m_Value: {x: 0, y: -34.08, z: 0}
+      - m_Value: {x: 0, y: -19.29, z: 0}
         m_Name: Pos4
         m_Overridden: 1
     m_Vector4f:
@@ -1006,7 +1153,13 @@ VisualEffect:
     m_Uint:
       m_Array: []
     m_Int:
-      m_Array: []
+      m_Array:
+      - m_Value: 3
+        m_Name: minDelay
+        m_Overridden: 1
+      - m_Value: 5
+        m_Name: maxDelay
+        m_Overridden: 1
     m_Matrix4x4f:
       m_Array: []
     m_AnimationCurve:
@@ -1016,7 +1169,19 @@ VisualEffect:
     m_NamedObject:
       m_Array: []
     m_Bool:
-      m_Array: []
+      m_Array:
+      - m_Value: 1
+        m_Name: BeamActive
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 1
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 2
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 3
+        m_Overridden: 1
 --- !u!73398921 &7525600068133354998
 VFXRenderer:
   serializedVersion: 1
@@ -1084,7 +1249,7 @@ Transform:
   m_GameObject: {fileID: 7946784493102788762}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 54.472458, y: -17.6, z: 70.308266}
+  m_LocalPosition: {x: 54.472458, y: -19.98, z: 70.308266}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1108,9 +1273,18 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 2.5
+      - m_Value: 1.43
         m_Name: lightningThickness
         m_Overridden: 1
+      - m_Value: 6
+        m_Name: Octaves
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: Roughness
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: Frequency
+        m_Overridden: 0
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -1135,7 +1309,13 @@ VisualEffect:
     m_Uint:
       m_Array: []
     m_Int:
-      m_Array: []
+      m_Array:
+      - m_Value: 5
+        m_Name: minDelay
+        m_Overridden: 1
+      - m_Value: 10
+        m_Name: maxDelay
+        m_Overridden: 1
     m_Matrix4x4f:
       m_Array: []
     m_AnimationCurve:
@@ -1145,7 +1325,19 @@ VisualEffect:
     m_NamedObject:
       m_Array: []
     m_Bool:
-      m_Array: []
+      m_Array:
+      - m_Value: 1
+        m_Name: BeamActive
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 1
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 2
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: BeamActive 3
+        m_Overridden: 1
 --- !u!73398921 &4940169071868155986
 VFXRenderer:
   serializedVersion: 1
@@ -1331,7 +1523,7 @@ Transform:
   m_GameObject: {fileID: 8629270392717220941}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -41.391937, y: -17.6, z: -55.774803}
+  m_LocalPosition: {x: -41.391937, y: -19.4, z: -55.774803}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1355,8 +1547,20 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 2.5
+      - m_Value: 1.15
         m_Name: lightningThickness
+        m_Overridden: 1
+      - m_Value: 8
+        m_Name: Octaves
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: Roughness
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: Frequency
+        m_Overridden: 0
+      - m_Value: 0.69
+        m_Name: noisePower
         m_Overridden: 1
     m_Vector2f:
       m_Array: []
@@ -1392,7 +1596,19 @@ VisualEffect:
     m_NamedObject:
       m_Array: []
     m_Bool:
-      m_Array: []
+      m_Array:
+      - m_Value: 1
+        m_Name: BeamActive
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 1
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 2
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BeamActive 3
+        m_Overridden: 1
 --- !u!73398921 &2725418832399528681
 VFXRenderer:
   serializedVersion: 1
