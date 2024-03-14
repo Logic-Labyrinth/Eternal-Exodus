@@ -29,14 +29,17 @@ public class HealthSystem : MonoBehaviour {
     }
 
     void Update() {
-        healthText.text = currentHealth.ToString();
-        if (hasShield) {
-            shieldedText.text = "Shielded";
-            shieldedText.color = Color.blue;
-        } else {
-            shieldedText.text = "No Shield";
-            shieldedText.color = Color.red;
+        if (healthText && shieldedText) {
+            healthText.text = currentHealth.ToString();
+            if (hasShield) {
+                shieldedText.text = "Shielded";
+                shieldedText.color = Color.blue;
+            } else {
+                shieldedText.text = "No Shield";
+                shieldedText.color = Color.red;
+            }
         }
+
     }
 
     public void TakeDamage(int damage, WeaponDamageType damageType) {
@@ -61,6 +64,7 @@ public class HealthSystem : MonoBehaviour {
     void Kill() {
         // Kill the entity
         Debug.Log("I died!");
+        gameObject.SetActive(false);
     }
 
     public void Heal(int heal) {

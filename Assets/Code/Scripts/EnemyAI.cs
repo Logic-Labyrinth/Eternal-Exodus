@@ -138,7 +138,7 @@ public class EnemyAI : MonoBehaviour {
         Vector3 startPosition = transform.position;
         Vector3 targetPosition = new Vector3(target.x, transform.position.y, target.z);
         float heightDifference = target.y - startPosition.y;
-        float characterHeight = GetComponent<Collider>().bounds.size.y; // Get the height of the character
+        float characterHeight = 2.0f; // Get the height of the character
         float clearanceHeight = 1.0f; // Additional clearance to avoid clipping
         float requiredPeakHeight = characterHeight + clearanceHeight + Mathf.Abs(heightDifference);
         float peakHeight = Mathf.Max(jumpHeight, requiredPeakHeight);
