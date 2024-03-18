@@ -66,6 +66,7 @@ public class HealthSystem : MonoBehaviour {
     void Kill() {
         // Kill the entity
         Debug.Log("I died!");
+        Instantiate(Resources.Load("Level/Prefabs/VFX/Soul"), transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }
 
