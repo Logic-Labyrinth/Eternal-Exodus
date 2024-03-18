@@ -1,31 +1,23 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HammerAbility : MonoBehaviour {
-    [SerializeField]
-    private float chargeTime = 1f;
+    [SerializeField] float chargeTime = 1f;
+    [SerializeField] BoxCollider impactArea;
+    [SerializeField] float hammerForce;
+    [SerializeField] float enemyBounceMultiplier;
 
-    [SerializeField]
-    private BoxCollider impactArea;
-
-    [SerializeField]
-    private float hammerForce;
-
-    [SerializeField]
-    private float enemyBounceMultiplier;
-    private LayerMask enemyLayer;
-    private LayerMask groundLayer;
-    private bool isCharging = false;
-    private bool isCharged = false;
-    private Rigidbody rb;
-    private Transform orientation;
-    private Coroutine storedCoroutine;
+    LayerMask enemyLayer;
+    LayerMask groundLayer;
+    bool isCharging = false;
+    bool isCharged = false;
+    Rigidbody rb;
+    Transform orientation;
+    Coroutine storedCoroutine;
 
     public Slider slider;
-    public Image handle,
-        background;
+    public Image handle, background;
     float timer = 0;
 
     void Start() {
@@ -81,14 +73,14 @@ public class HammerAbility : MonoBehaviour {
                     ForceMode.Impulse
                 );
             } else if (
-                  Physics.CheckBox(
-                      impactArea.transform.position,
-                      impactArea.size * 0.5f,
+                Physics.CheckBox(
+                    impactArea.transform.position,
+                    impactArea.size * 0.5f,
                     //   Quaternion.identity,
-                      impactArea.transform.rotation,
-                      groundLayer
-                  )
-              ) {
+                    impactArea.transform.rotation,
+                    groundLayer
+                )
+            ) {
                 Debug.Log(impactArea.transform.position);
                 Debug.Log(impactArea.size * 0.5f);
                 Debug.Log("Ground Hit");
