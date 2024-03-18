@@ -20,8 +20,7 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance {
         get {
-            if (!instace)
-                instace = FindObjectOfType<GameManager>();
+            if (!instace) instace = FindObjectOfType<GameManager>();
             return instace;
         }
     }
@@ -49,9 +48,9 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator LoadLevel() {
         // levelManager.useRandomSeed = useRandomSeed;
-        // levelManager.seedString = seedText;
+        levelManager.seedString = seedText;
         levelManager.useRandomSeed = false;
-        levelManager.seedString = "273295";
+        // levelManager.seedString = "273295";
 
         levelManager.InitializeLevel();
 
@@ -75,5 +74,9 @@ public class GameManager : MonoBehaviour {
 
     public void SetSeed(TMP_InputField inputField) {
         seedText = inputField.text;
+    }
+
+    public void SetSeed(string seed) {
+        seedText = seed;
     }
 }

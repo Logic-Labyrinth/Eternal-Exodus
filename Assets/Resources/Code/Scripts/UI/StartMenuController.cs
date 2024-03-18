@@ -2,17 +2,11 @@ using UnityEngine;
 
 public class StartMenuController : MonoBehaviour {
     [SerializeField] Animator animator;
-    [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject levelSelectMenu;
     public bool canClick = false;
 
-    GameManager gameManager;
-
-    void Start() {
-        if (!animator) {
-            animator = transform.GetComponent<Animator>();
-        }
-
-        gameManager = GameManager.Instance;
+    void Awake() {
+        if (!animator) animator = transform.GetComponent<Animator>();
     }
 
     void Update() {
@@ -21,8 +15,7 @@ public class StartMenuController : MonoBehaviour {
         if (animator.GetBool("canClick")) {
             if (Input.GetButtonDown("Basic Attack") || Input.GetButtonDown("Jump")) {
                 animator.SetBool("hasClicked", true);
-                // mainMenu.SetActive(true);
-                gameManager.StartGame();
+                levelSelectMenu.SetActive(true);
                 gameObject.SetActive(false);
             }
         }
