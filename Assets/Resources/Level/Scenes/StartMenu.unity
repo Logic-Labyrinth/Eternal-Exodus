@@ -862,7 +862,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &549831989
@@ -1359,7 +1359,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 175, y: -135}
+  m_AnchoredPosition: {x: 175, y: -80}
   m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &764089381
@@ -2080,8 +2080,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelManager: {fileID: 661342872}
   seedInput: {fileID: 469814254}
-  player: {fileID: 1596161258410748314, guid: cb0d418a6ce7c9d4aa64f2895a087e79, type: 3}
+  player: {fileID: 7031480877173253731, guid: c5fb0fc3ed54656468229ec3b1b30081, type: 3}
   gameSceneName: GameScene
+  seedOptions: {fileID: 155774800}
   useRandomSeed: 0
   seedText: 
 --- !u!4 &1704418882
@@ -2093,7 +2094,7 @@ Transform:
   m_GameObject: {fileID: 1704418880}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 686.91406, y: 161.51947, z: -491.9074}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2522,7 +2523,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1863835753
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2586,7 +2587,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1863835755}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1704418881}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ToggleSeedOptions
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1863835755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2721,7 +2734,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 175, y: -190}
+  m_AnchoredPosition: {x: 175, y: -135}
   m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1924211053

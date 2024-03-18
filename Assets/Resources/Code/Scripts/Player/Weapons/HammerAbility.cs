@@ -37,13 +37,10 @@ public class HammerAbility : MonoBehaviour {
 
     IEnumerator CompleteCharge() {
         yield return new WaitForSeconds(chargeTime);
-
         isCharged = isCharging;
-        // Debug.Log($"Hammer Charged: {isCharged}");
     }
 
     public void ChargeHammer() {
-        // Debug.Log("Charging Hammer");
         isCharging = true;
         storedCoroutine = StartCoroutine(CompleteCharge());
         timer = 0;
@@ -53,18 +50,13 @@ public class HammerAbility : MonoBehaviour {
         slider.gameObject.SetActive(true);
     }
 
-    // Update the charging progress if the charging flag is true
     private void Update() {
-        if (isCharging) { // Check if the object is currently charging
-            if (timer <= chargeTime) { // Check if the charging time has not exceeded the maximum charge time
-                // Update the slider value based on the charging progress
+        if (isCharging) {
+            if (timer <= chargeTime) {
                 slider.value = timer / chargeTime;
-                // Increment the timer based on the elapsed time
                 timer += Time.deltaTime;
             } else {
-                // Set the slider value to maximum
                 slider.value = 1;
-                // Set the handle and background color to green to indicate full charge
                 handle.color = Color.green;
                 background.color = Color.green;
             }
@@ -78,7 +70,7 @@ public class HammerAbility : MonoBehaviour {
                 Physics.CheckBox(
                     impactArea.transform.position,
                     impactArea.size * 0.5f,
-                    Quaternion.identity,
+                    impactArea.transform.rotation,
                     enemyLayer
                 )
             ) {
@@ -92,10 +84,13 @@ public class HammerAbility : MonoBehaviour {
                   Physics.CheckBox(
                       impactArea.transform.position,
                       impactArea.size * 0.5f,
-                      Quaternion.identity,
+                    //   Quaternion.identity,
+                      impactArea.transform.rotation,
                       groundLayer
                   )
               ) {
+                Debug.Log(impactArea.transform.position);
+                Debug.Log(impactArea.size * 0.5f);
                 Debug.Log("Ground Hit");
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
