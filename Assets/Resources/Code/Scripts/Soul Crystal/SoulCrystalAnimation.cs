@@ -8,6 +8,5 @@ public class SoulCrystalAnimation : MonoBehaviour {
     void Update() {
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
         transform.position = new Vector3(transform.position.x, transform.position.y + Mathf.Sin(Time.time * bobSpeed) * bobHeight * Time.deltaTime, transform.position.z);
-
     }
 }
