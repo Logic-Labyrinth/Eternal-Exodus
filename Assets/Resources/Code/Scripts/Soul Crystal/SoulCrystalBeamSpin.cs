@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class spinnyboi : MonoBehaviour {
+public class SoulCrystalBeamSpin : MonoBehaviour {
     [SerializeField] float rotationSpeed = 10f;
 
     void Update() {

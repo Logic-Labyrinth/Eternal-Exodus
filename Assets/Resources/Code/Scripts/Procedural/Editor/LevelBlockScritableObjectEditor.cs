@@ -2,10 +2,8 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(LevelBlockScriptableObject))]
-public class LevelBlockScriptableObjectEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
+public class LevelBlockScriptableObjectEditor : Editor {
+    public override void OnInspectorGUI() {
 
         LevelBlockScriptableObject scriptableObj = (LevelBlockScriptableObject)target;
 
@@ -19,15 +17,12 @@ public class LevelBlockScriptableObjectEditor : Editor
 
         // Create a 2x2 grid representation
         GUILayout.BeginVertical("box");
-        for (int i = 0; i < 2; i++)
-        {
+        for (int i = 0; i < 2; i++) {
             GUILayout.BeginHorizontal();
-            for (int j = 0; j < 2; j++)
-            {
+            for (int j = 0; j < 2; j++) {
                 // Determine if the current grid square should be highlighted
                 bool highlight = false;
-                switch (scriptableObj.blockType)
-                {
+                switch (scriptableObj.blockType) {
                     case BlockType.Small:
                         highlight = (i == 0 && j == 0);
                         break;
@@ -40,7 +35,7 @@ public class LevelBlockScriptableObjectEditor : Editor
                 }
 
                 // Draw the grid square
-                GUIStyle style = new GUIStyle(GUI.skin.box);
+                GUIStyle style = new(GUI.skin.box);
                 style.normal.background = MakeTex(2, 2, highlight ? Color.white : Color.gray);
                 GUILayout.Box("", style, GUILayout.Width(50), GUILayout.Height(50));
             }
@@ -58,20 +53,18 @@ public class LevelBlockScriptableObjectEditor : Editor
             );
 
         // Save changes
-        if (GUI.changed)
-        {
+        if (GUI.changed) {
             EditorUtility.SetDirty(target);
         }
     }
 
     // Utility function to create a texture
-    private Texture2D MakeTex(int width, int height, Color col)
-    {
+    private Texture2D MakeTex(int width, int height, Color col) {
         Color[] pix = new Color[width * height];
         for (int i = 0; i < pix.Length; i++)
             pix[i] = col;
 
-        Texture2D result = new Texture2D(width, height);
+        Texture2D result = new(width, height);
         result.SetPixels(pix);
         result.Apply();
         return result;
