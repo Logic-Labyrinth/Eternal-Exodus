@@ -42,6 +42,6 @@ public class MusicManager : MonoBehaviour {
     }
 
     void OnDestroy() {
-        Destroy(musicSource.gameObject);
+        Destroy(musicSource);
     }
 }
