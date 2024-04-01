@@ -6,4 +6,8 @@ public class SettingsCategoryButton : MonoBehaviour {
     public void OnClick() {
         SettingsMenuController.Instance.OpenMenu(menu);
     }
+
+    void OnDisable() {
+        SettingsMenuController.Instance.CloseMenu(menu);
+    }
 }
