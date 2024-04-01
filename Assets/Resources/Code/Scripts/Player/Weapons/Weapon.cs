@@ -56,6 +56,10 @@ public class Weapon : ScriptableObject {
     [VerticalGroup("Sounds")]
     [DisableIf("isLocked")]
     public Sound[] basicAttackSounds;
+
+    [VerticalGroup("Sounds")]
+    [DisableIf("isLocked")]
+    public Sound[] specialAttackSounds;
     #endregion
 
     #region Locking
@@ -95,5 +99,9 @@ public class Weapon : ScriptableObject {
 
     protected void PlayBasicAttackSound() {
         SoundFXManager.Instance.PlayRandom(basicAttackSounds);
+    }
+
+    protected void PlaySpecialAttackSound() {
+        SoundFXManager.Instance.PlayRandom(specialAttackSounds);
     }
 }
