@@ -96,7 +96,7 @@ PrefabInstance:
     - target: {fileID: 425052338495604970, guid: aae8a987d63c9cb43aeceab5a83369e7,
         type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2312533256670792127, guid: aae8a987d63c9cb43aeceab5a83369e7,
         type: 3}
@@ -190,6 +190,12 @@ PrefabInstance:
       objectReference: {fileID: 5094344100965887900}
     - target: {fileID: 8308135938930504847, guid: aae8a987d63c9cb43aeceab5a83369e7,
         type: 3}
+      propertyPath: hammerVFX
+      value: 
+      objectReference: {fileID: 185297640274218462, guid: e110e635ce3e1594787c09f8bc38d41d,
+        type: 3}
+    - target: {fileID: 8308135938930504847, guid: aae8a987d63c9cb43aeceab5a83369e7,
+        type: 3}
       propertyPath: background
       value: 
       objectReference: {fileID: 4162746401955166339}
@@ -198,6 +204,11 @@ PrefabInstance:
       propertyPath: impactArea
       value: 
       objectReference: {fileID: 1454853886851417763}
+    - target: {fileID: 8308135938930504847, guid: aae8a987d63c9cb43aeceab5a83369e7,
+        type: 3}
+      propertyPath: hammerRaycast
+      value: 
+      objectReference: {fileID: 568161512069068152}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -209,6 +220,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3741280509477836646}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &568161512069068152 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3749582245135393310, guid: aae8a987d63c9cb43aeceab5a83369e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 3741280509477836646}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf11b5269f84694ea29443b83d26e96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1440156219353800409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2312533256670792127, guid: aae8a987d63c9cb43aeceab5a83369e7,
