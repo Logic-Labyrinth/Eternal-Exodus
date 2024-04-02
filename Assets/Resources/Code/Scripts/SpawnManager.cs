@@ -141,6 +141,7 @@ public class SpawnManager : MonoBehaviour {
         // find enemy type and enqueue it
         switch (enemy.gameObject.tag) {
             case "Pawn":
+                PawnTargetManager.ReleasePawn(enemy);
                 pawnPool.Enqueue(enemy);
                 break;
             case "Bishop":
@@ -151,6 +152,8 @@ public class SpawnManager : MonoBehaviour {
                 break;
             case "Rook":
                 rookPool.Enqueue(enemy);
+                break;
+            default: // for player
                 break;
         }
     }

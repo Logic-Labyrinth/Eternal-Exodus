@@ -74,7 +74,7 @@ public class EnemyAI : MonoBehaviour {
                     // move towards retreat target
                     agent.destination = retreatTarget;
                 } else {
-                    if (!targetPawnObject) {
+                    if (!targetPawnObject || !PawnTargetManager.SelectedPawns.Contains(targetPawnObject)) {
                         targetPawnObject = FindClosestClusterOfPawns();
                     }
                     agent.destination = targetPawnObject.transform.position;
@@ -88,9 +88,25 @@ public class EnemyAI : MonoBehaviour {
 
         while (Time.time - startTime < attackDuration) {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position + Vector3.forward, attackRange);
+            if (hitColliders == null) {
+                yield break; // Exit the coroutine early if hitColliders is null
+            }
+
             foreach (var hitCollider in hitColliders) {
-                if (hitCollider.gameObject.GetParent() == player) {
-                    playerHealth.TakeDamage(attackDamage, null, hitCollider.transform.position);
+                if (hitCollider == null) {
+                    continue; // Ignore null entries in hitColliders
+                }
+
+                GameObject parentGameObject = hitCollider.gameObject.GetParent();
+                if (parentGameObject == null) {
+                    continue; // Ignore null entries in hitColliders
+                }
+
+                if (parentGameObject == player) {
+                    // playerHealth could be null, so we need to handle that case
+                    if (playerHealth != null) {
+                        playerHealth.TakeDamage(attackDamage, null, hitCollider.transform.position);
+                    }
                     yield break; // Exit the coroutine early if the player is hit
                 }
             }
