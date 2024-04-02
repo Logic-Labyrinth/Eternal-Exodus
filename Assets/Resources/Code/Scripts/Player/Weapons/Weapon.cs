@@ -2,6 +2,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 public class Weapon : ScriptableObject {
+    #region Weapon Stats
     [PreviewField(70, ObjectFieldAlignment.Center)]
     [TableColumnWidth(90, Resizable = false)]
     [DisableIf("isLocked")]
@@ -52,28 +53,35 @@ public class Weapon : ScriptableObject {
     [LabelText("Rotation")]
     public Quaternion localRotation;
 
-    private bool isLocked = false;
+    [VerticalGroup("Sounds")]
+    [DisableIf("isLocked")]
+    public Sound[] basicAttackSounds;
 
+    [VerticalGroup("Sounds")]
+    [DisableIf("isLocked")]
+    public Sound[] specialAttackSounds;
+    #endregion
+
+    #region Locking
+    bool isLocked = false;
     [Button("", ButtonSizes.Large, Icon = SdfIconType.LockFill, Stretch = false)]
     [ShowIf("IsLocked")]
     [VerticalGroup("Lock")]
     [TableColumnWidth(40, Resizable = false)]
-    private void UnlockButton() {
-        isLocked = false;
-    }
+    void UnlockButton() { isLocked = false; }
 
     [Button("", ButtonSizes.Large, Icon = SdfIconType.UnlockFill, Stretch = false)]
     [HideIf("IsLocked")]
     [VerticalGroup("Lock")]
-    private void LockButton() {
-        isLocked = true;
-    }
-
-    private bool IsLocked() {
-        return isLocked;
-    }
+    void LockButton() { isLocked = true; }
+    bool IsLocked() { return isLocked; }
+    #endregion
 
     public virtual void BasicAttack(GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
+        // Basic attack logic
+    }
+
+    public virtual void BasicAttack(GameObject player) {
         // Basic attack logic
     }
 
@@ -87,5 +95,13 @@ public class Weapon : ScriptableObject {
 
     public virtual void Reset() {
         // Reset various variables for each weapon
+    }
+
+    protected void PlayBasicAttackSound() {
+        SoundFXManager.Instance.PlayRandom(basicAttackSounds);
+    }
+
+    protected void PlaySpecialAttackSound() {
+        SoundFXManager.Instance.PlayRandom(specialAttackSounds);
     }
 }

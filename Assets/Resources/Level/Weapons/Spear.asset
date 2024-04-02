@@ -15,9 +15,26 @@ MonoBehaviour:
   weaponObject: {fileID: 8492260927699898950, guid: 8d1cee4d515802148bde78eca87595d4,
     type: 3}
   baseDamage: 50
-  attackRange: 3.5434783
-  speedDamageMultiplier: 0
-  attackSpeed: 0
+  attackRange: 2.0148146
+  speedDamageMultiplier: 1
+  attackSpeed: 0.98591554
   specialAttackCooldown: 1.0284462
   localPosition: {x: 0, y: 0.00345, z: 0}
   localRotation: {x: 0.270598, y: 0.65328145, z: -0.65328145, w: 0.270598}
+  basicAttackSounds:
+  - audioClip: {fileID: 8300000, guid: 3973b1d9368e9934ab6a438652f2cd36, type: 3}
+    volume: 1
+    spacialBlend: 0
+    loop: 0
+    player: 1
+  - audioClip: {fileID: 8300000, guid: dd4ccf0dd62707c4ca081661a1abd89e, type: 3}
+    volume: 1
+    spacialBlend: 0
+    loop: 0
+    player: 1
+  - audioClip: {fileID: 8300000, guid: c8cfb8ffe396d6b4da59533ad10a9664, type: 3}
+    volume: 1
+    spacialBlend: 0
+    loop: 0
+    player: 1
+  specialAttackSounds: []
