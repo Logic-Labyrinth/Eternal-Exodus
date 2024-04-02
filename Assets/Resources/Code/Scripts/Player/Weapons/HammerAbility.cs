@@ -7,6 +7,8 @@ public class HammerAbility : MonoBehaviour {
     [SerializeField] BoxCollider impactArea;
     [SerializeField] float hammerForce;
     [SerializeField] float enemyBounceMultiplier;
+    [SerializeField] HammerRaycast hammerRaycast;
+    [SerializeField] GameObject hammerVFX;
 
     LayerMask enemyLayer;
     LayerMask groundLayer;
@@ -57,38 +59,34 @@ public class HammerAbility : MonoBehaviour {
 
     public void ActivateHammerAbility() {
         if (isCharged) {
-            // Check if impact area is colliding with either a ground layer or enemy layer
             if (
-                Physics.CheckBox(
+                Physics.CheckBox(   // ENEMY CHECK
                     impactArea.transform.position,
                     impactArea.size * 0.5f,
                     impactArea.transform.rotation,
                     enemyLayer
                 )
             ) {
-                // Stop player y velocity whilst keeping the other velocity axes
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
                     (Vector3.up + 3f * enemyBounceMultiplier * orientation.forward) * hammerForce,
                     ForceMode.Impulse
                 );
             } else if (
-                Physics.CheckBox(
+                Physics.CheckBox(   // GROUND CHECK
                     impactArea.transform.position,
                     impactArea.size * 0.5f,
-                    //   Quaternion.identity,
                     impactArea.transform.rotation,
                     groundLayer
                 )
             ) {
-                Debug.Log(impactArea.transform.position);
-                Debug.Log(impactArea.size * 0.5f);
-                Debug.Log("Ground Hit");
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
                     (Vector3.up + orientation.forward * 3f) * hammerForce,
                     ForceMode.Impulse
                 );
+                Vector3 groundVFXPos = hammerRaycast.Raycast();
+                Instantiate(hammerVFX, groundVFXPos, Quaternion.identity);
             }
         }
 
