@@ -20,12 +20,15 @@ public class HealthSystem : MonoBehaviour {
     [SerializeField] TextMeshProUGUI healthText;
     [SerializeField] TextMeshProUGUI shieldedText;
 
+    private SpawnManager spawnManager;
+
     public int GetHealth() { return currentHealth; }
     public int GetMaxHealth() { return maxHealth; }
     public bool HasShield() { return hasShield; }
 
     void Start() {
         currentHealth = maxHealth;
+        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
     }
 
     void Update() {
@@ -42,7 +45,7 @@ public class HealthSystem : MonoBehaviour {
 
     }
 
-    public void TakeDamage(int damage, WeaponDamageType damageType, Vector3 hitLocation) {
+    public void TakeDamage(int damage, WeaponDamageType? damageType, Vector3 hitLocation) {
         Debug.Log("Damage: " + damage + ", Type: " + damageType);
         if (hasShield) {
             BreakShield();
@@ -68,6 +71,7 @@ public class HealthSystem : MonoBehaviour {
         Debug.Log("I died!");
         Instantiate(Resources.Load("Level/Prefabs/VFX/Soul"), transform.position, Quaternion.identity);
         gameObject.SetActive(false);
+        spawnManager.EnqueueEnemy(gameObject);
     }
 
     public void Heal(int heal) {
