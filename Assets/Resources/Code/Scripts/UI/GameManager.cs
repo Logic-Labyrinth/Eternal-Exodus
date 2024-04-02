@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using Exodus.ProceduralTools;
 using TMPro;
 using UnityEngine;
@@ -7,23 +6,27 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
-    [SerializeField]
-    LevelManager levelManager;
+    [SerializeField] LevelManager levelManager;
+    [SerializeField] TMP_InputField seedInput;
+    [SerializeField] GameObject player;
+    [SerializeField] string gameSceneName;
+    [SerializeField] GameObject seedOptions;
 
-    [SerializeField]
-    TMP_InputField seedInput;
-
-    [SerializeField]
-    GameObject player;
-
-    [SerializeField]
-    string gameSceneName;
     public bool useRandomSeed = true;
     public string seedText;
 
-    // Start is called before the first frame update
+    bool showSeedOptions = false;
+    static GameManager instace;
+
+    public static GameManager Instance {
+        get {
+            if (!instace) instace = FindObjectOfType<GameManager>();
+            return instace;
+        }
+    }
+
     void Start() {
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
 
         if (levelManager) {
             DontDestroyOnLoad(levelManager.gameObject);
@@ -38,9 +41,16 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(LoadLevel());
     }
 
+    public void ToggleSeedOptions() {
+        showSeedOptions = !showSeedOptions;
+        seedOptions.SetActive(showSeedOptions);
+    }
+
     IEnumerator LoadLevel() {
-        levelManager.useRandomSeed = useRandomSeed;
+        // levelManager.useRandomSeed = useRandomSeed;
         levelManager.seedString = seedText;
+        levelManager.useRandomSeed = false;
+        // levelManager.seedString = "273295";
 
         levelManager.InitializeLevel();
 
@@ -56,7 +66,7 @@ public class GameManager : MonoBehaviour {
         // Instantiate(player, levelManager.transform.GetChild(0).transform.position, Quaternion.identity);
     }
 
-    private void LoadScene(Scene scene) { }
+    void LoadScene(Scene scene) { }
 
     public void SetUseRandomSeed(Toggle toggle) {
         useRandomSeed = !toggle.isOn;
@@ -64,5 +74,9 @@ public class GameManager : MonoBehaviour {
 
     public void SetSeed(TMP_InputField inputField) {
         seedText = inputField.text;
+    }
+
+    public void SetSeed(string seed) {
+        seedText = seed;
     }
 }
