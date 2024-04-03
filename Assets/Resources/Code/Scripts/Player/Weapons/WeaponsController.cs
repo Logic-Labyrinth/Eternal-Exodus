@@ -104,7 +104,7 @@ public class WeaponsController : MonoBehaviour {
         });
 
         weaponSelectionUI.transform.GetChild(index).GetComponent<UnityEngine.UI.Outline>().enabled = true;
-        weaponSelectionUI.transform.GetChild(index).transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        weaponSelectionUI.transform.GetChild(index).transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
     }
 
     void BasicAttack() {
