@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -28,59 +29,122 @@ public class EnemyAI : MonoBehaviour {
     private float clusterRadius = 10f;
     GameObject targetPawnObject;
     private Vector3 bishopTarget;
+    [ShowIf("enemyType", EnemyType.Bishop)]
     public float retreatRange = 20f;
+    float lastSummonTime;
+    float summonCooldownTime = 20f;
+
+    private SpawnManager spawnManager;
 
     void Start() {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player");
         playerHealth = player.GetComponent<HealthSystem>();
+        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
     }
+
+    void Awake() {
+        lastSummonTime = Time.time;
+    }
+
+    private float checkInterval = 0.2f; // Time between checks in seconds
+    private float lastCheckTime = 0f;
 
     void Update() {
-        DecisionMaker(enemyType);
+        // Reduce frequency of checks
+        if (Time.time >= lastCheckTime + checkInterval) {
+            DecisionMaker(enemyType);
+            lastCheckTime = Time.time;
+        }
     }
 
-    // This is a terrible idea but for the sake of time, fuck it
     void DecisionMaker(EnemyType type) {
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
         switch (type) {
             case EnemyType.Pawn:
-                if (distanceToPlayer < attackRange - 0.5f) {
-                    // The player is within a certain distance, trigger the attack
-                    if (attackCoroutine != null) {
-                        StopCoroutine(attackCoroutine);
-                    }
-                    attackCoroutine = StartCoroutine(Attack());
-                } else {
-                    agent.destination = player.transform.position;
-                }
+                HandlePawnBehavior(distanceToPlayer);
                 break;
             case EnemyType.Bishop:
-                //if player is too close to enemy then run away
-                if (distanceToPlayer < retreatRange) {
-                    // Calculate the direction away from the player
-                    Vector3 directionFromPlayer = (transform.position - player.transform.position).normalized;
-
-                    // Generate a random angle for deviation
-                    float angle = Random.Range(-30f, 30f); // Adjust the range as needed
-
-                    // Rotate the direction vector by the random angle
-                    Quaternion rotation = Quaternion.Euler(0, angle, 0); // Assuming Y-axis rotation for a typical horizontal plane movement
-                    Vector3 randomizedDirection = rotation * directionFromPlayer;
-
-                    // Calculate the retreat target with randomized direction
-                    var retreatTarget = player.transform.position + randomizedDirection * retreatRange;
-                    // move towards retreat target
-                    agent.destination = retreatTarget;
-                } else {
-                    if (!targetPawnObject || !PawnTargetManager.SelectedPawns.Contains(targetPawnObject)) {
-                        targetPawnObject = FindClosestClusterOfPawns();
-                    }
-                    agent.destination = targetPawnObject.transform.position;
-                }
+                HandleBishopBehavior(distanceToPlayer);
+                break;
+            case EnemyType.Rook:
+                HandleRookBehavior(distanceToPlayer);
                 break;
         }
+    }
+
+
+    void HandlePawnBehavior(float distanceToPlayer) {
+        if (distanceToPlayer < attackRange - 0.5f) {
+            TriggerAttack();
+        } else {
+            agent.destination = player.transform.position;
+        }
+    }
+
+    void TriggerAttack() {
+        if (attackCoroutine != null) {
+            StopCoroutine(attackCoroutine);
+        }
+        attackCoroutine = StartCoroutine(Attack());
+    }
+
+    void HandleBishopBehavior(float distanceToPlayer) {
+        if (distanceToPlayer < retreatRange) {
+            RetreatFromPlayer();
+        } else if (Time.time >= lastSummonTime + summonCooldownTime) {
+            lastSummonTime = Time.time;
+            StartCoroutine(SummonPawns(spawnManager));
+        } else {
+            MoveToTargetPawn();
+        }
+    }
+
+    void RetreatFromPlayer() {
+        // Calculate the direction away from the player
+        Vector3 directionFromPlayer = (transform.position - player.transform.position).normalized;
+
+        // Generate a random angle for deviation
+        float angle = Random.Range(-30f, 30f); // Adjust the range as needed
+
+        // Rotate the direction vector by the random angle
+        Quaternion rotation = Quaternion.Euler(0, angle, 0); // Assuming Y-axis rotation for a typical horizontal plane movement
+        Vector3 randomizedDirection = rotation * directionFromPlayer;
+
+        // Calculate the retreat target with randomized direction
+        var retreatTarget = player.transform.position + randomizedDirection * retreatRange;
+        // move towards retreat target
+        agent.destination = retreatTarget;
+    }
+
+    void MoveToTargetPawn() {
+        // Logic to move towards the closest cluster of pawns, optimizing by only recalculating when necessary
+        if (!targetPawnObject || !PawnTargetManager.SelectedPawns.Contains(targetPawnObject)) {
+            targetPawnObject = FindClosestClusterOfPawns();
+        }
+        if (targetPawnObject) {
+            agent.destination = targetPawnObject.transform.position;
+        }
+    }
+
+    IEnumerator SummonPawns(SpawnManager spawnManager) {
+        lastSummonTime = Time.time;
+
+        // Spawn 5 pawns, one at a time, with a slight delay between each spawn
+        for (int i = 0; i < 5; i++) {
+            Vector3 randomPoint = transform.position + Random.insideUnitSphere * 10f;
+            randomPoint.y = transform.position.y;
+
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPoint, out hit, 10f, NavMesh.AllAreas)) {
+                spawnManager.SpawnEnemy(EnemyType.Pawn, hit.position);
+            }
+
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        yield return null;
     }
 
     IEnumerator Attack() {
@@ -163,6 +227,14 @@ public class EnemyAI : MonoBehaviour {
         }
 
         return null;
+    }
+
+    private void HandleRookBehavior(float distanceToPlayer) {
+        if (distanceToPlayer < attackRange - 0.5f) {
+            TriggerAttack();
+        } else {
+            agent.destination = player.transform.position;
+        }
     }
 
     void OnDrawGizmosSelected() {
