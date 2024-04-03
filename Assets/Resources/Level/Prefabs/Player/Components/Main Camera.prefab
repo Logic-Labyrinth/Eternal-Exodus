@@ -2561,8 +2561,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6773126173229839723}
+  - component: {fileID: 7700901176335506219}
   m_Layer: 7
-  m_Name: Anim_Spear_Dash
+  m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2585,6 +2586,27 @@ Transform:
   - {fileID: 6749907745699692992}
   m_Father: {fileID: 5385369725830430241}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!95 &7700901176335506219
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2864617181613630307}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 412a73ae671532f46a77d9c2909efc3d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2870531485398365373
 GameObject:
   m_ObjectHideFlags: 0
@@ -4955,9 +4977,9 @@ MonoBehaviour:
   m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
+  m_CameraType: 1
   m_Cameras: []
-  m_RendererIndex: 0
+  m_RendererIndex: 1
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -5993,7 +6015,7 @@ GameObject:
   - component: {fileID: 4081793194841613210}
   - component: {fileID: 7126596389444243769}
   m_Layer: 7
-  m_Name: Cube.002
+  m_Name: Arms Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9088,7 +9110,8 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras: []
+  m_Cameras:
+  - {fileID: 6191713485886694254}
   m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2

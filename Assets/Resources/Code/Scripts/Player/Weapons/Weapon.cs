@@ -60,6 +60,10 @@ public class Weapon : ScriptableObject {
     [VerticalGroup("Sounds")]
     [DisableIf("isLocked")]
     public Sound[] specialAttackSounds;
+
+    [VerticalGroup("Animations")]
+    [DisableIf("isLocked")]
+    public string swapAnimation;
     #endregion
 
     #region Locking
@@ -77,19 +81,19 @@ public class Weapon : ScriptableObject {
     bool IsLocked() { return isLocked; }
     #endregion
 
-    public virtual void BasicAttack(GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
+    public virtual void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
         // Basic attack logic
     }
 
-    public virtual void BasicAttack(GameObject player) {
+    public virtual void BasicAttack(Animator animator, GameObject player) {
         // Basic attack logic
     }
 
-    public virtual void SpecialAttack(GameObject player, HealthSystem healthSystem) {
+    public virtual void SpecialAttack(Animator animator, GameObject player, HealthSystem healthSystem) {
         // Special attack logic
     }
 
-    public virtual void SpecialRelease(GameObject player, HealthSystem healthSystem) {
+    public virtual void SpecialRelease(Animator animator, GameObject player, HealthSystem healthSystem) {
         // Special attack release logic
     }
 

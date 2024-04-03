@@ -19,9 +19,6 @@ class WeaponObject {
         canUseSpecialAttack = true;
         basicAttackCooldown = 1 / weapon.attackSpeed;
         specialAttackCooldown = weapon.specialAttackCooldown;
-        // foreach(Sound s in weapon.basicAttackSounds) {
-        //     AudioManager.instance.RegisterNewSound(s);
-        // }
     }
 
     public void PutOnCD() {
@@ -36,6 +33,7 @@ class WeaponObject {
 public class WeaponsController : MonoBehaviour {
     int activeWeaponIndex;
     [SerializeField] GameObject hand;
+    [SerializeField] Animator animator;
 
     [TableList(AlwaysExpanded = true)] public List<Weapon> weapons;
     [SerializeField] List<WeaponObject> weaponObjects;
@@ -77,27 +75,20 @@ public class WeaponsController : MonoBehaviour {
     void SetActiveWeapon(int index) {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(false);
+        currentWeapon.weapon.Reset();
         activeWeaponIndex = index;
         currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weaponObj.SetActive(true);
+
+        animator.SetTrigger(currentWeapon.weapon.swapAnimation);
     }
 
     void CycleToNextWeapon() {
-        var currentWeapon = weaponObjects[activeWeaponIndex];
-        currentWeapon.weaponObj.SetActive(false);
-        currentWeapon.weapon.Reset();
-        activeWeaponIndex = (activeWeaponIndex + 1) % weapons.Count;
-        currentWeapon = weaponObjects[activeWeaponIndex];
-        currentWeapon.weaponObj.SetActive(true);
+        SetActiveWeapon((activeWeaponIndex + 1) % weapons.Count);
     }
 
     void CycleToPreviousWeapon() {
-        var currentWeapon = weaponObjects[activeWeaponIndex];
-        currentWeapon.weaponObj.SetActive(false);
-        currentWeapon.weapon.Reset();
-        activeWeaponIndex = (activeWeaponIndex - 1 + weapons.Count) % weapons.Count;
-        currentWeapon = weaponObjects[activeWeaponIndex];
-        currentWeapon.weaponObj.SetActive(true);
+        SetActiveWeapon((activeWeaponIndex - 1 + weapons.Count) % weapons.Count);
     }
 
     void BasicAttack() {
@@ -112,9 +103,9 @@ public class WeaponsController : MonoBehaviour {
         if (!currentWeapon.canUseBasicAttack) return;
 
         if (hit && raycastHit.collider.CompareTag("Enemy"))
-            currentWeapon.weapon.BasicAttack(playerReference, raycastHit.collider.transform.parent.GetComponent<HealthSystem>(), raycastHit.point);
+            currentWeapon.weapon.BasicAttack(animator, playerReference, raycastHit.collider.transform.parent.GetComponent<HealthSystem>(), raycastHit.point);
         else
-            currentWeapon.weapon.BasicAttack(playerReference);
+            currentWeapon.weapon.BasicAttack(animator, playerReference);
 
         currentWeapon.canUseBasicAttack = false;
         StartCoroutine(ResetBasicAttack(activeWeaponIndex));
@@ -124,13 +115,13 @@ public class WeaponsController : MonoBehaviour {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         if (!currentWeapon.canUseSpecialAttack) return;
         currentWeapon.PutOnCD();
-        currentWeapon.weapon.SpecialAttack(playerReference, null);
+        currentWeapon.weapon.SpecialAttack(animator, playerReference, null);
         StartCoroutine(ResetSpecialAbility(activeWeaponIndex));
     }
 
     void SpecialRelease() {
         var currentWeapon = weaponObjects[activeWeaponIndex];
-        currentWeapon.weapon.SpecialRelease(playerReference, null);
+        currentWeapon.weapon.SpecialRelease(animator, playerReference, null);
     }
 
     IEnumerator ResetSpecialAbility(int weaponIndex) {
