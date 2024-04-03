@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine;
 
 class WeaponObject {
@@ -34,6 +35,7 @@ public class WeaponsController : MonoBehaviour {
     int activeWeaponIndex;
     [SerializeField] GameObject hand;
     [SerializeField] Animator animator;
+    [SerializeField] GameObject weaponSelectionUI;
 
     [TableList(AlwaysExpanded = true)] public List<Weapon> weapons;
     [SerializeField] List<WeaponObject> weaponObjects;
@@ -53,6 +55,7 @@ public class WeaponsController : MonoBehaviour {
         }
 
         weaponObjects[activeWeaponIndex].weaponObj.SetActive(true);
+        HighlightWeapon(activeWeaponIndex);
     }
 
     void Update() {
@@ -81,6 +84,7 @@ public class WeaponsController : MonoBehaviour {
         currentWeapon.weaponObj.SetActive(true);
 
         animator.SetTrigger(currentWeapon.weapon.swapAnimation);
+        HighlightWeapon(activeWeaponIndex);
     }
 
     void CycleToNextWeapon() {
@@ -89,6 +93,18 @@ public class WeaponsController : MonoBehaviour {
 
     void CycleToPreviousWeapon() {
         SetActiveWeapon((activeWeaponIndex - 1 + weapons.Count) % weapons.Count);
+    }
+
+    void HighlightWeapon(int index) {
+        var children = weaponSelectionUI.transform.GetChildren(true);
+
+        children.ForEach(x => {
+            x.GetComponent<UnityEngine.UI.Outline>().enabled = false;
+            x.transform.localScale = Vector3.one;
+        });
+
+        weaponSelectionUI.transform.GetChild(index).GetComponent<UnityEngine.UI.Outline>().enabled = true;
+        weaponSelectionUI.transform.GetChild(index).transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
     }
 
     void BasicAttack() {
@@ -122,7 +138,7 @@ public class WeaponsController : MonoBehaviour {
     void SpecialRelease() {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         currentWeapon.weapon.SpecialRelease(animator, playerReference, null);
-    }
+        }
 
     IEnumerator ResetSpecialAbility(int weaponIndex) {
         int index = weaponIndex;
