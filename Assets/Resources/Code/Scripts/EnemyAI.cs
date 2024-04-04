@@ -33,6 +33,9 @@ public class EnemyAI : MonoBehaviour {
     public float retreatRange = 20f;
     float lastSummonTime;
     float summonCooldownTime = 20f;
+    [SerializeField] LayerMask groundLayer;
+    [ShowIf("enemyType", EnemyType.Rook)]
+    public float chargeSpeed = 15f;
 
     private SpawnManager spawnManager;
 
@@ -106,7 +109,7 @@ public class EnemyAI : MonoBehaviour {
         Vector3 directionFromPlayer = (transform.position - player.transform.position).normalized;
 
         // Generate a random angle for deviation
-        float angle = Random.Range(-30f, 30f); // Adjust the range as needed
+        float angle = Random.Range(-90f, 90f); // Adjust the range as needed
 
         // Rotate the direction vector by the random angle
         Quaternion rotation = Quaternion.Euler(0, angle, 0); // Assuming Y-axis rotation for a typical horizontal plane movement
@@ -120,32 +123,52 @@ public class EnemyAI : MonoBehaviour {
 
     void MoveToTargetPawn() {
         // Logic to move towards the closest cluster of pawns, optimizing by only recalculating when necessary
-        if (!targetPawnObject || !PawnTargetManager.SelectedPawns.Contains(targetPawnObject)) {
-            targetPawnObject = FindClosestClusterOfPawns();
+        if (targetPawnObject == null || !PawnTargetManager.SelectedPawns.Contains(targetPawnObject)) {
+            targetPawnObject = FindClosestPawnCluster();
         }
-        if (targetPawnObject) {
-            agent.destination = targetPawnObject.transform.position;
-        }
+
+        if (targetPawnObject == null) return;
+
+        agent.destination = targetPawnObject.transform.position;
     }
 
+
+
     IEnumerator SummonPawns(SpawnManager spawnManager) {
+        if (spawnManager == null) {
+            Debug.LogError($"{nameof(EnemyAI)} tried to summon pawns but spawnManager is null");
+            yield break;
+        }
+
         lastSummonTime = Time.time;
 
         // Spawn 5 pawns, one at a time, with a slight delay between each spawn
         for (int i = 0; i < 5; i++) {
-            Vector3 randomPoint = transform.position + Random.insideUnitSphere * 10f;
+            Vector3 randomPoint;
+            try {
+                randomPoint = transform.position + Random.insideUnitSphere * 10f;
+            }
+            catch (System.Exception e) {
+                Debug.LogError($"{nameof(EnemyAI)} failed to generate a random point for summoning pawns: {e}");
+                yield break;
+            }
+
             randomPoint.y = transform.position.y;
 
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomPoint, out hit, 10f, NavMesh.AllAreas)) {
-                spawnManager.SpawnEnemy(EnemyType.Pawn, hit.position);
+            if (!NavMesh.SamplePosition(randomPoint, out hit, 10f, NavMesh.AllAreas)) {
+                Debug.LogError($"{nameof(EnemyAI)} could not find a valid position to summon pawns");
+                yield break;
             }
+
+            spawnManager.SpawnEnemy(EnemyType.Pawn, hit.position);
 
             yield return new WaitForSeconds(0.2f);
         }
 
         yield return null;
     }
+
 
     IEnumerator Attack() {
         float startTime = Time.time;
@@ -178,7 +201,7 @@ public class EnemyAI : MonoBehaviour {
         }
     }
 
-    GameObject FindClosestClusterOfPawns() {
+    GameObject FindClosestPawnCluster() {
         var pawns = GameObject.FindGameObjectsWithTag("Pawn").ToList();
 
         // Filter out already selected pawns
@@ -229,12 +252,40 @@ public class EnemyAI : MonoBehaviour {
         return null;
     }
 
+    bool isCharging = false;
+
     private void HandleRookBehavior(float distanceToPlayer) {
+        RaycastHit hit;
         if (distanceToPlayer < attackRange - 0.5f) {
             TriggerAttack();
+        } else if (!Physics.Raycast(transform.position, player.transform.position - transform.position, out hit, distanceToPlayer, groundLayer) && !isCharging) {
+            // Charge at player
+            // move in straight line towards player
+            var goal = player.transform.position;
+            StartCoroutine(ChargeTowardsPlayer(goal));
         } else {
             agent.destination = player.transform.position;
         }
+    }
+
+    private IEnumerator ChargeTowardsPlayer(Vector3 goalPosition) {
+        isCharging = true;
+
+        // Move towards goalPosition until within 0.5f of it
+        while (Vector3.Distance(transform.position, goalPosition) > 1f) {
+            gameObject.transform.LookAt(goalPosition);
+            gameObject.transform.Translate(Vector3.forward * Time.deltaTime * chargeSpeed);
+
+            // check if enemy collides with groundLayer
+            if (Physics.CheckCapsule(transform.position, transform.position + Vector3.up * 0.5f, 0.3f, groundLayer)) {
+                break;
+            }
+
+            yield return 0;
+        }
+
+        // Set charging to false after the charge is complete
+        isCharging = false;
     }
 
     void OnDrawGizmosSelected() {
