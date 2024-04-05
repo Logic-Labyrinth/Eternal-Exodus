@@ -4,20 +4,22 @@ using UnityEngine;
 public class Sword : Weapon {
     PlayerMovement playerMovement;
 
-    public override void BasicAttack(GameObject player) {
+    public override void BasicAttack(Animator animator, GameObject player) {
+        animator.SetTrigger("SwordAttack");
         PlayBasicAttackSound();
     }
 
-    public override void BasicAttack(GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
+    public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
         healthSystem.TakeDamage(baseDamage, WeaponDamageType.SWORD, hitLocation);
-        BasicAttack(player);
+        BasicAttack(animator, player);
     }
 
-    public override void SpecialAttack(GameObject player, HealthSystem healthSystem) {
+    public override void SpecialAttack(Animator animator, GameObject player, HealthSystem healthSystem) {
         if (playerMovement == null) {
             playerMovement = player.GetComponent<PlayerMovement>();
         }
 
+        animator.SetTrigger("SwordSpecial");
         playerMovement.Jump();
     }
 }
