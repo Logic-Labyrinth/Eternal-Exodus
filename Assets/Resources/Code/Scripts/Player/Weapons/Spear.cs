@@ -2,7 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Spear", menuName = "ExodusTools/Weapon/Spear")]
 public class Spear : Weapon {
-    private PlayerDashing playerDash;
+    PlayerDashing playerDash;
 
     public override void BasicAttack(Animator animator, GameObject player) {
         animator.SetTrigger("SpearAttack");
@@ -10,7 +10,6 @@ public class Spear : Weapon {
     }
 
     public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
-        // Basic attack logic
         healthSystem.TakeDamage(baseDamage, WeaponDamageType.SPEAR, hitLocation);
         BasicAttack(animator, player);
     }
@@ -19,7 +18,7 @@ public class Spear : Weapon {
         if (playerDash == null) {
             playerDash = player.GetComponent<PlayerDashing>();
         }
-        
+
         animator.SetTrigger("SpearSpecial");
         playerDash.Dash();
     }

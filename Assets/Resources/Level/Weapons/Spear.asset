@@ -21,7 +21,8 @@ MonoBehaviour:
   specialAttackCooldown: 1.0284462
   localPosition: {x: 0, y: 0.00345, z: 0}
   localRotation: {x: 0.270598, y: 0.65328145, z: -0.65328145, w: 0.270598}
-  basicAttackSounds:
+  basicAttackSounds: []
+  specialAttackSounds:
   - audioClip: {fileID: 8300000, guid: 3973b1d9368e9934ab6a438652f2cd36, type: 3}
     volume: 1
     spacialBlend: 0
@@ -37,7 +38,4 @@ MonoBehaviour:
     spacialBlend: 0
     loop: 0
     player: 1
-  specialAttackSounds: []
   swapAnimation: SwapSpear
-  attackAnimation: SpearAttack
-  specialAnimation: SpearSpecial

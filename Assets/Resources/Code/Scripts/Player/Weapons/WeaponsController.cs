@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine;
+using UnityEngine.UI;
 
 class WeaponObject {
     public GameObject weaponObj;
@@ -34,6 +36,7 @@ public class WeaponsController : MonoBehaviour {
     int activeWeaponIndex;
     [SerializeField] GameObject hand;
     [SerializeField] Animator animator;
+    [SerializeField] GameObject weaponSelectionUI;
 
     [TableList(AlwaysExpanded = true)] public List<Weapon> weapons;
     [SerializeField] List<WeaponObject> weaponObjects;
@@ -53,6 +56,7 @@ public class WeaponsController : MonoBehaviour {
         }
 
         weaponObjects[activeWeaponIndex].weaponObj.SetActive(true);
+        HighlightWeapon(activeWeaponIndex);
     }
 
     void Update() {
@@ -81,6 +85,7 @@ public class WeaponsController : MonoBehaviour {
         currentWeapon.weaponObj.SetActive(true);
 
         animator.SetTrigger(currentWeapon.weapon.swapAnimation);
+        HighlightWeapon(activeWeaponIndex);
     }
 
     void CycleToNextWeapon() {
@@ -89,6 +94,20 @@ public class WeaponsController : MonoBehaviour {
 
     void CycleToPreviousWeapon() {
         SetActiveWeapon((activeWeaponIndex - 1 + weapons.Count) % weapons.Count);
+    }
+
+    void HighlightWeapon(int index) {
+        var children = weaponSelectionUI.transform.GetChildren(true);
+
+        children.ForEach(x => {
+            x.GetComponent<UnityEngine.UI.Outline>().effectColor = new Color(1, 1, 1, 1f);
+            x.transform.localScale = Vector3.one;
+            x.GetComponent<Image>().color = new Color(0, 0, 0, 1f);
+        });
+
+        weaponSelectionUI.transform.GetChild(index).GetComponent<UnityEngine.UI.Outline>().effectColor = new Color(0, 0, 0, 1f);
+        weaponSelectionUI.transform.GetChild(index).GetComponent<Image>().color = new Color(1, 1, 1, 1f);
+        weaponSelectionUI.transform.GetChild(index).transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
     }
 
     void BasicAttack() {

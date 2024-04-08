@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void OnGUI() {
         GUILayout.TextArea($"State: {state}");
-        // GUILayout.TextArea($"Grounded: {isGrounded}");
+        GUILayout.TextArea($"Grounded: {isGrounded}");
         // GUILayout.TextArea($"Wants to uncrouch: {wantsToUncrouch}");
         // GUILayout.TextArea($"Sliding: {sliding}");
         // GUILayout.TextArea($"Crouching: {crouching}");
