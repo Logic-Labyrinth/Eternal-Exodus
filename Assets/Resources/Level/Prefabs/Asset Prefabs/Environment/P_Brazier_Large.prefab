@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5319055101262611677}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: P_Brazier_Large
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 7838217597948642720}
   - component: {fileID: 6586843162499533317}
   - component: {fileID: 8975073435196473039}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SM_Brazier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,8 +61,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5319055101262611677}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -73,7 +73,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7461657321828097818}
-  m_Mesh: {fileID: -3836328607977230042, guid: 809460c84ed99f2449b5d20c141e1de0, type: 3}
+  m_Mesh: {fileID: -2432090755550338912, guid: f02c133b8e2fec041a063b9c41539faa, type: 3}
 --- !u!23 &8975073435196473039
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -136,6 +136,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 227513999351437895, guid: c29aab91a7cf0e84eb13ae26074b0a68,
         type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 227513999351437895, guid: c29aab91a7cf0e84eb13ae26074b0a68,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -162,17 +167,17 @@ PrefabInstance:
     - target: {fileID: 2892396754606277483, guid: c29aab91a7cf0e84eb13ae26074b0a68,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.004
+      value: -0.668
       objectReference: {fileID: 0}
     - target: {fileID: 2892396754606277483, guid: c29aab91a7cf0e84eb13ae26074b0a68,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.525
+      value: 1.065
       objectReference: {fileID: 0}
     - target: {fileID: 2892396754606277483, guid: c29aab91a7cf0e84eb13ae26074b0a68,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.00014
+      value: 0.662
       objectReference: {fileID: 0}
     - target: {fileID: 2892396754606277483, guid: c29aab91a7cf0e84eb13ae26074b0a68,
         type: 3}
@@ -208,6 +213,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3617187328486196837, guid: c29aab91a7cf0e84eb13ae26074b0a68,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6962593772522167827, guid: c29aab91a7cf0e84eb13ae26074b0a68,
         type: 3}
@@ -253,6 +263,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Shadows.m_NearPlane
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193225754839232729, guid: c29aab91a7cf0e84eb13ae26074b0a68,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8335203661546410208, guid: c29aab91a7cf0e84eb13ae26074b0a68,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8411228886969263454, guid: c29aab91a7cf0e84eb13ae26074b0a68,
         type: 3}
