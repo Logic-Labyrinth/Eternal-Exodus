@@ -79,62 +79,68 @@ public class SpawnManager : MonoBehaviour {
         SpawnPoints.AddRange(GameObject.FindGameObjectsWithTag("SpawnPoint").Select(spawnPoint => spawnPoint.transform.position));
     }
 
-    public IEnumerator SpawnEnemy(EnemyType enemyType, float waitTime) {
-
-        // if there are no spawn points, return
-        if (!SpawnPoints.Any()) {
-            yield return null;
+    public void SpawnEnemy(EnemyType enemyType, Vector3? spawnPosition = null) {
+        // select random spawn point if no spawn position is provided
+        if (spawnPosition == null) {// if there are no spawn points, break
+            if (!SpawnPoints.Any()) {
+                return;
+            }
+            spawnPosition = SpawnPoints[Random.Range(0, SpawnPoints.Count)];
         }
-
-        // select random spawn point
-        Vector3 spawnPoint = SpawnPoints[Random.Range(0, SpawnPoints.Count)];
 
         // spawn enemy from correct pool
         switch (enemyType) {
             case EnemyType.Pawn:
                 // check if queue is empty
                 if (!pawnPool.Any()) {
-                    yield break;
+                    Debug.Log("No more pawns in the pool");
+                    return;
                 }
                 // get from pool
                 GameObject pawn = pawnPool.Dequeue();
                 // set position
-                pawn.transform.position = spawnPoint;
+                pawn.transform.position = spawnPosition.Value;
                 // activate enemy
                 pawn.SetActive(true);
                 break;
             case EnemyType.Bishop:
                 if (!bishopPool.Any()) {
-                    yield break;
+                    Debug.Log("No more bishops in the pool");
+                    return;
                 }
                 GameObject bishop = bishopPool.Dequeue();
-                bishop.transform.position = spawnPoint;
+                bishop.transform.position = spawnPosition.Value;
                 bishop.SetActive(true);
                 break;
             case EnemyType.Knight:
                 if (!knightPool.Any()) {
-                    yield break;
+                    Debug.Log("No more knights in the pool");
+                    return;
                 }
                 GameObject knight = knightPool.Dequeue();
-                knight.transform.position = spawnPoint;
+                knight.transform.position = spawnPosition.Value;
                 knight.SetActive(true);
                 break;
             case EnemyType.Rook:
                 if (!rookPool.Any()) {
-                    yield break;
+                    Debug.Log("No more rooks in the pool");
+                    return;
                 }
                 GameObject rook = rookPool.Dequeue();
-                rook.transform.position = spawnPoint;
+                rook.transform.position = spawnPosition.Value;
                 rook.SetActive(true);
                 break;
         }
-
-        yield return new WaitForSeconds(waitTime);
     }
 
     private void FixedUpdate() {
-        var pawnSpawner = StartCoroutine(SpawnEnemy(EnemyType.Pawn, 5f));
-        var bishopSpawner = StartCoroutine(SpawnEnemy(EnemyType.Bishop, 10f));
+        // SpawnEnemy(EnemyType.Pawn);
+        if (bishopPool.Count > 0) {
+            SpawnEnemy(EnemyType.Bishop);
+        }
+        if (rookPool.Count > 0) {
+            SpawnEnemy(EnemyType.Rook);
+        }
     }
 
     public void EnqueueEnemy(GameObject enemy) {
