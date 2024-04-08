@@ -31,6 +31,10 @@ public class HealthSystem : MonoBehaviour {
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
     }
 
+    void OnEnable() {
+        currentHealth = maxHealth;
+     }
+
     void Update() {
         if (healthText && shieldedText) {
             healthText.text = currentHealth.ToString();
@@ -90,7 +94,7 @@ public class HealthSystem : MonoBehaviour {
         hasShield = true;
     }
 
-    void BreakShield() {
+    public void BreakShield() {
         // Stuff for breaking the shield
         hasShield = false;
     }
