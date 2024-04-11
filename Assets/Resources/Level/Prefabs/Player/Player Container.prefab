@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4552237052643547946}
   - component: {fileID: 5303861742103765418}
+  - component: {fileID: 2346101792351645073}
   m_Layer: 0
   m_Name: Teleport Zone
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1135635754512625094}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 79.7, y: 0, z: 81.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,7 +45,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4ddebad6fbaca468808ea9cef34387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 221312063923061393}
+  player: {fileID: 8047854906023948024}
+--- !u!135 &2346101792351645073
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135635754512625094}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 200
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3316136871338105925
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,7 +771,8 @@ PrefabInstance:
       propertyPath: hammerRaycast
       value: 
       objectReference: {fileID: 568161512069068152}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2490800525055524777, guid: aae8a987d63c9cb43aeceab5a83369e7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -757,13 +780,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 368819464120457955}
+    - targetCorrespondingSourceObject: {fileID: 6648451769610664350, guid: aae8a987d63c9cb43aeceab5a83369e7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4638532989323996683}
   m_SourcePrefab: {fileID: 100100000, guid: aae8a987d63c9cb43aeceab5a83369e7, type: 3}
---- !u!1 &221312063923061393 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3529116676574434807, guid: aae8a987d63c9cb43aeceab5a83369e7,
-    type: 3}
-  m_PrefabInstance: {fileID: 3741280509477836646}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &568161512069068152 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3749582245135393310, guid: aae8a987d63c9cb43aeceab5a83369e7,
@@ -815,6 +836,29 @@ MonoBehaviour:
   maxHealth: 100
   shieldStatus: 0
   playerShieldUIController: {fileID: 5305628787002200174}
+--- !u!136 &4638532989323996683
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8047854906023948024}
+  m_Material: {fileID: 13400000, guid: e74e152981549e548b1e61803db8aa84, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4120045956487682705
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -837,7 +881,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 3592490119913354636}
+      objectReference: {fileID: 1884980137777000187}
     - target: {fileID: 7995777001483968423, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
       propertyPath: m_RenderMode
@@ -1199,6 +1243,12 @@ PrefabInstance:
 --- !u!65 &1454853886851417763 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 6626206859562371894, guid: 3e7116876a7fc2d469aa198b69aa5eaf,
+    type: 3}
+  m_PrefabInstance: {fileID: 5748187343330266517}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &1884980137777000187 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6191713485886694254, guid: 3e7116876a7fc2d469aa198b69aa5eaf,
     type: 3}
   m_PrefabInstance: {fileID: 5748187343330266517}
   m_PrefabAsset: {fileID: 0}
