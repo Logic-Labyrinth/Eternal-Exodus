@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 866711654625699043}
   - component: {fileID: 996347329198307916}
   - component: {fileID: 4654790385762977597}
+  - component: {fileID: 5305628787002200174}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
@@ -180,7 +181,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4626521379653120657}
-  m_CullTransparentMesh: 1
+  m_CullTransparentMesh: 0
 --- !u!114 &4654790385762977597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,15 +194,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0.2705884, a: 0.29803923}
-  m_RaycastTarget: 1
+  m_Material: {fileID: 2100000, guid: 805d19dec966b984b82f4607f0dd61de, type: 2}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.5254902}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2275a9e4b9b21264f9bf4624d55b208c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1b002455ff7a48e4e95e8de24fe2dbb5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -211,6 +212,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5305628787002200174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4626521379653120657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 992699359bd832a4da71712393fcadc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldImage: {fileID: 4654790385762977597}
+  fullShieldColor: {r: 0, g: 0.8509804, b: 1, a: 0.11764706}
+  fullShieldSprite: {fileID: 21300000, guid: 1b002455ff7a48e4e95e8de24fe2dbb5, type: 3}
+  damagedShieldColor: {r: 1, g: 0, b: 0, a: 0.16470589}
+  damagedShieldSprite: {fileID: 21300000, guid: 2275a9e4b9b21264f9bf4624d55b208c,
+    type: 3}
+  alphaSpeed: 1
+  alphaRange: 15
 --- !u!1 &4643986203909786024
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,7 +585,7 @@ PrefabInstance:
     - target: {fileID: 2312533256670792127, guid: aae8a987d63c9cb43aeceab5a83369e7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: 5.97
       objectReference: {fileID: 0}
     - target: {fileID: 2312533256670792127, guid: aae8a987d63c9cb43aeceab5a83369e7,
         type: 3}
@@ -646,6 +667,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7970888895079229901, guid: aae8a987d63c9cb43aeceab5a83369e7,
+        type: 3}
+      propertyPath: m_Asset
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8308135938930504847, guid: aae8a987d63c9cb43aeceab5a83369e7,
         type: 3}
       propertyPath: handle
@@ -680,7 +706,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6648451769610664350, guid: aae8a987d63c9cb43aeceab5a83369e7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 368819464120457955}
   m_SourcePrefab: {fileID: 100100000, guid: aae8a987d63c9cb43aeceab5a83369e7, type: 3}
 --- !u!1 &221312063923061393 stripped
 GameObject:
@@ -718,6 +748,27 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3741280509477836646}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8047854906023948024 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6648451769610664350, guid: aae8a987d63c9cb43aeceab5a83369e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 3741280509477836646}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &368819464120457955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8047854906023948024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30b3c437159bc7b4f9937b8f806909e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  shieldStatus: 0
+  playerShieldUIController: {fileID: 5305628787002200174}
 --- !u!1001 &4120045956487682705
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -735,6 +786,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enableWordWrapping
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995777001483968423, guid: d7bbfb7cd9582564983b2560233217b3,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 3592490119913354636}
+    - target: {fileID: 7995777001483968423, guid: d7bbfb7cd9582564983b2560233217b3,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995777001483968423, guid: d7bbfb7cd9582564983b2560233217b3,
+        type: 3}
+      propertyPath: m_PlaneDistance
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8142442011106714849, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
@@ -913,6 +979,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RenderPostProcessing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 673404609579334093, guid: 3e7116876a7fc2d469aa198b69aa5eaf,
+        type: 3}
+      propertyPath: m_Asset
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 673404609579334093, guid: 3e7116876a7fc2d469aa198b69aa5eaf,
         type: 3}
