@@ -17,15 +17,6 @@ public class PlayerShieldUIController : MonoBehaviour {
 
     void Awake() {
         shieldImage = GetComponent<Image>();
-        // shieldImage.material.SetFloat("_alpha", )
-    }
-
-    void Update() {
-        // if (!shieldImage.enabled) return;
-        // if (alphaRange == 0) return;
-        // float sin = Mathf.Sin(Time.time * alphaSpeed) * alphaRange;
-        // Debug.Log(sin + " " + shieldImage.color.a);
-        // shieldImage.color = new Color(shieldImage.color.r, shieldImage.color.g, shieldImage.color.b, sin + shieldImage.color.a);
     }
 
     public void Shield() {
