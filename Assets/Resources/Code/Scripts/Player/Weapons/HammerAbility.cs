@@ -67,7 +67,6 @@ public class HammerAbility : MonoBehaviour {
     public void ActivateHammerAbility() {
         if (isCharged) {
             Collider[] colliders = Physics.OverlapBox(impactArea.transform.position + impactArea.center, impactArea.size * 0.5f, impactArea.transform.rotation);
-            Debug.Log(colliders.Length);
             bool hasEnemy = false, hasGround = false;
 
             colliders.ForEach(x => {

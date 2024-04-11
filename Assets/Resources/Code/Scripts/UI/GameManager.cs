@@ -1,82 +1,28 @@
 using System.Collections;
-using Exodus.ProceduralTools;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
-    [SerializeField] LevelManager levelManager;
-    [SerializeField] TMP_InputField seedInput;
-    [SerializeField] GameObject player;
-    [SerializeField] string gameSceneName;
-    [SerializeField] GameObject seedOptions;
+    [SerializeField] LoadingScreenController loadingScreenController;
 
-    public bool useRandomSeed = true;
-    public string seedText;
+    public static GameManager Instance { get; private set; }
 
-    bool showSeedOptions = false;
-    static GameManager instace;
-
-    public static GameManager Instance {
-        get {
-            if (!instace) instace = FindObjectOfType<GameManager>();
-            return instace;
-        }
-    }
-
-    void Start() {
+    void Awake() {
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        if (levelManager) {
-            DontDestroyOnLoad(levelManager.gameObject);
-        }
     }
 
-    void Update() {
-        seedInput.interactable = !useRandomSeed;
+    IEnumerator LoadLevel(string sceneName) {
+        LevelSelectMenuController levelSelectMenu = LevelSelectMenuController.Instance;
+        levelSelectMenu.gameObject.SetActive(false);
+        loadingScreenController.gameObject.SetActive(true);
+
+        var sceneLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+        while (!sceneLoad.isDone) yield return null;
     }
 
-    public void StartGame() {
-        StartCoroutine(LoadLevel());
-    }
-
-    public void ToggleSeedOptions() {
-        showSeedOptions = !showSeedOptions;
-        seedOptions.SetActive(showSeedOptions);
-    }
-
-    IEnumerator LoadLevel() {
-        // levelManager.useRandomSeed = useRandomSeed;
-        levelManager.seedString = seedText;
-        levelManager.useRandomSeed = false;
-        // levelManager.seedString = "273295";
-
-        levelManager.InitializeLevel();
-
-        var sceneLoad = SceneManager.LoadSceneAsync(gameSceneName, LoadSceneMode.Single);
-
-        while (!sceneLoad.isDone) {
-            yield return null;
-        }
-
-        levelManager.ClearLevel();
-        levelManager.GenerateLevel();
-
-        // Instantiate(player, levelManager.transform.GetChild(0).transform.position, Quaternion.identity);
-    }
-
-    void LoadScene(Scene scene) { }
-
-    public void SetUseRandomSeed(Toggle toggle) {
-        useRandomSeed = !toggle.isOn;
-    }
-
-    public void SetSeed(TMP_InputField inputField) {
-        seedText = inputField.text;
-    }
-
-    public void SetSeed(string seed) {
-        seedText = seed;
+    public void LoadScene(string sceneName){
+        StartCoroutine(LoadLevel(sceneName));
     }
 }

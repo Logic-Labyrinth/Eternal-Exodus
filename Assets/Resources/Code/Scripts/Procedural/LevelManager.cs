@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace Exodus.ProceduralTools {
     public class LevelManager : MonoBehaviour {
-        private System.Random random;
-        private bool isSeedInitialised = false;
+        System.Random random;
+        bool isSeedInitialised = false;
 
         [TabGroup("Level Settings")]
         [DisableIf("useRandomSeed")]
         public string seedString;
-        private int seed;
+        int seed;
 
         [TabGroup("Level Settings")]
         public bool useRandomSeed;
@@ -51,10 +51,6 @@ namespace Exodus.ProceduralTools {
 
         void Start() {
             InitializeLevel();
-            // for (int i = 0; i < 10; i++)
-            // {
-            //     Debug.Log("Test Seed: " + TestSeed());
-            // }
         }
 
         public void InitializeLevel() {
@@ -67,12 +63,6 @@ namespace Exodus.ProceduralTools {
             random = new System.Random(seed);
             isSeedInitialised = true;
         }
-
-        // Previously used for testing the consistency of seeds, currently no longer required
-        // int TestSeed()
-        // {
-        //     return Random.Range(0, 1000000);
-        // }
 
         /// <summary>
         /// Generates a new level based on the given settings and level blocks.
