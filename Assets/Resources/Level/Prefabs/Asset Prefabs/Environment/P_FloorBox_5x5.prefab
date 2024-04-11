@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2298596721237530034}
   - component: {fileID: 2903020894315256343}
   - component: {fileID: 1129679300746964701}
+  - component: {fileID: 216642588641652691}
   m_Layer: 3
   m_Name: SM_Floor_5x5Ends
   m_TagString: Untagged
@@ -83,6 +84,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &216642588641652691
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490006646297841416}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 0.93410695, z: 4.99896}
+  m_Center: {x: -2.5, y: 0.4698745, z: 2.49948}
 --- !u!1 &3353549677760888891
 GameObject:
   m_ObjectHideFlags: 0
