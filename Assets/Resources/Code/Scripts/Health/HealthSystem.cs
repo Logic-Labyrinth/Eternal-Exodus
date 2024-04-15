@@ -20,26 +20,36 @@ public class HealthSystem : MonoBehaviour {
     [SerializeField] TextMeshProUGUI healthText;
     [SerializeField] TextMeshProUGUI shieldedText;
 
+    private SpawnManager spawnManager;
+
     public int GetHealth() { return currentHealth; }
     public int GetMaxHealth() { return maxHealth; }
     public bool HasShield() { return hasShield; }
 
     void Start() {
         currentHealth = maxHealth;
+        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
     }
+
+    void OnEnable() {
+        currentHealth = maxHealth;
+     }
 
     void Update() {
-        healthText.text = currentHealth.ToString();
-        if (hasShield) {
-            shieldedText.text = "Shielded";
-            shieldedText.color = Color.blue;
-        } else {
-            shieldedText.text = "No Shield";
-            shieldedText.color = Color.red;
+        if (healthText && shieldedText) {
+            healthText.text = currentHealth.ToString();
+            if (hasShield) {
+                shieldedText.text = "Shielded";
+                shieldedText.color = Color.blue;
+            } else {
+                shieldedText.text = "No Shield";
+                shieldedText.color = Color.red;
+            }
         }
+
     }
 
-    public void TakeDamage(int damage, WeaponDamageType damageType, Vector3 hitLocation) {
+    public void TakeDamage(int damage, WeaponDamageType? damageType, Vector3 hitLocation) {
         Debug.Log("Damage: " + damage + ", Type: " + damageType);
         if (hasShield) {
             BreakShield();
@@ -60,10 +70,12 @@ public class HealthSystem : MonoBehaviour {
         if (currentHealth <= 0) Kill();
     }
 
-    void Kill() {
+    public void Kill() {
         // Kill the entity
         Debug.Log("I died!");
-        Instantiate(Resources.Load("Level/Prefabs/VFX/Soul"), transform.position, Quaternion.identity);
+        Instantiate(Resources.Load("Level/Prefabs/VFX/Soul"), transform.position + Vector3.up, Quaternion.identity);
+        gameObject.SetActive(false);
+        spawnManager.EnqueueEnemy(gameObject);
     }
 
     public void Heal(int heal) {
@@ -82,7 +94,7 @@ public class HealthSystem : MonoBehaviour {
         hasShield = true;
     }
 
-    void BreakShield() {
+    public void BreakShield() {
         // Stuff for breaking the shield
         hasShield = false;
     }

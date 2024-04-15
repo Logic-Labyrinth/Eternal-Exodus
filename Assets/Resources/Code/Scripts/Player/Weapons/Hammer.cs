@@ -3,26 +3,28 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Hammer", menuName = "ExodusTools/Weapon/Hammer")]
 public class Hammer : Weapon {
     private HammerAbility hammer;
-    // private bool isCharging = false;
-    // private bool isCharged = false;
 
-    public override void BasicAttack(GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
+    public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
+        animator.SetTrigger("HammerAttack");
         healthSystem.TakeDamage(baseDamage, WeaponDamageType.HAMMER, hitLocation);
     }
 
-    public override void SpecialAttack(GameObject player, HealthSystem healthSystem) {
+    public override void SpecialAttack(Animator animator, GameObject player, HealthSystem healthSystem) {
         if (hammer == null) {
             hammer = player.GetComponent<HammerAbility>();
         }
 
+        animator.ResetTrigger("SwapHammer");
+        animator.SetTrigger("HammerCharge");
         hammer.ChargeHammer();
     }
 
-    public override void SpecialRelease(GameObject player, HealthSystem healthSystem) {
+    public override void SpecialRelease(Animator animator, GameObject player, HealthSystem healthSystem) {
         if (hammer == null) {
             hammer = player.GetComponent<HammerAbility>();
         }
 
+        animator.SetTrigger("HammerRelease");
         hammer.ActivateHammerAbility();
     }
 
