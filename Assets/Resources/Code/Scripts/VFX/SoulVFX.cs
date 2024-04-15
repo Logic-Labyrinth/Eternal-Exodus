@@ -4,7 +4,7 @@ using UnityEngine.VFX;
 public class SoulVFX : MonoBehaviour {
     [SerializeField] Transform vfxTransform;
     [SerializeField] float speed = 0.1f;
-    public int soulCount = 1;
+    public SoulType soulType = SoulType.PAWN;
     Vector3 target, origin;
     float timer = 0;
 

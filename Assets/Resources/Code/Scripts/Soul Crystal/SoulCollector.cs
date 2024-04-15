@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class SoulCollector : MonoBehaviour {
     [SerializeField] int soulsNeeded = 10;
-    [SerializeField] int soulsCollected = 0;
+    [SerializeField] SoulValue soulValuePawn;
+    [SerializeField] SoulValue soulValueRook;
+    [SerializeField] SoulValue soulValueKnight;
+    [SerializeField] SoulValue soulValueBishop;
 
     void OnTriggerEnter(Collider other) {
         if (!other.gameObject.CompareTag("Soul")) return;
@@ -10,13 +13,33 @@ public class SoulCollector : MonoBehaviour {
     }
 
     void CollectSoul(SoulVFX soul) {
-        soulsCollected += soul.soulCount;
+        switch (soul.soulType) {
+            case SoulType.PAWN:
+                soulValuePawn.ConsumeSoul();
+                break;
+            case SoulType.ROOK:
+                soulValueRook.ConsumeSoul();
+                break;
+            case SoulType.KNIGHT:
+                soulValueKnight.ConsumeSoul();
+                break;
+            case SoulType.BISHOP:
+                soulValueBishop.ConsumeSoul();
+                break;
+            default:
+                Debug.LogError("Invalid soul type");
+                break;
+        }
 
         soul.Consume();
-        Debug.Log("Souls Collected: " + soulsCollected);
+        if(GetScore() >= soulsNeeded) Done();
+    }
 
-        if (soulsCollected >= soulsNeeded) {
-            Debug.Log("Soul Crystal Complete!");
-        }
+    float GetScore() {
+        return soulValuePawn.GetSoulValue() + soulValueRook.GetSoulValue() + soulValueKnight.GetSoulValue() + soulValueBishop.GetSoulValue();
+    }
+
+    void Done() {
+        Debug.Log("Done!");
     }
 }
