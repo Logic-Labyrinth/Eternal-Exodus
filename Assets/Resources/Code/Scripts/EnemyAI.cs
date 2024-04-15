@@ -383,6 +383,8 @@ public class EnemyAI : MonoBehaviour
             )
             {
                 Debug.Log("Player hit by charge");
+                // Add force to player on hit
+                player.GetComponent<Rigidbody>().AddForce(transform.forward * 200 + Vector3.up * 100, ForceMode.Impulse);
                 isCharging = false;
             }
 

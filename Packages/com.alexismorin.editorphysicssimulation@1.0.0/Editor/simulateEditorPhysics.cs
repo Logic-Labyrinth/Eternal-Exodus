@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class simulateEditorPhysics : MonoBehaviour {
     void Awake(){
-        Physics.simulationMode = SimulationMode.Script;
+        // Physics.simulationMode = SimulationMode.Script;
     }
 
     [MenuItem ("Tools/Simulate Physics in Editor - Start")]
     static void editorSimStart () {
         Debug.Log("Simulating");
-        Physics.simulationMode = SimulationMode.Script;
+        // Physics.simulationMode = SimulationMode.Script;
+        Physics.simulationMode = SimulationMode.FixedUpdate;
         EditorApplication.update += Update;
     }
 

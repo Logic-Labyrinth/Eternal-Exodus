@@ -1,6 +1,5 @@
 using System.Collections;
 using Sirenix.Utilities;
-using Sisus.HierarchyFolders.Prefabs;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
