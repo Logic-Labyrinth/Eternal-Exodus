@@ -15,6 +15,7 @@ public class HealthSystem : MonoBehaviour {
     [SerializeField] WeaponDamageType weakness;
     [SerializeField] WeaponDamageType resistance;
     [SerializeField] bool hasShield = false;
+    [SerializeField] GameObject mesh;
     int currentHealth;
 
     [SerializeField] TextMeshProUGUI healthText;
@@ -92,10 +93,15 @@ public class HealthSystem : MonoBehaviour {
 
     public void Shield() {
         hasShield = true;
+        if(mesh == null) return;
+
+        mesh.GetComponent<MeshRenderer>().materials[1].SetFloat("_ShieldStrength", 2);
     }
 
     public void BreakShield() {
         // Stuff for breaking the shield
         hasShield = false;
+        if(mesh == null) return;
+        mesh.GetComponent<MeshRenderer>().materials[1].SetFloat("_ShieldStrength", 0);
     }
 }

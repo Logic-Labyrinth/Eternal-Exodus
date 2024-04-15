@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -135,12 +134,12 @@ public class SpawnManager : MonoBehaviour {
 
     private void FixedUpdate() {
         // SpawnEnemy(EnemyType.Pawn);
-        if (bishopPool.Count > 0) {
+        // if (bishopPool.Count > 0) {
             SpawnEnemy(EnemyType.Bishop);
-        }
-        if (rookPool.Count > 0) {
-            SpawnEnemy(EnemyType.Rook);
-        }
+        // }
+        // if (rookPool.Count > 0) {
+        //     SpawnEnemy(EnemyType.Rook);
+        // }
     }
 
     public void EnqueueEnemy(GameObject enemy) {
