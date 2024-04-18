@@ -10,19 +10,19 @@ public class simulateEditorPhysics : MonoBehaviour {
     [MenuItem ("Tools/Simulate Physics in Editor - Start")]
     static void EditorSimStart () {
         Debug.Log("Simulating");
-        // Physics.simulationMode = SimulationMode.Script;
-        Physics.simulationMode = SimulationMode.FixedUpdate;
-        // EditorApplication.update += Update;
+        Physics.simulationMode = SimulationMode.Script;
+        // Physics.simulationMode = SimulationMode.FixedUpdate;
+        EditorApplication.update += Update;
     }
 
     [MenuItem ("Tools/Simulate Physics in Editor - Stop")]
     static void EditorSimStop () {
         Debug.Log("Not Simulating");
-        Physics.simulationMode = SimulationMode.FixedUpdate;
-        // EditorApplication.update -= Update;
+        // Physics.simulationMode = SimulationMode.FixedUpdate;
+        EditorApplication.update -= Update;
     }
 
-    // static void Update () {
-    //     Physics.Simulate(Time.deltaTime);
-    // }
+    static void Update () {
+        Physics.Simulate(Time.deltaTime);
+    }
 }
