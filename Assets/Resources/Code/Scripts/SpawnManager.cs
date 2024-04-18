@@ -138,12 +138,12 @@ public class SpawnManager : MonoBehaviour {
         if (pawnPool.Count > 10) {
             SpawnEnemy(EnemyType.Pawn);
         }
-        // if (bishopPool.Count > 0) {
-        //     SpawnEnemy(EnemyType.Bishop);
-        // }
-        // if (rookPool.Count > 0) {
-        //     SpawnEnemy(EnemyType.Rook);
-        // }
+        if (bishopPool.Count > 0) {
+            SpawnEnemy(EnemyType.Bishop);
+        }
+        if (rookPool.Count > 0) {
+            SpawnEnemy(EnemyType.Rook);
+        }
     }
 
     public void EnqueueEnemy(GameObject enemy) {

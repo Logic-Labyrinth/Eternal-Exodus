@@ -22,7 +22,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private NavMeshAgent agent;
     private GameObject player;
-    private HealthSystem playerHealth;
+    private PlayerHealthSystem playerHealth;
     public EnemyType enemyType = EnemyType.Pawn;
 
     // Attack parameters
@@ -53,7 +53,7 @@ public class EnemyAI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player");
-        playerHealth = player.GetComponent<HealthSystem>();
+        playerHealth = player.GetComponent<PlayerHealthSystem>();
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         checkInterval = Random.Range(0f, 0.2f);
     }
@@ -228,23 +228,12 @@ public class EnemyAI : MonoBehaviour
 
             foreach (var hitCollider in hitColliders)
             {
-                if (hitCollider == null)
-                {
-                    continue; // Ignore null entries in hitColliders
-                }
-
-                GameObject parentGameObject = hitCollider.gameObject.GetParent();
-                if (parentGameObject == null)
-                {
-                    continue; // Ignore null entries in hitColliders
-                }
-
-                if (parentGameObject == player)
+                if (hitCollider == player)
                 {
                     // playerHealth could be null, so we need to handle that case
                     if (playerHealth != null)
                     {
-                        playerHealth.TakeDamage(attackDamage, null, hitCollider.transform.position);
+                        playerHealth.TakeDamage(attackDamage);
                     }
                     yield break; // Exit the coroutine early if the player is hit
                 }
@@ -358,13 +347,6 @@ public class EnemyAI : MonoBehaviour
         {
             float elapsedTime = Time.time - startTime;
             float fracJourney = elapsedTime / totalChargeTime;
-
-            // Dynamically update target position for the first 25% of the charge
-            if (fracJourney <= 0.25f)
-            {
-                targetPosition = player.transform.position;
-                totalChargeTime = Vector3.Distance(initialPosition, targetPosition) / chargeSpeed; // Recalculate total charge time based on new target
-            }
 
             // Calculate the new position using Lerp and update the enemy's position
             Vector3 newPosition = Vector3.Lerp(initialPosition, targetPosition, fracJourney);
