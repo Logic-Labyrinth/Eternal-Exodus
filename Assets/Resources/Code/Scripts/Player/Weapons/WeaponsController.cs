@@ -124,7 +124,7 @@ public class WeaponsController : MonoBehaviour {
         if (hit && raycastHit.collider.CompareTag("Enemy"))
             currentWeapon.weapon.BasicAttack(animator, playerReference, raycastHit.collider.transform.parent.GetComponent<HealthSystem>(), raycastHit.point);
         else {
-            if(raycastHit.collider.TryGetComponent<Rigidbody>(out Rigidbody rb)){
+            if (hit && raycastHit.collider.TryGetComponent(out Rigidbody rb)) {
                 rb.AddForceAtPosition(cameraReference.transform.forward * 100, raycastHit.point, ForceMode.Impulse);
             }
             currentWeapon.weapon.BasicAttack(animator, playerReference);
