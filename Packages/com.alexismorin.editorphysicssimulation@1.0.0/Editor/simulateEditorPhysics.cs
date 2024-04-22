@@ -57,6 +57,13 @@ public class simulateEditorPhysics : MonoBehaviour {
         EditorApplication.update -= Update;
     }
 
+    [MenuItem("Tools/Simulate Physics in Editor - Normal")]
+    static void EditorSimNormal() {
+        Debug.Log("Normal Simulation");
+        Physics.simulationMode = SimulationMode.FixedUpdate;
+        EditorApplication.update -= Update;
+    }
+
     static void Update() {
         Physics.Simulate(Time.deltaTime);
     }
