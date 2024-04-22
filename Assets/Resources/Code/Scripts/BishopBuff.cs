@@ -25,7 +25,7 @@ public class BishopBuff : MonoBehaviour {
         if (other.gameObject.CompareTag("Enemy") && other.gameObject.GetParent().CompareTag("Pawn")) {
             if (!pawns.Contains(other.gameObject)) {
                 other.GetComponentInParent<HealthSystem>().Shield();
-                Debug.Log("Shielded");
+                // Debug.Log("Shielded");
                 pawns.Add(other.gameObject);
             }
         }

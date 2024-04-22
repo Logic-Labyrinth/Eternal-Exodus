@@ -6,7 +6,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour {
     public static SpawnManager spawnManager { get; private set; }
 
-    private List<Vector3> SpawnPoints = new List<Vector3>();
+    private List<Vector3> SpawnPoints = new();
     [SerializeField] private GameObject pawnPrefab;
     [SerializeField] private GameObject bishopPrefab;
     [SerializeField] private GameObject knightPrefab;
@@ -41,6 +41,9 @@ public class SpawnManager : MonoBehaviour {
         SpawnPoints.AddRange(GameObject.FindGameObjectsWithTag("SpawnPoint")
             .Select(spawnPoint => spawnPoint.transform.position));
 
+        GameObject enemyContainer = new("Enemies");
+        enemyContainer.transform.parent = transform;
+
         // Instantiate pools for each enemy type
         // (size defined in inspector)
         // and set them to inactive
@@ -48,6 +51,7 @@ public class SpawnManager : MonoBehaviour {
         // Pawn pool
         for (int i = 0; i < pawnPoolSize; i++) {
             GameObject pawn = Instantiate(pawnPrefab);
+            pawn.transform.parent = enemyContainer.transform;
             pawnPool.Enqueue(pawn);
             pawn.SetActive(false);
         }
@@ -55,6 +59,7 @@ public class SpawnManager : MonoBehaviour {
         // Bishop pool
         for (int i = 0; i < bishopPoolSize; i++) {
             GameObject bishop = Instantiate(bishopPrefab);
+            bishop.transform.parent = enemyContainer.transform;
             bishopPool.Enqueue(bishop);
             bishop.SetActive(false);
         }
@@ -62,6 +67,7 @@ public class SpawnManager : MonoBehaviour {
         // Knight pool
         for (int i = 0; i < knightPoolSize; i++) {
             GameObject knight = Instantiate(knightPrefab);
+            knight.transform.parent = enemyContainer.transform;
             knightPool.Enqueue(knight);
             knight.SetActive(false);
         }
@@ -69,6 +75,7 @@ public class SpawnManager : MonoBehaviour {
         // Rook pool
         for (int i = 0; i < rookPoolSize; i++) {
             GameObject rook = Instantiate(rookPrefab);
+            rook.transform.parent = enemyContainer.transform;
             rookPool.Enqueue(rook);
             rook.SetActive(false);
         }
@@ -135,12 +142,12 @@ public class SpawnManager : MonoBehaviour {
 
     private void FixedUpdate() {
         // SpawnEnemy(EnemyType.Pawn);
-        // if (pawnPool.Count > 10) {
-        //     SpawnEnemy(EnemyType.Pawn);
-        // }
-        // if (bishopPool.Count > 0) {
-        //     SpawnEnemy(EnemyType.Bishop);
-        // }
+        if (pawnPool.Count > 10) {
+            SpawnEnemy(EnemyType.Pawn);
+        }
+        if (bishopPool.Count > 0) {
+            SpawnEnemy(EnemyType.Bishop);
+        }
         if (rookPool.Count > 0) {
             SpawnEnemy(EnemyType.Rook);
         }
@@ -148,7 +155,7 @@ public class SpawnManager : MonoBehaviour {
 
     public void EnqueueEnemy(GameObject enemy) {
         // find enemy type and enqueue it
-        switch (enemy.gameObject.tag) {
+        switch (enemy.tag) {
             case "Pawn":
                 PawnTargetManager.ReleasePawn(enemy);
                 pawnPool.Enqueue(enemy);
