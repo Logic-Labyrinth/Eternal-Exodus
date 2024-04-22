@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 namespace Exodus.ProceduralTools {
@@ -126,6 +127,8 @@ namespace Exodus.ProceduralTools {
                     }
                 }
             }
+
+            levelParent.GetComponent<NavMeshSurface>().BuildNavMesh();
         }
 
         bool CanPlaceBlock(int x, int y, Vector2Int dimension, int[,] grid, int xSize, int ySize) {
@@ -278,8 +281,18 @@ namespace Exodus.ProceduralTools {
 
             newLevel.transform.SetPositionAndRotation(new Vector3(0, 0, 0), Quaternion.identity);
             newLevel.transform.SetParent(this.transform, true);
+            newLevel.AddComponent<NavMeshSurface>();
 
             return newLevel;
+        }
+
+        [TabGroup("Level Settings")]
+        [PropertySpace]
+        [Button(ButtonSizes.Large, ButtonAlignment = 1f)]
+        void RegenerateLevel() {
+            ClearLevel();
+            ResetSeed();
+            GenerateLevel();
         }
     }
 }
