@@ -49,6 +49,8 @@ public class EnemyAI : MonoBehaviour
     private SpawnManager spawnManager;
     private float checkInterval;
 
+    public Animator animator;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -174,6 +176,17 @@ public class EnemyAI : MonoBehaviour
             yield break;
         }
 
+        // disable movement
+        agent.isStopped = true;
+
+        // look at player
+        transform.LookAt(player.transform);
+
+        // Play summon animation
+        animator.SetTrigger("SummonPawns");
+
+        yield return new WaitForSeconds(1f);
+
         lastSummonTime = Time.time;
 
         // Spawn 5 pawns, one at a time, with a slight delay between each spawn
@@ -208,12 +221,17 @@ public class EnemyAI : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
 
+        // enable movement
+        agent.isStopped = false;
+
         yield return null;
     }
 
     IEnumerator Attack()
     {
         float startTime = Time.time;
+
+        animator.SetTrigger("Attack");
 
         while (Time.time - startTime < attackDuration)
         {
@@ -311,23 +329,23 @@ public class EnemyAI : MonoBehaviour
     private void HandleRookBehavior(float distanceToPlayer)
     {
         RaycastHit hit;
-        if (distanceToPlayer < attackRange - 0.5f)
+        if (distanceToPlayer < attackRange)
         {
             TriggerAttack();
         }
-        else if (
-            !Physics.Raycast(
-                transform.position,
-                player.transform.position - transform.position,
-                out hit,
-                distanceToPlayer,
-                groundLayer
-            ) && !isCharging
-        )
-        {
-            // Charge at player
-            StartCoroutine(ChargeTowardsPlayer());
-        }
+        // else if (
+        //     !Physics.Raycast(
+        //         transform.position,
+        //         player.transform.position - transform.position,
+        //         out hit,
+        //         distanceToPlayer,
+        //         groundLayer
+        //     ) && !isCharging
+        // )
+        // {
+        //     // Charge at player
+        //     StartCoroutine(ChargeTowardsPlayer());
+        // }
         else
         {
             agent.destination = player.transform.position;
@@ -337,11 +355,16 @@ public class EnemyAI : MonoBehaviour
     private IEnumerator ChargeTowardsPlayer()
     {
         isCharging = true;
+        agent.isStopped = true;
+
         Vector3 initialPosition = transform.position; // Record the starting position
         Vector3 targetPosition = player.transform.position; // Initial target position
         float totalChargeTime = Vector3.Distance(initialPosition, targetPosition) / chargeSpeed; // Total time to complete the charge
         float startTime = Time.time;
         float minimumDistanceToPlayer = 1f; // Threshold distance to stop the charge if close enough to the player
+
+        animator.SetTrigger("Charge");
+        yield return new WaitForSeconds(1.5f);
 
         while (isCharging)
         {
@@ -366,7 +389,7 @@ public class EnemyAI : MonoBehaviour
             {
                 Debug.Log("Player hit by charge");
                 // Add force to player on hit
-                player.GetComponent<Rigidbody>().AddForce(transform.forward * 200 + Vector3.up * 100, ForceMode.Impulse);
+                player.GetComponent<Rigidbody>().AddForce(transform.forward * 100 + Vector3.up * 20, ForceMode.Impulse);
                 isCharging = false;
             }
 
@@ -391,6 +414,9 @@ public class EnemyAI : MonoBehaviour
 
             yield return null;
         }
+
+        animator.SetTrigger("ChargeFinished");
+        agent.isStopped = false;
 
         // Set rook to nearest point on navmesh
         NavMeshHit hit;
