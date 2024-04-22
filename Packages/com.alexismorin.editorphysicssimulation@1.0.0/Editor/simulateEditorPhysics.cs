@@ -53,7 +53,7 @@ public class simulateEditorPhysics : MonoBehaviour {
     [MenuItem("Tools/Simulate Physics in Editor - Stop")]
     static void EditorSimStop() {
         Debug.Log("Not Simulating");
-        // Physics.simulationMode = SimulationMode.FixedUpdate;
+        Physics.simulationMode = SimulationMode.FixedUpdate;
         EditorApplication.update -= Update;
     }
 

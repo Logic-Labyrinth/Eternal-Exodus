@@ -28,7 +28,10 @@ public class SettingsMenuController : MonoBehaviour {
 
     public void OpenSettings() {
         Time.timeScale = 0;
-        children.ForEach(x => x.gameObject.SetActive(true));
+        children.ForEach(x => {
+            Debug.Log(x.gameObject.name);
+            x.gameObject.SetActive(true);
+        });
     }
 
     public void CloseSettings() {
