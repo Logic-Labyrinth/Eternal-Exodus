@@ -128,6 +128,7 @@ namespace Exodus.ProceduralTools {
                 }
             }
 
+            levelParent.GetComponent<NavMeshSurface>().RemoveData();
             levelParent.GetComponent<NavMeshSurface>().BuildNavMesh();
         }
 
