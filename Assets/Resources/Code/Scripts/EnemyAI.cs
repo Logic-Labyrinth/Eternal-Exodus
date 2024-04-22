@@ -22,7 +22,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private NavMeshAgent agent;
     private GameObject player;
-    private HealthSystem playerHealth;
+    private PlayerHealthSystem playerHealth;
     public EnemyType enemyType = EnemyType.Pawn;
 
     // Attack parameters
@@ -49,11 +49,13 @@ public class EnemyAI : MonoBehaviour
     private SpawnManager spawnManager;
     private float checkInterval;
 
+    public Animator animator;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player");
-        playerHealth = player.GetComponent<HealthSystem>();
+        playerHealth = player.GetComponent<PlayerHealthSystem>();
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         checkInterval = Random.Range(0f, 0.2f);
     }
@@ -174,6 +176,17 @@ public class EnemyAI : MonoBehaviour
             yield break;
         }
 
+        // disable movement
+        agent.isStopped = true;
+
+        // look at player
+        transform.LookAt(player.transform);
+
+        // Play summon animation
+        animator.SetTrigger("SummonPawns");
+
+        yield return new WaitForSeconds(1f);
+
         lastSummonTime = Time.time;
 
         // Spawn 5 pawns, one at a time, with a slight delay between each spawn
@@ -208,12 +221,17 @@ public class EnemyAI : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
 
+        // enable movement
+        agent.isStopped = false;
+
         yield return null;
     }
 
     IEnumerator Attack()
     {
         float startTime = Time.time;
+
+        animator.SetTrigger("Attack");
 
         while (Time.time - startTime < attackDuration)
         {
@@ -228,23 +246,12 @@ public class EnemyAI : MonoBehaviour
 
             foreach (var hitCollider in hitColliders)
             {
-                if (hitCollider == null)
-                {
-                    continue; // Ignore null entries in hitColliders
-                }
-
-                GameObject parentGameObject = hitCollider.gameObject.GetParent();
-                if (parentGameObject == null)
-                {
-                    continue; // Ignore null entries in hitColliders
-                }
-
-                if (parentGameObject == player)
+                if (hitCollider == player)
                 {
                     // playerHealth could be null, so we need to handle that case
                     if (playerHealth != null)
                     {
-                        playerHealth.TakeDamage(attackDamage, null, hitCollider.transform.position);
+                        playerHealth.TakeDamage(attackDamage);
                     }
                     yield break; // Exit the coroutine early if the player is hit
                 }
@@ -322,23 +329,23 @@ public class EnemyAI : MonoBehaviour
     private void HandleRookBehavior(float distanceToPlayer)
     {
         RaycastHit hit;
-        if (distanceToPlayer < attackRange - 0.5f)
+        if (distanceToPlayer < attackRange)
         {
             TriggerAttack();
         }
-        else if (
-            !Physics.Raycast(
-                transform.position,
-                player.transform.position - transform.position,
-                out hit,
-                distanceToPlayer,
-                groundLayer
-            ) && !isCharging
-        )
-        {
-            // Charge at player
-            StartCoroutine(ChargeTowardsPlayer());
-        }
+        // else if (
+        //     !Physics.Raycast(
+        //         transform.position,
+        //         player.transform.position - transform.position,
+        //         out hit,
+        //         distanceToPlayer,
+        //         groundLayer
+        //     ) && !isCharging
+        // )
+        // {
+        //     // Charge at player
+        //     StartCoroutine(ChargeTowardsPlayer());
+        // }
         else
         {
             agent.destination = player.transform.position;
@@ -348,23 +355,21 @@ public class EnemyAI : MonoBehaviour
     private IEnumerator ChargeTowardsPlayer()
     {
         isCharging = true;
+        agent.isStopped = true;
+
         Vector3 initialPosition = transform.position; // Record the starting position
         Vector3 targetPosition = player.transform.position; // Initial target position
         float totalChargeTime = Vector3.Distance(initialPosition, targetPosition) / chargeSpeed; // Total time to complete the charge
         float startTime = Time.time;
         float minimumDistanceToPlayer = 1f; // Threshold distance to stop the charge if close enough to the player
 
+        animator.SetTrigger("Charge");
+        yield return new WaitForSeconds(1.5f);
+
         while (isCharging)
         {
             float elapsedTime = Time.time - startTime;
             float fracJourney = elapsedTime / totalChargeTime;
-
-            // Dynamically update target position for the first 25% of the charge
-            if (fracJourney <= 0.25f)
-            {
-                targetPosition = player.transform.position;
-                totalChargeTime = Vector3.Distance(initialPosition, targetPosition) / chargeSpeed; // Recalculate total charge time based on new target
-            }
 
             // Calculate the new position using Lerp and update the enemy's position
             Vector3 newPosition = Vector3.Lerp(initialPosition, targetPosition, fracJourney);
@@ -383,6 +388,8 @@ public class EnemyAI : MonoBehaviour
             )
             {
                 Debug.Log("Player hit by charge");
+                // Add force to player on hit
+                player.GetComponent<Rigidbody>().AddForce(transform.forward * 100 + Vector3.up * 20, ForceMode.Impulse);
                 isCharging = false;
             }
 
@@ -407,6 +414,9 @@ public class EnemyAI : MonoBehaviour
 
             yield return null;
         }
+
+        animator.SetTrigger("ChargeFinished");
+        agent.isStopped = false;
 
         // Set rook to nearest point on navmesh
         NavMeshHit hit;
