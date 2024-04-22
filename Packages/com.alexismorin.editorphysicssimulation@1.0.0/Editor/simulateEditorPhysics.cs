@@ -3,10 +3,10 @@ using UnityEditor;
 using UnityEngine;
 
 public class simulateEditorPhysics : MonoBehaviour {
-    void Awake() {
+    // void Awake() {
         // Physics.simulationMode = SimulationMode.Script;
-        Physics.simulationMode = SimulationMode.FixedUpdate;
-    }
+        // Physics.simulationMode = SimulationMode.FixedUpdate;
+    // }
 
     [MenuItem("Tools/Simulate Physics in Editor - Start x1")]
     static void EditorSimStart1() {

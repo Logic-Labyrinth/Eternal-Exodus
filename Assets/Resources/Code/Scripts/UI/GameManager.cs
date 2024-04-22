@@ -43,11 +43,10 @@ public class GameManager : MonoBehaviour {
         GameObject.Find("Portal").GetComponent<PortalVFX>().OpenPortal();
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.G)) {
-            Debug.Log("End Level");
-            EndLevel();
-
-        }
-    }
+    // private void Update() {
+    //     if (Input.GetKeyDown(KeyCode.G)) {
+    //         Debug.Log("End Level");
+    //         EndLevel();
+    //     }
+    // }
 }
