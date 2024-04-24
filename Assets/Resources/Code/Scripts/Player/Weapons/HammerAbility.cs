@@ -85,10 +85,8 @@ public class HammerAbility : MonoBehaviour {
             }
         }
 
-        isCharged = false;
-        isCharging = false;
-        slider.gameObject.SetActive(false);
         StopCoroutine(storedCoroutine);
+        Reset();
     }
 
     public void Reset() {

@@ -43,8 +43,6 @@ GameObject:
   - component: {fileID: 6217610963455507285}
   - component: {fileID: 7054536628325971184}
   - component: {fileID: 5044674686098145338}
-  - component: {fileID: 3491316787972363243}
-  - component: {fileID: 9204025255927162621}
   - component: {fileID: 5778490392696588155}
   m_Layer: 3
   m_Name: SM_Pillar_1
@@ -118,50 +116,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3491316787972363243
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6702117751934591471}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.428008
-  m_Height: 3.298728
-  m_Direction: 1
-  m_Center: {x: 0.429068, y: 1.649364, z: 0.4280075}
---- !u!65 &9204025255927162621
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6702117751934591471}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.856016, y: 0.38, z: 0.856015}
-  m_Center: {x: 0.429068, y: 3.15, z: 0.4280075}
 --- !u!64 &5778490392696588155
 MeshCollider:
   m_ObjectHideFlags: 0
