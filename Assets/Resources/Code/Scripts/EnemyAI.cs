@@ -45,6 +45,8 @@ public class EnemyAI : MonoBehaviour
 
     [ShowIf("enemyType", EnemyType.Rook)]
     public float chargeSpeed = 20f;
+    bool chargingCooldown = false;
+    public float chargingCooldownTime = 10f;
 
     private SpawnManager spawnManager;
     private float checkInterval;
@@ -68,6 +70,8 @@ public class EnemyAI : MonoBehaviour
 
     // Time between checks in seconds
     private float lastCheckTime = 0f;
+
+    
 
     void Update()
     {
@@ -324,7 +328,7 @@ public class EnemyAI : MonoBehaviour
         return null;
     }
 
-    bool isCharging = false;
+    public bool isCharging = false;
 
     private void HandleRookBehavior(float distanceToPlayer)
     {
@@ -333,19 +337,19 @@ public class EnemyAI : MonoBehaviour
         {
             TriggerAttack();
         }
-        // else if (
-        //     !Physics.Raycast(
-        //         transform.position,
-        //         player.transform.position - transform.position,
-        //         out hit,
-        //         distanceToPlayer,
-        //         groundLayer
-        //     ) && !isCharging
-        // )
-        // {
-        //     // Charge at player
-        //     StartCoroutine(ChargeTowardsPlayer());
-        // }
+        else if (
+            !Physics.Raycast(
+                transform.position,
+                new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z) - transform.position, // locked on y axis
+                out hit,
+                distanceToPlayer,
+                groundLayer
+            ) && !isCharging && !chargingCooldown && 20f > Vector3.Distance(transform.position, player.transform.position) && Vector3.Distance(transform.position, player.transform.position) > 10f
+        )
+        {
+            // Charge at player
+            StartCoroutine(ChargeTowardsPlayer());
+        }
         else
         {
             agent.destination = player.transform.position;
@@ -357,66 +361,41 @@ public class EnemyAI : MonoBehaviour
         isCharging = true;
         agent.isStopped = true;
 
-        Vector3 initialPosition = transform.position; // Record the starting position
-        Vector3 targetPosition = player.transform.position; // Initial target position
-        float totalChargeTime = Vector3.Distance(initialPosition, targetPosition) / chargeSpeed; // Total time to complete the charge
+        Vector3 originalTargetPosition = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
+        Vector3 targetPosition = originalTargetPosition; // Initial target position locked on y axis
+        float totalChargeTime = 5f; // Total time to complete the charge
         float startTime = Time.time;
-        float minimumDistanceToPlayer = 1f; // Threshold distance to stop the charge if close enough to the player
+
+        transform.LookAt(targetPosition);
 
         animator.SetTrigger("Charge");
         yield return new WaitForSeconds(1.5f);
 
         while (isCharging)
         {
-            float elapsedTime = Time.time - startTime;
-            float fracJourney = elapsedTime / totalChargeTime;
+            targetPosition = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
+            transform.LookAt(targetPosition);
+            // set new position for frame
+            transform.position += transform.forward * chargeSpeed * Time.deltaTime;
 
-            // Calculate the new position using Lerp and update the enemy's position
-            Vector3 newPosition = Vector3.Lerp(initialPosition, targetPosition, fracJourney);
-            transform.position = newPosition;
-
-            // Aim the gameObject towards the target continuously during the first part of the charge
-            if (fracJourney <= 0.25f)
-            {
-                transform.LookAt(targetPosition);
-            }
-
-            // Check if the enemy is close enough to the player to stop the charge
-            if (
-                Vector3.Distance(transform.position, player.transform.position)
-                <= minimumDistanceToPlayer
-            )
-            {
-                Debug.Log("Player hit by charge");
-                // Add force to player on hit
-                player.GetComponent<Rigidbody>().AddForce(transform.forward * 100 + Vector3.up * 20, ForceMode.Impulse);
+            if (Vector3.Distance(targetPosition, transform.position) <= 0.1f){
                 isCharging = false;
             }
 
-            // Check for collision with groundLayer to potentially stop the charge
-            if (
-                Physics.CheckCapsule(
-                    transform.position,
-                    transform.position + Vector3.up * 0.5f,
-                    0.2f,
-                    groundLayer
-                )
-            )
+            // Check if the charge time has elapsed
+            if (Time.time - startTime >= totalChargeTime)
             {
-                isCharging = false; // Exit the loop if collision detected
+                isCharging = false; // Exit the loop if the charge time has elapsed
             }
 
-            // Condition to end the charge if the duration has been reached
-            if (fracJourney >= 1f)
-            {
-                isCharging = false;
-            }
-
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
 
         animator.SetTrigger("ChargeFinished");
         agent.isStopped = false;
+
+        chargingCooldown = true;
+        StartCoroutine(ChargeCooldown());
 
         // Set rook to nearest point on navmesh
         NavMeshHit hit;
@@ -425,7 +404,14 @@ public class EnemyAI : MonoBehaviour
             agent.destination = hit.position;
         }
     }
+
+    public IEnumerator ChargeCooldown() {
+        yield return new WaitForSeconds(chargingCooldownTime);
+
+        chargingCooldown = false;
+    }
 }
+
 
 public static class PawnTargetManager
 {
