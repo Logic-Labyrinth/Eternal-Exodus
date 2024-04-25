@@ -41,5 +41,6 @@ public class SoulCollector : MonoBehaviour {
 
     void Done() {
         Debug.Log("Done!");
+        GameManager.Instance.EndLevel();
     }
 }

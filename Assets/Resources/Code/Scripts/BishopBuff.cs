@@ -1,17 +1,12 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class BishopBuff : MonoBehaviour
-{
+public class BishopBuff : MonoBehaviour {
     [SerializeField] SphereCollider buffArea;
-    List<GameObject> pawns = new List<GameObject>();
+    List<GameObject> pawns = new();
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         if (!buffArea) buffArea = GetComponent<SphereCollider>();
     }
 
@@ -26,11 +21,11 @@ public class BishopBuff : MonoBehaviour
 
     // give pawn shield from health system
     void OnTriggerStay(Collider other) {
-        Debug.Log("Something entered me: " + other.gameObject.name);
-        if (other.gameObject.tag == "Enemy" && other.gameObject.GetParent().tag == "Pawn") {
+        // Debug.Log("Something entered me: " + other.gameObject.name);
+        if (other.gameObject.CompareTag("Enemy") && other.gameObject.GetParent().CompareTag("Pawn")) {
             if (!pawns.Contains(other.gameObject)) {
                 other.GetComponentInParent<HealthSystem>().Shield();
-                Debug.Log("Shielded");
+                // Debug.Log("Shielded");
                 pawns.Add(other.gameObject);
             }
         }
