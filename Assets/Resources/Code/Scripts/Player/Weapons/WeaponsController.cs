@@ -137,6 +137,10 @@ public class WeaponsController : MonoBehaviour {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         if (!currentWeapon.canUseSpecialAttack) return;
         currentWeapon.PutOnCD();
+
+        var col = currentWeapon.weaponObj.GetComponent<Collider>();
+        if(col) col.enabled = true;
+
         currentWeapon.weapon.SpecialAttack(animator, playerReference, null);
         StartCoroutine(ResetSpecialAbility(activeWeaponIndex));
     }

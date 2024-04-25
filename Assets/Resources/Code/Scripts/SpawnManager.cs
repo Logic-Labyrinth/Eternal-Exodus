@@ -100,7 +100,7 @@ public class SpawnManager : MonoBehaviour {
             case EnemyType.Pawn:
                 // check if queue is empty
                 if (!pawnPool.Any()) {
-                    Debug.Log("No more pawns in the pool");
+                    // Debug.Log("No more pawns in the pool");
                     return;
                 }
                 // get from pool
@@ -112,7 +112,7 @@ public class SpawnManager : MonoBehaviour {
                 break;
             case EnemyType.Bishop:
                 if (!bishopPool.Any()) {
-                    Debug.Log("No more bishops in the pool");
+                    // Debug.Log("No more bishops in the pool");
                     return;
                 }
                 GameObject bishop = bishopPool.Dequeue();
@@ -121,7 +121,7 @@ public class SpawnManager : MonoBehaviour {
                 break;
             case EnemyType.Knight:
                 if (!knightPool.Any()) {
-                    Debug.Log("No more knights in the pool");
+                    // Debug.Log("No more knights in the pool");
                     return;
                 }
                 GameObject knight = knightPool.Dequeue();
@@ -130,7 +130,7 @@ public class SpawnManager : MonoBehaviour {
                 break;
             case EnemyType.Rook:
                 if (!rookPool.Any()) {
-                    Debug.Log("No more rooks in the pool");
+                    // Debug.Log("No more rooks in the pool");
                     return;
                 }
                 GameObject rook = rookPool.Dequeue();
