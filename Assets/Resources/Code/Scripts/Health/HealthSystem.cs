@@ -31,6 +31,10 @@ public class HealthSystem : MonoBehaviour {
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
     }
 
+    void OnEnable() {
+        currentHealth = maxHealth;
+     }
+
     void Update() {
         if (healthText && shieldedText) {
             healthText.text = currentHealth.ToString();
@@ -66,10 +70,10 @@ public class HealthSystem : MonoBehaviour {
         if (currentHealth <= 0) Kill();
     }
 
-    void Kill() {
+    public void Kill() {
         // Kill the entity
         Debug.Log("I died!");
-        Instantiate(Resources.Load("Level/Prefabs/VFX/Soul"), transform.position, Quaternion.identity);
+        Instantiate(Resources.Load("Level/Prefabs/VFX/Soul"), transform.position + Vector3.up, Quaternion.identity);
         gameObject.SetActive(false);
         spawnManager.EnqueueEnemy(gameObject);
     }
@@ -90,7 +94,7 @@ public class HealthSystem : MonoBehaviour {
         hasShield = true;
     }
 
-    void BreakShield() {
+    public void BreakShield() {
         // Stuff for breaking the shield
         hasShield = false;
     }

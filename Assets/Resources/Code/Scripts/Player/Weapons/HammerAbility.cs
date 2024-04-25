@@ -1,4 +1,7 @@
 using System.Collections;
+using Sirenix.Utilities;
+using Sisus.HierarchyFolders.Prefabs;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,11 +25,15 @@ public class HammerAbility : MonoBehaviour {
     public Image handle, background;
     float timer = 0;
 
+    GameObject DEBUG;
+
     void Start() {
         rb = transform.GetComponent<Rigidbody>();
         orientation = transform.Find("Orientation");
         enemyLayer = LayerMask.NameToLayer("Enemy");
         groundLayer = LayerMask.NameToLayer("Ground");
+        DEBUG = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        DEBUG.GetComponent<BoxCollider>().enabled = false;
     }
 
     IEnumerator CompleteCharge() {
@@ -59,27 +66,23 @@ public class HammerAbility : MonoBehaviour {
 
     public void ActivateHammerAbility() {
         if (isCharged) {
-            if (
-                Physics.CheckBox(   // ENEMY CHECK
-                    impactArea.transform.position,
-                    impactArea.size * 0.5f,
-                    impactArea.transform.rotation,
-                    enemyLayer
-                )
-            ) {
+            Collider[] colliders = Physics.OverlapBox(impactArea.transform.position + impactArea.center, impactArea.size * 0.5f, impactArea.transform.rotation);
+            Debug.Log(colliders.Length);
+            bool hasEnemy = false, hasGround = false;
+
+            colliders.ForEach(x => {
+                Debug.Log(x.gameObject.name);
+                if (x.gameObject.layer == enemyLayer) hasEnemy = true;
+                if (x.gameObject.layer == groundLayer) hasGround = true;
+            });
+
+            if (hasEnemy) {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
                     (Vector3.up + 3f * enemyBounceMultiplier * orientation.forward) * hammerForce,
                     ForceMode.Impulse
                 );
-            } else if (
-                Physics.CheckBox(   // GROUND CHECK
-                    impactArea.transform.position,
-                    impactArea.size * 0.5f,
-                    impactArea.transform.rotation,
-                    groundLayer
-                )
-            ) {
+            } else if (hasGround) {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
                     (Vector3.up + orientation.forward * 3f) * hammerForce,

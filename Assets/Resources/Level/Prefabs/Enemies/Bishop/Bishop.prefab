@@ -264,6 +264,8 @@ GameObject:
   - component: {fileID: 4886458203522504958}
   - component: {fileID: 3305345896909533263}
   - component: {fileID: 5903147516518706103}
+  - component: {fileID: 995070222508506550}
+  - component: {fileID: 3398763678413376148}
   m_Layer: 0
   m_Name: Bishop
   m_TagString: Bishop
@@ -326,6 +328,10 @@ MonoBehaviour:
   attackDamage: 1
   attackDuration: 2
   retreatRange: 20
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  chargeSpeed: 15
 --- !u!195 &5903147516518706103
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -348,6 +354,40 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &995070222508506550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3387480086823893954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9918d58bf9e22924c86b556a8401fe07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffArea: {fileID: 3398763678413376148}
+--- !u!135 &3398763678413376148
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3387480086823893954}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 8
+  m_Center: {x: 0, y: 3.3000002, z: 0}
 --- !u!1 &6428921586690044893
 GameObject:
   m_ObjectHideFlags: 0
