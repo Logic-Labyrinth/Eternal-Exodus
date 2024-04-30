@@ -40,6 +40,7 @@ public class PlayerHealthSystem : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.Z)) Shield();
         if(Input.GetKeyDown(KeyCode.X)) DamageShield();
         if(Input.GetKeyDown(KeyCode.C)) BreakShield();
+        if(Input.GetKeyDown(KeyCode.End)) Kill();
     }
 
     public void Kill() {

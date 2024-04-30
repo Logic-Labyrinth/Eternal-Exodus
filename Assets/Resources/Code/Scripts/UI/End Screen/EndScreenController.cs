@@ -13,6 +13,7 @@ public class EndScreenController : MonoBehaviour {
     }
 
     public void ReloadLevel() {
+        GameManager.Instance.ResetCounter();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

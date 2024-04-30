@@ -73,8 +73,13 @@ public class GameManager : MonoBehaviour {
     }
 
     public void DisablePlayerInput() {
-        FindObjectOfType<PlayerMovement>().DisableMovementInput();
-        FindObjectOfType<PlayerCamera>().DisableCameraInput();
+        Debug.Log("Disable Player Input");
+        var pm = FindObjectOfType<PlayerMovement>();
+        pm.DisableMovementInput();
+        Debug.Log("Disabled Movement Input");
+        var pc = FindObjectOfType<PlayerCamera>();
+        pc.DisableCameraInput();
+        Debug.Log("Disabled Camera Input");
     }
 
     public void EnablePlayerInput() {
@@ -91,5 +96,12 @@ public class GameManager : MonoBehaviour {
 
     public void Quit() {
         Application.Quit();
+    }
+
+    public void ResetCounter() {
+        KillCountPawn = 0;
+        KillCountKnight = 69;
+        KillCountRook = 0;
+        KillCountBishop = 0;
     }
 }
