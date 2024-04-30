@@ -15,35 +15,30 @@ public class SoulCollector : MonoBehaviour {
         {EnemyType.Bishop, 0}
     };
 
-    public float score;
+    float DEBUG_SCORE = 0;
+    float pickupSoulScore = 0;
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Soul"))
             CollectSoul(other.GetComponent<SoulVFX>());
+        if (other.gameObject.CompareTag("SoulPickup"))
+            CollectPickupSoul(other.GetComponent<SoulPickupVFX>());
     }
 
     void CollectSoul(SoulVFX soul) {
         switch (soul.soulType) {
             case EnemyType.Pawn:
-                // soulValuePawn.ConsumeSoul();
                 Debug.Log("PAWN");
                 souls[EnemyType.Pawn]++;
-                // Debug.LogError("Consumed Pawn: " + soulValuePawn.GetSoulValue());
                 break;
             case EnemyType.Rook:
                 souls[EnemyType.Rook]++;
-                // soulValueRook.ConsumeSoul();
-                // Debug.LogError("Consumed Rook: " + soulValueRook.GetSoulValue());
                 break;
             case EnemyType.Knight:
                 souls[EnemyType.Knight]++;
-                // soulValueKnight.ConsumeSoul();
-                // Debug.LogError("Consumed Knight: " + soulValueKnight.GetSoulValue());
                 break;
             case EnemyType.Bishop:
                 souls[EnemyType.Bishop]++;
-                // soulValueBishop.ConsumeSoul();
-                // Debug.LogError("Consumed Bishop: " + soulValueBishop.GetSoulValue());
                 break;
             default:
                 Debug.LogError("Invalid soul type");
@@ -51,15 +46,24 @@ public class SoulCollector : MonoBehaviour {
         }
 
         Destroy(soul.gameObject);
-        score = GetScore();
-        if (GetScore() >= soulsNeeded) Done();
+        DEBUG_SCORE = GetScore();
+        if (DEBUG_SCORE >= soulsNeeded) Done();
+    }
+
+    void CollectPickupSoul(SoulPickupVFX soul) {
+        pickupSoulScore += soul.soulValue;
+
+        Destroy(soul.gameObject);
+        DEBUG_SCORE = GetScore();
+        if (DEBUG_SCORE >= soulsNeeded) Done();
     }
 
     float GetScore() {
         return soulValuePawn.GetSoulValue(souls[EnemyType.Pawn]) +
         soulValueRook.GetSoulValue(souls[EnemyType.Rook]) +
         soulValueKnight.GetSoulValue(souls[EnemyType.Knight]) +
-        soulValueBishop.GetSoulValue(souls[EnemyType.Bishop]);
+        soulValueBishop.GetSoulValue(souls[EnemyType.Bishop]) +
+        pickupSoulScore;
     }
 
     void Done() {
