@@ -85,6 +85,7 @@ public class WeaponsController : MonoBehaviour {
         currentWeapon.weaponObj.SetActive(true);
 
         animator.SetTrigger(currentWeapon.weapon.swapAnimation);
+        animator.SetInteger("Active Weapon", activeWeaponIndex);
         HighlightWeapon(activeWeaponIndex);
     }
 
@@ -135,6 +136,8 @@ public class WeaponsController : MonoBehaviour {
                 }
                 currentWeapon.weapon.BasicAttack(animator, playerReference);
             }
+        } else {
+            currentWeapon.weapon.BasicAttack(animator, playerReference);
         }
         currentWeapon.canUseBasicAttack = false;
         StartCoroutine(ResetBasicAttack(activeWeaponIndex));
