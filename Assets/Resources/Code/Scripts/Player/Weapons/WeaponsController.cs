@@ -121,13 +121,20 @@ public class WeaponsController : MonoBehaviour {
 
         if (!currentWeapon.canUseBasicAttack) return;
 
-        if (hit && raycastHit.collider.CompareTag("Enemy"))
-            currentWeapon.weapon.BasicAttack(animator, playerReference, raycastHit.collider.transform.parent.GetComponent<HealthSystem>(), raycastHit.point);
-        else {
-            if (hit && raycastHit.collider.TryGetComponent(out Rigidbody rb)) {
-                rb.AddForceAtPosition(cameraReference.transform.forward * 100, raycastHit.point, ForceMode.Impulse);
+        // if (hit && raycastHit.collider.CompareTag("Enemy")) {
+        if (hit) {
+            if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
+                currentWeapon.weapon.BasicAttack(animator, playerReference, raycastHit.collider.transform.GetComponent<HealthSystem>(), raycastHit.point);
+            } else if (raycastHit.collider.CompareTag("Weakpoint")) {
+                currentWeapon.weapon.WeakpointAttack(animator, playerReference, raycastHit.collider.transform.GetComponent<Weakpoint>(), raycastHit.point);
+            } else {
+                if (raycastHit.collider.TryGetComponent(out Rigidbody rb)) {
+                    rb.AddForceAtPosition(cameraReference.transform.forward * 100, raycastHit.point, ForceMode.Impulse);
+                } else if(raycastHit.collider.CompareTag("Breakable")) {
+                    raycastHit.collider.transform.parent.GetComponent<BreakableObject>().Break();
+                }
+                currentWeapon.weapon.BasicAttack(animator, playerReference);
             }
-            currentWeapon.weapon.BasicAttack(animator, playerReference);
         }
         currentWeapon.canUseBasicAttack = false;
         StartCoroutine(ResetBasicAttack(activeWeaponIndex));
@@ -139,7 +146,7 @@ public class WeaponsController : MonoBehaviour {
         currentWeapon.PutOnCD();
 
         var col = currentWeapon.weaponObj.GetComponent<Collider>();
-        if(col) col.enabled = true;
+        if (col) col.enabled = true;
 
         currentWeapon.weapon.SpecialAttack(animator, playerReference, null);
         StartCoroutine(ResetSpecialAbility(activeWeaponIndex));

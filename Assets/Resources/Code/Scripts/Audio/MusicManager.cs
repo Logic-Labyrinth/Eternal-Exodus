@@ -18,7 +18,8 @@ public class MusicManager : MonoBehaviour {
         mainCamera = Camera.main.gameObject;
 
         musicSource = Instantiate(musicObject).gameObject;
-        musicSource.transform.SetParent(mainCamera.transform);
+        // musicSource.transform.SetParent(mainCamera.transform);
+        musicSource.transform.SetParent(gameObject.transform);
         musicSource.transform.localPosition = Vector3.zero;
     }
 

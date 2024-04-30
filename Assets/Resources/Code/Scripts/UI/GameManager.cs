@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
     [SerializeField] LoadingScreenController loadingScreenController;
 
+    public int KillCountPawn { get; private set; } = 1;
+    public int KillCountKnight { get; private set; } = 1;
+    public int KillCountRook { get; private set; } = 1;
+    public int KillCountBishop { get; private set; } = 1;
+
     public static GameManager Instance { get; private set; }
 
     void Awake() {
@@ -38,15 +43,54 @@ public class GameManager : MonoBehaviour {
         GameObject explosionSource = GameObject.Find("Explosion Source");
         explosionSource.GetComponent<ExplosionVFX>().Play();
 
-        FindObjectsOfType<HealthSystem>().ToList().ForEach(x => x.Kill());
+
+        // FindObjectOfType<SpawnManager>().DisableSpawner();
+        SpawnManager.spawnManager.DisableSpawner();
+        FindObjectsOfType<HealthSystem>().ToList().ForEach(x => {
+            // x.Kill();
+            x.gameObject.SetActive(false);
+        });
 
         GameObject.Find("Portal").GetComponent<PortalVFX>().OpenPortal();
+        // GameObject.Find("End Plate Thing").SetActive(true);
+        FindObjectOfType<EndScreenController>(true).gameObject.SetActive(true);
     }
 
-    // private void Update() {
-    //     if (Input.GetKeyDown(KeyCode.G)) {
-    //         Debug.Log("End Level");
-    //         EndLevel();
-    //     }
-    // }
+    public void AddKillCount(EnemyType type) {
+        switch (type) {
+            case EnemyType.Pawn:
+                KillCountPawn++;
+                break;
+            case EnemyType.Knight:
+                KillCountKnight++;
+                break;
+            case EnemyType.Rook:
+                KillCountRook++;
+                break;
+            case EnemyType.Bishop:
+                KillCountBishop++;
+                break;
+        }
+    }
+
+    public void DisablePlayerInput() {
+        FindObjectOfType<PlayerMovement>().DisableMovementInput();
+        FindObjectOfType<PlayerCamera>().DisableCameraInput();
+    }
+
+    public void EnablePlayerInput() {
+        FindObjectOfType<PlayerMovement>().EnableMovementInput();
+        FindObjectOfType<PlayerCamera>().EnableCameraInput();
+    }
+
+    private void Update() {
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.End)) {
+            Debug.Log("End Level");
+            EndLevel();
+        }
+    }
+
+    public void Quit() {
+        Application.Quit();
+    }
 }
