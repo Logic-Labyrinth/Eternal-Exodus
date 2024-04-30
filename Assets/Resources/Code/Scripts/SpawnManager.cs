@@ -143,10 +143,10 @@ public class SpawnManager : MonoBehaviour {
 
     private void FixedUpdate() {
         if (disableSpawner) return;
-        // SpawnEnemy(EnemyType.Pawn);
-        if (pawnPool.Count > 10) {
-            SpawnEnemy(EnemyType.Pawn);
-        }
+        SpawnEnemy(EnemyType.Pawn);
+        // if (pawnPool.Count  10) {
+            //SpawnEnemy(EnemyType.Pawn);
+        //}
         if (bishopPool.Count > 0) {
             SpawnEnemy(EnemyType.Bishop);
         }
