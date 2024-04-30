@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -24,6 +23,8 @@ public class SpawnManager : MonoBehaviour {
     public Queue<GameObject> knightPool = new Queue<GameObject>();
     public Queue<GameObject> rookPool = new Queue<GameObject>();
 
+    bool disableSpawner = false;
+
     private void Awake() {
         // singleton
         if (spawnManager != null && spawnManager != this) {
@@ -31,7 +32,7 @@ public class SpawnManager : MonoBehaviour {
         } else {
             spawnManager = this;
         }
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update
@@ -100,7 +101,7 @@ public class SpawnManager : MonoBehaviour {
             case EnemyType.Pawn:
                 // check if queue is empty
                 if (!pawnPool.Any()) {
-                    Debug.Log("No more pawns in the pool");
+                    // Debug.Log("No more pawns in the pool");
                     return;
                 }
                 // get from pool
@@ -112,7 +113,7 @@ public class SpawnManager : MonoBehaviour {
                 break;
             case EnemyType.Bishop:
                 if (!bishopPool.Any()) {
-                    Debug.Log("No more bishops in the pool");
+                    // Debug.Log("No more bishops in the pool");
                     return;
                 }
                 GameObject bishop = bishopPool.Dequeue();
@@ -121,7 +122,7 @@ public class SpawnManager : MonoBehaviour {
                 break;
             case EnemyType.Knight:
                 if (!knightPool.Any()) {
-                    Debug.Log("No more knights in the pool");
+                    // Debug.Log("No more knights in the pool");
                     return;
                 }
                 GameObject knight = knightPool.Dequeue();
@@ -130,7 +131,7 @@ public class SpawnManager : MonoBehaviour {
                 break;
             case EnemyType.Rook:
                 if (!rookPool.Any()) {
-                    Debug.Log("No more rooks in the pool");
+                    // Debug.Log("No more rooks in the pool");
                     return;
                 }
                 GameObject rook = rookPool.Dequeue();
@@ -141,6 +142,7 @@ public class SpawnManager : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        if (disableSpawner) return;
         // SpawnEnemy(EnemyType.Pawn);
         if (pawnPool.Count > 10) {
             SpawnEnemy(EnemyType.Pawn);
@@ -172,5 +174,13 @@ public class SpawnManager : MonoBehaviour {
             default: // for player
                 break;
         }
+    }
+
+    public void DisableSpawner() {
+        disableSpawner = true;
+    }
+
+    public void EnableSpawner() {
+        disableSpawner = false;
     }
 }

@@ -97,6 +97,10 @@ public class Weapon : ScriptableObject {
         // Special attack release logic
     }
 
+    public virtual void WeakpointAttack(Animator animator, GameObject player, Weakpoint weakpoint, Vector3 hitLocation) {
+        // Weakpoint attack logic
+    }
+
     public virtual void Reset() {
         // Reset various variables for each weapon
     }

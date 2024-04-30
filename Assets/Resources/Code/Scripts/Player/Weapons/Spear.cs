@@ -22,4 +22,9 @@ public class Spear : Weapon {
         animator.SetTrigger("SpearSpecial");
         playerDash.Dash();
     }
+
+    public override void WeakpointAttack(Animator animator, GameObject player, Weakpoint weakpoint, Vector3 hitLocation) {
+        weakpoint.TakeDamage(baseDamage, WeaponDamageType.SPEAR, hitLocation);
+        BasicAttack(animator, player);
+    }
 }

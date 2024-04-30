@@ -27,7 +27,7 @@ public class PortalVFX : MonoBehaviour {
         }
     }
 
-    public void ClosePortal(){
+    public void ClosePortal() {
         portalVFX.Stop();
     }
 
@@ -35,7 +35,8 @@ public class PortalVFX : MonoBehaviour {
         if (collider.gameObject.CompareTag("Player")) {
             ClosePortal();
 
-            GameManager.Instance.LoadScene("730181");
+            // GameManager.Instance.LoadScene("730181");
+            FindObjectOfType<EndScreenController>(true).gameObject.SetActive(true);
         }
     }
 }
