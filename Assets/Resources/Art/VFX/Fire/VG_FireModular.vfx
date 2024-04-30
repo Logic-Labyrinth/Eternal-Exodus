@@ -78,9 +78,9 @@ MonoBehaviour:
   - title: Smoke ADD
     position:
       serializedVersion: 2
-      x: 2059
+      x: 2076
       y: -248
-      width: 1050
+      width: 1033
       height: 2538
     contents:
     - model: {fileID: 8926484042661614813}
@@ -266,8 +266,8 @@ MonoBehaviour:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
       m_SerializableObject: 0.8
-    min: 0.01
-    max: 2
+    min: -Infinity
+    max: Infinity
     enumValues: []
     descendantCount: 0
   - name: sizeMax
@@ -280,8 +280,8 @@ MonoBehaviour:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
       m_SerializableObject: 1.52
-    min: 0.05
-    max: 4
+    min: -Infinity
+    max: Infinity
     enumValues: []
     descendantCount: 0
   - name: coneSize
@@ -4555,7 +4555,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 2345, y: 278}
+  m_UIPosition: {x: 2351, y: 198}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
@@ -6655,17 +6655,15 @@ MonoBehaviour:
   m_Category: 
   m_Min:
     m_Type:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    m_SerializableObject: 0.01
+      m_SerializableType: 
+    m_SerializableObject: 
   m_Max:
     m_Type:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    m_SerializableObject: 2
+      m_SerializableType: 
+    m_SerializableObject: 
   m_IsOutput: 0
   m_EnumValues: []
-  m_ValueFilter: 1
+  m_ValueFilter: 0
   m_Tooltip: 
   m_Nodes:
   - m_Id: 0
@@ -6751,17 +6749,15 @@ MonoBehaviour:
   m_Category: 
   m_Min:
     m_Type:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    m_SerializableObject: 0.05
+      m_SerializableType: 
+    m_SerializableObject: 
   m_Max:
     m_Type:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    m_SerializableObject: 4
+      m_SerializableType: 
+    m_SerializableObject: 
   m_IsOutput: 0
   m_EnumValues: []
-  m_ValueFilter: 1
+  m_ValueFilter: 0
   m_Tooltip: 
   m_Nodes:
   - m_Id: 0
@@ -6956,7 +6952,7 @@ MonoBehaviour:
       inputSlot: {fileID: 8926484042661614848}
     - outputSlot: {fileID: 8926484042661615193}
       inputSlot: {fileID: 8926484042661615207}
-    position: {x: 2084, y: 650}
+    position: {x: 2101, y: 639}
     expandedSlots: []
     expanded: 0
   - m_Id: 3
@@ -7353,7 +7349,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 2423, y: 397}
+  m_UIPosition: {x: 2426, y: 321}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -9268,7 +9264,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 2468, y: 623}
+  m_UIPosition: {x: 2470, y: 622}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -9405,7 +9401,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 2299, y: 595}
+  m_UIPosition: {x: 2275, y: 725}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
