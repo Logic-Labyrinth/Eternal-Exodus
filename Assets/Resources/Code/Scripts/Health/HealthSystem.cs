@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using UnityEngine;
 
 public enum WeaponDamageType {
@@ -16,10 +15,9 @@ public class HealthSystem : MonoBehaviour {
     [SerializeField] WeaponDamageType resistance;
     [SerializeField] bool hasShield = false;
     [SerializeField] GameObject mesh;
+    [SerializeField] EnemyType type;
+    [SerializeField] GameObject enemyMainGameObject;
     int currentHealth;
-
-    [SerializeField] TextMeshProUGUI healthText;
-    [SerializeField] TextMeshProUGUI shieldedText;
 
     private SpawnManager spawnManager;
 
@@ -34,20 +32,6 @@ public class HealthSystem : MonoBehaviour {
 
     void OnEnable() {
         currentHealth = maxHealth;
-     }
-
-    void Update() {
-        if (healthText && shieldedText) {
-            healthText.text = currentHealth.ToString();
-            if (hasShield) {
-                shieldedText.text = "Shielded";
-                shieldedText.color = Color.blue;
-            } else {
-                shieldedText.text = "No Shield";
-                shieldedText.color = Color.red;
-            }
-        }
-
     }
 
     public void TakeDamage(int damage, WeaponDamageType? damageType, Vector3 hitLocation) {
@@ -73,10 +57,13 @@ public class HealthSystem : MonoBehaviour {
 
     public void Kill() {
         // Kill the entity
-        Debug.Log("I died!");
-        Instantiate(Resources.Load("Level/Prefabs/VFX/Soul"), transform.position + Vector3.up, Quaternion.identity);
-        gameObject.SetActive(false);
-        spawnManager.EnqueueEnemy(gameObject);
+        // Debug.Log("I died!");
+        // EnemyType type = GetComponent<EnemyAI>().enemyType;
+        GameManager.Instance.AddKillCount(type);
+        GameObject soul = (GameObject)Instantiate(Resources.Load("Level/Prefabs/VFX/Soul"), transform.position + Vector3.up, Quaternion.identity);
+        soul.GetComponent<SoulVFX>().soulType = type;
+        enemyMainGameObject.SetActive(false);
+        spawnManager.EnqueueEnemy(enemyMainGameObject);
     }
 
     public void Heal(int heal) {
@@ -93,7 +80,7 @@ public class HealthSystem : MonoBehaviour {
 
     public void Shield() {
         hasShield = true;
-        if(mesh == null) return;
+        if (mesh == null) return;
 
         mesh.GetComponent<MeshRenderer>().materials[1].SetFloat("_ShieldStrength", 2);
     }
@@ -101,7 +88,7 @@ public class HealthSystem : MonoBehaviour {
     public void BreakShield() {
         // Stuff for breaking the shield
         hasShield = false;
-        if(mesh == null) return;
+        if (mesh == null) return;
         mesh.GetComponent<MeshRenderer>().materials[1].SetFloat("_ShieldStrength", 0);
     }
 }
