@@ -14,7 +14,7 @@ public class SoundFXManager : MonoBehaviour {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
 
-        DontDestroyOnLoad(this);
+        // DontDestroyOnLoad(this);
 
         usedSources = new List<GameObject>();
         standbySources = new Queue<GameObject>();
@@ -47,7 +47,7 @@ public class SoundFXManager : MonoBehaviour {
     /// <param name="sounds">An array of Sound objects to choose from.</param>
     /// <param name="location">An optional Transform to specify the location of the sound.</param>
     public void PlayRandom(Sound[] sounds, Transform location = null) {
-        if(sounds.Length == 0) return;
+        if (sounds.Length == 0) return;
         int randomIndex = Random.Range(0, sounds.Length);
         Play(sounds[randomIndex], location);
     }

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,6 +31,10 @@ public class HammerAbility : MonoBehaviour {
         groundLayer = LayerMask.NameToLayer("Ground");
     }
 
+    // private void OnDrawGizmos() {
+    //     Gizmos.DrawCube(impactArea.transform.position + impactArea.bounds.center, impactArea.bounds.size);
+    // }
+
     IEnumerator CompleteCharge() {
         yield return new WaitForSeconds(chargeTime);
         isCharged = isCharging;
@@ -60,10 +65,11 @@ public class HammerAbility : MonoBehaviour {
 
     public void ActivateHammerAbility() {
         if (isCharged) {
-            Collider[] colliders = Physics.OverlapBox(impactArea.transform.position + impactArea.center, impactArea.size * 0.5f, impactArea.transform.rotation);
+            Collider[] colliders = Physics.OverlapBox(impactArea.bounds.center, impactArea.bounds.extents, impactArea.transform.rotation);
             bool hasEnemy = false, hasGround = false;
 
             colliders.ForEach(x => {
+                // Debug.Log(x);
                 if (x.gameObject.layer == enemyLayer) hasEnemy = true;
                 if (x.gameObject.layer == groundLayer) hasGround = true;
             });

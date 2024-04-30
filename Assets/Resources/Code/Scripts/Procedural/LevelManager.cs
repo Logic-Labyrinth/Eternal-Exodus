@@ -3,6 +3,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Exodus.ProceduralTools {
     public class LevelManager : MonoBehaviour {
@@ -129,7 +130,7 @@ namespace Exodus.ProceduralTools {
             }
 
             levelParent.GetComponent<NavMeshSurface>().RemoveData();
-            levelParent.GetComponent<NavMeshSurface>().BuildNavMesh();
+// levelParent.GetComponent<NavMeshSurface>().BuildNavMesh();
         }
 
         bool CanPlaceBlock(int x, int y, Vector2Int dimension, int[,] grid, int xSize, int ySize) {
@@ -282,7 +283,8 @@ namespace Exodus.ProceduralTools {
 
             newLevel.transform.SetPositionAndRotation(new Vector3(0, 0, 0), Quaternion.identity);
             newLevel.transform.SetParent(this.transform, true);
-            newLevel.AddComponent<NavMeshSurface>();
+            NavMeshSurface navmesh = newLevel.AddComponent<NavMeshSurface>();
+            navmesh.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
 
             return newLevel;
         }

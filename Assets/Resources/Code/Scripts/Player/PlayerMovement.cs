@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
+    bool disableMovementInput = false;
+
     [Header("Movement")]
     float moveSpeed;
     float desiredMoveSpeed;
@@ -67,20 +69,20 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] DustTrailVFX dustTrailVFX;
     [SerializeField] SpeedLinesVFX speedLinesVFX;
 
-    void OnGUI() {
-        GUILayout.TextArea($"State: {state}");
-        GUILayout.TextArea($"Grounded: {isGrounded}");
-        // GUILayout.TextArea($"Wants to uncrouch: {wantsToUncrouch}");
-        // GUILayout.TextArea($"Sliding: {sliding}");
-        // GUILayout.TextArea($"Crouching: {crouching}");
-        // GUILayout.TextArea($"Dashing: {dashing}");
-        // GUILayout.TextArea($"Player height: {playerHeight}");
-        // GUILayout.TextArea($"Player scale: {playerObj.localScale}");
-        // GUILayout.TextArea($"Ready to jump: {canJump}");
-        // GUILayout.TextArea($"Move direction: {moveDirection}");
-        GUILayout.TextArea($"Current speed: {rb.velocity.magnitude}");
-        // GUILayout.TextArea($"Desired speed: {desiredMoveSpeed}");
-    }
+    // void OnGUI() {
+    // GUILayout.TextArea($"State: {state}");
+    // GUILayout.TextArea($"Grounded: {isGrounded}");
+    // GUILayout.TextArea($"Wants to uncrouch: {wantsToUncrouch}");
+    // GUILayout.TextArea($"Sliding: {sliding}");
+    // GUILayout.TextArea($"Crouching: {crouching}");
+    // GUILayout.TextArea($"Dashing: {dashing}");
+    // GUILayout.TextArea($"Player height: {playerHeight}");
+    // GUILayout.TextArea($"Player scale: {playerObj.localScale}");
+    // GUILayout.TextArea($"Ready to jump: {canJump}");
+    // GUILayout.TextArea($"Move direction: {moveDirection}");
+    // GUILayout.TextArea($"Current speed: {rb.velocity.magnitude}");
+    // GUILayout.TextArea($"Desired speed: {desiredMoveSpeed}");
+    // }
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
@@ -91,7 +93,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Update() {
-        MyInput();
+        HandleInput();
         HandleGravity();
         HandleVFX();
     }
@@ -134,7 +136,9 @@ public class PlayerMovement : MonoBehaviour {
         landingVFX.Play(Math.Abs(lastFrameVerticalVelocity));
     }
 
-    private void MyInput() {
+    private void HandleInput() {
+        if (disableMovementInput) return;
+
         horizontalInput = Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Horizontal Controller");
         verticalInput = Input.GetAxisRaw("Vertical") + Input.GetAxisRaw("Vertical Controller");
 
@@ -300,5 +304,13 @@ public class PlayerMovement : MonoBehaviour {
 
     public Vector3 GetSlopeMoveDirection(Vector3 direction) {
         return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
+    }
+
+    public void DisableMovementInput() {
+        disableMovementInput = true;
+    }
+
+    public void EnableMovementInput() {
+        disableMovementInput = false;
     }
 }

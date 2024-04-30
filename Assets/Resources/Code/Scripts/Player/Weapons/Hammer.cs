@@ -19,6 +19,11 @@ public class Hammer : Weapon {
         hammer.ChargeHammer();
     }
 
+    public override void WeakpointAttack(Animator animator, GameObject player, Weakpoint weakpoint, Vector3 hitLocation) {
+        weakpoint.TakeDamage(baseDamage, WeaponDamageType.HAMMER, hitLocation);
+        BasicAttack(animator, player);
+    }
+
     public override void SpecialRelease(Animator animator, GameObject player, HealthSystem healthSystem) {
         if (hammer == null) {
             hammer = player.GetComponent<HammerAbility>();
