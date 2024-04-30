@@ -13,7 +13,7 @@ public class PlayerHealthSystem : MonoBehaviour {
     [SerializeField] ShieldStatus shieldStatus = ShieldStatus.FULL;
     [SerializeField] PlayerShieldUIController playerShieldUIController;
 
-    int currentHealth;
+    [SerializeField] int currentHealth;
 
     void Awake() {
         currentHealth = maxHealth;
@@ -45,6 +45,7 @@ public class PlayerHealthSystem : MonoBehaviour {
     public void Kill() {
         gameObject.SetActive(false);
         Debug.Log("Player died");
+        FindObjectOfType<EndScreenController>(true).gameObject.SetActive(true);
     }
 
     public void Heal(int heal) {

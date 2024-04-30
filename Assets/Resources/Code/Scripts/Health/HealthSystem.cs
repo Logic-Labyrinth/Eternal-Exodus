@@ -14,7 +14,7 @@ public class HealthSystem : MonoBehaviour {
     [SerializeField] WeaponDamageType weakness;
     [SerializeField] WeaponDamageType resistance;
     [SerializeField] bool hasShield = false;
-    [SerializeField] GameObject mesh;
+    [SerializeField] GameObject[] meshes;
     [SerializeField] EnemyType type;
     [SerializeField] GameObject enemyMainGameObject;
     int currentHealth;
@@ -80,15 +80,19 @@ public class HealthSystem : MonoBehaviour {
 
     public void Shield() {
         hasShield = true;
-        if (mesh == null) return;
-
-        mesh.GetComponent<MeshRenderer>().materials[1].SetFloat("_ShieldStrength", 2);
+        if(meshes == null) return;
+        foreach (GameObject mesh in meshes) {
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_ShieldStrength", 2);
+        }
     }
 
     public void BreakShield() {
         // Stuff for breaking the shield
         hasShield = false;
-        if (mesh == null) return;
-        mesh.GetComponent<MeshRenderer>().materials[1].SetFloat("_ShieldStrength", 0);
+        if(meshes == null) return;
+
+        foreach (GameObject mesh in meshes) {
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_ShieldStrength", 0);
+        }
     }
 }
