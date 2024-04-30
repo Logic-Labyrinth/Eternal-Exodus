@@ -36,11 +36,11 @@ public class PlayerHealthSystem : MonoBehaviour {
         }
     }
 
-    // private void Update() {
-    //     if(Input.GetKeyDown(KeyCode.Z)) Shield();
-    //     if(Input.GetKeyDown(KeyCode.X)) DamageShield();
-    //     if(Input.GetKeyDown(KeyCode.C)) BreakShield();
-    // }
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.Z)) Shield();
+        if(Input.GetKeyDown(KeyCode.X)) DamageShield();
+        if(Input.GetKeyDown(KeyCode.C)) BreakShield();
+    }
 
     public void Kill() {
         // gameObject.SetActive(false);
