@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] float jumpCooldown = 0.25f;
     [SerializeField] float airMultiplier = 0.4f;
     [SerializeField] float jumpFallGravityMultiplier = 2.5f;
+    [SerializeField] float swordJumpMultiplier = 1.2f;
     bool canJump = true;
 
     [Header("Crouching")]
@@ -287,6 +288,14 @@ public class PlayerMovement : MonoBehaviour {
         // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    }
+
+    public void SwordJump() {
+        exitingSlope = true;
+
+        // reset y velocity
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.AddForce(transform.up * jumpForce * swordJumpMultiplier, ForceMode.Impulse);
     }
 
     private void ResetJump() {

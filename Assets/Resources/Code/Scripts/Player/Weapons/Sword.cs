@@ -27,7 +27,7 @@ public class Sword : Weapon {
         UppercutEnemies(player);
 
         animator.SetTrigger("SwordSpecial");
-        playerMovement.Jump();
+        playerMovement.SwordJump();
     }
 
     public override void WeakpointAttack(Animator animator, GameObject player, Weakpoint weakpoint, Vector3 hitLocation) {
