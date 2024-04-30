@@ -43,16 +43,13 @@ public class GameManager : MonoBehaviour {
         GameObject explosionSource = GameObject.Find("Explosion Source");
         explosionSource.GetComponent<ExplosionVFX>().Play();
 
-        // FindObjectOfType<SpawnManager>().DisableSpawner();
         SpawnManager.spawnManager.DisableSpawner();
         FindObjectsOfType<HealthSystem>().ToList().ForEach(x => {
-            // x.Kill();
-            x.gameObject.SetActive(false);
+            x.Kill();
+            // x.gameObject.SetActive(false);
         });
 
         GameObject.Find("Portal").GetComponent<PortalVFX>().OpenPortal();
-        // GameObject.Find("End Plate Thing").SetActive(true);
-        // FindObjectOfType<EndScreenController>(true).gameObject.SetActive(true);
     }
 
     public void AddKillCount(EnemyType type) {
