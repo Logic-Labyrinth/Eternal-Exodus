@@ -402,7 +402,6 @@ MonoBehaviour:
   soulValueRook: {fileID: 11400000, guid: c6445a94eff0f3b4c8abd2be06e3477f, type: 2}
   soulValueKnight: {fileID: 11400000, guid: 630e30e06e18afa4198d6ee9c412916a, type: 2}
   soulValueBishop: {fileID: 11400000, guid: c99957eba20ea8e40a04ef98ea39ba88, type: 2}
-  score: 0
 --- !u!136 &6207354628851061628
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -503,7 +502,10 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 0
+        m_Name: sphereScaleF
+        m_Overridden: 0
     m_Vector2f:
       m_Array: []
     m_Vector3f:
