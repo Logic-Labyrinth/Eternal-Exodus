@@ -130,8 +130,6 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Landed() {
-        // Debug.Log("Landed " + lastFrameVerticalVelocity);
-
         LandingVFX landingVFX = Instantiate(landingVFXPrefab, new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z), Quaternion.identity).GetComponent<LandingVFX>();
         landingVFX.Play(Math.Abs(lastFrameVerticalVelocity));
     }

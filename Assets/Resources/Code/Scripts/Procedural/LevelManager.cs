@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 namespace Exodus.ProceduralTools {
     public class LevelManager : MonoBehaviour {
-        private System.Random random;
-        private bool isSeedInitialised = false;
+        System.Random random;
+        bool isSeedInitialised = false;
 
         [TabGroup("Level Settings")]
         [DisableIf("useRandomSeed")]
         public string seedString;
-        private int seed;
+        int seed;
 
         [TabGroup("Level Settings")]
         public bool useRandomSeed;
@@ -51,10 +52,6 @@ namespace Exodus.ProceduralTools {
 
         void Start() {
             InitializeLevel();
-            // for (int i = 0; i < 10; i++)
-            // {
-            //     Debug.Log("Test Seed: " + TestSeed());
-            // }
         }
 
         public void InitializeLevel() {
@@ -67,12 +64,6 @@ namespace Exodus.ProceduralTools {
             random = new System.Random(seed);
             isSeedInitialised = true;
         }
-
-        // Previously used for testing the consistency of seeds, currently no longer required
-        // int TestSeed()
-        // {
-        //     return Random.Range(0, 1000000);
-        // }
 
         /// <summary>
         /// Generates a new level based on the given settings and level blocks.
@@ -136,6 +127,9 @@ namespace Exodus.ProceduralTools {
                     }
                 }
             }
+
+            levelParent.GetComponent<NavMeshSurface>().RemoveData();
+            levelParent.GetComponent<NavMeshSurface>().BuildNavMesh();
         }
 
         bool CanPlaceBlock(int x, int y, Vector2Int dimension, int[,] grid, int xSize, int ySize) {
@@ -288,8 +282,18 @@ namespace Exodus.ProceduralTools {
 
             newLevel.transform.SetPositionAndRotation(new Vector3(0, 0, 0), Quaternion.identity);
             newLevel.transform.SetParent(this.transform, true);
+            newLevel.AddComponent<NavMeshSurface>();
 
             return newLevel;
+        }
+
+        [TabGroup("Level Settings")]
+        [PropertySpace]
+        [Button(ButtonSizes.Large, ButtonAlignment = 1f)]
+        void RegenerateLevel() {
+            ClearLevel();
+            ResetSeed();
+            GenerateLevel();
         }
     }
 }

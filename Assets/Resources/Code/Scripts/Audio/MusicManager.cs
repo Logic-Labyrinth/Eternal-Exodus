@@ -34,11 +34,12 @@ public class MusicManager : MonoBehaviour {
     IEnumerator PlayDelayed(Music music, float delay) {
         yield return new WaitForSeconds(delay);
         // musicObject.Stop();
-        musicObject.clip = music.audioClip;
-        musicObject.volume = music.volume;
-        musicObject.loop = music.loop;
+        AudioSource audioSource = musicSource.GetComponent<AudioSource>();
+        audioSource.clip = music.audioClip;
+        audioSource.volume = music.volume;
+        audioSource.loop = music.loop;
         // Debug.Break();
-        musicObject.Play();
+        audioSource.Play();
     }
 
     void OnDestroy() {

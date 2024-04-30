@@ -15,6 +15,7 @@ public class HealthSystem : MonoBehaviour {
     [SerializeField] WeaponDamageType weakness;
     [SerializeField] WeaponDamageType resistance;
     [SerializeField] bool hasShield = false;
+    [SerializeField] GameObject mesh;
     int currentHealth;
 
     [SerializeField] TextMeshProUGUI healthText;
@@ -50,7 +51,7 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void TakeDamage(int damage, WeaponDamageType? damageType, Vector3 hitLocation) {
-        Debug.Log("Damage: " + damage + ", Type: " + damageType);
+        // Debug.Log("Damage: " + damage + ", Type: " + damageType);
         if (hasShield) {
             BreakShield();
             return;
@@ -63,7 +64,7 @@ public class HealthSystem : MonoBehaviour {
             dam -= (int)Math.Floor(dam * resistanceFactor / 100.0f);
         }
 
-        Debug.Log("Dam: " + dam);
+        // Debug.Log("Dam: " + dam);
         GameObject hitVFXPrefab = Resources.Load<GameObject>("Level/Prefabs/VFX/HitVFX");
         Instantiate(hitVFXPrefab, hitLocation, Quaternion.identity).GetComponent<HitVFX>().Play(dam);
         currentHealth -= dam;
@@ -92,10 +93,15 @@ public class HealthSystem : MonoBehaviour {
 
     public void Shield() {
         hasShield = true;
+        if(mesh == null) return;
+
+        mesh.GetComponent<MeshRenderer>().materials[1].SetFloat("_ShieldStrength", 2);
     }
 
     public void BreakShield() {
         // Stuff for breaking the shield
         hasShield = false;
+        if(mesh == null) return;
+        mesh.GetComponent<MeshRenderer>().materials[1].SetFloat("_ShieldStrength", 0);
     }
 }
