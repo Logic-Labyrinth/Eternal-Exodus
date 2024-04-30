@@ -43,7 +43,7 @@ public class PlayerHealthSystem : MonoBehaviour {
     // }
 
     public void Kill() {
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
         Debug.Log("Player died");
         FindObjectOfType<EndScreenController>(true).gameObject.SetActive(true);
     }

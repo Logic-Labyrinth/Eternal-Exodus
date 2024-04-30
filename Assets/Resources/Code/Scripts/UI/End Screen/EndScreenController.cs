@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndScreenController : MonoBehaviour {
     [SerializeField] TextMeshProUGUI PawnKillCountText;
@@ -9,6 +10,10 @@ public class EndScreenController : MonoBehaviour {
 
     public void LoadStartMenu() {
         GameManager.Instance.LoadScene("StartMenu");
+    }
+
+    public void ReloadLevel() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void OnEnable() {
