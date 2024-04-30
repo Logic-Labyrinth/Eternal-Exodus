@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour {
 
         GameObject.Find("Portal").GetComponent<PortalVFX>().OpenPortal();
         // GameObject.Find("End Plate Thing").SetActive(true);
-        FindObjectOfType<EndScreenController>(true).gameObject.SetActive(true);
+        // FindObjectOfType<EndScreenController>(true).gameObject.SetActive(true);
     }
 
     public void AddKillCount(EnemyType type) {
