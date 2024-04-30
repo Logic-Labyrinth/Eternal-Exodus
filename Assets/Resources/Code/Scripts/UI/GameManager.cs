@@ -73,18 +73,15 @@ public class GameManager : MonoBehaviour {
     }
 
     public void DisablePlayerInput() {
-        Debug.Log("Disable Player Input");
-        var pm = FindObjectOfType<PlayerMovement>();
-        pm.DisableMovementInput();
-        Debug.Log("Disabled Movement Input");
-        var pc = FindObjectOfType<PlayerCamera>();
-        pc.DisableCameraInput();
-        Debug.Log("Disabled Camera Input");
+        FindObjectOfType<PlayerMovement>().DisableMovementInput();
+        FindObjectOfType<PlayerCamera>().DisableCameraInput();
+        FindObjectOfType<WeaponsController>().DisableWeaponsInput();
     }
 
     public void EnablePlayerInput() {
         FindObjectOfType<PlayerMovement>().EnableMovementInput();
         FindObjectOfType<PlayerCamera>().EnableCameraInput();
+        FindObjectOfType<WeaponsController>().EnableWeaponsInput();
     }
 
     private void Update() {

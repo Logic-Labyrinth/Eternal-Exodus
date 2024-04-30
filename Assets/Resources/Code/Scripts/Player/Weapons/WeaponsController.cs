@@ -44,6 +44,8 @@ public class WeaponsController : MonoBehaviour {
     [SerializeField] Camera cameraReference;
     [SerializeField] GameObject hitVFXPrefab;
 
+    bool disableWeaponInput = false;
+
     void Start() {
         activeWeaponIndex = 0;
         weaponObjects = new List<WeaponObject>();
@@ -167,6 +169,14 @@ public class WeaponsController : MonoBehaviour {
         int index = weaponIndex;
         yield return new WaitForSeconds(weaponObjects[index].basicAttackCooldown);
         weaponObjects[index].canUseBasicAttack = true;
+    }
+
+    public void DisableWeaponsInput() {
+        disableWeaponInput = true;
+    }
+
+    public void EnableWeaponsInput() {
+        disableWeaponInput = true;
     }
 
     #region Controller Input
