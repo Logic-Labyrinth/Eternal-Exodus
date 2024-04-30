@@ -59,19 +59,17 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.Find("Player");
         playerHealth = player.GetComponent<PlayerHealthSystem>();
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        checkInterval = Random.Range(0f, 0.2f);
+        checkInterval = Random.Range(0f, 0.1f);
     }
 
     void OnEnable()
     {
         lastSummonTime = Time.time;
-        checkInterval = Random.Range(0f, 0.2f);
+        checkInterval = Random.Range(0f, 0.1f);
     }
 
     // Time between checks in seconds
     private float lastCheckTime = 0f;
-
-    
 
     void Update()
     {
@@ -81,6 +79,10 @@ public class EnemyAI : MonoBehaviour
             DecisionMaker(enemyType);
             lastCheckTime = Time.time;
             checkInterval = Random.Range(0f, 0.2f);
+        }
+
+        if (enemyType == EnemyType.Pawn) {
+            animator.SetFloat("Speed", agent.velocity.magnitude);
         }
     }
 
@@ -250,7 +252,7 @@ public class EnemyAI : MonoBehaviour
 
             foreach (var hitCollider in hitColliders)
             {
-                if (hitCollider == player)
+                if (hitCollider.gameObject == player)
                 {
                     // playerHealth could be null, so we need to handle that case
                     if (playerHealth != null)
