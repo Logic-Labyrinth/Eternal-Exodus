@@ -80,7 +80,7 @@ public class EnemyAI : MonoBehaviour
         {
             DecisionMaker(enemyType);
             lastCheckTime = Time.time;
-            checkInterval = Random.Range(0f, 0.2f);
+            checkInterval = Random.Range(0f, 0.1f);
         }
 
         if (enemyType == EnemyType.Pawn)
@@ -345,11 +345,19 @@ public class EnemyAI : MonoBehaviour
         else if (
             !Physics.Raycast(
                 transform.position,
-                new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z) - transform.position, // locked on y axis
+                new Vector3(
+                    player.transform.position.x,
+                    transform.position.y,
+                    player.transform.position.z
+                ) - transform.position, // locked on y axis
                 out hit,
                 distanceToPlayer,
                 groundLayer
-            ) && !isCharging && !chargingCooldown && 20f > Vector3.Distance(transform.position, player.transform.position) && Vector3.Distance(transform.position, player.transform.position) > 10f
+            )
+            && !isCharging
+            && !chargingCooldown
+            && 20f > Vector3.Distance(transform.position, player.transform.position)
+            && Vector3.Distance(transform.position, player.transform.position) > 10f
         )
         {
             // Charge at player
