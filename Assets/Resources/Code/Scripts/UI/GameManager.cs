@@ -43,16 +43,13 @@ public class GameManager : MonoBehaviour {
         GameObject explosionSource = GameObject.Find("Explosion Source");
         explosionSource.GetComponent<ExplosionVFX>().Play();
 
-        // FindObjectOfType<SpawnManager>().DisableSpawner();
         SpawnManager.spawnManager.DisableSpawner();
         FindObjectsOfType<HealthSystem>().ToList().ForEach(x => {
-            // x.Kill();
-            x.gameObject.SetActive(false);
+            x.Kill();
+            // x.gameObject.SetActive(false);
         });
 
         GameObject.Find("Portal").GetComponent<PortalVFX>().OpenPortal();
-        // GameObject.Find("End Plate Thing").SetActive(true);
-        // FindObjectOfType<EndScreenController>(true).gameObject.SetActive(true);
     }
 
     public void AddKillCount(EnemyType type) {
@@ -75,11 +72,13 @@ public class GameManager : MonoBehaviour {
     public void DisablePlayerInput() {
         FindObjectOfType<PlayerMovement>().DisableMovementInput();
         FindObjectOfType<PlayerCamera>().DisableCameraInput();
+        FindObjectOfType<WeaponsController>().DisableWeaponsInput();
     }
 
     public void EnablePlayerInput() {
         FindObjectOfType<PlayerMovement>().EnableMovementInput();
         FindObjectOfType<PlayerCamera>().EnableCameraInput();
+        FindObjectOfType<WeaponsController>().EnableWeaponsInput();
     }
 
     private void Update() {
@@ -91,5 +90,12 @@ public class GameManager : MonoBehaviour {
 
     public void Quit() {
         Application.Quit();
+    }
+
+    public void ResetCounter() {
+        KillCountPawn = 0;
+        KillCountKnight = 69;
+        KillCountRook = 0;
+        KillCountBishop = 0;
     }
 }

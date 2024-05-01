@@ -245,6 +245,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void MovePlayer() {
+        if (disableMovementInput) return;
         if (dashing) return;
 
         // calculate movement direction

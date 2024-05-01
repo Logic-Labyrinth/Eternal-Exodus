@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,7 +6,6 @@ public class Sword : Weapon {
     PlayerMovement playerMovement;
     BoxCollider swordCollider;
     LayerMask enemyLayer = -1;
-    SwordAbility swordAbility;
 
     public override void BasicAttack(Animator animator, GameObject player) {
         animator.SetTrigger("SwordAttack");
@@ -17,6 +15,19 @@ public class Sword : Weapon {
     public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
         healthSystem.TakeDamage(baseDamage, WeaponDamageType.SWORD, hitLocation);
         BasicAttack(animator, player);
+
+        if (swordCollider == null) swordCollider = Camera.main.GetComponent<BoxCollider>();
+        Collider[] hitEnemies = Physics.OverlapBox(
+            swordCollider.bounds.center,
+            swordCollider.bounds.extents,
+            swordCollider.transform.rotation
+        );
+
+        foreach (Collider enemy in hitEnemies) {
+            if (enemy.gameObject.layer == enemyLayer) {
+                enemy.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD, enemy.transform.position);
+            }
+        }
     }
 
     public override void SpecialAttack(Animator animator, GameObject player, HealthSystem healthSystem) {
@@ -38,7 +49,6 @@ public class Sword : Weapon {
     void UppercutEnemies(GameObject player) {
         if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
         if (swordCollider == null) swordCollider = Camera.main.GetComponent<BoxCollider>();
-        if (swordAbility == null) swordAbility = player.GetComponent<SwordAbility>();
 
         Collider[] hitEnemies = Physics.OverlapBox(
             swordCollider.bounds.center,
@@ -48,12 +58,11 @@ public class Sword : Weapon {
 
         foreach (Collider enemy in hitEnemies) {
             if (enemy.gameObject.layer == enemyLayer) {
-                // Debug.Log("Hit " + enemy.name);
+                if (!enemy.TryGetComponent(out Rigidbody r)) continue;
                 enemy.GetComponent<NavMeshAgent>().isStopped = true;
                 enemy.GetComponent<NavMeshAgent>().updatePosition = false;
-                // enemy.GetComponent<NavMeshAgent>().enabled = false;
                 enemy.GetComponent<Rigidbody>().AddForce(Vector3.up * 20, ForceMode.Impulse);
-                // swordAbility.Uppercut(enemy);
+                enemy.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD, enemy.transform.position);
             }
         }
     }

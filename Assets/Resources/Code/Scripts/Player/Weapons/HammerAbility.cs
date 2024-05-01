@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Linq;
 using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
@@ -63,7 +62,7 @@ public class HammerAbility : MonoBehaviour {
         }
     }
 
-    public void ActivateHammerAbility() {
+    public void ActivateHammerAbility(int damage) {
         if (isCharged) {
             Collider[] colliders = Physics.OverlapBox(impactArea.bounds.center, impactArea.bounds.extents, impactArea.transform.rotation);
             bool hasEnemy = false, hasGround = false;
@@ -80,6 +79,9 @@ public class HammerAbility : MonoBehaviour {
                     (Vector3.up + 3f * enemyBounceMultiplier * orientation.forward) * hammerForce,
                     ForceMode.Impulse
                 );
+                colliders.ForEach(collider => {
+                    if (collider.CompareTag("Enemy")) collider.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER, collider.transform.position);
+                });
             } else if (hasGround) {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
