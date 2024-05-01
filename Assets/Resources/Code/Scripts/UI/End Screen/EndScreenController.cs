@@ -12,12 +12,13 @@ public class EndScreenController : MonoBehaviour {
     }
 
     public void ReloadLevel() {
+        Time.timeScale = 1f;
         GameManager.Instance.ResetCounter();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void OnEnable() {
-        // Time.timeScale = 0f;
+        Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 

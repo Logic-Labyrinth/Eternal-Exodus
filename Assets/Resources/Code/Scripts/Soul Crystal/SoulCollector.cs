@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SoulCollector : MonoBehaviour {
     [SerializeField] int soulsNeeded = 10;
-    [SerializeField] SoulCrystalIcon icon;
+    // [SerializeField] SoulCrystalIcon icon;
     [SerializeField] SoulValue soulValuePawn;
     [SerializeField] SoulValue soulValueRook;
     [SerializeField] SoulValue soulValueKnight;
@@ -48,7 +48,7 @@ public class SoulCollector : MonoBehaviour {
 
         Destroy(soul.gameObject);
         DEBUG_SCORE = GetScore();
-        icon.SetProgress(DEBUG_SCORE / soulsNeeded);
+        // icon.SetProgress(DEBUG_SCORE / soulsNeeded);
         if (DEBUG_SCORE >= soulsNeeded) Done();
     }
 
@@ -57,7 +57,7 @@ public class SoulCollector : MonoBehaviour {
 
         Destroy(soul.gameObject);
         DEBUG_SCORE = GetScore();
-        icon.SetProgress(DEBUG_SCORE / soulsNeeded);
+        // icon.SetProgress(DEBUG_SCORE / soulsNeeded);
         if (DEBUG_SCORE >= soulsNeeded) Done();
     }
 

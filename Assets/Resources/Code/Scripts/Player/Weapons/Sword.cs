@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,6 +16,7 @@ public class Sword : Weapon {
         healthSystem.TakeDamage(baseDamage, WeaponDamageType.SWORD, hitLocation);
         BasicAttack(animator, player);
 
+        if (swordCollider == null) swordCollider = Camera.main.GetComponent<BoxCollider>();
         Collider[] hitEnemies = Physics.OverlapBox(
             swordCollider.bounds.center,
             swordCollider.bounds.extents,
@@ -58,6 +58,7 @@ public class Sword : Weapon {
 
         foreach (Collider enemy in hitEnemies) {
             if (enemy.gameObject.layer == enemyLayer) {
+                if (!enemy.TryGetComponent(out Rigidbody r)) continue;
                 enemy.GetComponent<NavMeshAgent>().isStopped = true;
                 enemy.GetComponent<NavMeshAgent>().updatePosition = false;
                 enemy.GetComponent<Rigidbody>().AddForce(Vector3.up * 20, ForceMode.Impulse);
