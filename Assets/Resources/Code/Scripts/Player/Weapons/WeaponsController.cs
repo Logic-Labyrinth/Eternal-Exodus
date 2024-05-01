@@ -66,6 +66,7 @@ public class WeaponsController : MonoBehaviour {
     }
 
     void HandleInput() {
+        if (disableWeaponInput) return;
         if (Input.GetAxis("Cycle Weapons") > 0 || Input.GetButtonDown("Cycle Next Weapon")) CycleToNextWeapon();
         if (Input.GetAxis("Cycle Weapons") < 0 || Input.GetButtonDown("Cycle Prev Weapon")) CycleToPreviousWeapon();
 
