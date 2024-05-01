@@ -325,7 +325,11 @@ public class EnemyAI : MonoBehaviour {
         animator.SetTrigger("Charge");
         yield return new WaitForSeconds(1.5f);
 
-        while (isCharging) {
+        var audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
+
+        while (isCharging)
+        {
             targetPosition = new Vector3(
                 player.transform.position.x,
                 transform.position.y,
