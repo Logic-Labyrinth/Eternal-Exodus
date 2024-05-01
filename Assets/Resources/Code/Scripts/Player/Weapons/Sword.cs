@@ -16,6 +16,18 @@ public class Sword : Weapon {
     public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
         healthSystem.TakeDamage(baseDamage, WeaponDamageType.SWORD, hitLocation);
         BasicAttack(animator, player);
+
+        Collider[] hitEnemies = Physics.OverlapBox(
+            swordCollider.bounds.center,
+            swordCollider.bounds.extents,
+            swordCollider.transform.rotation
+        );
+
+        foreach (Collider enemy in hitEnemies) {
+            if (enemy.gameObject.layer == enemyLayer) {
+                enemy.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD, enemy.transform.position);
+            }
+        }
     }
 
     public override void SpecialAttack(Animator animator, GameObject player, HealthSystem healthSystem) {
