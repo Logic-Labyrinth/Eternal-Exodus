@@ -1747,12 +1747,12 @@ PrefabInstance:
     - target: {fileID: 6167175214731165895, guid: aae8a987d63c9cb43aeceab5a83369e7,
         type: 3}
       propertyPath: dashLowerLimit
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6167175214731165895, guid: aae8a987d63c9cb43aeceab5a83369e7,
         type: 3}
       propertyPath: dashUpperLimit
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6491349321539876717, guid: aae8a987d63c9cb43aeceab5a83369e7,
         type: 3}
@@ -1827,11 +1827,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6648451769610664350, guid: aae8a987d63c9cb43aeceab5a83369e7,
-        type: 3}
-      insertIndex: 7
-      addedObject: {fileID: 5046514988557973647}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aae8a987d63c9cb43aeceab5a83369e7, type: 3}
 --- !u!4 &1440156219353800409 stripped
 Transform:
@@ -1857,19 +1853,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3741280509477836646}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5046514988557973647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8047854906023948024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a044f49493704584492b3092740012be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spearData: {fileID: 11400000, guid: bd7007531d794764f8c116154f83a3c4, type: 2}
 --- !u!1001 &4120045956487682705
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2283,7 +2266,12 @@ PrefabInstance:
     - target: {fileID: 6191713485886694254, guid: 3e7116876a7fc2d469aa198b69aa5eaf,
         type: 3}
       propertyPath: field of view
-      value: 70
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191713485886694254, guid: 3e7116876a7fc2d469aa198b69aa5eaf,
+        type: 3}
+      propertyPath: far clip plane
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 6191713485886694254, guid: 3e7116876a7fc2d469aa198b69aa5eaf,
         type: 3}
