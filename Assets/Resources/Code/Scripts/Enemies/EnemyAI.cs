@@ -244,6 +244,9 @@ public class EnemyAI : MonoBehaviour
         if (animator != null)
             animator.SetTrigger("Attack");
 
+        while (Time.time - startTime < attackDuration)
+        {
+            // Debug.Log(Time.time - startTime);
             Collider[] hitColliders = Physics.OverlapSphere(
                 transform.position + Vector3.forward,
                 attackRange

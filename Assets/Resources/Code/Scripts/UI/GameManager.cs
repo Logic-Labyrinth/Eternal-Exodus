@@ -43,7 +43,6 @@ public class GameManager : MonoBehaviour {
         GameObject explosionSource = GameObject.Find("Explosion Source");
         explosionSource.GetComponent<ExplosionVFX>().Play();
 
-
         // FindObjectOfType<SpawnManager>().DisableSpawner();
         SpawnManager.spawnManager.DisableSpawner();
         FindObjectsOfType<HealthSystem>().ToList().ForEach(x => {
