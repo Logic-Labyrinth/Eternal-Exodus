@@ -7,7 +7,6 @@ public class Sword : Weapon {
     PlayerMovement playerMovement;
     BoxCollider swordCollider;
     LayerMask enemyLayer = -1;
-    SwordAbility swordAbility;
 
     public override void BasicAttack(Animator animator, GameObject player) {
         animator.SetTrigger("SwordAttack");
@@ -38,7 +37,6 @@ public class Sword : Weapon {
     void UppercutEnemies(GameObject player) {
         if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
         if (swordCollider == null) swordCollider = Camera.main.GetComponent<BoxCollider>();
-        if (swordAbility == null) swordAbility = player.GetComponent<SwordAbility>();
 
         Collider[] hitEnemies = Physics.OverlapBox(
             swordCollider.bounds.center,
@@ -48,12 +46,10 @@ public class Sword : Weapon {
 
         foreach (Collider enemy in hitEnemies) {
             if (enemy.gameObject.layer == enemyLayer) {
-                // Debug.Log("Hit " + enemy.name);
                 enemy.GetComponent<NavMeshAgent>().isStopped = true;
                 enemy.GetComponent<NavMeshAgent>().updatePosition = false;
-                // enemy.GetComponent<NavMeshAgent>().enabled = false;
                 enemy.GetComponent<Rigidbody>().AddForce(Vector3.up * 20, ForceMode.Impulse);
-                // swordAbility.Uppercut(enemy);
+                enemy.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD, enemy.transform.position);
             }
         }
     }
