@@ -155,7 +155,7 @@ MonoBehaviour:
   - {fileID: 1277462814120247970}
   - {fileID: 3441069462283272977}
   type: 0
-  enemyMainGameObject: {fileID: 0}
+  enemyMainGameObject: {fileID: 7982700664649492553}
 --- !u!114 &2112643052315762787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +331,11 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -8291670155826506909, guid: 7b0ad43efd5b6ff419aee9e68b6936c3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -7777513646968128806, guid: 7b0ad43efd5b6ff419aee9e68b6936c3,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -498,8 +503,18 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: abae956760d77a647ae34a58df119b47, type: 2}
     - target: {fileID: 3981472979264485811, guid: 7b0ad43efd5b6ff419aee9e68b6936c3,
         type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3981472979264485811, guid: 7b0ad43efd5b6ff419aee9e68b6936c3,
+        type: 3}
       propertyPath: m_Materials.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3981472979264485811, guid: 7b0ad43efd5b6ff419aee9e68b6936c3,
+        type: 3}
+      propertyPath: m_SkinnedMotionVectors
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3981472979264485811, guid: 7b0ad43efd5b6ff419aee9e68b6936c3,
         type: 3}
