@@ -80,7 +80,7 @@ public class EnemyAI : MonoBehaviour
         {
             DecisionMaker(enemyType);
             lastCheckTime = Time.time;
-            checkInterval = Random.Range(0f, 0.2f);
+            checkInterval = Random.Range(0f, 0.1f);
         }
 
         if (enemyType == EnemyType.Pawn)
@@ -244,8 +244,6 @@ public class EnemyAI : MonoBehaviour
         if (animator != null)
             animator.SetTrigger("Attack");
 
-        while (Time.time - startTime < attackDuration)
-        {
             Collider[] hitColliders = Physics.OverlapSphere(
                 transform.position + Vector3.forward,
                 attackRange
@@ -265,7 +263,7 @@ public class EnemyAI : MonoBehaviour
                 }
             }
             yield return null; // Wait for the next frame before continuing the loop
-        }
+        
     }
 
     GameObject FindClosestPawnCluster()
