@@ -57,7 +57,7 @@ public class HealthSystem : MonoBehaviour {
 
     public void Kill() {
         // Kill the entity
-        // Debug.Log("I died!");
+        Debug.Log("I died!");
         // EnemyType type = GetComponent<EnemyAI>().enemyType;
         GameManager.Instance.AddKillCount(type);
         GameObject soul = (GameObject)Instantiate(Resources.Load("Level/Prefabs/VFX/Soul"), transform.position + Vector3.up, Quaternion.identity);
