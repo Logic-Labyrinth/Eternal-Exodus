@@ -266,7 +266,7 @@ public class EnemyAI : MonoBehaviour
                 }
             }
             yield return null; // Wait for the next frame before continuing the loop
-        
+        }
     }
 
     GameObject FindClosestPawnCluster()
@@ -345,11 +345,19 @@ public class EnemyAI : MonoBehaviour
         else if (
             !Physics.Raycast(
                 transform.position,
-                new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z) - transform.position, // locked on y axis
+                new Vector3(
+                    player.transform.position.x,
+                    transform.position.y,
+                    player.transform.position.z
+                ) - transform.position, // locked on y axis
                 out hit,
                 distanceToPlayer,
                 groundLayer
-            ) && !isCharging && !chargingCooldown && 20f > Vector3.Distance(transform.position, player.transform.position) && Vector3.Distance(transform.position, player.transform.position) > 10f
+            )
+            && !isCharging
+            && !chargingCooldown
+            && 20f > Vector3.Distance(transform.position, player.transform.position)
+            && Vector3.Distance(transform.position, player.transform.position) > 10f
         )
         {
             // Charge at player
