@@ -11,15 +11,12 @@ public class SoulCrystalIconUI : MonoBehaviour {
 
     void Start() {
         camera = Camera.main;
-        Debug.Log(camera);
         imageSize = GetComponent<RectTransform>().sizeDelta;
         canvasTransform = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
         halfHeight = imageSize.y / 2;
         halfWidth = imageSize.x / 2;
         halfScreenHeight = Screen.height / 4;
         halfScreenWidth = Screen.width / 4;
-        Debug.Log(halfScreenHeight);
-        Debug.Log(halfScreenWidth);
     }
 
     void Update() {
@@ -37,8 +34,5 @@ public class SoulCrystalIconUI : MonoBehaviour {
         if (pos.x < -halfScreenWidth + halfWidth) pos.x = -halfScreenWidth + halfWidth;
 
         GetComponent<RectTransform>().anchoredPosition = pos;
-        // GetComponent<RectTransform>().rotation = Quaternion.identity;
-        transform.rotation = Quaternion.identity;
-        // transform.LookAt(camera.transform);
     }
 }
