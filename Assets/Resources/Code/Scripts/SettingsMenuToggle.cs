@@ -9,8 +9,15 @@ public class SettingsMenuToggle : MonoBehaviour {
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            if(controller.isOpen) controller.CloseSettings();
-            else controller.OpenSettings();
+            if (controller.isOpen) {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                controller.CloseSettings();
+            } else {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                controller.OpenSettings();
+            }
         }
     }
 }

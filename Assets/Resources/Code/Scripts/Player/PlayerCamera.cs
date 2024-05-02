@@ -30,7 +30,6 @@ public class PlayerCamera : MonoBehaviour {
 
     public void DisableCameraInput() {
         disableCameraInput = true;
-        Debug.Log("COCK");
     }
 
     public void EnableCameraInput() {

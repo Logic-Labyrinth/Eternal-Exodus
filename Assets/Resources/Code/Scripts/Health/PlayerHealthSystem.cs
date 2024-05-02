@@ -9,8 +9,7 @@ public enum ShieldStatus {
 
 public class PlayerHealthSystem : MonoBehaviour {
     [SerializeField] int maxHealth = 100;
-    // [SerializeField] ShieldStatus shieldStatus = ShieldStatus.NONE;
-    [SerializeField] ShieldStatus shieldStatus = ShieldStatus.FULL;
+    [SerializeField] ShieldStatus shieldStatus = ShieldStatus.NONE;
     [SerializeField] PlayerShieldUIController playerShieldUIController;
 
     [SerializeField] int currentHealth;
@@ -44,8 +43,6 @@ public class PlayerHealthSystem : MonoBehaviour {
     }
 
     public void Kill() {
-        // gameObject.SetActive(false);
-        Debug.Log("Player died");
         FindObjectOfType<EndScreenController>(true).gameObject.SetActive(true);
     }
 
@@ -58,8 +55,6 @@ public class PlayerHealthSystem : MonoBehaviour {
     }
 
     void DamagePlayer(int damage) {
-        Debug.Log("Damage: " + damage);
-
         currentHealth -= damage;
         if (currentHealth <= 0) Kill();
     }
