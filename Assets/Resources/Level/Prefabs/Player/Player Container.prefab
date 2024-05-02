@@ -989,9 +989,9 @@ RectTransform:
   - {fileID: 6361408773972875978}
   m_Father: {fileID: 7616472492351370119}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -140}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4585185954534900487
@@ -1026,9 +1026,9 @@ RectTransform:
   - {fileID: 335532003494839682}
   m_Father: {fileID: 7616472492351370119}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -25}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4713110703077779863
@@ -1063,9 +1063,9 @@ RectTransform:
   - {fileID: 3924427171213902804}
   m_Father: {fileID: 7616472492351370119}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: 90}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4893525127889914331
@@ -1158,6 +1158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bf0a44ed4fbed4f9af07e91e82a2a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  averageTime: 0
   PawnKillCountText: {fileID: 4070490139917319119}
   RookKillCountText: {fileID: 796976184218845355}
   BishopKillCountText: {fileID: 3509941166387904178}
@@ -2093,7 +2094,7 @@ PrefabInstance:
     - target: {fileID: 623791623375582389, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
       propertyPath: m_text
-      value: 'Build: 4.2'
+      value: 'Build: 4.3'
       objectReference: {fileID: 0}
     - target: {fileID: 1868333690043486057, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
