@@ -129,6 +129,7 @@ public class WeaponsController : MonoBehaviour {
             ~LayerMask.NameToLayer("Player")
         );
 
+        Debug.Log("Basic Attack Ready: " + currentWeapon.canUseBasicAttack);
         if (!currentWeapon.canUseBasicAttack) return;
 
         // if (hit && raycastHit.collider.CompareTag("Enemy")) {
