@@ -4,7 +4,13 @@ using UnityEngine;
 public class Hammer : Weapon {
     private HammerAbility hammer;
 
+    public override void BasicAttack(Animator animator, GameObject player) {
+        animator.SetTrigger("HammerAttack");
+        PlayBasicAttackSound();
+    }
+
     public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
+        Debug.Log("Weapon Attack");
         animator.SetTrigger("HammerAttack");
         healthSystem.TakeDamage(baseDamage, WeaponDamageType.HAMMER, hitLocation);
     }
