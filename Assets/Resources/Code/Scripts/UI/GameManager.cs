@@ -45,8 +45,8 @@ public class GameManager : MonoBehaviour {
 
         SpawnManager.spawnManager.DisableSpawner();
         FindObjectsOfType<HealthSystem>().ToList().ForEach(x => {
-            x.Kill();
-            // x.gameObject.SetActive(false);
+            // x.Kill();
+            x.gameObject.SetActive(false);
         });
 
         GameObject.Find("Portal").GetComponent<PortalVFX>().OpenPortal();
