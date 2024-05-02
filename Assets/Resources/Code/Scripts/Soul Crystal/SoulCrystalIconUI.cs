@@ -37,5 +37,6 @@ public class SoulCrystalIconUI : MonoBehaviour {
         if (pos.x < -halfScreenWidth + halfWidth) pos.x = -halfScreenWidth + halfWidth;
 
         GetComponent<RectTransform>().anchoredPosition = pos;
+        GetComponent<RectTransform>().rotation = Quaternion.identity;
     }
 }
