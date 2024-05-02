@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoulCrystalIcon : MonoBehaviour {
     new Transform camera;
@@ -6,7 +7,7 @@ public class SoulCrystalIcon : MonoBehaviour {
 
     void Start() {
         camera = Camera.main.transform;
-        material = GetComponent<Renderer>().material;
+        material = GetComponent<Image>().material;
         material.SetFloat("_Progress", 0);
     }
 
