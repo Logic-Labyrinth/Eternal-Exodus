@@ -19,7 +19,8 @@ public class SoulValue : ScriptableObject {
         int value = count * soulValue > valueCap ? valueCap : count * soulValue;
         // Debug.Log(soulType + ": " + value);
         Debug.Log("Count: " + count + ", Value: " + value + "Eval: " + soulValueCurve.Evaluate(value * 1.0f / valueCap ) * valueCap);
-        return soulValueCurve.Evaluate(value / valueCap) * valueCap;
+        Debug.Log("Evaluation: " + soulValueCurve.Evaluate(value * 1.0f / valueCap) * valueCap);
+        return soulValueCurve.Evaluate(value * 1.0f / valueCap) * valueCap;
     }
 
     public int GetSoulCount() {

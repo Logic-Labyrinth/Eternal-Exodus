@@ -31,25 +31,32 @@ public class SoulCollector : MonoBehaviour {
             case EnemyType.Pawn:
                 Debug.Log("PAWN");
                 souls[EnemyType.Pawn]++;
+                soulValuePawn.ConsumeSoul();
                 break;
             case EnemyType.Rook:
                 souls[EnemyType.Rook]++;
+                soulValueRook.ConsumeSoul();
                 break;
             case EnemyType.Knight:
                 souls[EnemyType.Knight]++;
+                soulValueKnight.ConsumeSoul();
                 break;
             case EnemyType.Bishop:
                 souls[EnemyType.Bishop]++;
+                soulValueBishop.ConsumeSoul();
                 break;
             default:
                 Debug.LogError("Invalid soul type");
                 break;
         }
 
+        
         Destroy(soul.gameObject);
         DEBUG_SCORE = GetScore();
         icon.SetProgress(DEBUG_SCORE / soulsNeeded);
         if (DEBUG_SCORE >= soulsNeeded) Done();
+        Debug.Log(GetScore());
+        Debug.Log(pickupSoulScore);
     }
 
     void CollectPickupSoul(SoulPickupVFX soul) {
@@ -62,11 +69,15 @@ public class SoulCollector : MonoBehaviour {
     }
 
     float GetScore() {
-        return soulValuePawn.GetSoulValue(souls[EnemyType.Pawn]) +
+        var score = soulValuePawn.GetSoulValue(souls[EnemyType.Pawn]) +
         soulValueRook.GetSoulValue(souls[EnemyType.Rook]) +
         soulValueKnight.GetSoulValue(souls[EnemyType.Knight]) +
         soulValueBishop.GetSoulValue(souls[EnemyType.Bishop]) +
         pickupSoulScore;
+
+        Debug.Log("Score: " + score);;
+
+        return score;
     }
 
     void Done() {
