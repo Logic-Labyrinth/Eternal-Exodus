@@ -2,20 +2,35 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour {
+public class SpawnManager : MonoBehaviour
+{
     public static SpawnManager spawnManager { get; private set; }
 
     private List<Vector3> SpawnPoints = new();
-    [SerializeField] private GameObject pawnPrefab;
-    [SerializeField] private GameObject bishopPrefab;
-    [SerializeField] private GameObject knightPrefab;
-    [SerializeField] private GameObject rookPrefab;
 
-    [SerializeField] private int pawnPoolSize = 30;
-    [SerializeField] private int bishopPoolSize = 5;
-    [SerializeField] private int knightPoolSize = 5;
-    [SerializeField] private int rookPoolSize = 5;
+    [SerializeField]
+    private GameObject pawnPrefab;
 
+    [SerializeField]
+    private GameObject bishopPrefab;
+
+    [SerializeField]
+    private GameObject knightPrefab;
+
+    [SerializeField]
+    private GameObject rookPrefab;
+
+    [SerializeField]
+    private int pawnPoolSize = 30;
+
+    [SerializeField]
+    private int bishopPoolSize = 5;
+
+    [SerializeField]
+    private int knightPoolSize = 5;
+
+    [SerializeField]
+    private int rookPoolSize = 5;
 
     // pool of enemies
     public Queue<GameObject> pawnPool = new Queue<GameObject>();
@@ -25,11 +40,15 @@ public class SpawnManager : MonoBehaviour {
 
     bool disableSpawner = false;
 
-    private void Awake() {
+    private void Awake()
+    {
         // singleton
-        if (spawnManager != null && spawnManager != this) {
+        if (spawnManager != null && spawnManager != this)
+        {
             Destroy(this);
-        } else {
+        }
+        else
+        {
             spawnManager = this;
         }
         // DontDestroyOnLoad(gameObject);
@@ -37,10 +56,14 @@ public class SpawnManager : MonoBehaviour {
 
     // Start is called before the first frame update
     // Use this function to instantiate enemy pools
-    void Start() {
+    void Start()
+    {
         // Find all spawn points in the scene and store their positions
-        SpawnPoints.AddRange(GameObject.FindGameObjectsWithTag("SpawnPoint")
-            .Select(spawnPoint => spawnPoint.transform.position));
+        SpawnPoints.AddRange(
+            GameObject
+                .FindGameObjectsWithTag("SpawnPoint")
+                .Select(spawnPoint => spawnPoint.transform.position)
+        );
 
         GameObject enemyContainer = new("Enemies");
         enemyContainer.transform.parent = transform;
@@ -50,7 +73,8 @@ public class SpawnManager : MonoBehaviour {
         // and set them to inactive
 
         // Pawn pool
-        for (int i = 0; i < pawnPoolSize; i++) {
+        for (int i = 0; i < pawnPoolSize; i++)
+        {
             GameObject pawn = Instantiate(pawnPrefab);
             pawn.transform.parent = enemyContainer.transform;
             pawnPool.Enqueue(pawn);
@@ -58,7 +82,8 @@ public class SpawnManager : MonoBehaviour {
         }
 
         // Bishop pool
-        for (int i = 0; i < bishopPoolSize; i++) {
+        for (int i = 0; i < bishopPoolSize; i++)
+        {
             GameObject bishop = Instantiate(bishopPrefab);
             bishop.transform.parent = enemyContainer.transform;
             bishopPool.Enqueue(bishop);
@@ -66,7 +91,8 @@ public class SpawnManager : MonoBehaviour {
         }
 
         // Knight pool
-        for (int i = 0; i < knightPoolSize; i++) {
+        for (int i = 0; i < knightPoolSize; i++)
+        {
             GameObject knight = Instantiate(knightPrefab);
             knight.transform.parent = enemyContainer.transform;
             knightPool.Enqueue(knight);
@@ -74,7 +100,8 @@ public class SpawnManager : MonoBehaviour {
         }
 
         // Rook pool
-        for (int i = 0; i < rookPoolSize; i++) {
+        for (int i = 0; i < rookPoolSize; i++)
+        {
             GameObject rook = Instantiate(rookPrefab);
             rook.transform.parent = enemyContainer.transform;
             rookPool.Enqueue(rook);
@@ -82,25 +109,35 @@ public class SpawnManager : MonoBehaviour {
         }
     }
 
-    public void ReloadSpawns() {
+    public void ReloadSpawns()
+    {
         SpawnPoints.Clear();
-        SpawnPoints.AddRange(GameObject.FindGameObjectsWithTag("SpawnPoint").Select(spawnPoint => spawnPoint.transform.position));
+        SpawnPoints.AddRange(
+            GameObject
+                .FindGameObjectsWithTag("SpawnPoint")
+                .Select(spawnPoint => spawnPoint.transform.position)
+        );
     }
 
-    public void SpawnEnemy(EnemyType enemyType, Vector3? spawnPosition = null) {
+    public void SpawnEnemy(EnemyType enemyType, Vector3? spawnPosition = null)
+    {
         // select random spawn point if no spawn position is provided
-        if (spawnPosition == null) {// if there are no spawn points, break
-            if (!SpawnPoints.Any()) {
+        if (spawnPosition == null)
+        { // if there are no spawn points, break
+            if (!SpawnPoints.Any())
+            {
                 return;
             }
             spawnPosition = SpawnPoints[Random.Range(0, SpawnPoints.Count)];
         }
 
         // spawn enemy from correct pool
-        switch (enemyType) {
+        switch (enemyType)
+        {
             case EnemyType.Pawn:
                 // check if queue is empty
-                if (!pawnPool.Any()) {
+                if (!pawnPool.Any())
+                {
                     // Debug.Log("No more pawns in the pool");
                     return;
                 }
@@ -112,7 +149,8 @@ public class SpawnManager : MonoBehaviour {
                 pawn.SetActive(true);
                 break;
             case EnemyType.Bishop:
-                if (!bishopPool.Any()) {
+                if (!bishopPool.Any())
+                {
                     // Debug.Log("No more bishops in the pool");
                     return;
                 }
@@ -121,7 +159,8 @@ public class SpawnManager : MonoBehaviour {
                 bishop.SetActive(true);
                 break;
             case EnemyType.Knight:
-                if (!knightPool.Any()) {
+                if (!knightPool.Any())
+                {
                     // Debug.Log("No more knights in the pool");
                     return;
                 }
@@ -130,7 +169,8 @@ public class SpawnManager : MonoBehaviour {
                 knight.SetActive(true);
                 break;
             case EnemyType.Rook:
-                if (!rookPool.Any()) {
+                if (!rookPool.Any())
+                {
                     // Debug.Log("No more rooks in the pool");
                     return;
                 }
@@ -141,23 +181,75 @@ public class SpawnManager : MonoBehaviour {
         }
     }
 
-    private void FixedUpdate() {
-        if (disableSpawner) return;
-        SpawnEnemy(EnemyType.Pawn);
-        // if (pawnPool.Count  10) {
-            //SpawnEnemy(EnemyType.Pawn);
-        //}
-        if (bishopPool.Count > 0) {
-            SpawnEnemy(EnemyType.Bishop);
-        }
-        if (rookPool.Count > 0) {
-            SpawnEnemy(EnemyType.Rook);
-        }
+    // time elapsed in seconds
+    private float timeElapsed = 0.0f;
+
+    private void Update()
+    {
+        timeElapsed += Time.deltaTime;
     }
 
-    public void EnqueueEnemy(GameObject enemy) {
+    private void FixedUpdate()
+    {
+        // Get number of active enemies of each type
+
+        int activePawns = GameObject.FindGameObjectsWithTag("Pawn").Where(go => go.activeSelf).Count();
+        int activeBishops = GameObject.FindGameObjectsWithTag("Bishop").Where(go => go.activeSelf).Count();
+        int activeRooks = GameObject.FindGameObjectsWithTag("Rook").Where(go => go.activeSelf).Count();
+
+        if (disableSpawner)
+            return;
+
+        if (timeElapsed < 30.0f)
+        {
+            if (activePawns < 10)
+            {
+                SpawnEnemy(EnemyType.Pawn);
+            }
+            if (activeBishops < 0)
+            {
+                SpawnEnemy(EnemyType.Bishop);
+            }
+            if (activeRooks > 0)
+            {
+                SpawnEnemy(EnemyType.Rook);
+            }
+        } else if (timeElapsed > 30.0f && timeElapsed < 60.0f) {
+            if (activePawns < 20)
+            {
+                SpawnEnemy(EnemyType.Pawn);
+            }
+            if (activeBishops < 2)
+            {
+                SpawnEnemy(EnemyType.Bishop);
+            }
+            if (activeRooks < 2)
+            {
+                SpawnEnemy(EnemyType.Rook);
+            }
+        } else if (timeElapsed > 60.0f) {
+            if (activePawns < 30)
+            {
+                SpawnEnemy(EnemyType.Pawn);
+            }
+            if (activeBishops < 4)
+            {
+                SpawnEnemy(EnemyType.Bishop);
+            }
+            if (activeRooks < 4)
+            {
+                SpawnEnemy(EnemyType.Rook);
+            }
+        }
+
+        // SpawnEnemy(EnemyType.Pawn);
+    }
+
+    public void EnqueueEnemy(GameObject enemy)
+    {
         // find enemy type and enqueue it
-        switch (enemy.tag) {
+        switch (enemy.tag)
+        {
             case "Pawn":
                 PawnTargetManager.ReleasePawn(enemy);
                 pawnPool.Enqueue(enemy);
@@ -176,11 +268,13 @@ public class SpawnManager : MonoBehaviour {
         }
     }
 
-    public void DisableSpawner() {
+    public void DisableSpawner()
+    {
         disableSpawner = true;
     }
 
-    public void EnableSpawner() {
+    public void EnableSpawner()
+    {
         disableSpawner = false;
     }
 }
