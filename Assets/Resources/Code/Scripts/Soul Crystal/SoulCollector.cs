@@ -48,7 +48,6 @@ public class SoulCollector : MonoBehaviour {
                 Debug.LogError("Invalid soul type");
                 break;
         }
-
         
         Destroy(soul.gameObject);
         DEBUG_SCORE = GetScore();
@@ -69,8 +68,9 @@ public class SoulCollector : MonoBehaviour {
         var score = soulValuePawn.GetSoulValue(souls[EnemyType.Pawn]) +
         soulValueRook.GetSoulValue(souls[EnemyType.Rook]) +
         soulValueKnight.GetSoulValue(souls[EnemyType.Knight]) +
-        soulValueBishop.GetSoulValue(souls[EnemyType.Bishop]) +
-        pickupSoulScore;
+        soulValueBishop.GetSoulValue(souls[EnemyType.Bishop]) 
+        // + pickupSoulScore
+        ;
 
         return score;
     }

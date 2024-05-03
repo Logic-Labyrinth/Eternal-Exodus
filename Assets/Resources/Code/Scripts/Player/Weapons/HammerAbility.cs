@@ -81,9 +81,6 @@ public class HammerAbility : MonoBehaviour {
                     (Vector3.up + 3f * enemyBounceMultiplier * orientation.forward) * hammerForce,
                     ForceMode.Impulse
                 );
-                // colliders.ForEach(collider => {
-                //     if (collider.CompareTag("Enemy")) collider.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER, collider.transform.position);
-                // });
                 SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
             } else if (hasGround) {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
@@ -104,7 +101,6 @@ public class HammerAbility : MonoBehaviour {
     public void Reset() {
         isCharged = false;
         isCharging = false;
-        // if (slider) slider.gameObject.SetActive(false);
         if (hammerChargeBar) hammerChargeBar.gameObject.SetActive(false);
     }
 }
