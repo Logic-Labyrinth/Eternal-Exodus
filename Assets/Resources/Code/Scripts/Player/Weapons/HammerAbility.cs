@@ -34,10 +34,6 @@ public class HammerAbility : MonoBehaviour {
         hammerChargeBar.gameObject.SetActive(false);
     }
 
-    // private void OnDrawGizmos() {
-    //     Gizmos.DrawCube(impactArea.transform.position + impactArea.bounds.center, impactArea.bounds.size);
-    // }
-
     IEnumerator CompleteCharge() {
         yield return new WaitForSeconds(chargeTime);
         isCharged = isCharging;
@@ -48,27 +44,19 @@ public class HammerAbility : MonoBehaviour {
         SoundFXManager.Instance.PlayRandom(hammerChargeSounds);
         storedCoroutine = StartCoroutine(CompleteCharge());
         timer = 0;
-        // handle.color = Color.white;
-        // background.color = Color.white;
         hammerChargeBarMaterial.SetColor("_Color", chargeColor);
         hammerChargeBarMaterial.SetFloat("_Progress", 0);
         hammerChargeBar.gameObject.SetActive(true);
-        // slider.value = 0;
-        // slider.gameObject.SetActive(true);
     }
 
     private void Update() {
         if (isCharging) {
             if (timer <= chargeTime) {
-                // slider.value = timer / chargeTime;
                 hammerChargeBarMaterial.SetFloat("_Progress", timer / chargeTime);
                 timer += Time.deltaTime;
             } else {
-                // slider.value = 1;
                 hammerChargeBarMaterial.SetFloat("_Progress", 1);
                 hammerChargeBarMaterial.SetColor("_Color", Color.white);
-                // handle.color = Color.green;
-                // background.color = Color.green;
             }
         }
     }
@@ -79,9 +67,12 @@ public class HammerAbility : MonoBehaviour {
             bool hasEnemy = false, hasGround = false;
 
             colliders.ForEach(x => {
-                // Debug.Log(x);
                 if (x.gameObject.layer == enemyLayer) hasEnemy = true;
                 if (x.gameObject.layer == groundLayer) hasGround = true;
+                if (x.gameObject.layer == enemyLayer) {
+                    hasEnemy = true;
+                    x.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER, x.transform.position);
+                }
             });
 
             if (hasEnemy) {
@@ -90,9 +81,9 @@ public class HammerAbility : MonoBehaviour {
                     (Vector3.up + 3f * enemyBounceMultiplier * orientation.forward) * hammerForce,
                     ForceMode.Impulse
                 );
-                colliders.ForEach(collider => {
-                    if (collider.CompareTag("Enemy")) collider.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER, collider.transform.position);
-                });
+                // colliders.ForEach(collider => {
+                //     if (collider.CompareTag("Enemy")) collider.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER, collider.transform.position);
+                // });
                 SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
             } else if (hasGround) {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
