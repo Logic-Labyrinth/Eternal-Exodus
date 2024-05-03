@@ -29,7 +29,6 @@ public class SoulCollector : MonoBehaviour {
     void CollectSoul(SoulVFX soul) {
         switch (soul.soulType) {
             case EnemyType.Pawn:
-                Debug.Log("PAWN");
                 souls[EnemyType.Pawn]++;
                 soulValuePawn.ConsumeSoul();
                 break;
@@ -55,8 +54,6 @@ public class SoulCollector : MonoBehaviour {
         DEBUG_SCORE = GetScore();
         icon.SetProgress(DEBUG_SCORE / soulsNeeded);
         if (DEBUG_SCORE >= soulsNeeded) Done();
-        Debug.Log(GetScore());
-        Debug.Log(pickupSoulScore);
     }
 
     void CollectPickupSoul(SoulPickupVFX soul) {
@@ -75,13 +72,10 @@ public class SoulCollector : MonoBehaviour {
         soulValueBishop.GetSoulValue(souls[EnemyType.Bishop]) +
         pickupSoulScore;
 
-        Debug.Log("Score: " + score);;
-
         return score;
     }
 
     void Done() {
-        Debug.Log("Done!");
         GameManager.Instance.EndLevel();
     }
 }

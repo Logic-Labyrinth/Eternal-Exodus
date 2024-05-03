@@ -3399,7 +3399,6 @@ GameObject:
   - component: {fileID: 5326904912918888684}
   - component: {fileID: 3098603052652201824}
   - component: {fileID: 1622691966686091983}
-  - component: {fileID: 8864641285351160927}
   m_Layer: 6
   m_Name: RetopoFlow.001
   m_TagString: Rook
@@ -3640,32 +3639,13 @@ MonoBehaviour:
   weakness: 2
   resistance: 0
   hasShield: 0
-  meshes: []
+  meshes:
+  - {fileID: 694942601121539818}
+  - {fileID: 5662020687236149428}
+  - {fileID: 522965098376419379}
   type: 3
   enemyMainGameObject: {fileID: 3387480086823893954}
---- !u!136 &8864641285351160927
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5662020687236149428}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.0091028595
-  m_Height: 0.021042151
-  m_Direction: 1
-  m_Center: {x: -0.0007109606, y: 0.02056443, z: 0.00073329324}
+  smokeVFX: {fileID: 0}
 --- !u!1 &5715741785903030993
 GameObject:
   m_ObjectHideFlags: 0
