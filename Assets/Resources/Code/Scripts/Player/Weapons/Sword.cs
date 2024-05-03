@@ -39,6 +39,7 @@ public class Sword : Weapon {
 
         animator.SetTrigger("SwordSpecial");
         playerMovement.SwordJump();
+        PlaySpecialAttackSound();
     }
 
     public override void WeakpointAttack(Animator animator, GameObject player, Weakpoint weakpoint, Vector3 hitLocation) {
