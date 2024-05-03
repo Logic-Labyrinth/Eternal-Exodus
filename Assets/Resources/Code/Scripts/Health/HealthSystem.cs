@@ -123,7 +123,7 @@ public class HealthSystem : MonoBehaviour {
 
     private void OnDisable() {
         enemyMainGameObject?.SetActive(false);
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
     }
 
     IEnumerator Disolve() {
