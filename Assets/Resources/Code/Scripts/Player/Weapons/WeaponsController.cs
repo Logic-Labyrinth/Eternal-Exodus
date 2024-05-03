@@ -126,12 +126,12 @@ public class WeaponsController : MonoBehaviour {
             cameraReference.transform.forward,
             out RaycastHit raycastHit,
             currentWeapon.weapon.attackRange,
-            ~LayerMask.NameToLayer("Player")
+            ~LayerMask.NameToLayer("Player"),
+            QueryTriggerInteraction.Ignore
         );
 
         if (!currentWeapon.canUseBasicAttack) return;
 
-        // if (hit && raycastHit.collider.CompareTag("Enemy")) {
         if (hit) {
             if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
                 currentWeapon.weapon.BasicAttack(
