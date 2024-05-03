@@ -130,12 +130,9 @@ public class WeaponsController : MonoBehaviour {
             QueryTriggerInteraction.Ignore
         );
 
-        Debug.Log(currentWeapon.weapon.attackRange);
-
         if (!currentWeapon.canUseBasicAttack) return;
 
         if (hit) {
-            Debug.Log(raycastHit.collider.gameObject.name);
             if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
                 currentWeapon.weapon.BasicAttack(
                     animator,
