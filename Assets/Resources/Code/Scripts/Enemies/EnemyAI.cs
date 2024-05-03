@@ -318,7 +318,7 @@ public class EnemyAI : MonoBehaviour {
             player.transform.position.z
         );
         Vector3 targetPosition = originalTargetPosition; // Initial target position locked on y axis
-        float totalChargeTime = 5f; // Total time to complete the charge
+        float totalChargeTime = 2f; // Total time to complete the charge
         float startTime = Time.time;
 
         transform.LookAt(targetPosition);
