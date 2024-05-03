@@ -31,7 +31,7 @@ public class HammerAbility : MonoBehaviour {
         enemyLayer = LayerMask.NameToLayer("Enemy");
         groundLayer = LayerMask.NameToLayer("Ground");
         hammerChargeBarMaterial = hammerChargeBar.material;
-        hammerChargeBar.gameObject.SetActive(true);
+        hammerChargeBar.gameObject.SetActive(false);
     }
 
     // private void OnDrawGizmos() {
