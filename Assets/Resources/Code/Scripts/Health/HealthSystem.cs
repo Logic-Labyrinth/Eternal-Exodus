@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public enum WeaponDamageType {
     SPEAR,
@@ -17,6 +19,7 @@ public class HealthSystem : MonoBehaviour {
     [SerializeField] GameObject[] meshes;
     [SerializeField] EnemyType type;
     [SerializeField] GameObject enemyMainGameObject;
+    [SerializeField] VisualEffect smokeVFX;
     int currentHealth;
 
     private SpawnManager spawnManager;
@@ -56,14 +59,15 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void Kill() {
-        // Kill the entity
-        Debug.Log("I died!");
-        // EnemyType type = GetComponent<EnemyAI>().enemyType;
         GameManager.Instance.AddKillCount(type);
         GameObject soul = (GameObject)Instantiate(Resources.Load("Level/Prefabs/VFX/Soul"), transform.position + Vector3.up, Quaternion.identity);
         soul.GetComponent<SoulVFX>().soulType = type;
-        enemyMainGameObject.SetActive(false);
-        spawnManager.EnqueueEnemy(enemyMainGameObject);
+        enemyMainGameObject.GetComponent<EnemyAI>().enabled = false;
+
+        StartCoroutine(Disolve());
+
+        // enemyMainGameObject.SetActive(false);
+        // spawnManager.EnqueueEnemy(enemyMainGameObject);
     }
 
     public void Heal(int heal) {
@@ -80,19 +84,49 @@ public class HealthSystem : MonoBehaviour {
 
     public void Shield() {
         hasShield = true;
-        if(meshes == null) return;
+        if (meshes == null) return;
         foreach (GameObject mesh in meshes) {
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_Alpha", 1);
             mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_ShieldStrength", 2);
         }
     }
 
     public void BreakShield() {
-        // Stuff for breaking the shield
         hasShield = false;
-        if(meshes == null) return;
+        if (meshes == null) return;
 
         foreach (GameObject mesh in meshes) {
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_Alpha", 0);
             mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_ShieldStrength", 0);
         }
+    }
+
+    private void OnDisable() {
+        enemyMainGameObject?.SetActive(false);
+        gameObject.SetActive(false);
+    }
+
+    IEnumerator Disolve() {
+        GetComponent<Collider>().enabled = false;
+        smokeVFX.Play();
+
+        float time = 2f;
+        while (time >= 0) {
+            float prog = 1 - time / 2f;
+            foreach (GameObject mesh in meshes) {
+                mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_Dissolve_Amount", prog);
+            }
+
+            time -= Time.deltaTime;
+            yield return null;
+        }
+
+        foreach (GameObject mesh in meshes) {
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_Dissolve_Amount", 0f);
+        }
+        
+        enemyMainGameObject.GetComponent<EnemyAI>().enabled = true;
+        enemyMainGameObject.SetActive(false);
+        spawnManager.EnqueueEnemy(enemyMainGameObject);
     }
 }

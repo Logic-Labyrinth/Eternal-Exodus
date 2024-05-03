@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
     [SerializeField] LoadingScreenController loadingScreenController;
 
-    public int KillCountPawn { get; private set; } = 1;
-    public int KillCountKnight { get; private set; } = 1;
-    public int KillCountRook { get; private set; } = 1;
-    public int KillCountBishop { get; private set; } = 1;
+    public int KillCountPawn { get; private set; } = 0;
+    public int KillCountRook { get; private set; } = 0;
+    public int KillCountBishop { get; private set; } = 0;
+    // public int Score { get; private set; } = 0;
 
     public static GameManager Instance { get; private set; }
 
@@ -57,9 +57,9 @@ public class GameManager : MonoBehaviour {
             case EnemyType.Pawn:
                 KillCountPawn++;
                 break;
-            case EnemyType.Knight:
-                KillCountKnight++;
-                break;
+            // case EnemyType.Knight:
+            //     KillCountKnight++;
+            //     break;
             case EnemyType.Rook:
                 KillCountRook++;
                 break;
@@ -83,7 +83,6 @@ public class GameManager : MonoBehaviour {
 
     private void Update() {
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.End)) {
-            Debug.Log("End Level");
             EndLevel();
         }
     }
@@ -94,7 +93,6 @@ public class GameManager : MonoBehaviour {
 
     public void ResetCounter() {
         KillCountPawn = 0;
-        KillCountKnight = 69;
         KillCountRook = 0;
         KillCountBishop = 0;
     }

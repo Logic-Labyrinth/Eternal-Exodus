@@ -30,12 +30,14 @@ public class SettingsMenuController : MonoBehaviour {
     public void OpenSettings() {
         Time.timeScale = 0;
         isOpen = true;
+        children = transform.GetChildren(true);
         children.ForEach(x => x.gameObject.SetActive(true));
     }
 
     public void CloseSettings() {
         Time.timeScale = 1;
         isOpen = false;
+        children = transform.GetChildren(true);
         children.ForEach(x => x.gameObject.SetActive(false));
     }
 
