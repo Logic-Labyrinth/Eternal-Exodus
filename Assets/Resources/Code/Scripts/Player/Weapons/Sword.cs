@@ -13,7 +13,7 @@ public class Sword : Weapon {
     }
 
     public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
-        healthSystem.TakeDamage(baseDamage, WeaponDamageType.SWORD, hitLocation);
+        // healthSystem.TakeDamage(baseDamage, WeaponDamageType.SWORD, hitLocation);
         BasicAttack(animator, player);
 
         if (swordCollider == null) swordCollider = Camera.main.GetComponent<BoxCollider>();

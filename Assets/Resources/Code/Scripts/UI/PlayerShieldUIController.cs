@@ -3,12 +3,12 @@ using UnityEngine.UI;
 
 public class PlayerShieldUIController : MonoBehaviour {
     [SerializeField] Image shieldImage;
-    [SerializeField] Color fullShieldColor;
-    [SerializeField] Sprite fullShieldSprite;
+    [SerializeField] Color shieldColorTwo;
+    [SerializeField] Sprite shieldSpriteTwo;
+    [SerializeField] Color shieldColorOne;
+    [SerializeField] Sprite shieldSpriteOne;
     [SerializeField] Color damagedShieldColor;
     [SerializeField] Sprite damagedShieldSprite;
-    [SerializeField] float alphaSpeed;
-    [SerializeField] int alphaRange;
 
     struct ShieldColorData {
         public Color color;
@@ -19,13 +19,20 @@ public class PlayerShieldUIController : MonoBehaviour {
         shieldImage = GetComponent<Image>();
     }
 
-    public void Shield() {
-        // 00D4FF, alpha: 25-45
+    public void ShieldTwo() {
         shieldImage.enabled = true;
-        shieldImage.sprite = fullShieldSprite;
-        shieldImage.color = fullShieldColor;
-        shieldImage.material.SetTexture("_FullShield", fullShieldSprite.texture);
-        shieldImage.material.SetColor("_Color", fullShieldColor);
+        shieldImage.sprite = shieldSpriteTwo;
+        shieldImage.color = shieldColorTwo;
+        shieldImage.material.SetTexture("_FullShield", shieldSpriteTwo.texture);
+        shieldImage.material.SetColor("_Color", shieldColorTwo);
+    }
+
+    public void ShieldOne() {
+        shieldImage.enabled = true;
+        shieldImage.sprite = shieldSpriteOne;
+        shieldImage.color = shieldColorOne;
+        shieldImage.material.SetTexture("_FullShield", shieldSpriteOne.texture);
+        shieldImage.material.SetColor("_Color", shieldColorOne);
     }
 
     public void DamageShield() {

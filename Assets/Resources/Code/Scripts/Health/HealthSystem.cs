@@ -23,6 +23,7 @@ public class HealthSystem : MonoBehaviour {
     [SerializeField] Sound[] spearHitSounds;
     [SerializeField] Sound[] swordHitSounds;
     [SerializeField] Sound[] hammerHitSounds;
+    [SerializeField] HealthBar healthBar;
     int currentHealth;
 
     private SpawnManager spawnManager;
@@ -41,7 +42,6 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void TakeDamage(int damage, WeaponDamageType? damageType, Vector3 hitLocation) {
-        // Debug.Log("Damage: " + damage + ", Type: " + damageType);
         if (hasShield) {
             BreakShield();
             return;
@@ -62,6 +62,7 @@ public class HealthSystem : MonoBehaviour {
         GameObject hitVFXPrefab = Resources.Load<GameObject>("Level/Prefabs/VFX/HitVFX");
         Instantiate(hitVFXPrefab, hitLocation, Quaternion.identity).GetComponent<HitVFX>().Play(dam);
         currentHealth -= dam;
+        healthBar.SetProgress((float)currentHealth / maxHealth);
         if (currentHealth <= 0) Kill();
     }
 
@@ -86,9 +87,6 @@ public class HealthSystem : MonoBehaviour {
         enemyMainGameObject.GetComponent<EnemyAI>().enabled = false;
 
         StartCoroutine(Disolve());
-
-        // enemyMainGameObject.SetActive(false);
-        // spawnManager.EnqueueEnemy(enemyMainGameObject);
     }
 
     public void Heal(int heal) {
@@ -97,6 +95,7 @@ public class HealthSystem : MonoBehaviour {
         if (overheal > 0) Overheal(overheal);
 
         currentHealth = Math.Min(maxHealth, newHealth);
+        healthBar.SetProgress((float)currentHealth / maxHealth);
     }
 
     void Overheal(int overheal) {
