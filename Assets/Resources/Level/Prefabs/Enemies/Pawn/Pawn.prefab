@@ -30643,6 +30643,49 @@ MonoBehaviour:
   type: 0
   enemyMainGameObject: {fileID: 7982700664649492553}
   smokeVFX: {fileID: 8117975314075315256}
+  spearHitSounds:
+  - audioClip: {fileID: 8300000, guid: 4b4af868322057d4abef23a958cf6177, type: 3}
+    volume: 1
+    spacialBlend: 0
+    loop: 0
+    player: 1
+  - audioClip: {fileID: 8300000, guid: 5308af806a4b57243bd6544afce22c9c, type: 3}
+    volume: 1
+    spacialBlend: 0
+    loop: 0
+    player: 1
+  - audioClip: {fileID: 8300000, guid: e84b0c7a2f76faa4b9399dad433dac6d, type: 3}
+    volume: 1
+    spacialBlend: 0
+    loop: 0
+    player: 1
+  swordHitSounds:
+  - audioClip: {fileID: 8300000, guid: 78499ad1519d7b74884704839cb946e5, type: 3}
+    volume: 1
+    spacialBlend: 0
+    loop: 0
+    player: 1
+  - audioClip: {fileID: 8300000, guid: 67328dbc8bfc64f4888ff36c0fdd91b4, type: 3}
+    volume: 1
+    spacialBlend: 0
+    loop: 0
+    player: 1
+  - audioClip: {fileID: 8300000, guid: 2fd106c89f72cdd48acab44e950df772, type: 3}
+    volume: 1
+    spacialBlend: 0
+    loop: 0
+    player: 1
+  hammerHitSounds:
+  - audioClip: {fileID: 8300000, guid: 42908f82d3a7c554087fe3d5219c19f3, type: 3}
+    volume: 1
+    spacialBlend: 0
+    loop: 0
+    player: 1
+  - audioClip: {fileID: 8300000, guid: 655abe57706d95e48bd3cfcc1c878c9c, type: 3}
+    volume: 1
+    spacialBlend: 0
+    loop: 0
+    player: 0
   healthBar: {fileID: 5171776427641879705}
 --- !u!114 &2112643052315762787
 MonoBehaviour:
@@ -30668,6 +30711,12 @@ MonoBehaviour:
   chargeSpeed: 15
   chargingCooldownTime: 10
   animator: {fileID: 8706618238509308235}
+  soundEffect:
+    audioClip: {fileID: 0}
+    volume: 1
+    spacialBlend: 1
+    loop: 0
+    player: 0
   isCharging: 0
 --- !u!195 &8597766473108061917
 NavMeshAgent:

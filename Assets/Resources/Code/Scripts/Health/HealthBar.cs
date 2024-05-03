@@ -17,5 +17,6 @@ public class HealthBar : MonoBehaviour {
     void LateUpdate() {
         transform.LookAt(new Vector3(playerTransform.position.x, transform.position.y, playerTransform.position.z));
         transform.Rotate(Vector3.right, -90);
+        transform.Rotate(Vector3.up, 180);
     }
 }

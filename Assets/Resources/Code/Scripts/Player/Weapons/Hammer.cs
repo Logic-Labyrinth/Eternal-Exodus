@@ -37,6 +37,7 @@ public class Hammer : Weapon {
         animator.ResetTrigger("SwapHammer");
         animator.SetTrigger("HammerCharge");
         hammer.ChargeHammer();
+        PlaySpecialAttackSound();
     }
 
     public override void WeakpointAttack(Animator animator, GameObject player, Weakpoint weakpoint, Vector3 hitLocation) {

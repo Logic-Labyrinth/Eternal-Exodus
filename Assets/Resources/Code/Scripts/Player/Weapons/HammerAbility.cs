@@ -10,6 +10,8 @@ public class HammerAbility : MonoBehaviour {
     [SerializeField] float enemyBounceMultiplier;
     [SerializeField] HammerRaycast hammerRaycast;
     [SerializeField] GameObject hammerVFX;
+    [SerializeField] Sound[] hammerImpactSounds;
+    [SerializeField] Sound[] hammerChargeSounds;
 
     LayerMask enemyLayer;
     LayerMask groundLayer;
@@ -41,6 +43,7 @@ public class HammerAbility : MonoBehaviour {
 
     public void ChargeHammer() {
         isCharging = true;
+        SoundFXManager.Instance.PlayRandom(hammerChargeSounds);
         storedCoroutine = StartCoroutine(CompleteCharge());
         timer = 0;
         handle.color = Color.white;
@@ -82,6 +85,7 @@ public class HammerAbility : MonoBehaviour {
                 colliders.ForEach(collider => {
                     if (collider.CompareTag("Enemy")) collider.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER, collider.transform.position);
                 });
+                SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
             } else if (hasGround) {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
@@ -90,6 +94,7 @@ public class HammerAbility : MonoBehaviour {
                 );
                 Vector3 groundVFXPos = hammerRaycast.Raycast();
                 Instantiate(hammerVFX, groundVFXPos, Quaternion.identity);
+                SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
             }
         }
 
