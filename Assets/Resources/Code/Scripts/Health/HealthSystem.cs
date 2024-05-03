@@ -102,7 +102,8 @@ public class HealthSystem : MonoBehaviour {
     }
 
     private void OnDisable() {
-        enemyMainGameObject.SetActive(false);
+        enemyMainGameObject?.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     IEnumerator Disolve() {
@@ -120,10 +121,11 @@ public class HealthSystem : MonoBehaviour {
             yield return null;
         }
 
-
         foreach (GameObject mesh in meshes) {
             mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_Dissolve_Amount", 0f);
         }
+        
+        enemyMainGameObject.GetComponent<EnemyAI>().enabled = true;
         enemyMainGameObject.SetActive(false);
         spawnManager.EnqueueEnemy(enemyMainGameObject);
     }

@@ -18,7 +18,7 @@ public class Weapon : ScriptableObject {
 
     [VerticalGroup("Weapon Stats")]
     [TableColumnWidth(70)]
-    [ProgressBar(0.1, 10)]
+    [ProgressBar(0.1, 20)]
     [LabelText("Range")]
     [PropertyTooltip("Attack Range")]
     [DisableIf("isLocked")]
