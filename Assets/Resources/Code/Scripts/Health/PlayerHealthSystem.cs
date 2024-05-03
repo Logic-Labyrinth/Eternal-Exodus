@@ -21,7 +21,7 @@ public class PlayerHealthSystem : MonoBehaviour {
 
     PlayerMovement pm;
     bool canGetShieldOne = true;
-    bool canGetShieldTwo = true;
+    bool canGetShieldTwo = false;
 
 
     void Awake() {
@@ -55,10 +55,33 @@ public class PlayerHealthSystem : MonoBehaviour {
     }
 
     void FixedUpdate() {
+        if (canGetShieldOne) {
+            StartCoroutine(TryGetShieldOne());
+        }
         if (canGetShieldTwo) {
-            StartCoroutine(ResetCooldownTwo());
             StartCoroutine(TryGetShieldTwo());
         }
+    }
+
+    IEnumerator TryGetShieldOne() {
+        Debug.Log("Trying shield one");
+        canGetShieldOne = false;
+        float time = 0;
+        bool failed = false;
+        while (!failed && time < timeForShield) {
+            if (pm.rb.velocity.magnitude < layerTwoShieldSpeed) {
+                failed = true;
+                Debug.Log("Failed shield one");
+                Debug.Log(pm.rb.velocity.magnitude);
+            }
+            time += Time.fixedDeltaTime;
+            yield return null;
+        }
+
+        if (!failed) {
+            ShieldOne();
+            canGetShieldTwo = true;
+        } else StartCoroutine(ResetShieldCooldown());
     }
 
     IEnumerator TryGetShieldTwo() {
@@ -77,12 +100,14 @@ public class PlayerHealthSystem : MonoBehaviour {
         }
 
         if (!failed) ShieldTwo();
+        else StartCoroutine(ResetShieldCooldown());
     }
 
-    IEnumerator ResetCooldownTwo() {
+    IEnumerator ResetShieldCooldown() {
         yield return new WaitForSeconds(shieldCooldown);
         Debug.Log("Reset cooldown");
-        canGetShieldTwo = true;
+        canGetShieldOne = true;
+        // canGetShieldTwo = true;
     }
 
     public void Kill() {
@@ -124,5 +149,6 @@ public class PlayerHealthSystem : MonoBehaviour {
     public void BreakShield() {
         shieldStatus = ShieldLevel.NONE;
         playerShieldUIController.BreakShield();
+        StartCoroutine(ResetShieldCooldown());
     }
 }

@@ -3291,6 +3291,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2438922081884617105, guid: aae8a987d63c9cb43aeceab5a83369e7,
         type: 3}
+      propertyPath: timeForShield
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2438922081884617105, guid: aae8a987d63c9cb43aeceab5a83369e7,
+        type: 3}
+      propertyPath: shieldCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2438922081884617105, guid: aae8a987d63c9cb43aeceab5a83369e7,
+        type: 3}
+      propertyPath: layerOneShieldSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2438922081884617105, guid: aae8a987d63c9cb43aeceab5a83369e7,
+        type: 3}
+      propertyPath: layerTwoShieldSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2438922081884617105, guid: aae8a987d63c9cb43aeceab5a83369e7,
+        type: 3}
       propertyPath: playerShieldUIController
       value: 
       objectReference: {fileID: 1329347365084732240}
@@ -3482,12 +3502,22 @@ PrefabInstance:
     - target: {fileID: 3125389930906354113, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
       propertyPath: shieldColorOne.a
-      value: 0.16470589
+      value: 0.047058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 3125389930906354113, guid: d7bbfb7cd9582564983b2560233217b3,
+        type: 3}
+      propertyPath: shieldColorOne.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3125389930906354113, guid: d7bbfb7cd9582564983b2560233217b3,
+        type: 3}
+      propertyPath: shieldColorOne.g
+      value: 0.25882354
       objectReference: {fileID: 0}
     - target: {fileID: 3125389930906354113, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
       propertyPath: shieldColorOne.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3125389930906354113, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
@@ -3497,12 +3527,17 @@ PrefabInstance:
     - target: {fileID: 3125389930906354113, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
       propertyPath: shieldColorTwo.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3125389930906354113, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
       propertyPath: shieldColorTwo.g
-      value: 0.8509804
+      value: 0.5294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 3125389930906354113, guid: d7bbfb7cd9582564983b2560233217b3,
+        type: 3}
+      propertyPath: shieldColorTwo.r
+      value: 0.9529412
       objectReference: {fileID: 0}
     - target: {fileID: 3403882203238302429, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
