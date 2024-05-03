@@ -64,15 +64,12 @@ public class PlayerHealthSystem : MonoBehaviour {
     }
 
     IEnumerator TryGetShieldOne() {
-        Debug.Log("Trying shield one");
         canGetShieldOne = false;
         float time = 0;
         bool failed = false;
         while (!failed && time < timeForShield) {
             if (pm.rb.velocity.magnitude < layerTwoShieldSpeed) {
                 failed = true;
-                Debug.Log("Failed shield one");
-                Debug.Log(pm.rb.velocity.magnitude);
             }
             time += Time.fixedDeltaTime;
             yield return null;
@@ -85,15 +82,12 @@ public class PlayerHealthSystem : MonoBehaviour {
     }
 
     IEnumerator TryGetShieldTwo() {
-        Debug.Log("Trying shield two");
         canGetShieldTwo = false;
         float time = 0;
         bool failed = false;
         while (!failed && time < timeForShield) {
             if (pm.rb.velocity.magnitude < layerTwoShieldSpeed) {
                 failed = true;
-                Debug.Log("Failed shield two");
-                Debug.Log(pm.rb.velocity.magnitude);
             }
             time += Time.fixedDeltaTime;
             yield return null;
@@ -105,7 +99,6 @@ public class PlayerHealthSystem : MonoBehaviour {
 
     IEnumerator ResetShieldCooldown() {
         yield return new WaitForSeconds(shieldCooldown);
-        Debug.Log("Reset cooldown");
         canGetShieldOne = true;
         // canGetShieldTwo = true;
     }

@@ -20,6 +20,7 @@ public class HealthSystem : MonoBehaviour {
     [SerializeField] EnemyType type;
     [SerializeField] GameObject enemyMainGameObject;
     [SerializeField] VisualEffect smokeVFX;
+    [SerializeField] HealthBar healthBar;
     int currentHealth;
 
     private SpawnManager spawnManager;
@@ -38,7 +39,6 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void TakeDamage(int damage, WeaponDamageType? damageType, Vector3 hitLocation) {
-        // Debug.Log("Damage: " + damage + ", Type: " + damageType);
         if (hasShield) {
             BreakShield();
             return;
@@ -51,10 +51,10 @@ public class HealthSystem : MonoBehaviour {
             dam -= (int)Math.Floor(dam * resistanceFactor / 100.0f);
         }
 
-        // Debug.Log("Dam: " + dam);
         GameObject hitVFXPrefab = Resources.Load<GameObject>("Level/Prefabs/VFX/HitVFX");
         Instantiate(hitVFXPrefab, hitLocation, Quaternion.identity).GetComponent<HitVFX>().Play(dam);
         currentHealth -= dam;
+        healthBar.SetProgress((float)currentHealth / maxHealth);
         if (currentHealth <= 0) Kill();
     }
 
@@ -65,9 +65,6 @@ public class HealthSystem : MonoBehaviour {
         enemyMainGameObject.GetComponent<EnemyAI>().enabled = false;
 
         StartCoroutine(Disolve());
-
-        // enemyMainGameObject.SetActive(false);
-        // spawnManager.EnqueueEnemy(enemyMainGameObject);
     }
 
     public void Heal(int heal) {
@@ -76,6 +73,7 @@ public class HealthSystem : MonoBehaviour {
         if (overheal > 0) Overheal(overheal);
 
         currentHealth = Math.Min(maxHealth, newHealth);
+        healthBar.SetProgress((float)currentHealth / maxHealth);
     }
 
     void Overheal(int overheal) {
