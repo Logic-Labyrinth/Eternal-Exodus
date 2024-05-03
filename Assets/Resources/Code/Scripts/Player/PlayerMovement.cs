@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] DustTrailVFX dustTrailVFX;
     [SerializeField] SpeedLinesVFX speedLinesVFX;
 
-    void OnGUI() {
+    // void OnGUI() {
     // GUILayout.TextArea($"State: {state}");
     // GUILayout.TextArea($"Grounded: {isGrounded}");
     // GUILayout.TextArea($"Wants to uncrouch: {wantsToUncrouch}");
@@ -81,9 +81,9 @@ public class PlayerMovement : MonoBehaviour {
     // GUILayout.TextArea($"Player scale: {playerObj.localScale}");
     // GUILayout.TextArea($"Ready to jump: {canJump}");
     // GUILayout.TextArea($"Move direction: {moveDirection}");
-    GUILayout.TextArea($"Current speed: {rb.velocity.magnitude}");
-    GUILayout.TextArea($"Desired speed: {desiredMoveSpeed}");
-    }
+    // GUILayout.TextArea($"Current speed: {rb.velocity.magnitude}");
+    // GUILayout.TextArea($"Desired speed: {desiredMoveSpeed}");
+    // }
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
