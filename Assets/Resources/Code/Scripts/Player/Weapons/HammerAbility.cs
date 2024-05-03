@@ -12,6 +12,9 @@ public class HammerAbility : MonoBehaviour {
     [SerializeField] GameObject hammerVFX;
     [SerializeField] Sound[] hammerImpactSounds;
     [SerializeField] Sound[] hammerChargeSounds;
+    [SerializeField] Image hammerChargeBar;
+    [SerializeField] Color chargeColor;
+    Material hammerChargeBarMaterial;
 
     LayerMask enemyLayer;
     LayerMask groundLayer;
@@ -20,9 +23,6 @@ public class HammerAbility : MonoBehaviour {
     Rigidbody rb;
     Transform orientation;
     Coroutine storedCoroutine;
-
-    public Slider slider;
-    public Image handle, background;
     float timer = 0;
 
     void Start() {
@@ -30,6 +30,8 @@ public class HammerAbility : MonoBehaviour {
         orientation = transform.Find("Orientation");
         enemyLayer = LayerMask.NameToLayer("Enemy");
         groundLayer = LayerMask.NameToLayer("Ground");
+        hammerChargeBarMaterial = hammerChargeBar.material;
+        hammerChargeBar.gameObject.SetActive(true);
     }
 
     // private void OnDrawGizmos() {
@@ -46,21 +48,27 @@ public class HammerAbility : MonoBehaviour {
         SoundFXManager.Instance.PlayRandom(hammerChargeSounds);
         storedCoroutine = StartCoroutine(CompleteCharge());
         timer = 0;
-        handle.color = Color.white;
-        background.color = Color.white;
-        slider.value = 0;
-        slider.gameObject.SetActive(true);
+        // handle.color = Color.white;
+        // background.color = Color.white;
+        hammerChargeBarMaterial.SetColor("_Color", chargeColor);
+        hammerChargeBarMaterial.SetFloat("_Progress", 0);
+        hammerChargeBar.gameObject.SetActive(true);
+        // slider.value = 0;
+        // slider.gameObject.SetActive(true);
     }
 
     private void Update() {
         if (isCharging) {
             if (timer <= chargeTime) {
-                slider.value = timer / chargeTime;
+                // slider.value = timer / chargeTime;
+                hammerChargeBarMaterial.SetFloat("_Progress", timer / chargeTime);
                 timer += Time.deltaTime;
             } else {
-                slider.value = 1;
-                handle.color = Color.green;
-                background.color = Color.green;
+                // slider.value = 1;
+                hammerChargeBarMaterial.SetFloat("_Progress", 1);
+                hammerChargeBarMaterial.SetColor("_Color", Color.white);
+                // handle.color = Color.green;
+                // background.color = Color.green;
             }
         }
     }
@@ -105,6 +113,7 @@ public class HammerAbility : MonoBehaviour {
     public void Reset() {
         isCharged = false;
         isCharging = false;
-        if (slider) slider.gameObject.SetActive(false);
+        // if (slider) slider.gameObject.SetActive(false);
+        if (hammerChargeBar) hammerChargeBar.gameObject.SetActive(false);
     }
 }
