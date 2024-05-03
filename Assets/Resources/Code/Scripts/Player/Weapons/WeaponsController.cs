@@ -125,7 +125,7 @@ public class WeaponsController : MonoBehaviour {
             cameraReference.transform.position,
             cameraReference.transform.forward,
             out RaycastHit raycastHit,
-            currentWeapon.weapon.attackRange * 100,
+            currentWeapon.weapon.attackRange,
             ~LayerMask.NameToLayer("Player"),
             QueryTriggerInteraction.Ignore
         );
