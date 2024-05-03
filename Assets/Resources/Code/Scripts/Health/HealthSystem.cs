@@ -20,6 +20,9 @@ public class HealthSystem : MonoBehaviour {
     [SerializeField] EnemyType type;
     [SerializeField] GameObject enemyMainGameObject;
     [SerializeField] VisualEffect smokeVFX;
+    [SerializeField] Sound[] spearHitSounds;
+    [SerializeField] Sound[] swordHitSounds;
+    [SerializeField] Sound[] hammerHitSounds;
     int currentHealth;
 
     private SpawnManager spawnManager;
@@ -51,11 +54,29 @@ public class HealthSystem : MonoBehaviour {
             dam -= (int)Math.Floor(dam * resistanceFactor / 100.0f);
         }
 
+        if (damageType != null) {
+            PlayHitSound(damageType.Value);
+        }
+
         // Debug.Log("Dam: " + dam);
         GameObject hitVFXPrefab = Resources.Load<GameObject>("Level/Prefabs/VFX/HitVFX");
         Instantiate(hitVFXPrefab, hitLocation, Quaternion.identity).GetComponent<HitVFX>().Play(dam);
         currentHealth -= dam;
         if (currentHealth <= 0) Kill();
+    }
+
+    public void PlayHitSound(WeaponDamageType damageType) {
+        switch (damageType) {
+            case WeaponDamageType.SPEAR:
+                SoundFXManager.Instance.PlayRandom(spearHitSounds);
+                break;
+            case WeaponDamageType.SWORD:
+                SoundFXManager.Instance.PlayRandom(swordHitSounds);
+                break;
+            case WeaponDamageType.HAMMER:
+                SoundFXManager.Instance.PlayRandom(hammerHitSounds);
+                break;
+        }
     }
 
     public void Kill() {

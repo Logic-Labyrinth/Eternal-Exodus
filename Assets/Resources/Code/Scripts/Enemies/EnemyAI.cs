@@ -46,6 +46,7 @@ public class EnemyAI : MonoBehaviour {
     private float checkInterval;
 
     public Animator animator;
+    public Sound soundEffect;
 
     new Rigidbody rigidbody;
 
@@ -325,8 +326,7 @@ public class EnemyAI : MonoBehaviour {
         animator.SetTrigger("Charge");
         yield return new WaitForSeconds(1.5f);
 
-        var audioSource = GetComponent<AudioSource>();
-        audioSource.Play();
+        SoundFXManager.Instance.Play(soundEffect, transform);
 
         while (isCharging)
         {
