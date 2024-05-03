@@ -21,6 +21,16 @@ MonoBehaviour:
   specialAttackCooldown: 0
   localPosition: {x: 0, y: -0.002, z: 0}
   localRotation: {x: -2.0979878e-10, y: 0.9999885, z: -0.0047996365, w: -0.000000043710884}
-  basicAttackSounds: []
-  specialAttackSounds: []
+  basicAttackSounds:
+  - audioClip: {fileID: 8300000, guid: b83a95dfe46a14441ad5d9ed248c2bb0, type: 3}
+    volume: 1
+    spacialBlend: 1
+    loop: 0
+    player: 0
+  specialAttackSounds:
+  - audioClip: {fileID: 8300000, guid: b83a95dfe46a14441ad5d9ed248c2bb0, type: 3}
+    volume: 1
+    spacialBlend: 1
+    loop: 0
+    player: 0
   swapAnimation: SwapHammer

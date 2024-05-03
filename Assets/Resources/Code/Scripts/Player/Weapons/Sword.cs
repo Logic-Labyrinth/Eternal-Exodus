@@ -13,7 +13,7 @@ public class Sword : Weapon {
     }
 
     public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
-        healthSystem.TakeDamage(baseDamage, WeaponDamageType.SWORD, hitLocation);
+        // healthSystem.TakeDamage(baseDamage, WeaponDamageType.SWORD, hitLocation);
         BasicAttack(animator, player);
 
         if (swordCollider == null) swordCollider = Camera.main.GetComponent<BoxCollider>();
@@ -39,6 +39,7 @@ public class Sword : Weapon {
 
         animator.SetTrigger("SwordSpecial");
         playerMovement.SwordJump();
+        PlaySpecialAttackSound();
     }
 
     public override void WeakpointAttack(Animator animator, GameObject player, Weakpoint weakpoint, Vector3 hitLocation) {

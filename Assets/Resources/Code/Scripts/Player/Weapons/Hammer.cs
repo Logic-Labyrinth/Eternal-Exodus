@@ -3,6 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Hammer", menuName = "ExodusTools/Weapon/Hammer")]
 public class Hammer : Weapon {
     private HammerAbility hammer;
+    BoxCollider hammerCollider;
+    LayerMask enemyLayer = -1;
 
     public override void BasicAttack(Animator animator, GameObject player) {
         animator.SetTrigger("HammerAttack");
@@ -10,9 +12,21 @@ public class Hammer : Weapon {
     }
 
     public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
-        Debug.Log("Weapon Attack");
-        animator.SetTrigger("HammerAttack");
-        healthSystem.TakeDamage(baseDamage, WeaponDamageType.HAMMER, hitLocation);
+        BasicAttack(animator, player);
+        // healthSystem.TakeDamage(baseDamage, WeaponDamageType.HAMMER, hitLocation);
+
+        if (hammerCollider == null) hammerCollider = Camera.main.GetComponent<BoxCollider>();
+        Collider[] hitEnemies = Physics.OverlapBox(
+            hammerCollider.bounds.center,
+            hammerCollider.bounds.extents,
+            hammerCollider.transform.rotation
+        );
+
+        foreach (Collider enemy in hitEnemies) {
+            if (enemy.gameObject.layer == enemyLayer) {
+                enemy.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD, enemy.transform.position);
+            }
+        }
     }
 
     public override void SpecialAttack(Animator animator, GameObject player, HealthSystem healthSystem) {
@@ -23,6 +37,7 @@ public class Hammer : Weapon {
         animator.ResetTrigger("SwapHammer");
         animator.SetTrigger("HammerCharge");
         hammer.ChargeHammer();
+        PlaySpecialAttackSound();
     }
 
     public override void WeakpointAttack(Animator animator, GameObject player, Weakpoint weakpoint, Vector3 hitLocation) {
