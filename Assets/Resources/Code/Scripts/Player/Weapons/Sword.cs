@@ -13,6 +13,7 @@ public class Sword : Weapon {
     }
 
     public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
+        if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
         // healthSystem.TakeDamage(baseDamage, WeaponDamageType.SWORD, hitLocation);
         BasicAttack(animator, player);
 
@@ -24,6 +25,7 @@ public class Sword : Weapon {
         );
 
         foreach (Collider enemy in hitEnemies) {
+            Debug.Log(enemy.gameObject.layer);
             if (enemy.gameObject.layer == enemyLayer) {
                 enemy.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD, enemy.transform.position);
             }

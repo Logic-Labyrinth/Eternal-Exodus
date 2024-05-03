@@ -12,6 +12,7 @@ public class Hammer : Weapon {
     }
 
     public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
+        if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
         BasicAttack(animator, player);
         // healthSystem.TakeDamage(baseDamage, WeaponDamageType.HAMMER, hitLocation);
 
