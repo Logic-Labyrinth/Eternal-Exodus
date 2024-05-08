@@ -373,7 +373,7 @@ public class EnemyAI : MonoBehaviour {
         if (!agent.isStopped)
             return;
         // if (Physics.Raycast(transform.position, Vector3.down, 1f)) {
-        if (rigidbody.velocity.y == 0) {
+        if (rigidbody != null && rigidbody.velocity.y == 0) {
             agent.isStopped = false;
             agent.updatePosition = true;
         }

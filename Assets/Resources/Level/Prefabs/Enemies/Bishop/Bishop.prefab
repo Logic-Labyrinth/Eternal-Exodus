@@ -1940,7 +1940,6 @@ GameObject:
   - component: {fileID: 3305345896909533263}
   - component: {fileID: 5903147516518706103}
   - component: {fileID: 995070222508506550}
-  - component: {fileID: 3398763678413376148}
   - component: {fileID: 7610643240791402503}
   m_Layer: 6
   m_Name: Bishop
@@ -1965,6 +1964,7 @@ Transform:
   - {fileID: 856415667235952511}
   - {fileID: 5250752915590061968}
   - {fileID: 5593196472743827420}
+  - {fileID: 3249805964946652134}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4886458203522504958
@@ -1991,6 +1991,9 @@ MonoBehaviour:
   type: 1
   enemyMainGameObject: {fileID: 3387480086823893954}
   smokeVFX: {fileID: 3099558537284627569}
+  spearHitSounds: []
+  swordHitSounds: []
+  hammerHitSounds: []
   healthBar: {fileID: 6136036951782917571}
 --- !u!114 &3305345896909533263
 MonoBehaviour:
@@ -2016,6 +2019,12 @@ MonoBehaviour:
   chargeSpeed: 15
   chargingCooldownTime: 10
   animator: {fileID: 8016550563973848326}
+  soundEffect:
+    audioClip: {fileID: 0}
+    volume: 1
+    spacialBlend: 1
+    loop: 0
+    player: 0
   isCharging: 0
 --- !u!195 &5903147516518706103
 NavMeshAgent:
@@ -2051,28 +2060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9918d58bf9e22924c86b556a8401fe07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffArea: {fileID: 3398763678413376148}
---- !u!135 &3398763678413376148
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3387480086823893954}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 8
-  m_Center: {x: 0, y: 3.3000002, z: 0}
+  buffArea: {fileID: 5524676691110753007}
 --- !u!136 &7610643240791402503
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2553,9 +2541,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5250752915590061968}
   - component: {fileID: 8016550563973848326}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Anim_Bishop_Float
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2599,6 +2587,59 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &4961803122488900275
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3249805964946652134}
+  - component: {fileID: 5524676691110753007}
+  m_Layer: 0
+  m_Name: Buff Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3249805964946652134
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4961803122488900275}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5199997110340152306}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5524676691110753007
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4961803122488900275}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 8
+  m_Center: {x: 0, y: 3.3000002, z: 0}
 --- !u!1 &5016682699721368501
 GameObject:
   m_ObjectHideFlags: 0

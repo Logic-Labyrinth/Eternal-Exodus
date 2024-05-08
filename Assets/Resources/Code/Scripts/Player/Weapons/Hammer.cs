@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Hammer", menuName = "ExodusTools/Weapon/Hammer")]
 public class Hammer : Weapon {
     private HammerAbility hammer;
-    BoxCollider hammerCollider;
     LayerMask enemyLayer = -1;
+    List<GameObject> hammerTargets;
 
     public override void BasicAttack(Animator animator, GameObject player) {
         animator.SetTrigger("HammerAttack");
@@ -14,19 +15,17 @@ public class Hammer : Weapon {
     public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
         if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
         BasicAttack(animator, player);
-        // healthSystem.TakeDamage(baseDamage, WeaponDamageType.HAMMER, hitLocation);
 
-        if (hammerCollider == null) hammerCollider = Camera.main.GetComponent<BoxCollider>();
-        Collider[] hitEnemies = Physics.OverlapBox(
-            hammerCollider.bounds.center,
-            hammerCollider.bounds.extents,
-            hammerCollider.transform.rotation
+        hammerTargets = CustomConeCollider.GetAllObjects(
+            Camera.main.transform,
+            attackRange,    // radius
+            30,             // vertical angle
+            90              // horizontal angle
         );
 
-        foreach (Collider enemy in hitEnemies) {
-            if (enemy.gameObject.layer == enemyLayer) {
-                enemy.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD, enemy.transform.position);
-            }
+        foreach (GameObject target in hammerTargets) {
+            if (target.layer == enemyLayer)
+                target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.HAMMER, Vector3.zero);
         }
     }
 
@@ -52,7 +51,7 @@ public class Hammer : Weapon {
         }
 
         animator.SetTrigger("HammerRelease");
-        hammer.ActivateHammerAbility(baseDamage);
+        hammer.ActivateHammerAbility(baseDamage, attackRange);
     }
 
     public override void Reset() {

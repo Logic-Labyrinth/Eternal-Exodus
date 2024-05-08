@@ -1,11 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "Sword", menuName = "ExodusTools/Weapon/Sword")]
 public class Sword : Weapon {
     PlayerMovement playerMovement;
-    BoxCollider swordCollider;
     LayerMask enemyLayer = -1;
+    List<GameObject> swordTargets;
 
     public override void BasicAttack(Animator animator, GameObject player) {
         animator.SetTrigger("SwordAttack");
@@ -14,30 +15,25 @@ public class Sword : Weapon {
 
     public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
         if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
-        // healthSystem.TakeDamage(baseDamage, WeaponDamageType.SWORD, hitLocation);
         BasicAttack(animator, player);
 
-        if (swordCollider == null) swordCollider = Camera.main.GetComponent<BoxCollider>();
-        Collider[] hitEnemies = Physics.OverlapBox(
-            swordCollider.bounds.center,
-            swordCollider.bounds.extents,
-            swordCollider.transform.rotation
+        swordTargets = CustomConeCollider.GetAllObjects(
+            Camera.main.transform,
+            attackRange,    // radius
+            30,             // vertical angle
+            90              // horizontal angle
         );
 
-        foreach (Collider enemy in hitEnemies) {
-            Debug.Log(enemy.gameObject.layer);
-            if (enemy.gameObject.layer == enemyLayer) {
-                enemy.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD, enemy.transform.position);
-            }
+        foreach (GameObject target in swordTargets) {
+            if (target.layer == enemyLayer)
+                target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD, Vector3.zero);
         }
     }
 
     public override void SpecialAttack(Animator animator, GameObject player, HealthSystem healthSystem) {
-        if (playerMovement == null) {
-            playerMovement = player.GetComponent<PlayerMovement>();
-        }
+        if (playerMovement == null) playerMovement = player.GetComponent<PlayerMovement>();
 
-        UppercutEnemies(player);
+        UppercutEnemies();
 
         animator.SetTrigger("SwordSpecial");
         playerMovement.SwordJump();
@@ -49,23 +45,23 @@ public class Sword : Weapon {
         BasicAttack(animator, player);
     }
 
-    void UppercutEnemies(GameObject player) {
+    void UppercutEnemies() {
         if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
-        if (swordCollider == null) swordCollider = Camera.main.GetComponent<BoxCollider>();
 
-        Collider[] hitEnemies = Physics.OverlapBox(
-            swordCollider.bounds.center,
-            swordCollider.bounds.extents,
-            swordCollider.transform.rotation
+        swordTargets = CustomConeCollider.GetAllObjects(
+            Camera.main.transform,
+            attackRange,    // radius
+            30,             // vertical angle
+            90              // horizontal angle
         );
 
-        foreach (Collider enemy in hitEnemies) {
-            if (enemy.gameObject.layer == enemyLayer) {
-                if (!enemy.TryGetComponent(out Rigidbody r)) continue;
-                enemy.GetComponent<NavMeshAgent>().isStopped = true;
-                enemy.GetComponent<NavMeshAgent>().updatePosition = false;
-                enemy.GetComponent<Rigidbody>().AddForce(Vector3.up * 20, ForceMode.Impulse);
-                enemy.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD, enemy.transform.position);
+        foreach (GameObject target in swordTargets) {
+            if (target.layer == enemyLayer) {
+                target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD, Vector3.zero);
+                if (!target.TryGetComponent(out Rigidbody r)) continue;
+                target.GetComponent<NavMeshAgent>().isStopped = true;
+                target.GetComponent<NavMeshAgent>().updatePosition = false;
+                target.GetComponent<Rigidbody>().AddForce(Vector3.up * 20, ForceMode.Impulse);
             }
         }
     }

@@ -1,12 +1,17 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HealthBar : MonoBehaviour {
     Material material;
     Transform playerTransform;
 
-    private void Awake() {
+    void Awake() {
         playerTransform = Camera.main.transform;
         material = GetComponent<Renderer>().materials[0];
+        material.SetFloat("_Progress", 1);
+    }
+
+    void OnEnable() {
         material.SetFloat("_Progress", 1);
     }
 

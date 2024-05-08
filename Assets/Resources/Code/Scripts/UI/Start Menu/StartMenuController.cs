@@ -10,12 +10,16 @@ public class StartMenuController : MonoBehaviour {
     }
 
     void Update() {
-        // if (!canClick) return;
+        if (!canClick) return;
 
         if (Input.GetButtonDown("Basic Attack") || Input.GetButtonDown("Jump")) {
             animator.SetBool("hasClicked", true);
             levelSelectMenu.SetActive(true);
             gameObject.SetActive(false);
         }
+    }
+
+    public void Test() {
+        return;
     }
 }

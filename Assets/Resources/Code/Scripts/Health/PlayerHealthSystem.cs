@@ -68,7 +68,7 @@ public class PlayerHealthSystem : MonoBehaviour {
         float time = 0;
         bool failed = false;
         while (!failed && time < timeForShield) {
-            if (pm.rb.velocity.magnitude < layerTwoShieldSpeed) {
+            if (pm.rb.velocity.magnitude < layerOneShieldSpeed) {
                 failed = true;
             }
             time += Time.fixedDeltaTime;

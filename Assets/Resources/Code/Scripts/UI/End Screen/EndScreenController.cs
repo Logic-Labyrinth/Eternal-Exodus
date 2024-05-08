@@ -7,6 +7,7 @@ public class EndScreenController : MonoBehaviour {
     [SerializeField] TextMeshProUGUI PawnKillCountText;
     [SerializeField] TextMeshProUGUI RookKillCountText;
     [SerializeField] TextMeshProUGUI BishopKillCountText;
+    [SerializeField] TextMeshProUGUI SoulCountText;
 
     public void LoadStartMenu() {
         GameManager.Instance.LoadScene("StartMenu");
@@ -16,6 +17,10 @@ public class EndScreenController : MonoBehaviour {
         Time.timeScale = 1f;
         GameManager.Instance.ResetCounter();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void Quit() {
+        Application.Quit();
     }
 
     void OnEnable() {
@@ -34,5 +39,6 @@ public class EndScreenController : MonoBehaviour {
         PawnKillCountText.text = GameManager.Instance.KillCountPawn.ToString();
         RookKillCountText.text = GameManager.Instance.KillCountRook.ToString();
         BishopKillCountText.text = GameManager.Instance.KillCountBishop.ToString();
+        SoulCountText.text = totalKills.ToString();
     }
 }

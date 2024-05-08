@@ -39,6 +39,7 @@ public class HealthSystem : MonoBehaviour {
 
     void OnEnable() {
         currentHealth = maxHealth;
+        // healthBar.SetProgress((float)currentHealth / maxHealth);
     }
 
     public void TakeDamage(int damage, WeaponDamageType? damageType, Vector3 hitLocation) {
@@ -122,7 +123,7 @@ public class HealthSystem : MonoBehaviour {
     }
 
     private void OnDisable() {
-        enemyMainGameObject?.SetActive(false);
+        enemyMainGameObject.SetActive(false);
         // gameObject.SetActive(false);
     }
 
@@ -147,6 +148,7 @@ public class HealthSystem : MonoBehaviour {
         
         enemyMainGameObject.GetComponent<EnemyAI>().enabled = true;
         enemyMainGameObject.SetActive(false);
+        GetComponent<Collider>().enabled = true;
         spawnManager.EnqueueEnemy(enemyMainGameObject);
     }
 }

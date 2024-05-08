@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,7 @@ public class HammerAbility : MonoBehaviour {
     Transform orientation;
     Coroutine storedCoroutine;
     float timer = 0;
+    List<GameObject> hammerTargets;
 
     void Start() {
         rb = transform.GetComponent<Rigidbody>();
@@ -61,19 +63,23 @@ public class HammerAbility : MonoBehaviour {
         }
     }
 
-    public void ActivateHammerAbility(int damage) {
+    public void ActivateHammerAbility(int damage, float range) {
         if (isCharged) {
-            Collider[] colliders = Physics.OverlapBox(impactArea.bounds.center, impactArea.bounds.extents, impactArea.transform.rotation);
             bool hasEnemy = false, hasGround = false;
+            hammerTargets = CustomConeCollider.GetAllObjects(
+                Camera.main.transform,
+                range,  // radius
+                30,     // vertical angle
+                90      // horizontal angle
+            );
 
-            colliders.ForEach(x => {
-                if (x.gameObject.layer == enemyLayer) hasEnemy = true;
-                if (x.gameObject.layer == groundLayer) hasGround = true;
-                if (x.gameObject.layer == enemyLayer) {
+            foreach (GameObject target in hammerTargets) {
+                if (target.layer == groundLayer) hasGround = true;
+                else if (target.layer == enemyLayer) {
                     hasEnemy = true;
-                    x.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER, x.transform.position);
+                    target.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER, Vector3.zero);
                 }
-            });
+            }
 
             if (hasEnemy) {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
