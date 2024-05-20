@@ -13,7 +13,7 @@ public class Sword : Weapon {
         animator.SetTrigger("SwordAttack");
         PlayBasicAttackSound();
 
-        swordTargets = CustomConeCollider.ArcRaycast(Camera.main.transform, 120, attackRange, 20);
+        swordTargets = CustomTriggers.ArcRaycast(Camera.main.transform, 120, attackRange, 20);
 
         foreach (GameObject target in swordTargets) {
             if (target.layer == enemyLayer)
@@ -39,7 +39,7 @@ public class Sword : Weapon {
     void UppercutEnemies() {
         if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
 
-        swordTargets = CustomConeCollider.ArcRaycast(Camera.main.transform, 120, attackRange, 20);
+        swordTargets = CustomTriggers.ArcRaycast(Camera.main.transform, 120, attackRange, 20);
 
         foreach (GameObject target in swordTargets) {
             if (target.layer == enemyLayer) {

@@ -1,33 +1,7 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class CustomConeCollider {
-    [Obsolete("GetAllObjects is deprecated, please use Raycast instead.")]
-    public static List<GameObject> GetAllObjects(Transform t, float radius, float vAngle, float hAngle) {
-        Collider[] colliders = Physics.OverlapSphere(t.position, radius, -1, QueryTriggerInteraction.Ignore);
-        List<GameObject> objects = new();
-
-        foreach (Collider col in colliders) {
-            Vector3 dir = col.transform.position - t.position;
-            // float verticalAngle = Vector3.Angle(dir, t.up);
-
-            Vector3 proj = Vector3.ProjectOnPlane(dir, t.up);
-            float horizontalAngle = Vector3.SignedAngle(proj, t.forward, t.up);
-
-            // Debug.Log("Name: " + col.name + " Horizontal: " + horizontalAngle);
-
-            if (Math.Abs(horizontalAngle) < hAngle / 2) {
-                objects.Add(col.gameObject);
-                Debug.DrawLine(t.position, col.transform.position, Color.red);
-            } else
-                Debug.DrawLine(t.position, col.transform.position, Color.blue);
-        }
-        Debug.Break();
-        if (objects.Count > 0) return objects;
-        return null;
-    }
-
+public static class CustomTriggers {
     public static List<GameObject> ConeRaycast(Transform t, float angle, float distance, int rayCount) {
         List<GameObject> objects = new();
         float halfAngle = angle / 2;
@@ -60,11 +34,8 @@ public static class CustomConeCollider {
             RaycastHit[] hits = Physics.RaycastAll(t.position, rayDirection, distance);
             foreach (RaycastHit hit in hits)
                 if (!objects.Contains(hit.transform.gameObject)) objects.Add(hit.transform.gameObject);
-
-            // Debug.DrawLine(t.position, t.position + rayDirection * distance, Color.red);
         }
 
-        // Debug.Break();
         return objects;
     }
 }

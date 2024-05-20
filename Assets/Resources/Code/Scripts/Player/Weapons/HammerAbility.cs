@@ -15,7 +15,7 @@ public class HammerAbility : MonoBehaviour {
     [SerializeField] Sound[] hammerChargeSounds;
     [SerializeField] Image hammerChargeBar;
     [SerializeField] Color chargeColor;
-    
+
     Material hammerChargeBarMaterial;
     LayerMask enemyLayer;
     LayerMask groundLayer;
@@ -66,7 +66,7 @@ public class HammerAbility : MonoBehaviour {
     public void ActivateHammerAbility(int damage, float range) {
         if (isCharged) {
             bool hasEnemy = false, hasGround = false;
-            hammerTargets = CustomConeCollider.ConeRaycast(Camera.main.transform, 30, range, 100);
+            hammerTargets = CustomTriggers.ConeRaycast(Camera.main.transform, 30, range, 100);
 
             foreach (GameObject target in hammerTargets) {
                 // Debug.LogWarning(target.name);
