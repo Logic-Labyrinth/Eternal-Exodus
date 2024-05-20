@@ -18,11 +18,13 @@ public class PlayerHealthSystem : MonoBehaviour {
     [SerializeField] int layerTwoShieldSpeed = 20;
     [SerializeField] int timeForShield = 5;
     [SerializeField] int shieldCooldown = 5;
+    [SerializeField] float shieldGatingTime = 1f;
 
     PlayerMovement pm;
     bool canGetShieldOne = true;
     bool canGetShieldTwo = false;
-
+    bool shieldGatingActive = false;
+    bool canShieldGate = true;
 
     void Awake() {
         currentHealth = maxHealth;
@@ -34,10 +36,10 @@ public class PlayerHealthSystem : MonoBehaviour {
             case ShieldLevel.CRACKED:
             case ShieldLevel.LEVEL_ONE:
                 BreakShield();
-                return;
+                break;
             case ShieldLevel.LEVEL_TWO:
                 DamageShield();
-                return;
+                break;
             case ShieldLevel.NONE:
                 DamagePlayer(damage);
                 break;
@@ -55,12 +57,8 @@ public class PlayerHealthSystem : MonoBehaviour {
     // }
 
     void FixedUpdate() {
-        if (canGetShieldOne) {
-            StartCoroutine(TryGetShieldOne());
-        }
-        if (canGetShieldTwo) {
-            StartCoroutine(TryGetShieldTwo());
-        }
+        if (canGetShieldOne) StartCoroutine(TryGetShieldOne());
+        if (canGetShieldTwo) StartCoroutine(TryGetShieldTwo());
     }
 
     IEnumerator TryGetShieldOne() {
@@ -100,7 +98,6 @@ public class PlayerHealthSystem : MonoBehaviour {
     IEnumerator ResetShieldCooldown() {
         yield return new WaitForSeconds(shieldCooldown);
         canGetShieldOne = true;
-        // canGetShieldTwo = true;
     }
 
     public void Kill() {
@@ -113,11 +110,6 @@ public class PlayerHealthSystem : MonoBehaviour {
         if (overheal > 0) Overheal(overheal);
 
         currentHealth = Math.Min(maxHealth, newHealth);
-    }
-
-    void DamagePlayer(int damage) {
-        currentHealth -= damage;
-        if (currentHealth <= 0) Kill();
     }
 
     void Overheal(int overheal) {
@@ -134,14 +126,39 @@ public class PlayerHealthSystem : MonoBehaviour {
         playerShieldUIController.ShieldOne();
     }
 
+    void DamagePlayer(int damage) {
+        if (shieldGatingActive) return;
+        currentHealth -= damage;
+        if (currentHealth <= 0) Kill();
+    }
+
     public void DamageShield() {
         shieldStatus = ShieldLevel.CRACKED;
         playerShieldUIController.DamageShield();
+        
+        if(canShieldGate) {
+            canShieldGate = false;
+            shieldGatingActive = true;
+            StartCoroutine(ResetShieldGating());
+        }
     }
 
     public void BreakShield() {
+        if (shieldGatingActive) return;
         shieldStatus = ShieldLevel.NONE;
         playerShieldUIController.BreakShield();
         StartCoroutine(ResetShieldCooldown());
+        
+        if(canShieldGate) {
+            canShieldGate = false;
+            shieldGatingActive = true;
+            StartCoroutine(ResetShieldGating());
+        }
+    }
+
+    IEnumerator ResetShieldGating() {
+        yield return new WaitForSeconds(shieldGatingTime);
+        canShieldGate = true;
+        shieldGatingActive = false;
     }
 }
