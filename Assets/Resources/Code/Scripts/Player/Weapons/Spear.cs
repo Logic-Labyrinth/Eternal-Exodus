@@ -21,8 +21,6 @@ public class Spear : Weapon {
 
         foreach (GameObject target in spearTargets) {
             if (target.layer == enemyLayer) {
-                Debug.Log(target);
-                Debug.Log(target.GetComponent<HealthSystem>());
                 target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SPEAR);
             }
         }
