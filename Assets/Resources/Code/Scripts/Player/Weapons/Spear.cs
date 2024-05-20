@@ -7,14 +7,10 @@ public class Spear : Weapon {
     LayerMask enemyLayer = -1;
     List<GameObject> spearTargets;
 
-    public override void BasicAttack(Animator animator, GameObject player) {
+    public override void BasicAttack(Animator animator) {
+        if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
         animator.SetTrigger("SpearAttack");
         PlayBasicAttackSound();
-    }
-
-    public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
-        if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
-        BasicAttack(animator, player);
 
         spearTargets = CustomCapsuleCollider.GetAllObjects(
             Camera.main.transform,
@@ -25,11 +21,11 @@ public class Spear : Weapon {
 
         foreach (GameObject target in spearTargets) {
             if (target.layer == enemyLayer)
-                target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SPEAR, Vector3.zero);
+                target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SPEAR);
         }
     }
 
-    public override void SpecialAttack(Animator animator, GameObject player, HealthSystem healthSystem) {
+    public override void SpecialAttack(Animator animator, GameObject player) {
         if (playerDash == null) playerDash = player.GetComponent<PlayerDashing>();
 
         animator.SetTrigger("SpearSpecial");
@@ -37,8 +33,8 @@ public class Spear : Weapon {
         PlaySpecialAttackSound();
     }
 
-    public override void WeakpointAttack(Animator animator, GameObject player, Weakpoint weakpoint, Vector3 hitLocation) {
-        weakpoint.TakeDamage(baseDamage, WeaponDamageType.SPEAR, hitLocation);
-        BasicAttack(animator, player);
+    public override void WeakpointAttack(Animator animator, Weakpoint weakpoint) {
+        weakpoint.TakeDamage(baseDamage, WeaponDamageType.SPEAR);
+        BasicAttack(animator);
     }
 }

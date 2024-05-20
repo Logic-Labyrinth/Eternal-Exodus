@@ -7,29 +7,20 @@ public class Hammer : Weapon {
     LayerMask enemyLayer = -1;
     List<GameObject> hammerTargets;
 
-    public override void BasicAttack(Animator animator, GameObject player) {
+    public override void BasicAttack(Animator animator) {
+        if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
         animator.SetTrigger("HammerAttack");
         PlayBasicAttackSound();
-    }
 
-    public override void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
-        if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
-        BasicAttack(animator, player);
-
-        hammerTargets = CustomConeCollider.GetAllObjects(
-            Camera.main.transform,
-            attackRange,    // radius
-            30,             // vertical angle
-            90              // horizontal angle
-        );
+        hammerTargets = CustomConeCollider.ArcRaycast(Camera.main.transform, 120, attackRange, 20);
 
         foreach (GameObject target in hammerTargets) {
             if (target.layer == enemyLayer)
-                target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.HAMMER, Vector3.zero);
+                target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.HAMMER);
         }
     }
 
-    public override void SpecialAttack(Animator animator, GameObject player, HealthSystem healthSystem) {
+    public override void SpecialAttack(Animator animator, GameObject player) {
         if (hammer == null) {
             hammer = player.GetComponent<HammerAbility>();
         }
@@ -40,12 +31,12 @@ public class Hammer : Weapon {
         PlaySpecialAttackSound();
     }
 
-    public override void WeakpointAttack(Animator animator, GameObject player, Weakpoint weakpoint, Vector3 hitLocation) {
-        weakpoint.TakeDamage(baseDamage, WeaponDamageType.HAMMER, hitLocation);
-        BasicAttack(animator, player);
+    public override void WeakpointAttack(Animator animator, Weakpoint weakpoint) {
+        weakpoint.TakeDamage(baseDamage, WeaponDamageType.HAMMER);
+        BasicAttack(animator);
     }
 
-    public override void SpecialRelease(Animator animator, GameObject player, HealthSystem healthSystem) {
+    public override void SpecialRelease(Animator animator, GameObject player) {
         if (hammer == null) {
             hammer = player.GetComponent<HammerAbility>();
         }
@@ -55,7 +46,7 @@ public class Hammer : Weapon {
     }
 
     public override void Reset() {
-        if(hammer == null) return;
+        if (hammer == null) return;
         hammer.Reset();
     }
 }
