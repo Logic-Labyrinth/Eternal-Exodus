@@ -20,8 +20,9 @@ public class Spear : Weapon {
         );
 
         foreach (GameObject target in spearTargets) {
-            if (target.layer == enemyLayer)
+            if (target.layer == enemyLayer) {
                 target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SPEAR);
+            }
         }
     }
 
