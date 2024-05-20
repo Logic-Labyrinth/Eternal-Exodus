@@ -238,7 +238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8009177013236084948
 Transform:
   m_ObjectHideFlags: 0
@@ -811,7 +811,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2937949120667392816
 Transform:
   m_ObjectHideFlags: 0
@@ -1107,7 +1107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7864068113854621391
 Transform:
   m_ObjectHideFlags: 0
@@ -1864,7 +1864,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &696898926202997446
 Transform:
   m_ObjectHideFlags: 0
@@ -2067,6 +2067,8 @@ MonoBehaviour:
   attackDamage: 1
   attackDuration: 2
   retreatRange: 20
+  projectileCooldown: 1
+  projectilePrefab: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -2512,7 +2514,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2540918014580812710
 Transform:
   m_ObjectHideFlags: 0
