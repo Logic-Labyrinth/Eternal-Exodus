@@ -46,8 +46,6 @@ public class GameManager : MonoBehaviour {
         FindObjectsOfType<HealthSystem>().ToList().ForEach(x => {
             x.gameObject.SetActive(false);
         });
-
-        GameObject.Find("Portal").GetComponent<PortalVFX>().OpenPortal();
     }
 
     public void AddKillCount(EnemyType type) {
