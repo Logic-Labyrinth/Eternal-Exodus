@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour {
     [SerializeField] float angularSpeed = 1f;
 
     GameObject player;
-    LayerMask groundLayer, playerLayer;
+    LayerMask groundLayer;
     float angularSpeedRadians;
 
     void Awake() {
@@ -17,7 +17,6 @@ public class Projectile : MonoBehaviour {
         }
 
         groundLayer = LayerMask.NameToLayer("Ground");
-        playerLayer = LayerMask.NameToLayer("Player");
     }
 
     void Start() {
