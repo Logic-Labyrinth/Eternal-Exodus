@@ -12,7 +12,7 @@ public class SoulCollector : MonoBehaviour {
     Dictionary<EnemyType, int> souls = new() {
         {EnemyType.Pawn, 0},
         {EnemyType.Rook, 0},
-        {EnemyType.Knight, 0},
+        // {EnemyType.Knight, 0},
         {EnemyType.Bishop, 0}
     };
 
@@ -35,10 +35,10 @@ public class SoulCollector : MonoBehaviour {
                 souls[EnemyType.Rook]++;
                 soulValueRook.ConsumeSoul();
                 break;
-            case EnemyType.Knight:
-                souls[EnemyType.Knight]++;
-                soulValueKnight.ConsumeSoul();
-                break;
+            // case EnemyType.Knight:
+            //     souls[EnemyType.Knight]++;
+            //     soulValueKnight.ConsumeSoul();
+            //     break;
             case EnemyType.Bishop:
                 souls[EnemyType.Bishop]++;
                 soulValueBishop.ConsumeSoul();
@@ -64,7 +64,7 @@ public class SoulCollector : MonoBehaviour {
     float GetScore() {
         var score = soulValuePawn.GetSoulValue(souls[EnemyType.Pawn]) +
         soulValueRook.GetSoulValue(souls[EnemyType.Rook]) +
-        soulValueKnight.GetSoulValue(souls[EnemyType.Knight]) +
+        // soulValueKnight.GetSoulValue(souls[EnemyType.Knight]) +
         soulValueBishop.GetSoulValue(souls[EnemyType.Bishop]);
 
         return score;
