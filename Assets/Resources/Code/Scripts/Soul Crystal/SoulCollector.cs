@@ -17,7 +17,6 @@ public class SoulCollector : MonoBehaviour {
     };
 
     float DEBUG_SCORE = 0;
-    float pickupSoulScore = 0;
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Soul"))
@@ -48,7 +47,7 @@ public class SoulCollector : MonoBehaviour {
                 Debug.LogError("Invalid soul type");
                 break;
         }
-        
+
         Destroy(soul.gameObject);
         DEBUG_SCORE = GetScore();
         icon.SetProgress(DEBUG_SCORE / soulsNeeded);
@@ -56,8 +55,6 @@ public class SoulCollector : MonoBehaviour {
     }
 
     void CollectPickupSoul(SoulPickupVFX soul) {
-        pickupSoulScore += soul.soulValue;
-
         Destroy(soul.gameObject);
         DEBUG_SCORE = GetScore();
         icon.SetProgress(DEBUG_SCORE / soulsNeeded);
@@ -68,9 +65,7 @@ public class SoulCollector : MonoBehaviour {
         var score = soulValuePawn.GetSoulValue(souls[EnemyType.Pawn]) +
         soulValueRook.GetSoulValue(souls[EnemyType.Rook]) +
         soulValueKnight.GetSoulValue(souls[EnemyType.Knight]) +
-        soulValueBishop.GetSoulValue(souls[EnemyType.Bishop]) 
-        // + pickupSoulScore
-        ;
+        soulValueBishop.GetSoulValue(souls[EnemyType.Bishop]);
 
         return score;
     }
