@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
     public int KillCountRook { get; private set; } = 0;
     public int KillCountBishop { get; private set; } = 0;
     
-    public float LevelTimer { get; private set; } = 0;
+    public float LevelCountdownSeconds { get; private set; } = 0;
 
     public static GameManager Instance { get; private set; }
 
@@ -54,12 +54,15 @@ public class GameManager : MonoBehaviour {
         switch (type) {
             case EnemyType.Pawn:
                 KillCountPawn++;
+                UITimer.Instance.AddPawnTime();
                 break;
             case EnemyType.Rook:
                 KillCountRook++;
+                UITimer.Instance.AddRookTime();
                 break;
             case EnemyType.Bishop:
                 KillCountBishop++;
+                UITimer.Instance.AddBishopTime();
                 break;
         }
     }
