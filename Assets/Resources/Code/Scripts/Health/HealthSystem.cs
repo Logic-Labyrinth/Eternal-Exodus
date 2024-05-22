@@ -42,7 +42,7 @@ public class HealthSystem : MonoBehaviour {
         // healthBar.SetProgress((float)currentHealth / maxHealth);
     }
 
-    public void TakeDamage(int damage, WeaponDamageType? damageType, Vector3 hitLocation) {
+    public void TakeDamage(int damage, WeaponDamageType? damageType) {
         if (hasShield) {
             BreakShield();
             return;
@@ -59,9 +59,6 @@ public class HealthSystem : MonoBehaviour {
             PlayHitSound(damageType.Value);
         }
 
-        // Debug.Log("Dam: " + dam);
-        GameObject hitVFXPrefab = Resources.Load<GameObject>("Level/Prefabs/VFX/HitVFX");
-        Instantiate(hitVFXPrefab, hitLocation, Quaternion.identity).GetComponent<HitVFX>().Play(dam);
         currentHealth -= dam;
         healthBar.SetProgress((float)currentHealth / maxHealth);
         if (currentHealth <= 0) Kill();
@@ -83,7 +80,7 @@ public class HealthSystem : MonoBehaviour {
 
     public void Kill() {
         GameManager.Instance.AddKillCount(type);
-        GameObject soul = (GameObject)Instantiate(Resources.Load("Level/Prefabs/VFX/Soul"), transform.position + Vector3.up, Quaternion.identity);
+        GameObject soul = Instantiate(Resources.Load("Level/Prefabs/VFX/Soul"), transform.position + Vector3.up, Quaternion.identity) as GameObject;
         soul.GetComponent<SoulVFX>().soulType = type;
         enemyMainGameObject.GetComponent<EnemyAI>().enabled = false;
 

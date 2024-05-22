@@ -16,7 +16,7 @@ public class SpecialAbilityDamage : MonoBehaviour {
         if (other.gameObject.layer != LayerMask.NameToLayer("Enemy")) return;
         if (!pm.dashing) return;
         visualEffect.Play();
-        other.GetComponent<HealthSystem>().TakeDamage(spearData.baseDamage, WeaponDamageType.SPEAR, transform.position);
+        other.GetComponent<HealthSystem>().TakeDamage(spearData.baseDamage, WeaponDamageType.SPEAR);
         other.GetComponent<NavMeshAgent>().isStopped = true;
         other.GetComponent<NavMeshAgent>().updatePosition = false;
 

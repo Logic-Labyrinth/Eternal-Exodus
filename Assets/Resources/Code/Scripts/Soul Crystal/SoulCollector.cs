@@ -12,12 +12,11 @@ public class SoulCollector : MonoBehaviour {
     Dictionary<EnemyType, int> souls = new() {
         {EnemyType.Pawn, 0},
         {EnemyType.Rook, 0},
-        {EnemyType.Knight, 0},
+        // {EnemyType.Knight, 0},
         {EnemyType.Bishop, 0}
     };
 
     float DEBUG_SCORE = 0;
-    float pickupSoulScore = 0;
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Soul"))
@@ -36,10 +35,10 @@ public class SoulCollector : MonoBehaviour {
                 souls[EnemyType.Rook]++;
                 soulValueRook.ConsumeSoul();
                 break;
-            case EnemyType.Knight:
-                souls[EnemyType.Knight]++;
-                soulValueKnight.ConsumeSoul();
-                break;
+            // case EnemyType.Knight:
+            //     souls[EnemyType.Knight]++;
+            //     soulValueKnight.ConsumeSoul();
+            //     break;
             case EnemyType.Bishop:
                 souls[EnemyType.Bishop]++;
                 soulValueBishop.ConsumeSoul();
@@ -48,7 +47,7 @@ public class SoulCollector : MonoBehaviour {
                 Debug.LogError("Invalid soul type");
                 break;
         }
-        
+
         Destroy(soul.gameObject);
         DEBUG_SCORE = GetScore();
         icon.SetProgress(DEBUG_SCORE / soulsNeeded);
@@ -56,8 +55,6 @@ public class SoulCollector : MonoBehaviour {
     }
 
     void CollectPickupSoul(SoulPickupVFX soul) {
-        pickupSoulScore += soul.soulValue;
-
         Destroy(soul.gameObject);
         DEBUG_SCORE = GetScore();
         icon.SetProgress(DEBUG_SCORE / soulsNeeded);
@@ -67,10 +64,8 @@ public class SoulCollector : MonoBehaviour {
     float GetScore() {
         var score = soulValuePawn.GetSoulValue(souls[EnemyType.Pawn]) +
         soulValueRook.GetSoulValue(souls[EnemyType.Rook]) +
-        soulValueKnight.GetSoulValue(souls[EnemyType.Knight]) +
-        soulValueBishop.GetSoulValue(souls[EnemyType.Bishop]) 
-        // + pickupSoulScore
-        ;
+        // soulValueKnight.GetSoulValue(souls[EnemyType.Knight]) +
+        soulValueBishop.GetSoulValue(souls[EnemyType.Bishop]);
 
         return score;
     }
