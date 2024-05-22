@@ -30,9 +30,9 @@ public class EndScreenController : MonoBehaviour {
 
         int dif = averageTime - (int)Time.timeSinceLevelLoad;
         if (dif < averageTime / 2) dif = averageTime / 2;
-        float percentage = (dif / averageTime / 2) + 1;
+        // float percentage = (dif / averageTime / 2) + 1;
         int totalKills = GameManager.Instance.KillCountPawn + GameManager.Instance.KillCountRook + GameManager.Instance.KillCountBishop;
-        int score = (int)(totalKills * percentage);
+        // int score = (int)(totalKills * percentage);
 
         GameManager.Instance.DisablePlayerInput();
 
