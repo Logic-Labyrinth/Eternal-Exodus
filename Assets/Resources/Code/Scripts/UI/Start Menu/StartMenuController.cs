@@ -21,8 +21,4 @@ public class StartMenuController : MonoBehaviour {
         levelSelectMenu.SetActive(true);
         gameObject.SetActive(false);
     }
-
-    public void Test() {
-        return;
-    }
 }
