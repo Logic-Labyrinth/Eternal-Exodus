@@ -14,12 +14,11 @@ public class StartMenuController : MonoBehaviour {
 
         if (Input.GetButtonDown("Basic Attack") || Input.GetButtonDown("Jump")) {
             animator.SetBool("hasClicked", true);
-            levelSelectMenu.SetActive(true);
-            gameObject.SetActive(false);
         }
     }
 
-    public void Test() {
-        return;
+    public void StartGame() {
+        levelSelectMenu.SetActive(true);
+        gameObject.SetActive(false);
     }
 }
