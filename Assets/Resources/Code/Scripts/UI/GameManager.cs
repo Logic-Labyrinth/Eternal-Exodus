@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour {
     public int KillCountPawn { get; private set; } = 0;
     public int KillCountRook { get; private set; } = 0;
     public int KillCountBishop { get; private set; } = 0;
-    // public int Score { get; private set; } = 0;
+    
+    public float LevelTimer { get; private set; } = 0;
 
     public static GameManager Instance { get; private set; }
 
@@ -45,11 +46,8 @@ public class GameManager : MonoBehaviour {
 
         SpawnManager.spawnManager.DisableSpawner();
         FindObjectsOfType<HealthSystem>().ToList().ForEach(x => {
-            // x.Kill();
             x.gameObject.SetActive(false);
         });
-
-        GameObject.Find("Portal").GetComponent<PortalVFX>().OpenPortal();
     }
 
     public void AddKillCount(EnemyType type) {
@@ -57,9 +55,6 @@ public class GameManager : MonoBehaviour {
             case EnemyType.Pawn:
                 KillCountPawn++;
                 break;
-            // case EnemyType.Knight:
-            //     KillCountKnight++;
-            //     break;
             case EnemyType.Rook:
                 KillCountRook++;
                 break;
@@ -82,9 +77,9 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.End)) {
-            EndLevel();
-        }
+        // if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.End)) {
+        //     EndLevel();
+        // }
     }
 
     public void Quit() {

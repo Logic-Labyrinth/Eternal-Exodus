@@ -81,23 +81,19 @@ public class Weapon : ScriptableObject {
     bool IsLocked() { return isLocked; }
     #endregion
 
-    public virtual void BasicAttack(Animator animator, GameObject player, HealthSystem healthSystem, Vector3 hitLocation) {
+    public virtual void BasicAttack(Animator animator) {
         // Basic attack logic
     }
 
-    public virtual void BasicAttack(Animator animator, GameObject player) {
-        // Basic attack logic
-    }
-
-    public virtual void SpecialAttack(Animator animator, GameObject player, HealthSystem healthSystem) {
+    public virtual void SpecialAttack(Animator animator, GameObject player) {
         // Special attack logic
     }
 
-    public virtual void SpecialRelease(Animator animator, GameObject player, HealthSystem healthSystem) {
+    public virtual void SpecialRelease(Animator animator, GameObject player) {
         // Special attack release logic
     }
 
-    public virtual void WeakpointAttack(Animator animator, GameObject player, Weakpoint weakpoint, Vector3 hitLocation) {
+    public virtual void WeakpointAttack(Animator animator, Weakpoint weakpoint) {
         // Weakpoint attack logic
     }
 

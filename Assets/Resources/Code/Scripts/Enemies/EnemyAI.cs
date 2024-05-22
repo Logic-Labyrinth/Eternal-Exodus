@@ -15,9 +15,9 @@ public enum EnemyType {
 
 public class EnemyAI : MonoBehaviour {
     [SerializeField]
-    private NavMeshAgent agent;
-    private GameObject player;
-    private PlayerHealthSystem playerHealth;
+    NavMeshAgent agent;
+    GameObject player;
+    PlayerHealthSystem playerHealth;
     public EnemyType enemyType = EnemyType.Pawn;
 
     // Attack parameters
@@ -25,15 +25,18 @@ public class EnemyAI : MonoBehaviour {
     public int attackDamage = 1; // Amount of damage to deal
     public float attackDuration = 2f; // Duration of the attack in seconds
 
-    private Coroutine attackCoroutine;
-    private float clusterRadius = 10f;
+    Coroutine attackCoroutine;
+    float clusterRadius = 10f;
     GameObject targetPawnObject;
-    private Vector3 bishopTarget;
+    Vector3 bishopTarget;
 
     [ShowIf("enemyType", EnemyType.Bishop)]
     public float retreatRange = 20f;
+    public float projectileCooldown = 1f;
+    [SerializeField] GameObject projectilePrefab;
     float lastSummonTime;
     float summonCooldownTime = 20f;
+    bool canAttack = true;
 
     [SerializeField] LayerMask groundLayer;
 
@@ -42,8 +45,8 @@ public class EnemyAI : MonoBehaviour {
     bool chargingCooldown = false;
     public float chargingCooldownTime = 10f;
 
-    private SpawnManager spawnManager;
-    private float checkInterval;
+    SpawnManager spawnManager;
+    float checkInterval;
 
     public Animator animator;
     public Sound soundEffect;
@@ -67,9 +70,9 @@ public class EnemyAI : MonoBehaviour {
     }
 
     // Time between checks in seconds
-    private float lastCheckTime = 0f;
+    float lastCheckTime = 0f;
 
-    void Update() {
+    void FixedUpdate() {
         // Reduce frequency of checks
         if (Time.time >= lastCheckTime + checkInterval) {
             DecisionMaker(enemyType);
@@ -122,7 +125,20 @@ public class EnemyAI : MonoBehaviour {
             StartCoroutine(SummonPawns(spawnManager));
         } else {
             MoveToTargetPawn();
+            BishopAttackPlayer();
         }
+    }
+
+    void BishopAttackPlayer() {
+        if (!canAttack) return;
+        canAttack = false;
+        Instantiate(projectilePrefab, transform.position + Vector3.up * 3.5f, Quaternion.identity);
+        StartCoroutine(ResetProjectileCooldown());
+    }
+
+    IEnumerator ResetProjectileCooldown() {
+        yield return new WaitForSeconds(projectileCooldown);
+        canAttack = true;
     }
 
     void RetreatFromPlayer() {
@@ -208,7 +224,7 @@ public class EnemyAI : MonoBehaviour {
     IEnumerator Attack() {
         float startTime = Time.time;
 
-        animator?.SetTrigger("Attack");
+        if (animator) animator.SetTrigger("Attack");
 
         while (Time.time - startTime < attackDuration) {
             // Debug.Log(Time.time - startTime);
@@ -216,9 +232,7 @@ public class EnemyAI : MonoBehaviour {
                 transform.position + Vector3.forward,
                 attackRange
             );
-            if (hitColliders == null) {
-                yield break; // Exit the coroutine early if hitColliders is null
-            }
+            if (hitColliders == null) yield break; // Exit the coroutine early if hitColliders is null
 
             foreach (var hitCollider in hitColliders) {
                 if (hitCollider.gameObject == player) {
@@ -289,7 +303,7 @@ public class EnemyAI : MonoBehaviour {
 
     public bool isCharging = false;
 
-    private void HandleRookBehavior(float distanceToPlayer) {
+    void HandleRookBehavior(float distanceToPlayer) {
         if (distanceToPlayer < attackRange) {
             TriggerAttack();
         } else if (
@@ -308,7 +322,7 @@ public class EnemyAI : MonoBehaviour {
         }
     }
 
-    private IEnumerator ChargeTowardsPlayer() {
+    IEnumerator ChargeTowardsPlayer() {
         isCharging = true;
         agent.isStopped = true;
 
@@ -328,8 +342,7 @@ public class EnemyAI : MonoBehaviour {
 
         SoundFXManager.Instance.Play(soundEffect, transform);
 
-        while (isCharging)
-        {
+        while (isCharging) {
             targetPosition = new Vector3(
                 player.transform.position.x,
                 transform.position.y,
