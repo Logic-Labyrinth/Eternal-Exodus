@@ -6,6 +6,7 @@ public class SoulCrystalIconUI : MonoBehaviour {
     [SerializeField] Vector3 offset;
     [SerializeField] RectTransform canvasTransform;
     [SerializeField] Vector2 edgeOffsetXY;
+    
     new Camera camera;
     float halfScreenHeight, halfScreenWidth;
     float minX, maxX, minY, maxY;

@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 834908416261973853}
   m_Layer: 0
   m_Name: SoulCrystal
-  m_TagString: Untagged
+  m_TagString: Soul Crystal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -280,8 +280,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f49e9f18a570d4ca9340978bf0a723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soulsNeeded: 100
+  scoreNeeded: 10
   icon: {fileID: 0}
+  explosionVFX: {fileID: 5865098217823867811}
+  gracePeriodSeconds: 10
   soulValuePawn: {fileID: 11400000, guid: d0ea9d83767b18f4ab3c09e9f5a860de, type: 2}
   soulValueRook: {fileID: 11400000, guid: c6445a94eff0f3b4c8abd2be06e3477f, type: 2}
   soulValueKnight: {fileID: 11400000, guid: 630e30e06e18afa4198d6ee9c412916a, type: 2}
@@ -348,6 +350,7 @@ GameObject:
   - component: {fileID: 726136912342944780}
   - component: {fileID: 6855343398636452079}
   - component: {fileID: 7890826357445187859}
+  - component: {fileID: 3325464451339028349}
   m_Layer: 0
   m_Name: Soul Crystal Mesh
   m_TagString: Untagged
@@ -442,6 +445,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: 6d9486e55d5f0564bab642aadd11b0ff, type: 3}
+--- !u!114 &3325464451339028349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6142070130561987353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e75c5309ec6b6024b8c0b61a6a670a62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 10
+  bobSpeed: 0.5
+  bobHeight: 0.1
 --- !u!1 &8856547091145129802
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,7 +593,7 @@ PrefabInstance:
     - target: {fileID: 2246124477156335661, guid: c21c36adcbaaebf418600cda19b69311,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.025
+      value: 4.29
       objectReference: {fileID: 0}
     - target: {fileID: 2246124477156335661, guid: c21c36adcbaaebf418600cda19b69311,
         type: 3}
@@ -633,3 +651,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1556718881974621622}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5865098217823867811 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4971851197130901013, guid: c21c36adcbaaebf418600cda19b69311,
+    type: 3}
+  m_PrefabInstance: {fileID: 1556718881974621622}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b905c6e6175e93b43bc02fb87c52f817, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

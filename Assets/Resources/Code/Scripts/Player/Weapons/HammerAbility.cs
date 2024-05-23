@@ -17,8 +17,7 @@ public class HammerAbility : MonoBehaviour {
     [SerializeField] Color chargeColor;
 
     Material hammerChargeBarMaterial;
-    LayerMask enemyLayer;
-    LayerMask groundLayer;
+    LayerMask enemyLayer, groundLayer, crystalLayer;
     bool isCharging = false;
     bool isCharged = false;
     Rigidbody rb;
@@ -69,11 +68,14 @@ public class HammerAbility : MonoBehaviour {
             hammerTargets = CustomTriggers.ConeRaycast(Camera.main.transform, 30, range, 100);
 
             foreach (GameObject target in hammerTargets) {
-                // Debug.LogWarning(target.name);
+                Debug.LogWarning(target.name);
                 if (target.layer == groundLayer) hasGround = true;
                 else if (target.layer == enemyLayer) {
                     hasEnemy = true;
                     target.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER);
+                } else if(target.CompareTag("Soul Crystal")) {
+                    Debug.Log("Crystal");
+                    target.GetComponent<SoulCollector>().Explode();
                 }
             }
 
