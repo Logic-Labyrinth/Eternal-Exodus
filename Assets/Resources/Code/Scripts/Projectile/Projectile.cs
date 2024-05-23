@@ -33,10 +33,8 @@ public class Projectile : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Player")) {
-            Debug.Log("Hit player");
             other.GetComponent<PlayerHealthSystem>().TakeDamage(damage);
         } else if (other.gameObject.layer == groundLayer) {
-            Debug.Log("Hit ground");
             Destroy(gameObject);
         }
     }
