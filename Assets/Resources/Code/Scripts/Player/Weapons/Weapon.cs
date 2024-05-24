@@ -64,7 +64,24 @@ public class Weapon : ScriptableObject {
     [VerticalGroup("Animations")]
     [DisableIf("isLocked")]
     public string swapAnimation;
+
+    [VerticalGroup("Camera Shake")]
+    [DisableIf("isLocked")]
+    public AnimationCurve shakeMagnitude;
+    
+    [VerticalGroup("Camera Shake")]
+    [DisableIf("isLocked")]
+    public float shakeDuration;
+
+    [VerticalGroup("Camera Shake")]
+    [DisableIf("isLocked")]
+    public AnimationCurve shakeMagnitudeScnd;
+    
+    [VerticalGroup("Camera Shake")]
+    [DisableIf("isLocked")]
+    public float shakeDurationScnd;
     #endregion
+   
 
     #region Locking
     bool isLocked = false;

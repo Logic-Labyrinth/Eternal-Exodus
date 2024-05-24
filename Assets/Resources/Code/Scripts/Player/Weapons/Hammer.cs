@@ -11,13 +11,19 @@ public class Hammer : Weapon {
         if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
         animator.SetTrigger("HammerAttack");
         PlayBasicAttackSound();
+        bool hasEnemy = false;
 
         hammerTargets = CustomTriggers.ArcRaycast(Camera.main.transform, 120, attackRange, 20);
 
         foreach (GameObject target in hammerTargets) {
-            if (target.layer == enemyLayer)
+            if (target.layer == enemyLayer) {
+                hasEnemy = true;
                 target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.HAMMER);
+            }
         }
+
+        if(hasEnemy) CameraPositioning.Instance.ShakeCamera(shakeMagnitude, shakeDuration);
+        else CameraPositioning.Instance.ShakeCamera(shakeMagnitudeScnd, shakeDurationScnd);
     }
 
     public override void SpecialAttack(Animator animator, GameObject player) {
@@ -42,7 +48,7 @@ public class Hammer : Weapon {
         }
 
         animator.SetTrigger("HammerRelease");
-        hammer.ActivateHammerAbility(baseDamage, attackRange);
+        hammer.ActivateHammerAbility(baseDamage, attackRange, this);
     }
 
     public override void Reset() {

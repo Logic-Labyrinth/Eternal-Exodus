@@ -34,3 +34,28 @@ MonoBehaviour:
     loop: 0
     player: 0
   swapAnimation: SwapHammer
+  shakeMagnitude:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -14.633017
+      outSlope: -14.633017
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.005725975
+    - serializedVersion: 3
+      time: 1.0009766
+      value: 0
+      inSlope: -22.720823
+      outSlope: -22.720823
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.0014963439
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  shakeDuration: 3
