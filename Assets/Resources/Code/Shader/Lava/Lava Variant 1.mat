@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4063010058207141999
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -40,12 +27,35 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Emissive_Strength: 0.2
+    - _Emissive_Strength: 1
+    - _FlowSize: 1000
+    - _FoamDist: 1.5
+    - _FoamSize: 2
+    - _Foam_Amount: 0.29
     - _Metallic_Strength: 0
     - _Normal_Strength: 1
     - _QueueControl: 0
-    - _SecondTiling: 19.4
+    - _SecondTiling: 13.9
+    - _TileSize: 12.82
     m_Colors:
-    - _Colour: {r: 0.18356179, g: 0.31132078, b: 0.22188948, a: 0}
-    - _Tiling: {r: 20, g: 20, b: 0, a: 0}
+    - _Color: {r: 0.1509434, g: 0.0646822, b: 0.026343895, a: 0}
+    - _Color_Dark: {r: 0.4339623, g: 0.16834745, b: 0, a: 0}
+    - _Color_Light: {r: 0.8490566, g: 0.3426018, b: 0, a: 0}
+    - _Colour: {r: 0.46226418, g: 0.27029568, b: 0.128649, a: 1}
+    - _Movement_Direction: {r: 0.08, g: 0.29, b: 0, a: 0}
+    - _SecondMovementDirrection: {r: 0.07, g: 0.16, b: 0, a: 0}
+    - _Tiling: {r: 100, g: 100, b: 0, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &669201311613833778
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
