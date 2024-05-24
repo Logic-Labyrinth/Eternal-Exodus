@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &9806400034993989
 Transform:
@@ -49,8 +49,12 @@ MonoBehaviour:
   startMusic:
     audioClip: {fileID: 8300000, guid: 766607e3840bb6f449724b940b8a2a38, type: 3}
     volume: 1
+    spacialBlend: 0
     loop: 0
+    player: 0
   loopMusic:
     audioClip: {fileID: 8300000, guid: 1401c8c52a6141d44b75dbf7d1e9fc23, type: 3}
     volume: 1
+    spacialBlend: 0
     loop: 1
+    player: 0
