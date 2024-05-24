@@ -5,6 +5,8 @@ public class SoulCrystalIconUI : MonoBehaviour {
     [SerializeField] GameObject trackedObject;
     [SerializeField] Vector3 offset;
     [SerializeField] RectTransform canvasTransform;
+    [SerializeField] Vector2 edgeOffsetXY;
+    
     new Camera camera;
     float halfScreenHeight, halfScreenWidth;
     float minX, maxX, minY, maxY;
@@ -17,8 +19,8 @@ public class SoulCrystalIconUI : MonoBehaviour {
         halfScreenWidth = Screen.width / 4;
 
         image = GetComponent<Image>();
-        minX = image.GetPixelAdjustedRect().width / 2;
-        minY = image.GetPixelAdjustedRect().height / 2;
+        minX = image.GetPixelAdjustedRect().width / 2 + edgeOffsetXY.x;
+        minY = image.GetPixelAdjustedRect().height / 2 + edgeOffsetXY.y;
         maxX = Screen.width / 2 - minX;
         maxY = Screen.height / 2 - minY;
     }
@@ -29,8 +31,8 @@ public class SoulCrystalIconUI : MonoBehaviour {
         pos.x *= canvasTransform.rect.width / camera.pixelWidth;
         pos.y *= canvasTransform.rect.height / camera.pixelHeight;
 
-        if(Vector3.Dot(trackedObject.transform.position - transform.position, transform.forward) < 0){
-            if(pos.x < Screen.width / 4) pos.x = maxX;
+        if (Vector3.Dot(trackedObject.transform.position - transform.position, transform.forward) < 0) {
+            if (pos.x < Screen.width / 4) pos.x = maxX;
             else pos.x = minX;
         }
 
@@ -39,6 +41,22 @@ public class SoulCrystalIconUI : MonoBehaviour {
         pos.x -= halfScreenWidth;
         pos.y -= halfScreenHeight;
 
+        // pos = ClampToOval(pos, halfScreenWidth, halfScreenHeight);
+
         GetComponent<RectTransform>().anchoredPosition = pos;
+    }
+
+    Vector2 ClampToOval(Vector2 v, float width, float height) {
+        float angleFromCenter = Vector2.SignedAngle(Vector2.up, v);
+        float radius = width * height / Mathf.Sqrt(Mathf.Pow(height * Mathf.Cos(angleFromCenter), 2) + Mathf.Pow(width * Mathf.Sin(angleFromCenter), 2));
+
+        float x = radius * Mathf.Cos(angleFromCenter);
+        float y = radius * Mathf.Sin(angleFromCenter);
+
+        Vector2 vector = new(x, y);
+
+        if(Vector2.Distance(v, Vector2.zero) < radius) return v;
+
+        return vector;
     }
 }

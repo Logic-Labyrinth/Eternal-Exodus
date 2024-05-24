@@ -362,6 +362,7 @@ MonoBehaviour:
   trackedObject: {fileID: 0}
   offset: {x: 0, y: 4.5, z: 0}
   canvasTransform: {fileID: 0}
+  edgeOffsetXY: {x: 0, y: 0}
 --- !u!114 &1048166639603458936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3541,6 +3542,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 7509305659589046076, guid: 643dfe6c38f98294a9feb80049b775d1,
+        type: 3}
+      propertyPath: m_Antialiasing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7543031300347376762, guid: 643dfe6c38f98294a9feb80049b775d1,
         type: 3}
       propertyPath: m_Layer
@@ -4248,7 +4254,7 @@ PrefabInstance:
     - target: {fileID: 623791623375582389, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
       propertyPath: m_text
-      value: 'Build: 4.4'
+      value: 'Build: 4.5'
       objectReference: {fileID: 0}
     - target: {fileID: 1868333690043486057, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
