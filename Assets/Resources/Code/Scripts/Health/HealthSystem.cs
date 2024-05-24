@@ -87,6 +87,11 @@ public class HealthSystem : MonoBehaviour {
         StartCoroutine(Disolve());
     }
 
+    public void KillWithoutSoul() {
+        enemyMainGameObject.GetComponent<EnemyAI>().enabled = false;
+        StartCoroutine(Disolve());
+    }
+
     public void Heal(int heal) {
         int newHealth = currentHealth + heal;
         int overheal = newHealth - maxHealth;
@@ -142,7 +147,7 @@ public class HealthSystem : MonoBehaviour {
         foreach (GameObject mesh in meshes) {
             mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_Dissolve_Amount", 0f);
         }
-        
+
         enemyMainGameObject.GetComponent<EnemyAI>().enabled = true;
         enemyMainGameObject.SetActive(false);
         GetComponent<Collider>().enabled = true;

@@ -9,8 +9,6 @@ public class GameManager : MonoBehaviour {
     public int KillCountPawn { get; private set; } = 0;
     public int KillCountRook { get; private set; } = 0;
     public int KillCountBishop { get; private set; } = 0;
-    
-    public float LevelCountdownSeconds { get; private set; } = 0;
 
     public static GameManager Instance { get; private set; }
 
@@ -79,11 +77,11 @@ public class GameManager : MonoBehaviour {
         FindObjectOfType<WeaponsController>().EnableWeaponsInput();
     }
 
-    private void Update() {
-        // if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.End)) {
-        //     EndLevel();
-        // }
-    }
+    // private void Update() {
+    //     if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.End)) {
+    //         EndLevel();
+    //     }
+    // }
 
     public void Quit() {
         Application.Quit();

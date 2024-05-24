@@ -11,6 +11,9 @@
         },
         {
             "m_Id": "a5cd311d2105462498bca1a74701246c"
+        },
+        {
+            "m_Id": "db27cb8cdfc4417da607f4831b5811e5"
         }
     ],
     "m_Keywords": [],
@@ -205,7 +208,7 @@
                 "m_Node": {
                     "m_Id": "526b1f0b86e241c88254d21085e0e891"
                 },
-                "m_SlotId": 1
+                "m_SlotId": 0
             }
         },
         {
@@ -247,7 +250,7 @@
                 "m_Node": {
                     "m_Id": "526b1f0b86e241c88254d21085e0e891"
                 },
-                "m_SlotId": 0
+                "m_SlotId": 1
             }
         },
         {
@@ -1662,13 +1665,13 @@
     },
     "m_Name": "Sample Texture 2D",
     "m_DrawState": {
-        "m_Expanded": true,
+        "m_Expanded": false,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1252.0,
-            "y": 455.0,
-            "width": 183.0,
-            "height": 251.0
+            "x": -1227.0001220703125,
+            "y": 240.00001525878907,
+            "width": 155.0,
+            "height": 155.0000457763672
         }
     },
     "m_Slots": [
@@ -1904,6 +1907,9 @@
         },
         {
             "m_Id": "a5cd311d2105462498bca1a74701246c"
+        },
+        {
+            "m_Id": "db27cb8cdfc4417da607f4831b5811e5"
         }
     ]
 }
@@ -2133,7 +2139,7 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -769.0,
+            "x": -1012.0,
             "y": -65.0,
             "width": 171.0,
             "height": 34.0
@@ -2398,6 +2404,36 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "db27cb8cdfc4417da607f4831b5811e5",
+    "m_Guid": {
+        "m_GuidSerialized": "f2b03bfb-9fef-4245-9386-01c6d1b2ca9f"
+    },
+    "m_Name": "MainTex",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "MainTex",
+    "m_DefaultReferenceName": "_MainTex",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": false,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
 }
 
 {
