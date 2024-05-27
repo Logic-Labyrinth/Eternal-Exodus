@@ -25,8 +25,10 @@ public class Spear : Weapon {
                 target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SPEAR);
             }
         }
-
-        if(hasEnemy) CameraPositioning.Instance.ShakeCamera(shakeMagnitude, shakeDuration);
+        if (hasEnemy){
+            CameraPositioning.Instance.ShakeCamera(shakeMagnitude, shakeDuration);
+            FindObjectOfType<FrameHang>().ExecFrameHang(0.05f);
+        } 
         else CameraPositioning.Instance.ShakeCamera(shakeMagnitudeScnd, shakeDurationScnd);
 
     }
@@ -38,6 +40,8 @@ public class Spear : Weapon {
         playerDash.Dash();
         PlaySpecialAttackSound();
         CameraPositioning.Instance.ShakeCamera(shakeMagnitude, shakeDuration);
+        
+        
     }
 
     public override void WeakpointAttack(Animator animator, Weakpoint weakpoint) {

@@ -85,6 +85,7 @@ public class HammerAbility : MonoBehaviour {
                 );
                 SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
                 CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration);
+                FindObjectOfType<FrameHang>().ExecFrameHang(0.15f);
             } else if (hasGround) {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
@@ -95,6 +96,7 @@ public class HammerAbility : MonoBehaviour {
                 Instantiate(hammerVFX, groundVFXPos, Quaternion.identity);
                 SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
                 CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration);
+                FindObjectOfType<FrameHang>().ExecFrameHang(0.05f);
             }
         }
 
