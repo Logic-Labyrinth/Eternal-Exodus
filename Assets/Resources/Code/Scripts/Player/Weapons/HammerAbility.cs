@@ -16,6 +16,8 @@ public class HammerAbility : MonoBehaviour {
     [SerializeField] Image hammerChargeBar;
     [SerializeField] Color chargeColor;
 
+     
+
     Material hammerChargeBarMaterial;
     LayerMask enemyLayer, groundLayer, crystalLayer;
     bool isCharging = false;
@@ -62,19 +64,17 @@ public class HammerAbility : MonoBehaviour {
         }
     }
 
-    public void ActivateHammerAbility(int damage, float range) {
+    public void ActivateHammerAbility(int damage, float range, Hammer hammer) {
         if (isCharged) {
             bool hasEnemy = false, hasGround = false;
             hammerTargets = CustomTriggers.ConeRaycast(Camera.main.transform, 30, range, 100);
 
             foreach (GameObject target in hammerTargets) {
-                Debug.LogWarning(target.name);
                 if (target.layer == groundLayer) hasGround = true;
                 else if (target.layer == enemyLayer) {
                     hasEnemy = true;
                     target.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER);
                 } else if(target.CompareTag("Soul Crystal")) {
-                    Debug.Log("Crystal");
                     target.GetComponent<SoulCollector>().Explode();
                 }
             }
@@ -86,6 +86,9 @@ public class HammerAbility : MonoBehaviour {
                     ForceMode.Impulse
                 );
                 SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
+                CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration);
+                // FindObjectOfType<FrameHang>().ExecFrameHang(0.15f);
+                FrameHang.Instance.ExecFrameHang(0.15f);
             } else if (hasGround) {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
@@ -95,6 +98,9 @@ public class HammerAbility : MonoBehaviour {
                 Vector3 groundVFXPos = hammerRaycast.Raycast();
                 Instantiate(hammerVFX, groundVFXPos, Quaternion.identity);
                 SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
+                CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration);
+                // FindObjectOfType<FrameHang>().ExecFrameHang(0.05f);
+                FrameHang.Instance.ExecFrameHang(0.05f);
             }
         }
 

@@ -6,4 +6,7 @@ public class SoulCrystalHit : MonoBehaviour {
     public void Hit() {
         collector.Explode();
     }
+
+    
+
 }

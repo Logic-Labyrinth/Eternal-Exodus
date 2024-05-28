@@ -38,8 +38,10 @@ public class Sword : Weapon {
 
     void UppercutEnemies() {
         if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
-
+            
         swordTargets = CustomTriggers.ArcRaycast(Camera.main.transform, 120, attackRange, 20);
+        CameraPositioning.Instance.ShakeCamera(shakeMagnitude, shakeDuration);
+        FindObjectOfType<FrameHang>().ExecFrameHang(0.1f);
 
         foreach (GameObject target in swordTargets) {
             if (target.layer == enemyLayer) {

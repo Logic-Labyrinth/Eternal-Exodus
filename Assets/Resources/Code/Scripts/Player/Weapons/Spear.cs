@@ -11,6 +11,7 @@ public class Spear : Weapon {
         if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
         animator.SetTrigger("SpearAttack");
         PlayBasicAttackSound();
+        bool hasEnemy = false;
 
         spearTargets = CustomCapsuleCollider.GetAllObjects(
             Camera.main.transform,
@@ -24,6 +25,12 @@ public class Spear : Weapon {
                 target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SPEAR);
             }
         }
+        if (hasEnemy){
+            CameraPositioning.Instance.ShakeCamera(shakeMagnitude, shakeDuration);
+            FindObjectOfType<FrameHang>().ExecFrameHang(0.05f);
+        } 
+        else CameraPositioning.Instance.ShakeCamera(shakeMagnitudeScnd, shakeDurationScnd);
+
     }
 
     public override void SpecialAttack(Animator animator, GameObject player) {
@@ -32,6 +39,9 @@ public class Spear : Weapon {
         animator.SetTrigger("SpearSpecial");
         playerDash.Dash();
         PlaySpecialAttackSound();
+        CameraPositioning.Instance.ShakeCamera(shakeMagnitude, shakeDuration);
+        
+        
     }
 
     public override void WeakpointAttack(Animator animator, Weakpoint weakpoint) {
