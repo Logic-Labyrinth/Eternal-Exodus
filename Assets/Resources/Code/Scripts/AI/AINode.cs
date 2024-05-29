@@ -42,9 +42,8 @@ namespace BehaviorTree {
             AINode node = parent;
             while (node != null) {
                 value = node.GetData(key);
-                // if (value != null) return value;
-
-                // node = node.parent;
+                if (value != null) return value;
+                node = node.parent;
             }
 
             return value;
@@ -60,8 +59,8 @@ namespace BehaviorTree {
             AINode node = parent;
             while (node != null) {
                 cleared = node.ClearData(key);
-                // if (cleared) return true;
-                // node = node.parent;
+                if (cleared) return true;
+                node = node.parent;
             }
 
             return cleared;

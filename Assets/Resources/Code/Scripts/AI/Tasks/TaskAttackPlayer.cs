@@ -4,19 +4,22 @@ using UnityEngine;
 public class TaskAttackPlayer : AINode {
     readonly PlayerHealthSystem playerHealth;
     readonly Animator animator;
+    readonly float attackDuration;
+    readonly int attackDamage;
     float timer = 0f;
     bool waiting = false;
 
-    public TaskAttackPlayer(Animator animator, PlayerHealthSystem playerHealth) {
+    public TaskAttackPlayer(Animator animator, PlayerHealthSystem playerHealth, float attackDuration, int attackDamage) {
         this.playerHealth = playerHealth;
         this.animator = animator;
+        this.attackDuration = attackDuration;
+        this.attackDamage = attackDamage;
     }
 
     public override NodeState Evaluate() {
-        // if (!(bool)parent.GetData("canHitPlayer")) return NodeState.FAILURE;
         if (waiting) {
             timer += Time.fixedDeltaTime;
-            if (timer >= BTPawn.AttackDuration) {
+            if (timer >= attackDuration) {
                 waiting = false;
                 timer = 0f;
             }
@@ -24,7 +27,7 @@ public class TaskAttackPlayer : AINode {
             return state;
         } else {
             if (animator) animator.SetTrigger("Attack");
-            playerHealth.TakeDamage(BTPawn.AttackDamage);
+            playerHealth.TakeDamage(attackDamage);
             waiting = true;
             state = NodeState.SUCCESS;
             return state;

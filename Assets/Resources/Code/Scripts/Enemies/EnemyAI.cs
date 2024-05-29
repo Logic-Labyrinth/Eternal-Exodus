@@ -28,7 +28,6 @@ public class EnemyAI : MonoBehaviour {
     Coroutine attackCoroutine;
     float clusterRadius = 10f;
     GameObject targetPawnObject;
-    Vector3 bishopTarget;
 
     [ShowIf("enemyType", EnemyType.Bishop)]
     public float retreatRange = 20f;
@@ -80,9 +79,9 @@ public class EnemyAI : MonoBehaviour {
             checkInterval = Random.Range(0f, 0.2f);
         }
 
-        if (enemyType == EnemyType.Pawn) {
-            animator.SetFloat("Speed", agent.velocity.magnitude);
-        }
+        // if (enemyType == EnemyType.Pawn) {
+        //     animator.SetFloat("Speed", agent.velocity.magnitude);
+        // }
         GroundCheck();
     }
 
@@ -90,9 +89,9 @@ public class EnemyAI : MonoBehaviour {
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
         switch (type) {
-            case EnemyType.Pawn:
-                HandlePawnBehavior(distanceToPlayer);
-                break;
+            // case EnemyType.Pawn:
+            //     HandlePawnBehavior(distanceToPlayer);
+            //     break;
             case EnemyType.Bishop:
                 HandleBishopBehavior(distanceToPlayer);
                 break;
@@ -102,13 +101,13 @@ public class EnemyAI : MonoBehaviour {
         }
     }
 
-    void HandlePawnBehavior(float distanceToPlayer) {
-        if (distanceToPlayer < attackRange - 0.5f) {
-            TriggerAttack();
-        } else {
-            agent.destination = player.transform.position;
-        }
-    }
+    // void HandlePawnBehavior(float distanceToPlayer) {
+    //     if (distanceToPlayer < attackRange - 0.5f) {
+    //         TriggerAttack();
+    //     } else {
+    //         agent.destination = player.transform.position;
+    //     }
+    // }
 
     void TriggerAttack() {
         if (attackCoroutine != null) {
@@ -119,7 +118,7 @@ public class EnemyAI : MonoBehaviour {
 
     void HandleBishopBehavior(float distanceToPlayer) {
         if (distanceToPlayer < retreatRange) {
-            RetreatFromPlayer();
+            // RetreatFromPlayer();
         } else if (Time.time >= lastSummonTime + summonCooldownTime) {
             lastSummonTime = Time.time;
             StartCoroutine(SummonPawns(spawnManager));
@@ -141,22 +140,22 @@ public class EnemyAI : MonoBehaviour {
         canAttack = true;
     }
 
-    void RetreatFromPlayer() {
-        // Calculate the direction away from the player
-        Vector3 directionFromPlayer = (transform.position - player.transform.position).normalized;
+    // void RetreatFromPlayer() {
+    //     // Calculate the direction away from the player
+    //     Vector3 directionFromPlayer = (transform.position - player.transform.position).normalized;
 
-        // Generate a random angle for deviation
-        float angle = Random.Range(-90f, 90f); // Adjust the range as needed
+    //     // Generate a random angle for deviation
+    //     float angle = Random.Range(-90f, 90f); // Adjust the range as needed
 
-        // Rotate the direction vector by the random angle
-        Quaternion rotation = Quaternion.Euler(0, angle, 0); // Assuming Y-axis rotation for a typical horizontal plane movement
-        Vector3 randomizedDirection = rotation * directionFromPlayer;
+    //     // Rotate the direction vector by the random angle
+    //     Quaternion rotation = Quaternion.Euler(0, angle, 0); // Assuming Y-axis rotation for a typical horizontal plane movement
+    //     Vector3 randomizedDirection = rotation * directionFromPlayer;
 
-        // Calculate the retreat target with randomized direction
-        var retreatTarget = player.transform.position + randomizedDirection * retreatRange;
-        // move towards retreat target
-        agent.destination = retreatTarget;
-    }
+    //     // Calculate the retreat target with randomized direction
+    //     var retreatTarget = player.transform.position + randomizedDirection * retreatRange;
+    //     // move towards retreat target
+    //     agent.destination = retreatTarget;
+    // }
 
     void MoveToTargetPawn() {
         // Logic to move towards the closest cluster of pawns, optimizing by only recalculating when necessary
