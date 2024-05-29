@@ -76,6 +76,8 @@ public class HammerAbility : MonoBehaviour {
                     target.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER);
                 } else if(target.CompareTag("Soul Crystal")) {
                     target.GetComponent<SoulCollector>().Explode();
+                    FrameHang.Instance.ExecFrameHang(0.1f);
+                    CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration);
                 }
             }
 
