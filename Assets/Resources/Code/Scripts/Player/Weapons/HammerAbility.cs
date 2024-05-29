@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,15 +67,13 @@ public class HammerAbility : MonoBehaviour {
             hammerTargets = CustomTriggers.ConeRaycast(Camera.main.transform, 30, range, 100);
 
             foreach (GameObject target in hammerTargets) {
-                Debug.LogWarning(target.name);
                 if (target.layer == groundLayer) hasGround = true;
                 else if (target.layer == enemyLayer) {
                     hasEnemy = true;
                     target.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER);
-                } else if(target.CompareTag("Soul Crystal")) {
-                    Debug.Log("Crystal");
+                } else if (target.CompareTag("Soul Crystal")) {
                     target.GetComponent<SoulCollector>().Explode();
-                }
+                } else if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
             }
 
             if (hasEnemy) {
