@@ -96,6 +96,7 @@ public class SoulCollector : MonoBehaviour {
         DEBUG_SCORE = 0;
         fullyCharged = false;
         icon.SetProgress(0);
+        icon.StopAnimation();
 
         souls[EnemyType.Pawn] = 0;
         souls[EnemyType.Rook] = 0;
