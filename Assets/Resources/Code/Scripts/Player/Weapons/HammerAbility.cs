@@ -76,8 +76,9 @@ public class HammerAbility : MonoBehaviour {
                     target.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER);
                 } else if(target.CompareTag("Soul Crystal")) {
                     target.GetComponent<SoulCollector>().Explode();
-                    FrameHang.Instance.ExecFrameHang(0.1f);
-                    CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration);
+                    FrameHang.Instance.ExecFrameHang(0.2f);
+                    CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration, 1.75f);
+                    
                 }
             }
 
@@ -115,4 +116,7 @@ public class HammerAbility : MonoBehaviour {
         isCharging = false;
         if (hammerChargeBar) hammerChargeBar.gameObject.SetActive(false);
     }
+
+
+
 }

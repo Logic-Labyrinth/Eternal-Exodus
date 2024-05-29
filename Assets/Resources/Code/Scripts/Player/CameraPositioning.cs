@@ -32,16 +32,16 @@ public class CameraPositioning : MonoBehaviour {
         transform.rotation = Quaternion.Euler(CamRot + transform.rotation.eulerAngles);
     }
 
-    public void ShakeCamera(AnimationCurve curve, float duration) {
-        StartCoroutine(CamShake(curve, duration));
+    public void ShakeCamera(AnimationCurve curve, float duration, float multiplier = 1) {
+        StartCoroutine(CamShake(curve, duration, multiplier));
     }
 
-    IEnumerator CamShake(AnimationCurve curve, float duration) {
+    IEnumerator CamShake(AnimationCurve curve, float duration, float multiplier = 1) {
         float elapsed = 0f;
         float angle = 0f;
 
         while (elapsed < duration) {
-            float magnitude = curve.Evaluate(elapsed / duration);
+            float magnitude = curve.Evaluate(elapsed / duration) * multiplier;
 
             angle += Time.deltaTime / duration * 360;
 
