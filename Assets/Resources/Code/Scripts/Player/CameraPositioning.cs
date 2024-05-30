@@ -1,7 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-
 
 public class CameraPositioning : MonoBehaviour {
     public static CameraPositioning Instance { get; private set; }

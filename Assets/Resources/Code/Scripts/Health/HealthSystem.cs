@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using BehaviorTree;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -33,7 +34,6 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void TakeDamage(int damage, WeaponDamageType? damageType) {
-
         HitFlash();
 
         if (hasShield) {
@@ -118,19 +118,16 @@ public class HealthSystem : MonoBehaviour {
     }
 
     void HitFlash() {
-
         if (meshes == null) return;
         foreach (GameObject mesh in meshes) {
             mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_HitFlashBool", 1);
         }
 
-        Invoke(nameof(ResetHitFlash), 0.05f);
-
+        StartCoroutine(ResetHitFlash());
     }
 
-    void ResetHitFlash() {
-
-        if (meshes == null) return;
+    IEnumerator ResetHitFlash() {
+        yield return new WaitForSeconds(0.05f);
         foreach (GameObject mesh in meshes) {
             mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_HitFlashBool", 0);
         }

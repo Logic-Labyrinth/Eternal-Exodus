@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EndScreenController : MonoBehaviour {
-    [SerializeField] int averageTime = 60;
+    // [SerializeField] int averageTime = 60;
     [SerializeField] TextMeshProUGUI PawnKillCountText;
     [SerializeField] TextMeshProUGUI RookKillCountText;
     [SerializeField] TextMeshProUGUI BishopKillCountText;
@@ -28,8 +28,8 @@ public class EndScreenController : MonoBehaviour {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        int dif = averageTime - (int)Time.timeSinceLevelLoad;
-        if (dif < averageTime / 2) dif = averageTime / 2;
+        // int dif = averageTime - (int)Time.timeSinceLevelLoad;
+        // if (dif < averageTime / 2) dif = averageTime / 2;
         // float percentage = (dif / averageTime / 2) + 1;
         int totalKills = GameManager.Instance.KillCountPawn + GameManager.Instance.KillCountRook + GameManager.Instance.KillCountBishop;
         // int score = (int)(totalKills * percentage);

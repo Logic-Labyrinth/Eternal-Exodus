@@ -2,9 +2,9 @@ using System.Collections;
 using UnityEngine;
 
 public class FrameHang : MonoBehaviour {
-    bool waiting;
-
     public static FrameHang Instance { get; private set; }
+
+    bool waiting;
 
     void Awake() {
         if (Instance != null && Instance != this) Destroy(this);

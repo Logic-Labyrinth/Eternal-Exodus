@@ -26,7 +26,7 @@ public class HammerAbility : MonoBehaviour {
     List<GameObject> hammerTargets;
 
     void Start() {
-        rb = transform.GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         orientation = transform.Find("Orientation");
         enemyLayer = LayerMask.NameToLayer("Enemy");
         groundLayer = LayerMask.NameToLayer("Ground");
@@ -111,7 +111,4 @@ public class HammerAbility : MonoBehaviour {
         isCharging = false;
         if (hammerChargeBar) hammerChargeBar.gameObject.SetActive(false);
     }
-
-
-
 }

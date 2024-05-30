@@ -25,13 +25,6 @@ public class GameManager : MonoBehaviour {
     }
 
     IEnumerator LoadLevel(string sceneName) {
-        try {
-            LevelSelectMenuController levelSelectMenu = LevelSelectMenuController.Instance;
-            levelSelectMenu.gameObject.SetActive(false);
-        } catch (MissingReferenceException) {
-            // do nothing
-        }
-
         loadingScreenController.gameObject.SetActive(true);
 
         var sceneLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);

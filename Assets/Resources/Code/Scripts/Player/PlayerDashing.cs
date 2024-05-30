@@ -51,7 +51,6 @@ public class PlayerDashing : MonoBehaviour {
 
     void DashingMovement() {
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        // Vector3 direction = new(cam.transform.forward.x, Y, cam.transform.forward.z);
         rb.AddForce(dashDirection * dashForce, ForceMode.Impulse);
     }
 
