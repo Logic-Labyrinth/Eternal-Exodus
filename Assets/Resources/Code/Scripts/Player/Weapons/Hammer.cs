@@ -21,9 +21,7 @@ public class Hammer : Weapon {
     }
 
     public override void SpecialAttack(Animator animator, GameObject player) {
-        if (hammer == null) {
-            hammer = player.GetComponent<HammerAbility>();
-        }
+        if (hammer == null) hammer = player.GetComponent<HammerAbility>();
 
         animator.ResetTrigger("SwapHammer");
         animator.SetTrigger("HammerCharge");
@@ -37,12 +35,10 @@ public class Hammer : Weapon {
     }
 
     public override void SpecialRelease(Animator animator, GameObject player) {
-        if (hammer == null) {
-            hammer = player.GetComponent<HammerAbility>();
-        }
+        if (hammer == null) hammer = player.GetComponent<HammerAbility>();
 
         animator.SetTrigger("HammerRelease");
-        hammer.ActivateHammerAbility(baseDamage, attackRange);
+        hammer.ActivateHammerAbility(baseDamage, attackRange, this);
     }
 
     public override void Reset() {

@@ -2020,9 +2020,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5199997110340152306}
-  - component: {fileID: 6833783877645697481}
   - component: {fileID: 2017256163353578432}
   - component: {fileID: 4248025000439688283}
+  - component: {fileID: 3727389344639400463}
   m_Layer: 6
   m_Name: Rook
   m_TagString: Rook
@@ -2048,39 +2048,6 @@ Transform:
   - {fileID: 5128009356977592851}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6833783877645697481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3387480086823893954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2393c90c98311fe4a9abedf415e608a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  enemyType: 3
-  attackRange: 2
-  attackDamage: 1
-  attackDuration: 2
-  retreatRange: 20
-  projectileCooldown: 1
-  projectilePrefab: {fileID: 0}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  chargeSpeed: 12
-  chargingCooldownTime: 30
-  animator: {fileID: 7416570949546997997}
-  soundEffect:
-    audioClip: {fileID: 8300000, guid: 4f141fc592686d04993dfb6b74fde41d, type: 3}
-    volume: 0.30119416
-    spacialBlend: 0
-    loop: 0
-    player: 0
-  isCharging: 0
 --- !u!195 &2017256163353578432
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2115,7 +2082,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be46928a701df36478a148ddacec0889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  self: {fileID: 6833783877645697481}
+  isCharging: 0
+  verticalForce: 40
+  horizontalForce: 100
+--- !u!114 &3727389344639400463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3387480086823893954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8ffcb8c2a54c824ab02cb8a3079f6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 2
+  attackDamage: 1
+  attackDuration: 2
+  chargeCooldown: 10
+  chargeSpeed: 20
+  animator: {fileID: 7416570949546997997}
+  agent: {fileID: 2017256163353578432}
+  chargeSound:
+    audioClip: {fileID: 0}
+    volume: 1
+    spacialBlend: 1
+    loop: 0
+    player: 0
 --- !u!1 &3444367502941670992
 GameObject:
   m_ObjectHideFlags: 0

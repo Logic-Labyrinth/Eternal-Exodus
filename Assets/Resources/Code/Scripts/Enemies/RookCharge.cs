@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class RookCharge : MonoBehaviour
-{
-    public EnemyAI self;
+public class RookCharge : MonoBehaviour {
+    public bool isCharging;
+    [SerializeField] float verticalForce = 40;
+    [SerializeField] float horizontalForce = 100;
 
-    void OnCollisionEnter(Collision other)
-    {
-        if (other.collider.tag == "Player" && self.isCharging) {
-                other.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 100 + Vector3.up * 40, ForceMode.Impulse);
-                other.gameObject.GetComponent<PlayerHealthSystem>().TakeDamage(30);
-                self.isCharging = false;
-        }
+    void OnCollisionEnter(Collision other) {
+        if (!other.collider.CompareTag("Player") || !isCharging) return;
+
+        other.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * horizontalForce + Vector3.up * verticalForce, ForceMode.Impulse);
+        other.gameObject.GetComponent<PlayerHealthSystem>().TakeDamage(30);
+        isCharging = false;
     }
 }

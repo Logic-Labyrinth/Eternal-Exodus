@@ -2,9 +2,9 @@ using System.Collections;
 using UnityEngine;
 
 public class FrameHang : MonoBehaviour {
-    bool waiting;
-
     public static FrameHang Instance { get; private set; }
+
+    bool waiting;
 
     void Awake() {
         if (Instance != null && Instance != this) Destroy(this);
@@ -13,8 +13,6 @@ public class FrameHang : MonoBehaviour {
 
     public void ExecFrameHang(float duration) {
         if (waiting) return;
-
-        Time.timeScale = 0.0f;
         StartCoroutine(FrameHanging(duration));
     }
 

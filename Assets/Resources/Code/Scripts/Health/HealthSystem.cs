@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using BehaviorTree;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -27,24 +29,11 @@ public class HealthSystem : MonoBehaviour {
 
     int currentHealth;
 
-    private SpawnManager spawnManager;
-
-    public int GetHealth() { return currentHealth; }
-    public int GetMaxHealth() { return maxHealth; }
-    public bool HasShield() { return hasShield; }
-
-    void Start() {
-        currentHealth = maxHealth;
-        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-    }
-
     void OnEnable() {
         currentHealth = maxHealth;
-        // healthBar.SetProgress((float)currentHealth / maxHealth);
     }
 
     public void TakeDamage(int damage, WeaponDamageType? damageType) {
-
         HitFlash();
 
         if (hasShield) {
@@ -86,13 +75,13 @@ public class HealthSystem : MonoBehaviour {
         GameManager.Instance.AddKillCount(type);
         GameObject soul = Instantiate(Resources.Load("Level/Prefabs/VFX/Soul"), transform.position + Vector3.up, Quaternion.identity) as GameObject;
         soul.GetComponent<SoulVFX>().soulType = type;
-        enemyMainGameObject.GetComponent<EnemyAI>().enabled = false;
+        enemyMainGameObject.GetComponent<AITree>().SetActive(false);
 
         StartCoroutine(Disolve());
     }
 
     public void KillWithoutSoul() {
-        enemyMainGameObject.GetComponent<EnemyAI>().enabled = false;
+        enemyMainGameObject.GetComponent<AITree>().SetActive(false);
         StartCoroutine(Disolve());
     }
 
@@ -129,19 +118,16 @@ public class HealthSystem : MonoBehaviour {
     }
 
     void HitFlash() {
-
         if (meshes == null) return;
         foreach (GameObject mesh in meshes) {
             mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_HitFlashBool", 1);
         }
 
-        Invoke(nameof(ResetHitFlash), 0.05f);
-
+        StartCoroutine(ResetHitFlash());
     }
 
-    void ResetHitFlash() {
-
-        if (meshes == null) return;
+    IEnumerator ResetHitFlash() {
+        yield return new WaitForSeconds(0.05f);
         foreach (GameObject mesh in meshes) {
             mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_HitFlashBool", 0);
         }
@@ -150,7 +136,6 @@ public class HealthSystem : MonoBehaviour {
 
     private void OnDisable() {
         enemyMainGameObject.SetActive(false);
-        // gameObject.SetActive(false);
     }
 
     IEnumerator Disolve() {
@@ -172,9 +157,9 @@ public class HealthSystem : MonoBehaviour {
             mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_Dissolve_Amount", 0f);
         }
 
-        enemyMainGameObject.GetComponent<EnemyAI>().enabled = true;
+        enemyMainGameObject.GetComponent<AITree>().SetActive(false);
         enemyMainGameObject.SetActive(false);
         GetComponent<Collider>().enabled = true;
-        spawnManager.EnqueueEnemy(enemyMainGameObject);
+        SpawnManager.Instance.EnqueueEnemy(enemyMainGameObject);
     }
 }

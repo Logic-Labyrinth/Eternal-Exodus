@@ -11,17 +11,15 @@ namespace BehaviorTree {
                     case NodeState.FAILURE:
                         continue;
                     case NodeState.SUCCESS:
-                        state = NodeState.SUCCESS;
-                        return state;
+                        return NodeState.SUCCESS;
                     case NodeState.RUNNING:
-                        state = NodeState.RUNNING;
-                        return state;
+                        return NodeState.RUNNING;
                     default:
                         continue;
                 }
             }
-            state = NodeState.FAILURE;
-            return state;
+
+            return NodeState.FAILURE;
         }
     }
 }

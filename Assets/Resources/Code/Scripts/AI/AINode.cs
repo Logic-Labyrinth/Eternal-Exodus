@@ -10,7 +10,7 @@ namespace BehaviorTree {
     public class AINode {
         public AINode parent;
 
-        protected NodeState state;
+        // protected NodeState state;
         protected List<AINode> children = new();
 
         readonly Dictionary<string, object> data = new();
@@ -20,9 +20,8 @@ namespace BehaviorTree {
         }
 
         public AINode(List<AINode> children) {
-            foreach (AINode child in children) {
+            foreach (AINode child in children)
                 Attach(child);
-            }
         }
 
         void Attach(AINode child) {
@@ -42,9 +41,8 @@ namespace BehaviorTree {
             AINode node = parent;
             while (node != null) {
                 value = node.GetData(key);
-                // if (value != null) return value;
-
-                // node = node.parent;
+                if (value != null) return value;
+                node = node.parent;
             }
 
             return value;
@@ -60,8 +58,8 @@ namespace BehaviorTree {
             AINode node = parent;
             while (node != null) {
                 cleared = node.ClearData(key);
-                // if (cleared) return true;
-                // node = node.parent;
+                if (cleared) return true;
+                node = node.parent;
             }
 
             return cleared;

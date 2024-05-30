@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class BTPawn : AITree {
-    public static float AttackRange { get; private set; } = 2f;
-    public static int AttackDamage { get; private set; } = 1;
-    public static float AttackDuration { get; private set; } = 2f;
+    [HideInInspector] public bool isFollowedByBishop = false;
 
+    [SerializeField] float attackRange = 2f;
+    [SerializeField] int attackDamage = 1;
+    [SerializeField] float attackDuration = 2f;
     [SerializeField] Animator animator;
     [SerializeField] NavMeshAgent agent;
 
@@ -17,17 +18,12 @@ public class BTPawn : AITree {
         if (!agent) agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player");
 
-        // AINode root = new AISequence(new List<AINode> {
-        //     new TaskChasePlayer(animator, agent, player.transform),
-        //     new TaskAttackPlayer(animator, player.GetComponent<PlayerHealthSystem>())
-        // });
-
         AINode root = new AISelector(new List<AINode> {
             new AISequence(new List<AINode> {
-                new TaskCheckAttackRange(agent, player.transform),
-                new TaskAttackPlayer(animator, player.GetComponent<PlayerHealthSystem>())
+                new CheckAttackRange(agent, player.transform, attackRange),
+                new TaskPawnAttackPlayer(animator, player.GetComponent<PlayerHealthSystem>(), attackDuration, attackDamage)
             }),
-            new TaskChasePlayer(animator, agent, player.transform)
+            new TaskPawnChasePlayer(animator, agent, player.transform)
         });
 
         return root;
