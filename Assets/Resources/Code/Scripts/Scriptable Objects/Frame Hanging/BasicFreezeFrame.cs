@@ -8,7 +8,7 @@ public class BasicFreezeFrame : ScriptableObject {
     public float Evaluate(float x) {
 
         float xValue = Mathf.Clamp01(x);
-        return timescaleCurve.Evaluate(xValue);
+        return Mathf.Clamp01(timescaleCurve.Evaluate(xValue));
 
     }
 

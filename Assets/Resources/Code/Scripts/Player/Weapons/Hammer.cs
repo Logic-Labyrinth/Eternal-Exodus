@@ -26,6 +26,7 @@ public class Hammer : Weapon {
         }
 
         animator.ResetTrigger("SwapHammer");
+        animator.ResetTrigger("HammerRelease");
         animator.SetTrigger("HammerCharge");
         hammer.ChargeHammer();
         PlaySpecialAttackSound();

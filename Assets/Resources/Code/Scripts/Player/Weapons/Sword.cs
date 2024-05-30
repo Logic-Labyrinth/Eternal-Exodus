@@ -43,6 +43,8 @@ public class Sword : Weapon {
         CameraPositioning.Instance.ShakeCamera(shakeMagnitude, shakeDuration);
         FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.1f);
 
+
+
         foreach (GameObject target in swordTargets) {
             if (target.layer == enemyLayer) {
                 target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD);
@@ -52,6 +54,7 @@ public class Sword : Weapon {
                 target.GetComponent<Rigidbody>().AddForce(Vector3.up * 20, ForceMode.Impulse);
             }
             if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
+            
         }
     }
 }

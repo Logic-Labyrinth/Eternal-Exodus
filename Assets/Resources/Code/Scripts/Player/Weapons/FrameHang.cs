@@ -24,11 +24,18 @@ public class FrameHang : MonoBehaviour {
         while (timer < duration) {
 
             Time.timeScale = basicFreezeFrame.Evaluate(timer / duration);
-            timer += Time.deltaTime;
-            yield return null;
-
+            // timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
+            // yield return null;
+            yield return new WaitForSecondsRealtime(Time.unscaledDeltaTime);
         }
 
         waiting = false;
+        Time.timeScale = 1.0f;
+    }
+
+    void OnGUI() {
+        GUILayout.TextArea($"Time Scale: {Time.timeScale}");
+        
     }
 }

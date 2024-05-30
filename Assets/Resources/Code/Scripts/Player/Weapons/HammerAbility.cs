@@ -101,7 +101,7 @@ public class HammerAbility : MonoBehaviour {
                 SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
                 CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration);
                 // FindObjectOfType<FrameHang>().ExecFrameHang(0.05f);
-                FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.05f);
+                FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.01f);
             }
         }
 
