@@ -123,46 +123,6 @@ public class WeaponsController : MonoBehaviour {
         var currentWeapon = weaponObjects[activeWeaponIndex];
         if (!currentWeapon.canUseBasicAttack) return;
 
-        // bool hit = Physics.Raycast(
-        //     cameraReference.transform.position,
-        //     cameraReference.transform.forward,
-        //     out RaycastHit raycastHit,
-        //     currentWeapon.weapon.attackRange,
-        //     ~LayerMask.NameToLayer("Player"),
-        //     QueryTriggerInteraction.Ignore
-        // );
-
-        // if (hit) {
-        //     if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
-        //         currentWeapon.weapon.BasicAttack(
-        //             animator,
-        //             playerReference,
-        //             raycastHit.collider.transform.GetComponent<HealthSystem>(),
-        //             raycastHit.point
-        //         );
-        //     } else if (raycastHit.collider.CompareTag("Weakpoint")) {
-        //         currentWeapon.weapon.WeakpointAttack(
-        //             animator,
-        //             playerReference,
-        //             raycastHit.collider.transform.GetComponent<Weakpoint>(),
-        //             raycastHit.point
-        //         );
-        //     } else {
-        //         if (raycastHit.collider.TryGetComponent(out Rigidbody rb) && !raycastHit.collider.CompareTag("Player")) {
-        //             rb.AddForceAtPosition(
-        //                 cameraReference.transform.forward * 100,
-        //                 raycastHit.point,
-        //                 ForceMode.Impulse
-        //             );
-        //         } else if (raycastHit.collider.CompareTag("Breakable")) {
-        //             raycastHit.collider.transform.parent.GetComponent<BreakableObject>().Break();
-        //         }
-        //         currentWeapon.weapon.BasicAttack(animator, playerReference);
-        //     }
-        // } else {
-        //     currentWeapon.weapon.BasicAttack(animator, playerReference);
-        // }
-
         currentWeapon.weapon.BasicAttack(animator);
 
         currentWeapon.canUseBasicAttack = false;
