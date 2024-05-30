@@ -241,6 +241,7 @@ GameObject:
   - component: {fileID: 1574305853688802524}
   - component: {fileID: 6207354628851061628}
   - component: {fileID: 834908416261973853}
+  - component: {fileID: 3667153001030181347}
   m_Layer: 0
   m_Name: SoulCrystal
   m_TagString: Soul Crystal
@@ -338,6 +339,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &3667153001030181347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5197818234155675100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e75c5309ec6b6024b8c0b61a6a670a62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 10
+  bobSpeed: 0.5
+  bobHeight: 0.1
 --- !u!1 &6142070130561987353
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,7 +366,6 @@ GameObject:
   - component: {fileID: 726136912342944780}
   - component: {fileID: 6855343398636452079}
   - component: {fileID: 7890826357445187859}
-  - component: {fileID: 3325464451339028349}
   m_Layer: 0
   m_Name: Soul Crystal Mesh
   m_TagString: Untagged
@@ -445,21 +460,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: 6d9486e55d5f0564bab642aadd11b0ff, type: 3}
---- !u!114 &3325464451339028349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6142070130561987353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e75c5309ec6b6024b8c0b61a6a670a62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 10
-  bobSpeed: 0.5
-  bobHeight: 0.1
 --- !u!1 &8856547091145129802
 GameObject:
   m_ObjectHideFlags: 0
