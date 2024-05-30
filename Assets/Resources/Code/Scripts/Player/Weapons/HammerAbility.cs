@@ -15,8 +15,6 @@ public class HammerAbility : MonoBehaviour {
     [SerializeField] Image hammerChargeBar;
     [SerializeField] Color chargeColor;
 
-     
-
     Material hammerChargeBarMaterial;
     LayerMask enemyLayer, groundLayer, crystalLayer;
     bool isCharging = false;
@@ -73,7 +71,7 @@ public class HammerAbility : MonoBehaviour {
                 else if (target.layer == enemyLayer) {
                     hasEnemy = true;
                     target.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER);
-                } else if(target.CompareTag("Soul Crystal")) {
+                } else if (target.CompareTag("Soul Crystal")) {
                     target.GetComponent<SoulCollector>().Explode();
                     FrameHang.Instance.ExecFrameHang(0.2f);
                     CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration, 1.75f);
@@ -88,8 +86,8 @@ public class HammerAbility : MonoBehaviour {
                 );
                 SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
                 CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration);
-                // FindObjectOfType<FrameHang>().ExecFrameHang(0.15f);
                 FrameHang.Instance.ExecFrameHang(0.15f);
+
             } else if (hasGround) {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
@@ -100,7 +98,6 @@ public class HammerAbility : MonoBehaviour {
                 Instantiate(hammerVFX, groundVFXPos, Quaternion.identity);
                 SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
                 CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration);
-                // FindObjectOfType<FrameHang>().ExecFrameHang(0.05f);
                 FrameHang.Instance.ExecFrameHang(0.05f);
             }
         }
