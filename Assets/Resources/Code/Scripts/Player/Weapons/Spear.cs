@@ -24,11 +24,10 @@ public class Spear : Weapon {
             if (target.layer == enemyLayer) target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SPEAR);
             if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
         }
-        if (hasEnemy){
+        if (hasEnemy) {
             CameraPositioning.Instance.ShakeCamera(shakeMagnitude, shakeDuration);
-            FindObjectOfType<FrameHang>().ExecFrameHang(0.05f);
-        } 
-        else CameraPositioning.Instance.ShakeCamera(shakeMagnitudeScnd, shakeDurationScnd);
+            FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.05f);
+        } else CameraPositioning.Instance.ShakeCamera(shakeMagnitudeScnd, shakeDurationScnd);
 
     }
 
@@ -39,8 +38,8 @@ public class Spear : Weapon {
         playerDash.Dash();
         PlaySpecialAttackSound();
         CameraPositioning.Instance.ShakeCamera(shakeMagnitude, shakeDuration);
-        
-        
+
+
     }
 
     public override void WeakpointAttack(Animator animator, Weakpoint weakpoint) {

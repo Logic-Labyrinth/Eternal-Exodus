@@ -80,6 +80,14 @@ public class Weapon : ScriptableObject {
     [VerticalGroup("Camera Shake")]
     [DisableIf("isLocked")]
     public float shakeDurationScnd;
+
+    [VerticalGroup("Freeze Frame Anim Curve")]
+    [DisableIf("isLocked")]
+    public BasicFreezeFrame basicFreezeFrame;
+
+    [VerticalGroup("Slomo Anim Curve")]
+    [DisableIf("isLocked")]
+    public BasicFreezeFrame slomoAnimCurve;
     #endregion
    
 

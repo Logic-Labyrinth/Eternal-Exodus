@@ -42,7 +42,7 @@ public class Hammer : Weapon {
         }
 
         animator.SetTrigger("HammerRelease");
-        hammer.ActivateHammerAbility(baseDamage, attackRange);
+        hammer.ActivateHammerAbility(baseDamage, attackRange, this);
     }
 
     public override void Reset() {
