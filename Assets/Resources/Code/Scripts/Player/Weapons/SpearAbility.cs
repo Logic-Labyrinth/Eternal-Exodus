@@ -13,14 +13,16 @@ public class SpecialAbilityDamage : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
-        if (other.gameObject.layer != LayerMask.NameToLayer("Enemy")) return;
         if (!pm.dashing) return;
         visualEffect.Play();
-        other.GetComponent<HealthSystem>().TakeDamage(spearData.baseDamage, WeaponDamageType.SPEAR);
-        other.GetComponent<NavMeshAgent>().isStopped = true;
-        other.GetComponent<NavMeshAgent>().updatePosition = false;
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
+            other.GetComponent<HealthSystem>().TakeDamage(spearData.baseDamage, WeaponDamageType.SPEAR);
+            other.GetComponent<NavMeshAgent>().isStopped = true;
+            other.GetComponent<NavMeshAgent>().updatePosition = false;
 
-        // add force away from spear position and up
-        other.GetComponent<Rigidbody>().AddForce((other.transform.position - transform.position).normalized * 5 + Vector3.up * 15, ForceMode.Impulse);
+            // add force away from spear position and up
+            other.GetComponent<Rigidbody>().AddForce((other.transform.position - transform.position).normalized * 5 + Vector3.up * 15, ForceMode.Impulse);
+        }
+        if (other.CompareTag("Breakable")) other.GetComponent<BreakableObject>().Break();
     }
 }

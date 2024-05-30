@@ -14,15 +14,11 @@ public class BreakableObject : MonoBehaviour {
     public void Break() {
         objectWhole.SetActive(false);
         objectBroken.SetActive(true);
-
-        // if (destroyTime > 0) Destroy(gameObject, destroyTime);
-        DestroyObject();
+        StartCoroutine(DestroyObject());
     }
 
     IEnumerator DestroyObject() {
         yield return new WaitForSeconds(destroyTime);
-
-        // GetComponent<Collider>().enabled = false;
         GetComponentInChildren<Collider>().enabled = false;
 
         yield return new WaitForSeconds(5f);

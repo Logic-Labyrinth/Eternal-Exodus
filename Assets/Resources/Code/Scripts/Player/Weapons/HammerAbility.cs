@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -78,8 +77,7 @@ public class HammerAbility : MonoBehaviour {
                     target.GetComponent<SoulCollector>().Explode();
                     FrameHang.Instance.ExecFrameHang(0.2f);
                     CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration, 1.75f);
-                    
-                }
+                } else if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
             }
 
             if (hasEnemy) {
