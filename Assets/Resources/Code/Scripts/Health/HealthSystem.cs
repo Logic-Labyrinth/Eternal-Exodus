@@ -25,6 +25,7 @@ public class HealthSystem : MonoBehaviour {
     [SerializeField] Sound[] swordHitSounds;
     [SerializeField] Sound[] hammerHitSounds;
     [SerializeField] HealthBar healthBar;
+
     int currentHealth;
 
     void OnEnable() {
@@ -32,6 +33,9 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void TakeDamage(int damage, WeaponDamageType? damageType) {
+
+        HitFlash();
+
         if (hasShield) {
             BreakShield();
             return;
@@ -98,8 +102,8 @@ public class HealthSystem : MonoBehaviour {
         hasShield = true;
         if (meshes == null) return;
         foreach (GameObject mesh in meshes) {
-            mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_Alpha", 1);
-            mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_ShieldStrength", 2);
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_Alpha", 1);
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_ShieldStrength", 2);
         }
     }
 
@@ -108,9 +112,29 @@ public class HealthSystem : MonoBehaviour {
         if (meshes == null) return;
 
         foreach (GameObject mesh in meshes) {
-            mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_Alpha", 0);
-            mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_ShieldStrength", 0);
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_Alpha", 0);
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_ShieldStrength", 0);
         }
+    }
+
+    void HitFlash() {
+
+        if (meshes == null) return;
+        foreach (GameObject mesh in meshes) {
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_HitFlashBool", 1);
+        }
+
+        Invoke(nameof(ResetHitFlash), 0.05f);
+
+    }
+
+    void ResetHitFlash() {
+
+        if (meshes == null) return;
+        foreach (GameObject mesh in meshes) {
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_HitFlashBool", 0);
+        }
+
     }
 
     private void OnDisable() {

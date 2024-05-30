@@ -13,6 +13,8 @@ public class SoulCollector : MonoBehaviour {
     [SerializeField] SoulValue soulValueRook;
     [SerializeField] SoulValue soulValueKnight;
     [SerializeField] SoulValue soulValueBishop;
+    [SerializeField] MeshRenderer crystalMesh;
+    [SerializeField] Light crystalLight;
 
     Dictionary<EnemyType, int> souls = new() {
         {EnemyType.Pawn, 0},
@@ -101,7 +103,7 @@ public class SoulCollector : MonoBehaviour {
         Debug.Log("FullyCharged");
         explosionVFX.Play();
         SpawnManager.Instance.DisableSpawner();
-
+        CrystalFlash();
         FindObjectsOfType<HealthSystem>().ToList().ForEach(x => {
             x.KillWithoutSoul();
         });
@@ -114,4 +116,26 @@ public class SoulCollector : MonoBehaviour {
         yield return new WaitForSeconds(gracePeriodSeconds);
         SpawnManager.Instance.EnableSpawner();
     }
+
+    // Crystal Flashing
+
+    void CrystalFlash() {
+        crystalLight.intensity = 100.0f;
+        crystalMesh.material.SetInt("_HitFlashBool", 1);
+        //CameraPositioning.Instance.ShakeCamera();
+        Invoke(nameof(CrystalFlashReset), 0.3f);
+
+    }
+
+    void CrystalFlashReset() {
+        crystalLight.intensity = 30.0f;
+        crystalMesh.material.SetInt("_HitFlashBool", 0);
+    }
+
+
+
+
+    // void Done() {
+    //     GameManager.Instance.EndLevel();
+    // }
 }
