@@ -7,6 +7,7 @@ public class BTBishop : AITree {
     [SerializeField] float retreatRange = 20f;
     [SerializeField] float projectileCooldown = 1f;
     [SerializeField] float summonCooldown = 1f;
+    [SerializeField] int summonCount = 5;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Animator animator;
     [SerializeField] NavMeshAgent agent;
@@ -18,10 +19,15 @@ public class BTBishop : AITree {
         player = GameObject.Find("Player");
 
         AINode root = new AIBranch(
-            new CheckIfCloseToPlayer(agent, player.transform, retreatRange),
-            new TaskFleeFromPlayer(agent, player.transform, retreatRange),
-            new AISelector(new List<AINode> {
-                new TaskShootPlayer(agent, projectilePrefab, projectileCooldown)
+            new CheckBishopIfCloseToPlayer(agent, player.transform, retreatRange),
+            new TaskBishopFleeFromPlayer(agent, player.transform, retreatRange),
+            new AISequence(new List<AINode> {
+                new AISequence(new List<AINode> {
+                    new TaskBishopFindClosestPawnCluster(),
+                    new TaskBishopFollowPawn(agent)
+                }),
+                new TaskBishopShootPlayer(agent, projectilePrefab, projectileCooldown),
+                new TaskBishopSummonPawns(animator, agent, summonCount, summonCooldown, retreatRange)
             })
         );
 

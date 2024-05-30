@@ -14,17 +14,11 @@ namespace BehaviorTree {
         }
 
         public override NodeState Evaluate() {
-            switch(checkNode.Evaluate()) {
-                case NodeState.SUCCESS:
-                    state = trueNode.Evaluate();
-                    return state;
-                case NodeState.FAILURE:
-                    state = falseNode.Evaluate();
-                    return state;
-                default:
-                    state = NodeState.RUNNING;
-                    return state;
-            }
+            return checkNode.Evaluate() switch {
+                NodeState.SUCCESS => trueNode.Evaluate(),
+                NodeState.FAILURE => falseNode.Evaluate(),
+                _ => NodeState.RUNNING,
+            };
         }
     }
 }

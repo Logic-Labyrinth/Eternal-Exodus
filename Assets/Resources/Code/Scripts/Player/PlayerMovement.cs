@@ -85,7 +85,7 @@ public class PlayerMovement : MonoBehaviour {
     // GUILayout.TextArea($"Desired speed: {desiredMoveSpeed}");
     // }
 
-    private void Start() {
+    void Start() {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         startYScale = playerObj.localScale.y;
@@ -93,13 +93,13 @@ public class PlayerMovement : MonoBehaviour {
         lastFrameVerticalVelocity = 0;
     }
 
-    private void Update() {
+    void Update() {
         HandleInput();
         HandleGravity();
         HandleVFX();
     }
 
-    private void FixedUpdate() {
+    void FixedUpdate() {
         GroundCheck();
         MovePlayer();
         SpeedControl();
@@ -120,7 +120,7 @@ public class PlayerMovement : MonoBehaviour {
         speedLinesVFX.SetSpeed(rb.velocity.magnitude);
     }
 
-    private void GroundCheck() {
+    void GroundCheck() {
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.2f, groundMask);
         Debug.DrawRay(transform.position, Vector3.down * 1.2f, Color.magenta);
 
@@ -132,12 +132,12 @@ public class PlayerMovement : MonoBehaviour {
         lastFrameVerticalVelocity = rb.velocity.y;
     }
 
-    private void Landed() {
+    void Landed() {
         LandingVFX landingVFX = Instantiate(landingVFXPrefab, new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z), Quaternion.identity).GetComponent<LandingVFX>();
         landingVFX.Play(Math.Abs(lastFrameVerticalVelocity));
     }
 
-    private void HandleInput() {
+    void HandleInput() {
         if (disableMovementInput) return;
 
         horizontalInput = Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Horizontal Controller");
@@ -146,7 +146,7 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetButton("Jump") && canJump && isGrounded) {
             canJump = false;
             Jump();
-            Invoke(nameof(ResetJump), jumpCooldown);
+            StartCoroutine(ResetJump());
         }
 
         TryUncrouch();
@@ -178,7 +178,7 @@ public class PlayerMovement : MonoBehaviour {
         StopCrouch();
     }
 
-    private void StateHandler() {
+    void StateHandler() {
         if (dashing) {
             desiredMoveSpeed = slideSpeed;
 
@@ -221,7 +221,7 @@ public class PlayerMovement : MonoBehaviour {
         lastState = state;
     }
 
-    private IEnumerator SmoothlyLerpMoveSpeed() {
+    IEnumerator SmoothlyLerpMoveSpeed() {
         float time = 0;
         float difference = Mathf.Abs(desiredMoveSpeed - moveSpeed);
         float startValue = moveSpeed;
@@ -244,7 +244,7 @@ public class PlayerMovement : MonoBehaviour {
         keepMomentum = false;
     }
 
-    private void MovePlayer() {
+    void MovePlayer() {
         if (disableMovementInput) return;
         if (dashing) return;
 
@@ -265,7 +265,7 @@ public class PlayerMovement : MonoBehaviour {
         rb.useGravity = !OnSlope();
     }
 
-    private void SpeedControl() {
+    void SpeedControl() {
         // limiting speed on slope
         if (OnSlope() && !exitingSlope) {
             if (rb.velocity.magnitude > moveSpeed) rb.velocity = rb.velocity.normalized * moveSpeed;
@@ -299,7 +299,8 @@ public class PlayerMovement : MonoBehaviour {
         rb.AddForce(transform.up * jumpForce * swordJumpMultiplier, ForceMode.Impulse);
     }
 
-    private void ResetJump() {
+    IEnumerator ResetJump() {
+        yield return new WaitForSeconds(jumpCooldown);
         canJump = true;
         exitingSlope = false;
     }

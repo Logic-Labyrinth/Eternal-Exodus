@@ -14,12 +14,9 @@ public class CheckAttackRange : AINode {
     }
 
     public override NodeState Evaluate() {
-        if (Vector3.Distance(playerTransform.position, agent.transform.position) <= attackRange) {
-            state = NodeState.SUCCESS;
-            return state;
-        }
+        if (Vector3.Distance(playerTransform.position, agent.transform.position) <= attackRange)
+            return NodeState.SUCCESS;
 
-        state = NodeState.FAILURE;
-        return state;
+        return NodeState.FAILURE;
     }
 }

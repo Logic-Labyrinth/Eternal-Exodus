@@ -8,16 +8,16 @@ public class SettingsMenuToggle : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (controller.isOpen) {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                controller.CloseSettings();
-            } else {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                controller.OpenSettings();
-            }
+        if (!Input.GetKeyDown(KeyCode.Escape)) return;
+        if (controller.isOpen) {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            controller.CloseSettings();
+            return;
         }
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        controller.OpenSettings();
     }
 }
