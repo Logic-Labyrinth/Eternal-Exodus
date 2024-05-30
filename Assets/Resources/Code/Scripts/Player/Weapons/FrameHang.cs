@@ -13,8 +13,6 @@ public class FrameHang : MonoBehaviour {
 
     public void ExecFrameHang(float duration) {
         if (waiting) return;
-
-        Time.timeScale = 0.0f;
         StartCoroutine(FrameHanging(duration));
     }
 

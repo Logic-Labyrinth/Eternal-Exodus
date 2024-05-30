@@ -16,7 +16,7 @@ public class HammerAbility : MonoBehaviour {
     [SerializeField] Color chargeColor;
 
     Material hammerChargeBarMaterial;
-    LayerMask enemyLayer, groundLayer, crystalLayer;
+    LayerMask enemyLayer, groundLayer;
     bool isCharging = false;
     bool isCharged = false;
     Rigidbody rb;

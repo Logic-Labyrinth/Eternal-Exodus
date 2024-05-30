@@ -17,14 +17,13 @@ public class CameraPositioning : MonoBehaviour {
     }
 
     Vector2 PolarToCartesian(float r, float a) {
-        float x = radius * Mathf.Cos(a);
-        float y = radius * Mathf.Sin(a);
+        float x = r * Mathf.Cos(a);
+        float y = r * Mathf.Sin(a);
 
         return new Vector2(x, y);
     }
 
     void Update() {
-        // if (Input.GetKeyDown(KeyCode.L)) StartCoroutine(CamShake(duration, magnitude));
         transform.position = trans.position + Shake;
     }
 
