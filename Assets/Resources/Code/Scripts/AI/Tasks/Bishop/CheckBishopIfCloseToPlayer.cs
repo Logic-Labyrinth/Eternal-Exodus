@@ -16,7 +16,7 @@ public class CheckBishopIfCloseToPlayer : AINode {
     public override NodeState Evaluate() {
         if (Vector3.Distance(playerTransform.position, agent.transform.position) <= fleeRange)
             return NodeState.SUCCESS;
-        else
-            return NodeState.FAILURE;
+
+        return NodeState.FAILURE;
     }
 }
