@@ -11,10 +11,11 @@ public class TaskPawnSelectChasePoint : AINode {
 
     bool waiting = false;
 
-    public TaskPawnSelectChasePoint(NavMeshAgent agent, float checkInterval) {
+    public TaskPawnSelectChasePoint(bool inner, NavMeshAgent agent, float checkInterval) {
         this.agent = agent;
         this.checkInterval = checkInterval;
-        chasePoints = ChasePointCreation.Instance.Points;
+
+        chasePoints = inner ? ChasePointCreation.Instance.InnerPoints : ChasePointCreation.Instance.OuterPoints;
     }
 
     public override NodeState Evaluate() {

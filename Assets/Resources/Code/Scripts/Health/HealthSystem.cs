@@ -157,7 +157,7 @@ public class HealthSystem : MonoBehaviour {
             mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_Dissolve_Amount", 0f);
         }
 
-        enemyMainGameObject.GetComponent<AITree>().SetActive(false);
+        enemyMainGameObject.GetComponent<AITree>().SetActive(true);
         enemyMainGameObject.SetActive(false);
         GetComponent<Collider>().enabled = true;
         SpawnManager.Instance.EnqueueEnemy(enemyMainGameObject);

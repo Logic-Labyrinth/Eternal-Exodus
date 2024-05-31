@@ -7,65 +7,45 @@ public class CameraPositioning : MonoBehaviour {
     [SerializeField] float radius = 1f;
 
     Vector3 Shake = Vector3.zero;
-    Vector3 CamRot = Vector3.zero;
+    Quaternion CamRot = Quaternion.identity;
+
+    Vector3 maxTranslationShake = Vector3.one;
+    Vector3 maxRotationShake = Vector3.one * 15;
+    float frequency = 25;
+    float traumaExponent = 1;
+    float recoverySpeed = 1;
+    float trauma, seed;
 
     void Awake() {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
-    }
-
-    Vector2 PolarToCartesian(float r, float a) {
-        float x = r * Mathf.Cos(a);
-        float y = r * Mathf.Sin(a);
-
-        return new Vector2(x, y);
+        seed = Random.value;
     }
 
     void Update() {
+        float shake = Mathf.Pow(trauma, traumaExponent);
+        Shake = new Vector3(
+            maxTranslationShake.x * (Mathf.PerlinNoise(seed, Time.time * frequency) * 2 - 1),
+            maxTranslationShake.y * (Mathf.PerlinNoise(seed + 1, Time.time * frequency) * 2 - 1),
+            maxTranslationShake.z * (Mathf.PerlinNoise(seed + 2, Time.time * frequency) * 2 - 1)
+        ) * shake;
+
+        CamRot = Quaternion.Euler(new Vector3(
+            maxRotationShake.x * (Mathf.PerlinNoise(seed + 3, Time.time * frequency) * 2 - 1),
+            maxRotationShake.y * (Mathf.PerlinNoise(seed + 4, Time.time * frequency) * 2 - 1),
+            maxRotationShake.z * (Mathf.PerlinNoise(seed + 5, Time.time * frequency) * 2 - 1)
+        ) * shake);
+
         transform.position = trans.position + Shake;
+
+        trauma = Mathf.Clamp01(trauma - Time.deltaTime * recoverySpeed);
     }
 
     void LateUpdate() {
-        transform.rotation = Quaternion.Euler(CamRot + transform.rotation.eulerAngles);
+        transform.rotation = transform.rotation * CamRot;
     }
 
-    public void ShakeCamera(AnimationCurve curve, float duration, float multiplier = 1) {
-        StartCoroutine(CamShake(curve, duration, multiplier));
-    }
-
-    IEnumerator CamShake(AnimationCurve curve, float duration, float multiplier = 1) {
-        float elapsed = 0f;
-        float angle = 0f;
-
-        while (elapsed < duration) {
-            float magnitude = curve.Evaluate(elapsed / duration) * multiplier;
-
-            angle += Time.deltaTime / duration * 360;
-
-            Vector2 PerlinCoord_X = PolarToCartesian(radius, angle);
-            Vector2 PerlinCoord_Y = PolarToCartesian(radius, angle);
-
-            float Noise_X = Mathf.PerlinNoise(PerlinCoord_X.x, PerlinCoord_X.y) * 2 - 1;
-            float Noise_Y = Mathf.PerlinNoise(PerlinCoord_Y.x, PerlinCoord_Y.y) * 2 - 1;
-
-            float x1 = Noise_X * ((1 - elapsed / duration) * magnitude);
-            float y1 = Noise_X * ((1 - elapsed / duration) * magnitude);
-
-            float x2 = Noise_Y * ((1 - elapsed / duration) * magnitude);
-            float y2 = Noise_Y * ((1 - elapsed / duration) * magnitude);
-
-            Shake.x = x1;
-            Shake.y = y1;
-
-            CamRot.x = x2;
-            CamRot.y = y2;
-
-            elapsed += Time.deltaTime;
-
-            yield return null;
-        }
-
-        Shake = Vector3.zero;
-        CamRot = Vector3.zero;
+    public void InduceStress(float stress) {
+        trauma = Mathf.Clamp01(trauma + stress);
     }
 }
