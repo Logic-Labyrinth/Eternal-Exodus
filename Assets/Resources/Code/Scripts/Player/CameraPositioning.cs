@@ -1,7 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-
 
 public class CameraPositioning : MonoBehaviour {
     public static CameraPositioning Instance { get; private set; }
@@ -17,14 +15,13 @@ public class CameraPositioning : MonoBehaviour {
     }
 
     Vector2 PolarToCartesian(float r, float a) {
-        float x = radius * Mathf.Cos(a);
-        float y = radius * Mathf.Sin(a);
+        float x = r * Mathf.Cos(a);
+        float y = r * Mathf.Sin(a);
 
         return new Vector2(x, y);
     }
 
     void Update() {
-        // if (Input.GetKeyDown(KeyCode.L)) StartCoroutine(CamShake(duration, magnitude));
         transform.position = trans.position + Shake;
     }
 
@@ -32,16 +29,16 @@ public class CameraPositioning : MonoBehaviour {
         transform.rotation = Quaternion.Euler(CamRot + transform.rotation.eulerAngles);
     }
 
-    public void ShakeCamera(AnimationCurve curve, float duration) {
-        StartCoroutine(CamShake(curve, duration));
+    public void ShakeCamera(AnimationCurve curve, float duration, float multiplier = 1) {
+        StartCoroutine(CamShake(curve, duration, multiplier));
     }
 
-    IEnumerator CamShake(AnimationCurve curve, float duration) {
+    IEnumerator CamShake(AnimationCurve curve, float duration, float multiplier = 1) {
         float elapsed = 0f;
         float angle = 0f;
 
         while (elapsed < duration) {
-            float magnitude = curve.Evaluate(elapsed / duration);
+            float magnitude = curve.Evaluate(elapsed / duration) * multiplier;
 
             angle += Time.deltaTime / duration * 360;
 
