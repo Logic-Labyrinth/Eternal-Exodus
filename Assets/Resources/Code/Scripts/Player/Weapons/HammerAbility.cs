@@ -15,10 +15,8 @@ public class HammerAbility : MonoBehaviour {
     [SerializeField] Image hammerChargeBar;
     [SerializeField] Color chargeColor;
 
-
-
     Material hammerChargeBarMaterial;
-    LayerMask enemyLayer, groundLayer, crystalLayer;
+    LayerMask enemyLayer, groundLayer;
     bool isCharging = false;
     bool isCharged = false;
     Rigidbody rb;
@@ -28,7 +26,7 @@ public class HammerAbility : MonoBehaviour {
     List<GameObject> hammerTargets;
 
     void Start() {
-        rb = transform.GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         orientation = transform.Find("Orientation");
         enemyLayer = LayerMask.NameToLayer("Enemy");
         groundLayer = LayerMask.NameToLayer("Ground");
@@ -88,7 +86,6 @@ public class HammerAbility : MonoBehaviour {
                 );
                 SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
                 CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration);
-                // FindObjectOfType<FrameHang>().ExecFrameHang(0.15f);
                 FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.15f);
             } else if (hasGround) {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
@@ -100,7 +97,6 @@ public class HammerAbility : MonoBehaviour {
                 Instantiate(hammerVFX, groundVFXPos, Quaternion.identity);
                 SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
                 CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration);
-                // FindObjectOfType<FrameHang>().ExecFrameHang(0.05f);
                 FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.01f);
             }
         }
@@ -114,7 +110,4 @@ public class HammerAbility : MonoBehaviour {
         isCharging = false;
         if (hammerChargeBar) hammerChargeBar.gameObject.SetActive(false);
     }
-
-
-
 }

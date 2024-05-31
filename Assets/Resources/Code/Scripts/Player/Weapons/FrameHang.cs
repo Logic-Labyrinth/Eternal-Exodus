@@ -2,9 +2,9 @@ using System.Collections;
 using UnityEngine;
 
 public class FrameHang : MonoBehaviour {
-    bool waiting;
-
     public static FrameHang Instance { get; private set; }
+
+    bool waiting;
 
     void Awake() {
         if (Instance != null && Instance != this) Destroy(this);
@@ -24,9 +24,7 @@ public class FrameHang : MonoBehaviour {
         while (timer < duration) {
 
             Time.timeScale = basicFreezeFrame.Evaluate(timer / duration);
-            // timer += Time.deltaTime;
             timer += Time.unscaledDeltaTime;
-            // yield return null;
             yield return new WaitForSecondsRealtime(Time.unscaledDeltaTime);
         }
 
@@ -36,6 +34,5 @@ public class FrameHang : MonoBehaviour {
 
     void OnGUI() {
         GUILayout.TextArea($"Time Scale: {Time.timeScale}");
-        
     }
 }

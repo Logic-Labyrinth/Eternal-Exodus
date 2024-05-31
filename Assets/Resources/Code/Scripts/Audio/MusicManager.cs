@@ -7,7 +7,6 @@ public class MusicManager : MonoBehaviour {
     [SerializeField] Music startMusic;
     [SerializeField] Music loopMusic;
 
-    GameObject mainCamera;
     GameObject musicSource;
 
     void Awake() {
@@ -15,10 +14,8 @@ public class MusicManager : MonoBehaviour {
         else Instance = this;
 
         DontDestroyOnLoad(this);
-        mainCamera = Camera.main.gameObject;
 
         musicSource = Instantiate(musicObject).gameObject;
-        // musicSource.transform.SetParent(mainCamera.transform);
         musicSource.transform.SetParent(gameObject.transform);
         musicSource.transform.localPosition = Vector3.zero;
     }
@@ -34,12 +31,10 @@ public class MusicManager : MonoBehaviour {
 
     IEnumerator PlayDelayed(Music music, float delay) {
         yield return new WaitForSeconds(delay);
-        // musicObject.Stop();
         AudioSource audioSource = musicSource.GetComponent<AudioSource>();
         audioSource.clip = music.audioClip;
         audioSource.volume = music.volume;
         audioSource.loop = music.loop;
-        // Debug.Break();
         audioSource.Play();
     }
 

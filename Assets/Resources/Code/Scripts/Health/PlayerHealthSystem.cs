@@ -49,13 +49,6 @@ public class PlayerHealthSystem : MonoBehaviour {
         }
     }
 
-    // void Update() {
-    //     if (Input.GetKeyDown(KeyCode.Z)) ShieldTwo();
-    //     if (Input.GetKeyDown(KeyCode.X)) DamageShield();
-    //     if (Input.GetKeyDown(KeyCode.C)) BreakShield();
-    //     if (Input.GetKeyDown(KeyCode.End)) Kill();
-    // }
-
     void FixedUpdate() {
         if (canGetShieldOne) StartCoroutine(TryGetShieldOne());
         if (canGetShieldTwo) StartCoroutine(TryGetShieldTwo());
@@ -134,8 +127,9 @@ public class PlayerHealthSystem : MonoBehaviour {
 
     public void DamageShield() {
         shieldStatus = ShieldLevel.CRACKED;
+        canGetShieldTwo = true;
         playerShieldUIController.DamageShield();
-        
+
         if(canShieldGate) {
             canShieldGate = false;
             shieldGatingActive = true;
@@ -148,7 +142,7 @@ public class PlayerHealthSystem : MonoBehaviour {
         shieldStatus = ShieldLevel.NONE;
         playerShieldUIController.BreakShield();
         StartCoroutine(ResetShieldCooldown());
-        
+
         if(canShieldGate) {
             canShieldGate = false;
             shieldGatingActive = true;

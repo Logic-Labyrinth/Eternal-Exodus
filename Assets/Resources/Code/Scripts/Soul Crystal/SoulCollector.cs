@@ -16,10 +16,9 @@ public class SoulCollector : MonoBehaviour {
     [SerializeField] MeshRenderer crystalMesh;
     [SerializeField] Light crystalLight;
 
-    Dictionary<EnemyType, int> souls = new() {
+    readonly Dictionary<EnemyType, int> souls = new() {
         {EnemyType.Pawn, 0},
         {EnemyType.Rook, 0},
-        // {EnemyType.Knight, 0},
         {EnemyType.Bishop, 0}
     };
 
@@ -49,10 +48,6 @@ public class SoulCollector : MonoBehaviour {
                 souls[EnemyType.Rook]++;
                 soulValueRook.ConsumeSoul();
                 break;
-            // case EnemyType.Knight:
-            //     souls[EnemyType.Knight]++;
-            //     soulValueKnight.ConsumeSoul();
-            //     break;
             case EnemyType.Bishop:
                 souls[EnemyType.Bishop]++;
                 soulValueBishop.ConsumeSoul();
@@ -84,7 +79,6 @@ public class SoulCollector : MonoBehaviour {
     float GetScore() {
         var score = soulValuePawn.GetSoulValue(souls[EnemyType.Pawn]) +
         soulValueRook.GetSoulValue(souls[EnemyType.Rook]) +
-        // soulValueKnight.GetSoulValue(souls[EnemyType.Knight]) +
         soulValueBishop.GetSoulValue(souls[EnemyType.Bishop]) +
         pickupSouls;
 
@@ -108,12 +102,9 @@ public class SoulCollector : MonoBehaviour {
         if (!fullyCharged) return;
         Debug.Log("FullyCharged");
         explosionVFX.Play();
-        SpawnManager.spawnManager.DisableSpawner();
+        SpawnManager.Instance.DisableSpawner();
         CrystalFlash();
-        FindObjectsOfType<HealthSystem>().ToList().ForEach(x => {
-            // x.gameObject.SetActive(false);
-            x.KillWithoutSoul();
-        });
+        FindObjectsOfType<HealthSystem>().ToList().ForEach(x => x.KillWithoutSoul());
 
         StartCoroutine(RestartSpawner());
         Reset();
@@ -121,28 +112,18 @@ public class SoulCollector : MonoBehaviour {
 
     IEnumerator RestartSpawner() {
         yield return new WaitForSeconds(gracePeriodSeconds);
-        SpawnManager.spawnManager.EnableSpawner();
+        SpawnManager.Instance.EnableSpawner();
     }
-
-    // Crystal Flashing
 
     void CrystalFlash() {
         crystalLight.intensity = 100.0f;
         crystalMesh.material.SetInt("_HitFlashBool", 1);
-        //CameraPositioning.Instance.ShakeCamera();
-        Invoke(nameof(CrystalFlashReset), 0.3f);
-
+        StartCoroutine(CrystalFlashReset());
     }
 
-    void CrystalFlashReset() {
+    IEnumerator CrystalFlashReset() {
+        yield return new WaitForSeconds(0.3f);
         crystalLight.intensity = 30.0f;
         crystalMesh.material.SetInt("_HitFlashBool", 0);
     }
-
-
-
-
-    // void Done() {
-    //     GameManager.Instance.EndLevel();
-    // }
 }

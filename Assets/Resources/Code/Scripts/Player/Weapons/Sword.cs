@@ -53,6 +53,7 @@ public class Sword : Weapon {
                 target.GetComponent<NavMeshAgent>().updatePosition = false;
                 target.GetComponent<Rigidbody>().AddForce(Vector3.up * 20, ForceMode.Impulse);
             }
+
             if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
             
         }

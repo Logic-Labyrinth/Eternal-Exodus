@@ -68,7 +68,7 @@ public class Weapon : ScriptableObject {
     [VerticalGroup("Camera Shake")]
     [DisableIf("isLocked")]
     public AnimationCurve shakeMagnitude;
-    
+
     [VerticalGroup("Camera Shake")]
     [DisableIf("isLocked")]
     public float shakeDuration;
@@ -76,7 +76,7 @@ public class Weapon : ScriptableObject {
     [VerticalGroup("Camera Shake")]
     [DisableIf("isLocked")]
     public AnimationCurve shakeMagnitudeScnd;
-    
+
     [VerticalGroup("Camera Shake")]
     [DisableIf("isLocked")]
     public float shakeDurationScnd;
@@ -89,7 +89,6 @@ public class Weapon : ScriptableObject {
     [DisableIf("isLocked")]
     public BasicFreezeFrame slomoAnimCurve;
     #endregion
-   
 
     #region Locking
     bool isLocked = false;
@@ -106,25 +105,11 @@ public class Weapon : ScriptableObject {
     bool IsLocked() { return isLocked; }
     #endregion
 
-    public virtual void BasicAttack(Animator animator) {
-        // Basic attack logic
-    }
-
-    public virtual void SpecialAttack(Animator animator, GameObject player) {
-        // Special attack logic
-    }
-
-    public virtual void SpecialRelease(Animator animator, GameObject player) {
-        // Special attack release logic
-    }
-
-    public virtual void WeakpointAttack(Animator animator, Weakpoint weakpoint) {
-        // Weakpoint attack logic
-    }
-
-    public virtual void Reset() {
-        // Reset various variables for each weapon
-    }
+    public virtual void BasicAttack(Animator animator) { }
+    public virtual void SpecialAttack(Animator animator, GameObject player) { }
+    public virtual void SpecialRelease(Animator animator, GameObject player) { }
+    public virtual void WeakpointAttack(Animator animator, Weakpoint weakpoint) { }
+    public virtual void Reset() { }
 
     protected void PlayBasicAttackSound() {
         SoundFXManager.Instance.PlayRandom(basicAttackSounds);

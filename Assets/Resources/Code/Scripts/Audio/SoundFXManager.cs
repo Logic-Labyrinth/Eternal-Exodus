@@ -7,17 +7,13 @@ public class SoundFXManager : MonoBehaviour {
     [SerializeField] AudioSource soundFXObject;
 
     GameObject mainCamera;
-    List<GameObject> usedSources;
-    Queue<GameObject> standbySources;
+    readonly List<GameObject> usedSources = new();
+    readonly Queue<GameObject> standbySources = new();
 
     void Awake() {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
 
-        // DontDestroyOnLoad(this);
-
-        usedSources = new List<GameObject>();
-        standbySources = new Queue<GameObject>();
         mainCamera = Camera.main.gameObject;
     }
 

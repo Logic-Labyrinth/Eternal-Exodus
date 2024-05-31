@@ -10,20 +10,18 @@ namespace BehaviorTree {
             foreach (AINode child in children) {
                 switch (child.Evaluate()) {
                     case NodeState.FAILURE:
-                        state = NodeState.FAILURE;
-                        return state;
+                        return NodeState.FAILURE;
                     case NodeState.SUCCESS:
                         continue;
                     case NodeState.RUNNING:
                         anyChildIsRunning = true;
                         continue;
                     default:
-                        state = NodeState.SUCCESS;
-                        return state;
+                        return NodeState.SUCCESS;
                 }
             }
-            state = anyChildIsRunning ? NodeState.RUNNING : NodeState.SUCCESS;
-            return state;
+
+            return anyChildIsRunning ? NodeState.RUNNING : NodeState.SUCCESS;
         }
     }
 }

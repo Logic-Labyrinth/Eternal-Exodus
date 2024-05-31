@@ -6,7 +6,7 @@ public class SoulCrystalIconUI : MonoBehaviour {
     [SerializeField] Vector3 offset;
     [SerializeField] RectTransform canvasTransform;
     [SerializeField] Vector2 edgeOffsetXY;
-    
+
     new Camera camera;
     float halfScreenHeight, halfScreenWidth;
     float minX, maxX, minY, maxY;
@@ -55,7 +55,7 @@ public class SoulCrystalIconUI : MonoBehaviour {
 
         Vector2 vector = new(x, y);
 
-        if(Vector2.Distance(v, Vector2.zero) < radius) return v;
+        if (Vector2.Distance(v, Vector2.zero) < radius) return v;
 
         return vector;
     }
