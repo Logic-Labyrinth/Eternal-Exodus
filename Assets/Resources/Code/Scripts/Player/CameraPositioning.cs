@@ -40,7 +40,7 @@ public class CameraPositioning : MonoBehaviour {
         while (elapsed < duration) {
             float magnitude = curve.Evaluate(elapsed / duration) * multiplier;
 
-            angle += Time.deltaTime / duration * 360;
+            angle += Time.unscaledDeltaTime / duration * 360;
 
             Vector2 PerlinCoord_X = PolarToCartesian(radius, angle);
             Vector2 PerlinCoord_Y = PolarToCartesian(radius, angle);
