@@ -16,8 +16,8 @@ public class Sword : Weapon {
         swordTargets = CustomTriggers.ArcRaycast(Camera.main.transform, 120, attackRange, 20);
 
         foreach (GameObject target in swordTargets) {
-            if (target.layer == enemyLayer)
-                target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD);
+            if (target.layer == enemyLayer) target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD);
+            if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
         }
     }
 
@@ -40,6 +40,8 @@ public class Sword : Weapon {
         if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
 
         swordTargets = CustomTriggers.ArcRaycast(Camera.main.transform, 120, attackRange, 20);
+        CameraPositioning.Instance.ShakeCamera(shakeMagnitude, shakeDuration);
+        FindObjectOfType<FrameHang>().ExecFrameHang(0.1f);
 
         foreach (GameObject target in swordTargets) {
             if (target.layer == enemyLayer) {
@@ -49,6 +51,8 @@ public class Sword : Weapon {
                 target.GetComponent<NavMeshAgent>().updatePosition = false;
                 target.GetComponent<Rigidbody>().AddForce(Vector3.up * 20, ForceMode.Impulse);
             }
+
+            if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
         }
     }
 }

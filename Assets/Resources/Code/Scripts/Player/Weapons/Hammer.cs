@@ -15,15 +15,13 @@ public class Hammer : Weapon {
         hammerTargets = CustomTriggers.ArcRaycast(Camera.main.transform, 120, attackRange, 20);
 
         foreach (GameObject target in hammerTargets) {
-            if (target.layer == enemyLayer)
-                target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.HAMMER);
+            if (target.layer == enemyLayer) target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.HAMMER);
+            if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
         }
     }
 
     public override void SpecialAttack(Animator animator, GameObject player) {
-        if (hammer == null) {
-            hammer = player.GetComponent<HammerAbility>();
-        }
+        if (hammer == null) hammer = player.GetComponent<HammerAbility>();
 
         animator.ResetTrigger("SwapHammer");
         animator.SetTrigger("HammerCharge");
@@ -37,12 +35,10 @@ public class Hammer : Weapon {
     }
 
     public override void SpecialRelease(Animator animator, GameObject player) {
-        if (hammer == null) {
-            hammer = player.GetComponent<HammerAbility>();
-        }
+        if (hammer == null) hammer = player.GetComponent<HammerAbility>();
 
         animator.SetTrigger("HammerRelease");
-        hammer.ActivateHammerAbility(baseDamage, attackRange);
+        hammer.ActivateHammerAbility(baseDamage, attackRange, this);
     }
 
     public override void Reset() {

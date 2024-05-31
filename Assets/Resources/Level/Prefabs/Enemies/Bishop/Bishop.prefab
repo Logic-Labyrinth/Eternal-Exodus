@@ -1937,10 +1937,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5199997110340152306}
   - component: {fileID: 4886458203522504958}
-  - component: {fileID: 3305345896909533263}
   - component: {fileID: 5903147516518706103}
   - component: {fileID: 995070222508506550}
   - component: {fileID: 7610643240791402503}
+  - component: {fileID: 1048151711485984661}
   m_Layer: 6
   m_Name: Bishop
   m_TagString: Bishop
@@ -1997,40 +1997,6 @@ MonoBehaviour:
   swordHitSounds: []
   hammerHitSounds: []
   healthBar: {fileID: 6136036951782917571}
---- !u!114 &3305345896909533263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3387480086823893954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2393c90c98311fe4a9abedf415e608a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 5903147516518706103}
-  enemyType: 1
-  attackRange: 2
-  attackDamage: 1
-  attackDuration: 2
-  retreatRange: 20
-  projectileCooldown: 2.8
-  projectilePrefab: {fileID: 1136758355843730814, guid: d795377f9dc41134b9cc8dc77c01d48c,
-    type: 3}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  chargeSpeed: 15
-  chargingCooldownTime: 10
-  animator: {fileID: 8016550563973848326}
-  soundEffect:
-    audioClip: {fileID: 0}
-    volume: 1
-    spacialBlend: 1
-    loop: 0
-    player: 0
-  isCharging: 0
 --- !u!195 &5903147516518706103
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2065,7 +2031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9918d58bf9e22924c86b556a8401fe07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffArea: {fileID: 5524676691110753007}
+  range: 10
 --- !u!136 &7610643240791402503
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2089,6 +2055,26 @@ CapsuleCollider:
   m_Height: 2.7480826
   m_Direction: 1
   m_Center: {x: 0, y: 3.2518609, z: 0.14999998}
+--- !u!114 &1048151711485984661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3387480086823893954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16b38f8917219a4ab690ce3310fb434, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  retreatRange: 20
+  projectileCooldown: 1
+  summonCooldown: 1
+  summonCount: 5
+  projectilePrefab: {fileID: 1136758355843730814, guid: d795377f9dc41134b9cc8dc77c01d48c,
+    type: 3}
+  animator: {fileID: 8016550563973848326}
+  agent: {fileID: 5903147516518706103}
 --- !u!1 &3492406430093032806
 GameObject:
   m_ObjectHideFlags: 0

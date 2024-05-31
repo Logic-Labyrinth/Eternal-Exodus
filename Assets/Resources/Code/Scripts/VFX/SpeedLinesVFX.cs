@@ -1,25 +1,25 @@
 using UnityEngine;
 using UnityEngine.VFX;
 
+[RequireComponent(typeof(VisualEffect))]
 public class SpeedLinesVFX : MonoBehaviour {
-  [SerializeField, Range(0, 50)] int threshold = 5;
-  VisualEffect vfx;
-  public float speed;
+    [SerializeField, Range(0, 50)] int threshold = 5;
+    VisualEffect vfx;
+    float speed = 0;
 
-  void Start() {
-    speed = 0;
-    vfx = GetComponent<VisualEffect>();
-  }
-
-  void Update() {
-    if (speed > threshold) {
-      vfx.Play();
-    } else {
-      vfx.Stop();
+    void Awake() {
+        vfx = GetComponent<VisualEffect>();
     }
-  }
 
-  public void SetSpeed(float s) {
-    speed = s;
-  }
+    void Update() {
+        if (speed > threshold) {
+            vfx.Play();
+            return;
+        }
+        vfx.Stop();
+    }
+
+    public void SetSpeed(float s) {
+        speed = s;
+    }
 }
