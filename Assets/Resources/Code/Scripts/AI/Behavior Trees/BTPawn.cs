@@ -23,7 +23,14 @@ public class BTPawn : AITree {
                 new CheckAttackRange(agent, player.transform, attackRange),
                 new TaskPawnAttackPlayer(animator, player.GetComponent<PlayerHealthSystem>(), attackDuration, attackDamage)
             }),
-            new TaskPawnChasePlayer(animator, agent, player.transform)
+            new AIBranch(
+                new CheckPawnChasePointProximity(agent, player.transform),
+                new TaskPawnChasePlayer(animator, agent, player.transform),
+                new AISequence(new List<AINode> {
+                    new TaskPawnSelectChasePoint(agent, 3),
+                    new TaskPawnChasePointAroundPlayer(animator, agent)
+                })
+            )
         });
 
         return root;
