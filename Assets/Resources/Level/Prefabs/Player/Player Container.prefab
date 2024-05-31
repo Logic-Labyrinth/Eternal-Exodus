@@ -470,7 +470,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Leaderboard
+  m_text: Leaderboard (Local)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dd7a9fc585f911941a97385c2adceb71, type: 2}
   m_sharedMaterial: {fileID: -2885792892640557738, guid: dd7a9fc585f911941a97385c2adceb71,
@@ -788,7 +788,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2762698099929416697}
   m_Layer: 5
-  m_Name: Pawn
+  m_Name: Score Entry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2108,7 +2108,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 25.739985}
+  m_AnchoredPosition: {x: 0, y: 25.73999}
   m_SizeDelta: {x: 0, y: 51.48003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7923022256304307615
@@ -3259,6 +3259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c50a0161b2f9ef46aeb90a4cd5bc815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leaderboardEntryPrefab: {fileID: 0}
 --- !u!114 &7281653292011140425
 MonoBehaviour:
   m_ObjectHideFlags: 0
