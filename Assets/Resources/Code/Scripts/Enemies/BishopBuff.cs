@@ -1,12 +1,16 @@
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class BishopBuff : MonoBehaviour {
+    [SerializeField] GameObject buffAura;
     [SerializeField] float range = 10f;
     Collider[] colliders;
 
     void Start() {
         int pawnCount = SpawnManager.Instance.PawnPoolSize;
         colliders = new Collider[pawnCount];
+        buffAura.GetComponent<SphereCollider>().radius = range;
+        buffAura.GetComponent<VisualEffect>().SetFloat("Size", range * 2);
     }
 
     void FixedUpdate() {

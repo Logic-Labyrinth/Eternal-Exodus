@@ -18,7 +18,7 @@ public class CameraPositioning : MonoBehaviour {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
         seed = Random.value;
-    }
+    } 
 
     void Update() {
         float shake = Mathf.Pow(trauma, traumaExponent);

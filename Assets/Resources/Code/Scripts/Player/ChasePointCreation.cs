@@ -3,6 +3,8 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class ChasePointCreation : MonoBehaviour {
+    [SerializeField] bool visible = false;
+
     [Header("Inner Points")]
     [LabelText("Count"), Range(0, 16)] public int innerPointCount = 8;
     [LabelText("Radius")] public float innerPointRadius = 10f;
@@ -33,6 +35,8 @@ public class ChasePointCreation : MonoBehaviour {
             point.transform.localScale = Vector3.one * 0.5f;
             point.name = "Chase Point " + i;
             Destroy(point.GetComponent<SphereCollider>());
+            if(!visible) Destroy(point.GetComponent<MeshRenderer>());
+            if(!visible) Destroy(point.GetComponent<MeshFilter>());
 
             InnerPoints.Add(point);
         }
@@ -49,6 +53,8 @@ public class ChasePointCreation : MonoBehaviour {
             point.transform.localScale = Vector3.one * 0.5f;
             point.name = "Chase Point " + i;
             Destroy(point.GetComponent<SphereCollider>());
+            if(!visible) Destroy(point.GetComponent<MeshRenderer>());
+            if(!visible) Destroy(point.GetComponent<MeshFilter>());
 
             OuterPoints.Add(point);
         }
