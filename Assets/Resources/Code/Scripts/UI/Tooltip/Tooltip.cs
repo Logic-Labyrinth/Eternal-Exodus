@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Tooltip : MonoBehaviour
-{
+public class Tooltip : MonoBehaviour {
     public TextMeshProUGUI tooltipText;
     public static Tooltip Instance { get; private set; }
 
@@ -28,8 +25,7 @@ public class Tooltip : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         // follow mouse in canvas
         transform.position = Input.mousePosition;
     }
