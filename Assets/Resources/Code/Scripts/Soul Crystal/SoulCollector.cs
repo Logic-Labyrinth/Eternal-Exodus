@@ -91,6 +91,8 @@ public class SoulCollector : MonoBehaviour {
         fullyCharged = false;
         icon.SetProgress(0);
         icon.StopAnimation();
+        UITimer.Instance.ResetTime();
+
 
         souls[EnemyType.Pawn] = 0;
         souls[EnemyType.Rook] = 0;
@@ -122,7 +124,7 @@ public class SoulCollector : MonoBehaviour {
     }
 
     IEnumerator CrystalFlashReset() {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(2f);
         crystalLight.intensity = 30.0f;
         crystalMesh.material.SetInt("_HitFlashBool", 0);
     }

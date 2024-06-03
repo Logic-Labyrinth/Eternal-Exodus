@@ -21,9 +21,13 @@ public class Spear : Weapon {
         );
 
         foreach (GameObject target in spearTargets) {
-            if (target.layer == enemyLayer) target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SPEAR);
+            if (target.layer == enemyLayer) {
+                target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SPEAR);
+                hasEnemy = true;
+            }
             if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
         }
+
         if (hasEnemy) {
             CameraPositioning.Instance.InduceStress(0.2f);
             FindObjectOfType<FrameHang>().ExecFrameHang(0.05f);

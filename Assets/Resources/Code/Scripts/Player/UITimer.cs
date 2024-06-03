@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -6,10 +7,12 @@ public class UITimer : MonoBehaviour {
     public static UITimer Instance;
 
     [SerializeField] TextMeshProUGUI timerText;
-    [SerializeField] float countdownTimeSeconds = 300f;
-    [SerializeField] int secondsPerPawn = 5;
-    [SerializeField] int secondsPerRook = 5;
-    [SerializeField] int secondsPerBishop = 5;
+    [SerializeField] float countdownTimeSeconds = 120f;
+    [SerializeField] float secondsPerPawn = 5;
+    [SerializeField] float secondsPerRook = 5;
+    [SerializeField] float secondsPerBishop = 5;
+
+
     float scale = 1f;
     float timer = 0;
     VisualEffect tornadoVFX;
@@ -33,6 +36,16 @@ public class UITimer : MonoBehaviour {
         tornadoTrigger.transform.localScale = tornadoTriggerScale * scale;
         timerText.text = ((int)timeLeft / 60).ToString() + ":" + ((int)timeLeft % 60).ToString("D2");
     }
+
+    public void ResetTime() {
+        timer = 0;
+    }
+
+    //IEnumerable TornadoSizeReset(){
+
+
+
+   // }
 
     void AddTime(float time) {
         timer = Mathf.Max(0, timer - time);

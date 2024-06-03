@@ -53,6 +53,7 @@ public class Sword : Weapon {
             }
 
             if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
+            
         }
     }
 }
