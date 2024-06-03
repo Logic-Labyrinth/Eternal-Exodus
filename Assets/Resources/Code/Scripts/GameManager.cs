@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
         GameObject explosionSource = GameObject.Find("Explosion Source");
         explosionSource.GetComponent<ExplosionVFX>().Play();
 
-        SpawnManager.Instance.DisableSpawner();
+        SpawnManager.Instance.SetSpawnerActive(false);
         FindObjectsOfType<HealthSystem>().ToList().ForEach(x => {
             x.gameObject.SetActive(false);
         });

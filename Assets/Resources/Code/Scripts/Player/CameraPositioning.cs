@@ -1,10 +1,8 @@
-using System.Collections;
 using UnityEngine;
 
 public class CameraPositioning : MonoBehaviour {
     public static CameraPositioning Instance { get; private set; }
     [SerializeField] Transform trans;
-    [SerializeField] float radius = 1f;
 
     Vector3 Shake = Vector3.zero;
     Quaternion CamRot = Quaternion.identity;
