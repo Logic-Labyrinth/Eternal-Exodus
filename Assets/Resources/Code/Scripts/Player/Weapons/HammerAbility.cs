@@ -73,8 +73,8 @@ public class HammerAbility : MonoBehaviour {
                     target.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER);
                 } else if (target.CompareTag("Soul Crystal")) {
                     target.GetComponent<SoulCollector>().Explode();
-                    FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.2f);
-                    CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration, 1.75f);
+                    FrameHang.Instance.ExecFrameHang(0.2f);
+                    CameraPositioning.Instance.InduceStress(0.2f);
                 } else if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
             }
 
@@ -85,8 +85,9 @@ public class HammerAbility : MonoBehaviour {
                     ForceMode.Impulse
                 );
                 SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
-                CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration);
-                FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.15f);
+                CameraPositioning.Instance.InduceStress(0.2f);
+                FrameHang.Instance.ExecFrameHang(0.15f);
+
             } else if (hasGround) {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(
@@ -96,8 +97,8 @@ public class HammerAbility : MonoBehaviour {
                 Vector3 groundVFXPos = hammerRaycast.Raycast();
                 Instantiate(hammerVFX, groundVFXPos, Quaternion.identity);
                 SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
-                CameraPositioning.Instance.ShakeCamera(hammer.shakeMagnitude, hammer.shakeDuration);
-                FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.01f);
+                CameraPositioning.Instance.InduceStress(0.2f);
+                FrameHang.Instance.ExecFrameHang(0.05f);
             }
         }
 

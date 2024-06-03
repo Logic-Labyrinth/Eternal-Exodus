@@ -104,7 +104,7 @@ public class SoulCollector : MonoBehaviour {
         if (!fullyCharged) return;
         Debug.Log("FullyCharged");
         explosionVFX.Play();
-        SpawnManager.Instance.DisableSpawner();
+        SpawnManager.Instance.SetSpawnerActive(false);
         CrystalFlash();
         FindObjectsOfType<HealthSystem>().ToList().ForEach(x => x.KillWithoutSoul());
 
@@ -114,7 +114,7 @@ public class SoulCollector : MonoBehaviour {
 
     IEnumerator RestartSpawner() {
         yield return new WaitForSeconds(gracePeriodSeconds);
-        SpawnManager.Instance.EnableSpawner();
+        SpawnManager.Instance.SetSpawnerActive(true);
     }
 
     void CrystalFlash() {

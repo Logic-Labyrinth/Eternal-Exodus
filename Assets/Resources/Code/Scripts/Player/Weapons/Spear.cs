@@ -29,8 +29,10 @@ public class Spear : Weapon {
         }
 
         if (hasEnemy) {
-            FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.05f);
-        }
+            CameraPositioning.Instance.InduceStress(0.2f);
+            FindObjectOfType<FrameHang>().ExecFrameHang(0.05f);
+        } else
+            CameraPositioning.Instance.InduceStress(0.2f);
 
     }
 
@@ -40,7 +42,7 @@ public class Spear : Weapon {
         animator.SetTrigger("SpearSpecial");
         playerDash.Dash();
         PlaySpecialAttackSound();
-        CameraPositioning.Instance.ShakeCamera(shakeMagnitude, shakeDuration);
+        CameraPositioning.Instance.InduceStress(0.2f);
     }
 
     public override void WeakpointAttack(Animator animator, Weakpoint weakpoint) {

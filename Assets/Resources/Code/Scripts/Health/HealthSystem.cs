@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using BehaviorTree;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -22,6 +21,7 @@ public class HealthSystem : MonoBehaviour {
     [SerializeField] EnemyType type;
     [SerializeField] GameObject enemyMainGameObject;
     [SerializeField] VisualEffect smokeVFX;
+    [SerializeField] VisualEffect lightningVFX;
     [SerializeField] Sound[] spearHitSounds;
     [SerializeField] Sound[] swordHitSounds;
     [SerializeField] Sound[] hammerHitSounds;
@@ -31,6 +31,7 @@ public class HealthSystem : MonoBehaviour {
 
     void OnEnable() {
         currentHealth = maxHealth;
+        // lightningVFX.Play();
     }
 
     public void TakeDamage(int damage, WeaponDamageType? damageType) {
