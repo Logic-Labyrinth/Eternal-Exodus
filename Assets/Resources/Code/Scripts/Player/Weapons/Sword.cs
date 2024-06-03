@@ -41,7 +41,7 @@ public class Sword : Weapon {
 
         swordTargets = CustomTriggers.ArcRaycast(Camera.main.transform, 120, attackRange, 20);
         CameraPositioning.Instance.InduceStress(0.2f);
-        FindObjectOfType<FrameHang>().ExecFrameHang(0.1f);
+        FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.1f);
 
         foreach (GameObject target in swordTargets) {
             if (target.layer == enemyLayer) {
@@ -53,7 +53,6 @@ public class Sword : Weapon {
             }
 
             if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
-            
         }
     }
 }

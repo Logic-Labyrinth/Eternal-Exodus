@@ -30,7 +30,7 @@ public class Spear : Weapon {
 
         if (hasEnemy) {
             CameraPositioning.Instance.InduceStress(0.2f);
-            FindObjectOfType<FrameHang>().ExecFrameHang(0.05f);
+            FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.05f);
         } else
             CameraPositioning.Instance.InduceStress(0.2f);
 
