@@ -76,12 +76,6 @@ public class GameManager : MonoBehaviour {
         FindObjectOfType<WeaponsController>().EnableWeaponsInput();
     }
 
-    // private void Update() {
-    //     if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.End)) {
-    //         EndLevel();
-    //     }
-    // }
-
     public void Quit() {
         Application.Quit();
     }
