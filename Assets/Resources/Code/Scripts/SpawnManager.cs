@@ -21,7 +21,7 @@ public class SpawnManager : MonoBehaviour {
 
     readonly List<Vector3> SpawnPoints = new();
 
-    bool disableSpawner = false;
+    bool active = true;
 
     void Awake() {
         if (Instance != null && Instance != this) Destroy(this);
@@ -112,7 +112,7 @@ public class SpawnManager : MonoBehaviour {
     float timeElapsed = 0;
 
     void FixedUpdate() {
-        if (disableSpawner) return;
+        if (!active) return;
 
         timeElapsed += Time.fixedDeltaTime;
         int activePawnCount = pawnList.Count();
@@ -157,11 +157,7 @@ public class SpawnManager : MonoBehaviour {
         }
     }
 
-    public void DisableSpawner() {
-        disableSpawner = true;
-    }
-
-    public void EnableSpawner() {
-        disableSpawner = false;
+    public void SetSpawnerActive(bool active) {
+        this.active = active;
     }
 }

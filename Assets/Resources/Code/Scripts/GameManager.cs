@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
         GameObject explosionSource = GameObject.Find("Explosion Source");
         explosionSource.GetComponent<ExplosionVFX>().Play();
 
-        SpawnManager.Instance.DisableSpawner();
+        SpawnManager.Instance.SetSpawnerActive(false);
         FindObjectsOfType<HealthSystem>().ToList().ForEach(x => {
             x.gameObject.SetActive(false);
         });
@@ -75,12 +75,6 @@ public class GameManager : MonoBehaviour {
         FindObjectOfType<PlayerCamera>().EnableCameraInput();
         FindObjectOfType<WeaponsController>().EnableWeaponsInput();
     }
-
-    // private void Update() {
-    //     if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.End)) {
-    //         EndLevel();
-    //     }
-    // }
 
     public void Quit() {
         Application.Quit();
