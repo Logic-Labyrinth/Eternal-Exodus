@@ -42,13 +42,15 @@ public class Leaderboard : MonoBehaviour {
     }
 
     public bool CompareScore(int score) {
+        GetScore();
+
         if (scores.Count < 10) {
             // If the leaderboard is less than 10 scores long, return true.
             return true;
         }
 
-        // Retrieve the score of the last entry in the leaderboard.
-        int lowestScore = scores[^1].score;
+        // Retrieve the score of the 10th entry in the leaderboard.
+        int lowestScore = scores[9].score;
         // Compare the given score with the lowest score in the leaderboard.
         return lowestScore < score;
     }
