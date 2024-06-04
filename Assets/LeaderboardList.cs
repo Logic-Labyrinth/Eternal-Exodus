@@ -31,6 +31,7 @@ public class LeaderboardList : MonoBehaviour
 
         // For each score entry, instantiate a leaderboard entry and set its properties
         for (int i = 0; i < scoreEntries.Count; i++) {
+            if (i >= 10) break;
             // Instantiate the leaderboard entry prefab
             GameObject leaderboardEntry = Instantiate(leaderboardEntryPrefab, transform);
             // Set the leaderboard entry's parent to the leaderboard list transform
