@@ -35,7 +35,6 @@ public class TaskRookChargeAtPlayer : AINode {
                 agent.isStopped = false;
                 animator.SetTrigger("Charge");
                 chargeState = ChargeState.Charging;
-                // SetData("isCharging", true);
                 GameManager.Instance.StartCoroutine(Charge());
                 return NodeState.RUNNING;
         }
@@ -65,8 +64,6 @@ public class TaskRookChargeAtPlayer : AINode {
         }
 
         animator.SetTrigger("ChargeFinished");
-        // SetData("isCharging", false);
-        // SetData("isOnCooldown", true);
         agent.isStopped = false;
 
         if (NavMesh.SamplePosition(agent.transform.position, out NavMeshHit hit, 1f, NavMesh.AllAreas))
@@ -75,6 +72,5 @@ public class TaskRookChargeAtPlayer : AINode {
         yield return new WaitForSeconds(chargeCooldown);
 
         chargeState = ChargeState.Idle;
-        // SetData("isOnCooldown", false);
     }
 }
