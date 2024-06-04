@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
-public static PlayerMovement Instance { get; private set; }
+
     
     bool disableMovementInput = false;
 
@@ -37,7 +37,7 @@ public static PlayerMovement Instance { get; private set; }
     [Header("Ground Check")]
     [SerializeField] LayerMask groundMask;
     readonly float playerHeight = 2f;
-    bool isGrounded;
+    public bool isGrounded;
 
     [Header("Slope Handling")]
     [SerializeField] float maxSlopeAngle = 45f;
@@ -91,11 +91,7 @@ public static PlayerMovement Instance { get; private set; }
     // }
 
 
-    void Awake() {
-        if (Instance != null && Instance != this) Destroy(this);
-        else Instance = this;
-    }
-
+    
     void Start() {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;

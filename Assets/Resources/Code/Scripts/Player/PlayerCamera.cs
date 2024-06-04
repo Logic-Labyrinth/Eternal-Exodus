@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour {
-public static PlayerCamera Instance { get; private set; }
+
     [SerializeField] float sensitivityX = 5f;
     [SerializeField] float sensitivityY = 5f;
     [SerializeField] Transform orientation;
@@ -10,13 +10,8 @@ public static PlayerCamera Instance { get; private set; }
     float rotationX;
     float rotationY;
     bool disableCameraInput = false;
-    Vector2 lookInput;
+    public static Vector2 lookInput;
    
-// Don't think this is the right way to go about this...
-    void Awake() {
-        if (Instance != null && Instance != this) Destroy(this);
-        else Instance = this;
-    }
 
     private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
@@ -34,23 +29,21 @@ public static PlayerCamera Instance { get; private set; }
 
     void GetInput() {
 
-        float mouseX = (Input.GetAxisRaw("Mouse X") + Input.GetAxisRaw("Controller X")) * Time.deltaTime * sensitivityX;
-        float mouseY = (Input.GetAxisRaw("Mouse Y") + Input.GetAxisRaw("Controller Y")) * Time.deltaTime * sensitivityY;
+        float mouseX = Input.GetAxisRaw("Mouse X") + Input.GetAxisRaw("Controller X");
+        float mouseY = Input.GetAxisRaw("Mouse Y") + Input.GetAxisRaw("Controller Y");
 
-        rotationY += mouseX;
-        rotationX -= mouseY;
+        rotationY += mouseX * Time.deltaTime * sensitivityX;
+        rotationX -= mouseY * Time.deltaTime * sensitivityY;
         rotationX = Mathf.Clamp(rotationX, -89f, 89);
 
         // Replace this if other var ^ can be changed easily
         lookInput.x = mouseX;
         lookInput.y = mouseY;
+
+        Debug.Log(lookInput);
     }
 
    
-
-
-    
-    
     public void DisableCameraInput() {
         disableCameraInput = true;
     }
