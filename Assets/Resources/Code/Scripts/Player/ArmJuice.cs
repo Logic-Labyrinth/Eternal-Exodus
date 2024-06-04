@@ -13,7 +13,7 @@ public class ArmBobbing : MonoBehaviour
     Vector3 swayEulerRot; 
     
 
-
+/*
     // Update is called once per frame
     void Update()
     {
@@ -32,7 +32,7 @@ public class ArmBobbing : MonoBehaviour
         swayPos = invertLook;
     }
 
-    void SwayRotation() {
+   void SwayRotation() {
         
         Vector2 invertLook = lookInput * -rotationStep;
         invertLook.x = Mathf.Clamp(invertLook.x, -maxStepDistance, maxStepDistance);
@@ -41,5 +41,5 @@ public class ArmBobbing : MonoBehaviour
         swayEulerRot = new Vector3(invertLook.y, invertLook.x, invertLook.x);
 
 
-    }
+    } */
 }
