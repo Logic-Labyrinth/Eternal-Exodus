@@ -2023,6 +2023,7 @@ GameObject:
   - component: {fileID: 2017256163353578432}
   - component: {fileID: 4248025000439688283}
   - component: {fileID: 3727389344639400463}
+  - component: {fileID: 1707899562093382879}
   m_Layer: 6
   m_Name: Rook
   m_TagString: Rook
@@ -2111,6 +2112,30 @@ MonoBehaviour:
     spacialBlend: 1
     loop: 0
     player: 0
+  rCharge: {fileID: 4248025000439688283}
+--- !u!136 &1707899562093382879
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3387480086823893954}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &3444367502941670992
 GameObject:
   m_ObjectHideFlags: 0
