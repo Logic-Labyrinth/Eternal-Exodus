@@ -9,6 +9,7 @@ public class BTPawn : AITree {
     [SerializeField] float attackRange = 2f;
     [SerializeField] int attackDamage = 1;
     [SerializeField] float attackDuration = 2f;
+    [SerializeField] float targetCheckInterval = 3;
     [SerializeField] Animator animator;
     [SerializeField] NavMeshAgent agent;
 
@@ -24,12 +25,21 @@ public class BTPawn : AITree {
                 new TaskPawnAttackPlayer(animator, player.GetComponent<PlayerHealthSystem>(), attackDuration, attackDamage)
             }),
             new AIBranch(
-                new CheckPawnChasePointProximity(agent, player.transform),
+                // Success = Inside the radius, Failure = Outside the radius
+                new CheckPawnChasePointProximity(true, agent, player.transform),
                 new TaskPawnChasePlayer(animator, agent, player.transform),
+                new AIBranch(
+                    // Success = Inside the radius, Failure = Outside the radius
+                    new CheckPawnChasePointProximity(false, agent, player.transform),
                 new AISequence(new List<AINode> {
-                    new TaskPawnSelectChasePoint(agent, 3),
+                    new TaskPawnSelectChasePoint(true, agent, targetCheckInterval),
                     new TaskPawnChasePointAroundPlayer(animator, agent)
-                })
+                }),
+                    new AISequence(new List<AINode> {
+                        new TaskPawnSelectChasePoint(false, agent, targetCheckInterval),
+                        new TaskPawnChasePointAroundPlayer(animator, agent)
+                    })
+                )
             )
         });
 

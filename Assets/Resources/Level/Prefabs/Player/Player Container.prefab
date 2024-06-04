@@ -574,9 +574,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c16d5b3fa76009d49af5617e484c0d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointCount: 8
-  pointRadius: 10
-  enemyRadius: 11
+  visible: 0
+  innerPointCount: 8
+  innerPointRadius: 10
+  innerPointRadiusOffset: 1
+  outerPointCount: 4
+  outerPointRadius: 20
+  outerPointRadiusOffset: 1
 --- !u!1 &1135635754512625094
 GameObject:
   m_ObjectHideFlags: 0
@@ -4322,11 +4326,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 044fe0d4244b38641948b03f983ea7db,
+        type: 3}
     - target: {fileID: 623791623375582389, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
       propertyPath: m_text
-      value: 'Build: 4.5'
+      value: 'Build: 5.0'
       objectReference: {fileID: 0}
     - target: {fileID: 1868333690043486057, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
@@ -4410,6 +4415,12 @@ PrefabInstance:
       propertyPath: shieldColorTwo.r
       value: 0.9529412
       objectReference: {fileID: 0}
+    - target: {fileID: 3125389930906354113, guid: d7bbfb7cd9582564983b2560233217b3,
+        type: 3}
+      propertyPath: damagedShieldSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 044fe0d4244b38641948b03f983ea7db,
+        type: 3}
     - target: {fileID: 3403882203238302429, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
       propertyPath: m_Layer
@@ -4444,6 +4455,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4592452093121308545, guid: d7bbfb7cd9582564983b2560233217b3,
+        type: 3}
+      propertyPath: secondsPerPawn
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4592452093121308545, guid: d7bbfb7cd9582564983b2560233217b3,
+        type: 3}
+      propertyPath: secondsPerRook
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4592452093121308545, guid: d7bbfb7cd9582564983b2560233217b3,
+        type: 3}
+      propertyPath: secondsPerBishop
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5780254357536701955, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}

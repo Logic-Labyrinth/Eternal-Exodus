@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using BehaviorTree;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -22,6 +21,7 @@ public class HealthSystem : MonoBehaviour {
     [SerializeField] EnemyType type;
     [SerializeField] GameObject enemyMainGameObject;
     [SerializeField] VisualEffect smokeVFX;
+    [SerializeField] VisualEffect lightningVFX;
     [SerializeField] Sound[] spearHitSounds;
     [SerializeField] Sound[] swordHitSounds;
     [SerializeField] Sound[] hammerHitSounds;
@@ -31,6 +31,7 @@ public class HealthSystem : MonoBehaviour {
 
     void OnEnable() {
         currentHealth = maxHealth;
+        // lightningVFX.Play();
     }
 
     public void TakeDamage(int damage, WeaponDamageType? damageType) {
@@ -102,8 +103,7 @@ public class HealthSystem : MonoBehaviour {
         hasShield = true;
         if (meshes == null) return;
         foreach (GameObject mesh in meshes) {
-            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_Alpha", 1);
-            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_ShieldStrength", 2);
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_ShieldAmount", 0.5f);
         }
     }
 
@@ -112,8 +112,7 @@ public class HealthSystem : MonoBehaviour {
         if (meshes == null) return;
 
         foreach (GameObject mesh in meshes) {
-            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_Alpha", 0);
-            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_ShieldStrength", 0);
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_ShieldAmount", 0);
         }
     }
 
@@ -157,7 +156,7 @@ public class HealthSystem : MonoBehaviour {
             mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_Dissolve_Amount", 0f);
         }
 
-        enemyMainGameObject.GetComponent<AITree>().SetActive(false);
+        enemyMainGameObject.GetComponent<AITree>().SetActive(true);
         enemyMainGameObject.SetActive(false);
         GetComponent<Collider>().enabled = true;
         SpawnManager.Instance.EnqueueEnemy(enemyMainGameObject);

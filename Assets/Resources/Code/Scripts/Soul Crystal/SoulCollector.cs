@@ -91,6 +91,8 @@ public class SoulCollector : MonoBehaviour {
         fullyCharged = false;
         icon.SetProgress(0);
         icon.StopAnimation();
+        UITimer.Instance.ResetTime();
+
 
         souls[EnemyType.Pawn] = 0;
         souls[EnemyType.Rook] = 0;
@@ -102,7 +104,7 @@ public class SoulCollector : MonoBehaviour {
         if (!fullyCharged) return;
         Debug.Log("FullyCharged");
         explosionVFX.Play();
-        SpawnManager.Instance.DisableSpawner();
+        SpawnManager.Instance.SetSpawnerActive(false);
         CrystalFlash();
         FindObjectsOfType<HealthSystem>().ToList().ForEach(x => x.KillWithoutSoul());
 
@@ -112,7 +114,7 @@ public class SoulCollector : MonoBehaviour {
 
     IEnumerator RestartSpawner() {
         yield return new WaitForSeconds(gracePeriodSeconds);
-        SpawnManager.Instance.EnableSpawner();
+        SpawnManager.Instance.SetSpawnerActive(true);
     }
 
     void CrystalFlash() {
@@ -122,7 +124,7 @@ public class SoulCollector : MonoBehaviour {
     }
 
     IEnumerator CrystalFlashReset() {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(2f);
         crystalLight.intensity = 30.0f;
         crystalMesh.material.SetInt("_HitFlashBool", 0);
     }

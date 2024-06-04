@@ -24,6 +24,7 @@ public class Hammer : Weapon {
         if (hammer == null) hammer = player.GetComponent<HammerAbility>();
 
         animator.ResetTrigger("SwapHammer");
+        animator.ResetTrigger("HammerRelease");
         animator.SetTrigger("HammerCharge");
         hammer.ChargeHammer();
         PlaySpecialAttackSound();
