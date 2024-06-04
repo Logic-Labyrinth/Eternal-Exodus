@@ -3,7 +3,12 @@ using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
+public static PlayerMovement Instance { get; private set; }
+    
     bool disableMovementInput = false;
+
+
+  
 
     [Header("Movement")]
     float moveSpeed;
@@ -84,6 +89,12 @@ public class PlayerMovement : MonoBehaviour {
     // GUILayout.TextArea($"Current speed: {rb.velocity.magnitude}");
     // GUILayout.TextArea($"Desired speed: {desiredMoveSpeed}");
     // }
+
+
+    void Awake() {
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
+    }
 
     void Start() {
         rb = GetComponent<Rigidbody>();
@@ -283,6 +294,7 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+
     public void Jump() {
         exitingSlope = true;
 
@@ -324,4 +336,5 @@ public class PlayerMovement : MonoBehaviour {
     public void EnableMovementInput() {
         disableMovementInput = false;
     }
+
 }
