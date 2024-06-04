@@ -103,8 +103,7 @@ public class HealthSystem : MonoBehaviour {
         hasShield = true;
         if (meshes == null) return;
         foreach (GameObject mesh in meshes) {
-            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_Alpha", 1);
-            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_ShieldStrength", 2);
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_ShieldAmount", 0.5f);
         }
     }
 
@@ -113,8 +112,7 @@ public class HealthSystem : MonoBehaviour {
         if (meshes == null) return;
 
         foreach (GameObject mesh in meshes) {
-            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_Alpha", 0);
-            mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat("_ShieldStrength", 0);
+            mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_ShieldAmount", 0);
         }
     }
 
