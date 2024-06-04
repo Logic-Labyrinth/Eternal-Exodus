@@ -52,10 +52,6 @@ public class ArmBobbing : MonoBehaviour {
 
         CompositePosRot();
 
-        //Debug.Log(swayPos);
-        //Debug.Log(swayEulerRot);
-        //Debug.Log(lookInput);
-
     }
 
     void Sway() {
@@ -97,14 +93,16 @@ public class ArmBobbing : MonoBehaviour {
 
         speedCurve += Time.deltaTime * (pm.isGrounded ? rb.velocity.magnitude : 1f) + 0.01f;
 
-
+        
         bobPosition.x =
             (curveCos * bobLimit.x * (pm.isGrounded ? 1 : 0))
-            - (walkInput.x * travelLimit.x);
+            - (walkInput.x * travelLimit.x) ;
 
-        bobPosition.y =
-            (curveSin * bobLimit.y)
+        float yVal = (curveSin * bobLimit.y)
             - (rb.velocity.y * travelLimit.y);
+
+        bobPosition.y = Mathf.Clamp(yVal, -0.1f, 0.1f);
+            
 
         bobPosition.z =
             - (walkInput.y * travelLimit.z);

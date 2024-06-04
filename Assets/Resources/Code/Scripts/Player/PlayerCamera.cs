@@ -40,7 +40,7 @@ public class PlayerCamera : MonoBehaviour {
         lookInput.x = mouseX;
         lookInput.y = mouseY;
 
-        Debug.Log(lookInput);
+        
     }
 
    
