@@ -29932,10 +29932,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5593463353896359430}
   - component: {fileID: 6823208802128917694}
-  - component: {fileID: 2112643052315762787}
   - component: {fileID: 8597766473108061917}
   - component: {fileID: 7516769871533668350}
   - component: {fileID: 3215014377924201935}
+  - component: {fileID: 8243949380622638486}
   m_Layer: 6
   m_Name: Pawn
   m_TagString: Pawn
@@ -30044,37 +30044,6 @@ MonoBehaviour:
     loop: 0
     player: 0
   healthBar: {fileID: 5171776427641879705}
---- !u!114 &2112643052315762787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7982700664649492553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2393c90c98311fe4a9abedf415e608a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 8597766473108061917}
-  enemyType: 0
-  attackRange: 2
-  attackDamage: 10
-  attackDuration: 2
-  retreatRange: 20
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  chargeSpeed: 15
-  chargingCooldownTime: 10
-  animator: {fileID: 8706618238509308235}
-  soundEffect:
-    audioClip: {fileID: 0}
-    volume: 1
-    spacialBlend: 1
-    loop: 0
-    player: 0
-  isCharging: 0
 --- !u!195 &8597766473108061917
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -30147,6 +30116,24 @@ CapsuleCollider:
   m_Height: 2.3468406
   m_Direction: 1
   m_Center: {x: -6.5629256e-16, y: 0.94853413, z: 0.17118245}
+--- !u!114 &8243949380622638486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7982700664649492553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c8de6d85dc3bde48817048480698342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFollowedByBishop: 0
+  attackRange: 2
+  attackDamage: 1
+  attackDuration: 2
+  animator: {fileID: 8706618238509308235}
+  agent: {fileID: 8597766473108061917}
 --- !u!1 &8010065081738568856
 GameObject:
   m_ObjectHideFlags: 0

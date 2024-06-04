@@ -1,14 +1,15 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Light))]
 public class FireFlicker : MonoBehaviour {
-    public float minIntensity = 0.5f; // Minimum intensity of the flicker
-    public float maxIntensity = 1.5f; // Maximum intensity of the flicker
-    public float flickerSpeed = 2f; // Speed of the flicker
+    [SerializeField] float minIntensity = 0.5f;
+    [SerializeField] float maxIntensity = 1.5f;
+    [SerializeField] float flickerSpeed = 2f;
 
-    private Light torchLight;
-    private float baseIntensity;
+    Light torchLight;
+    float baseIntensity;
 
-    void Start() {
+    void Awake() {
         torchLight = GetComponent<Light>();
         baseIntensity = torchLight.intensity;
     }

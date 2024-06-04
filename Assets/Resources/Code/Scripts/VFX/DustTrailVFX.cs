@@ -1,31 +1,30 @@
 using UnityEngine;
 using UnityEngine.VFX;
 
+[RequireComponent(typeof(VisualEffect))]
 public class DustTrailVFX : MonoBehaviour {
-  [SerializeField, Range(0, 50)] int threshold = 5;
-  VisualEffect vfx;
-  float speed;
-  bool canPlay;
+    [SerializeField, Range(0, 50)] int threshold = 5;
+    VisualEffect vfx;
+    float speed = 0;
+    bool canPlay = false;
 
-  void Start() {
-    speed = 0;
-    canPlay = false;
-    vfx = GetComponent<VisualEffect>();
-  }
-
-  void Update() {
-    if (!canPlay || speed < threshold) {
-      vfx.Stop();
-      return;
+    void Awake() {
+        vfx = GetComponent<VisualEffect>();
     }
-    vfx.Play();
-  }
 
-  public void SetSpeed(float s) {
-    speed = s;
-  }
+    void FixedUpdate() {
+        if (!canPlay || speed < threshold) {
+            vfx.Stop();
+            return;
+        }
+        vfx.Play();
+    }
 
-  public void SetCanPlay(bool b) {
-    canPlay = b;
-  }
+    public void SetSpeed(float s) {
+        speed = s;
+    }
+
+    public void SetCanPlay(bool b) {
+        canPlay = b;
+    }
 }

@@ -20,7 +20,6 @@ public class Projectile : MonoBehaviour {
     }
 
     void Start() {
-        // transform.LookAt(player.transform.position);
         transform.forward = Vector3.up;
         angularSpeedRadians = angularSpeed * Mathf.Deg2Rad;
     }

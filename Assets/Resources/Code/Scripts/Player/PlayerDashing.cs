@@ -27,13 +27,12 @@ public class PlayerDashing : MonoBehaviour {
         pm = GetComponent<PlayerMovement>();
         originalFOV = cam.fieldOfView;
     }
-    
+
     public void FixedUpdate() {
         if (dashCDTimer > 0) dashCDTimer -= Time.deltaTime;
         if (pm.dashing) DashingMovement();
     }
 
-    Vector3 delayedForceToApply;
     public void Dash() {
         if (dashCDTimer > 0) return;
         else dashCDTimer = dashCooldown;
@@ -46,21 +45,17 @@ public class PlayerDashing : MonoBehaviour {
         float Y = Map(XAngle, -89, 89, dashLowerLimit, dashUpperLimit);
         dashDirection = Quaternion.AngleAxis(Y, cam.transform.right) * cam.transform.forward;
 
-        Invoke(nameof(ResetDash), dashDuration);
+        StartCoroutine(ResetDash());
         StartCoroutine(LerpFOV(dashFOV, 0.1f));
     }
 
     void DashingMovement() {
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        // Vector3 direction = new(cam.transform.forward.x, Y, cam.transform.forward.z);
         rb.AddForce(dashDirection * dashForce, ForceMode.Impulse);
     }
 
-    void DelayedDashForce() {
-        rb.AddForce(delayedForceToApply, ForceMode.Impulse);
-    }
-
-    void ResetDash() {
+    IEnumerator ResetDash() {
+        yield return new WaitForSeconds(dashDuration);
         pm.dashing = false;
         rb.useGravity = true;
         StartCoroutine(LerpFOV(originalFOV, 0.25f));

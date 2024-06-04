@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.VFX;
 
+[RequireComponent(typeof(VisualEffect))]
 public class ExplosionVFX : MonoBehaviour {
     VisualEffect explosionEffect;
 
-    void Start() {
+    void Awake() {
         explosionEffect = GetComponent<VisualEffect>();
         explosionEffect.Stop();
     }
