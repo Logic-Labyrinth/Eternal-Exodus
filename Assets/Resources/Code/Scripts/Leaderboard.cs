@@ -41,8 +41,21 @@ public class Leaderboard : MonoBehaviour {
         LoadScores();
     }
 
+    public bool CompareScore(int score) {
+        if (scores.Count < 10) {
+            // If the leaderboard is less than 10 scores long, return true.
+            return true;
+        }
+
+        // Retrieve the score of the last entry in the leaderboard.
+        int lowestScore = scores[^1].score;
+        // Compare the given score with the lowest score in the leaderboard.
+        return lowestScore < score;
+    }
+
     // The AddScore() method adds a new score to the leaderboard.
     public void AddScore(string name, int score) {
+
         // Create a new ScoreEntry object with the given name and score.
         ScoreEntry newScore = new ScoreEntry(name, score);
         // Add the new score to the list of scores.

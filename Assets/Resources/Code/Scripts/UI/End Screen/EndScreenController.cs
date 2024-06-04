@@ -9,6 +9,8 @@ public class EndScreenController : MonoBehaviour {
     [SerializeField] TextMeshProUGUI BishopKillCountText;
     [SerializeField] TextMeshProUGUI SoulCountText;
     [SerializeField] TextMeshProUGUI ScoreText;
+    [SerializeField] GameObject LeaderboardInput;
+    [SerializeField] TMP_InputField LeaderboardNameInput;
 
     public void LoadStartMenu() {
         GameManager.Instance.LoadScene("StartMenu");
@@ -43,6 +45,14 @@ public class EndScreenController : MonoBehaviour {
         SoulCountText.text = totalKills.ToString();
         ScoreText.text = ((totalKills + Time.timeSinceLevelLoad) * 100).ToString("00");
 
-        Leaderboard.Instance.AddScore("Player", int.Parse(ScoreText.text));
+        if (Leaderboard.Instance.CompareScore(int.Parse(ScoreText.text))) {
+            LeaderboardInput.SetActive(true);
+        }
+    }
+
+    public void SubmitScore() {
+        Leaderboard.Instance.AddScore(LeaderboardNameInput.text, int.Parse(ScoreText.text));
+        LeaderboardList.GenerateLeaderboardList();
+        LeaderboardInput.SetActive(false);
     }
 }
