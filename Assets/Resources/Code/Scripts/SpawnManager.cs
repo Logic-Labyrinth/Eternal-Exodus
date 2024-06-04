@@ -8,9 +8,9 @@ public class SpawnManager : MonoBehaviour {
     [SerializeField] GameObject pawnPrefab;
     [SerializeField] GameObject bishopPrefab;
     [SerializeField] GameObject rookPrefab;
-    public int PawnPoolSize { get; private set; } = 30;
-    public int BishopPoolSize { get; private set; } = 5;
-    public int RookPoolSize { get; private set; } = 5;
+    public int PawnPoolSize = 30;
+    public int BishopPoolSize = 5;
+    public int RookPoolSize = 5;
 
     readonly Queue<GameObject> pawnQueue = new();
     readonly Queue<GameObject> bishopQueue = new();
