@@ -63,7 +63,7 @@ public class HammerAbility : MonoBehaviour {
 
     public void ActivateHammerAbility(int damage, float range, Hammer hammer) {
         if (isCharged) {
-            bool hasEnemy = false, hasGround = false;
+            bool hasEnemy = false, hasGround = false, hasCrystal = false;
             hammerTargets = CustomTriggers.ConeRaycast(Camera.main.transform, 30, range, 100);
 
             foreach (GameObject target in hammerTargets) {
@@ -72,9 +72,8 @@ public class HammerAbility : MonoBehaviour {
                     hasEnemy = true;
                     target.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER);
                 } else if (target.CompareTag("Soul Crystal")) {
+                    hasCrystal = true;
                     target.GetComponent<SoulCollector>().Explode();
-                    FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.2f);
-                    CameraPositioning.Instance.InduceStress(0.2f);
                 } else if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
             }
 
@@ -99,6 +98,14 @@ public class HammerAbility : MonoBehaviour {
                 SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
                 CameraPositioning.Instance.InduceStress(0.2f);
                 FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.01f);
+            } else if (hasCrystal) {
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                rb.AddForce(
+                    (Vector3.up + orientation.forward * -3f) * hammerForce,
+                    ForceMode.Impulse
+                );
+                FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.2f);
+                CameraPositioning.Instance.InduceStress(0.2f);
             }
         }
 
