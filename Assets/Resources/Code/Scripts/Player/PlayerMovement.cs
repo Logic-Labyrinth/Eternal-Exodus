@@ -150,8 +150,8 @@ public class PlayerMovement : MonoBehaviour {
         horizontalInput = Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Horizontal Controller");
         verticalInput = Input.GetAxisRaw("Vertical") + Input.GetAxisRaw("Vertical Controller");
 
-        if (Input.GetButton("Jump") && canJump && isGrounded) {
-            canJump = false;
+        if (Input.GetButtonDown("Jump") && canJump && isGrounded) {
+            // canJump = false;
             Jump();
             StartCoroutine(ResetJump());
         }

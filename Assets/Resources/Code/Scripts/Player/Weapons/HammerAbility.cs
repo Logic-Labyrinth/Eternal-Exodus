@@ -84,7 +84,7 @@ public class HammerAbility : MonoBehaviour {
                 if (target.layer == groundLayer) hasGround = true;
                 else if (target.layer == enemyLayer) {
                     hasEnemy = true;
-                    target.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER);
+                    target.GetComponent<HealthSystem>()?.TakeDamage(damage, WeaponDamageType.HAMMER);
                 } else if (target.CompareTag("Soul Crystal")) {
                     hasCrystal = true;
                     target.GetComponent<SoulCollector>().Explode();
