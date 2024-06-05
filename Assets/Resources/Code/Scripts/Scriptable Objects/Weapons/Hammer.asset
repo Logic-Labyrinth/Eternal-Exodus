@@ -15,12 +15,12 @@ MonoBehaviour:
   weaponObject: {fileID: 6031186701469796686, guid: 68b8a791c01026745b4bb9dc6628768f,
     type: 3}
   baseDamage: 60
-  attackRange: 5.899914
+  attackRange: 4.4665856
   speedDamageMultiplier: 1
   attackSpeed: 0.9916199
   specialAttackCooldown: 0
-  localPosition: {x: 0, y: -0.002, z: 0}
-  localRotation: {x: -2.0979878e-10, y: 0.9999885, z: -0.0047996365, w: -0.000000043710884}
+  localPosition: {x: 0, y: -0.00189, z: -0.00006}
+  localRotation: {x: -0.008400193, y: -0.99708736, z: 0.018574696, w: 0.07349268}
   basicAttackSounds:
   - audioClip: {fileID: 8300000, guid: b83a95dfe46a14441ad5d9ed248c2bb0, type: 3}
     volume: 1
@@ -34,64 +34,5 @@ MonoBehaviour:
     loop: 0
     player: 0
   swapAnimation: SwapHammer
-  shakeMagnitude:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.29999998
-      value: 0.8
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -3.2731209
-      outSlope: -3.2731209
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.09583328
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  shakeDuration: 0.5
-  shakeMagnitudeScnd:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.012500001
-      value: 0
-      inSlope: 0.52304727
-      outSlope: 0.52304727
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.06869568
-    - serializedVersion: 3
-      time: 0.49166667
-      value: 0.1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -0.5517077
-      outSlope: -0.5517077
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.0647541
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  shakeDurationScnd: 0.6
   basicFreezeFrame: {fileID: 11400000, guid: 088a1e3b9c6f136449ece3d0eaa5f857, type: 2}
   slomoAnimCurve: {fileID: 11400000, guid: 004fa1227f4f59d4e8eaf5e921846882, type: 2}

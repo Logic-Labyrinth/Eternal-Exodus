@@ -12,12 +12,15 @@ public class Sword : Weapon {
         if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
         animator.SetTrigger("SwordAttack");
         PlayBasicAttackSound();
+        CameraPositioning.Instance.InduceStress(0.05f);
 
         swordTargets = CustomTriggers.ArcRaycast(Camera.main.transform, 120, attackRange, 20);
 
         foreach (GameObject target in swordTargets) {
             if (target.layer == enemyLayer) target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD);
             if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
+            CameraPositioning.Instance.InduceStress(0.05f);
+            FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.05f);
         }
     }
 
@@ -40,8 +43,8 @@ public class Sword : Weapon {
         if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
 
         swordTargets = CustomTriggers.ArcRaycast(Camera.main.transform, 120, attackRange, 20);
-        CameraPositioning.Instance.InduceStress(0.2f);
-        FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.1f);
+        CameraPositioning.Instance.InduceStress(0.1f);
+        
 
         foreach (GameObject target in swordTargets) {
             if (target.layer == enemyLayer) {
@@ -50,6 +53,9 @@ public class Sword : Weapon {
                 target.GetComponent<NavMeshAgent>().isStopped = true;
                 target.GetComponent<NavMeshAgent>().updatePosition = false;
                 target.GetComponent<Rigidbody>().AddForce(Vector3.up * 20, ForceMode.Impulse);
+                CameraPositioning.Instance.InduceStress(0.2f);
+                FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.1f, 0.3f);
+                
             }
 
             if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
