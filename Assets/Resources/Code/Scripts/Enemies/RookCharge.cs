@@ -5,8 +5,8 @@ public class RookCharge : MonoBehaviour {
     [SerializeField] float verticalForce = 40;
     [SerializeField] float horizontalForce = 100;
 
-    void OnCollisionEnter(Collision other) {
-        if (!other.collider.CompareTag("Player") || !isCharging) return;
+    void OnTriggerEnter(Collider other) {
+        if (!other.CompareTag("Player") || !isCharging) return;
 
         other.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * horizontalForce + Vector3.up * verticalForce, ForceMode.Impulse);
         other.gameObject.GetComponent<PlayerHealthSystem>().TakeDamage(30);

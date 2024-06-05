@@ -10,17 +10,19 @@ public class TaskRookChargeAtPlayer : AINode {
     readonly float chargeSpeed;
     readonly float chargeCooldown;
     readonly Sound chargeSound;
+    readonly RookCharge rookCharge;
 
     ChargeState chargeState = ChargeState.Idle;
     enum ChargeState { Charging, Cooldown, Idle }
 
-    public TaskRookChargeAtPlayer(Animator animator, NavMeshAgent agent, Transform playerTransform, float chargeSpeed, float chargeCooldown, Sound chargeSound) {
+    public TaskRookChargeAtPlayer(Animator animator, NavMeshAgent agent, Transform playerTransform, float chargeSpeed, float chargeCooldown, Sound chargeSound, RookCharge rookCharge) {
         this.animator = animator;
         this.agent = agent;
         this.playerTransform = playerTransform;
         this.chargeSpeed = chargeSpeed;
         this.chargeCooldown = chargeCooldown;
         this.chargeSound = chargeSound;
+        this.rookCharge = rookCharge;
     }
 
     public override NodeState Evaluate() {
@@ -32,11 +34,11 @@ public class TaskRookChargeAtPlayer : AINode {
                 return NodeState.FAILURE;
 
             case ChargeState.Idle:
-                agent.isStopped = false;
+                agent.isStopped = true;
                 animator.SetTrigger("Charge");
                 chargeState = ChargeState.Charging;
-                // SetData("isCharging", true);
                 GameManager.Instance.StartCoroutine(Charge());
+                rookCharge.isCharging = true;
                 return NodeState.RUNNING;
         }
 
@@ -48,8 +50,8 @@ public class TaskRookChargeAtPlayer : AINode {
         agent.transform.LookAt(target);
         yield return new WaitForSeconds(1.5f);
 
-        if (chargeSound != null)
-            SoundFXManager.Instance.Play(chargeSound, agent.transform);
+        // if (chargeSound != null)
+        //     SoundFXManager.Instance.Play(chargeSound, agent.transform);
 
         while (chargeState == ChargeState.Charging) {
             agent.transform.position += chargeSpeed * Time.deltaTime * agent.transform.forward;
@@ -65,8 +67,6 @@ public class TaskRookChargeAtPlayer : AINode {
         }
 
         animator.SetTrigger("ChargeFinished");
-        // SetData("isCharging", false);
-        // SetData("isOnCooldown", true);
         agent.isStopped = false;
 
         if (NavMesh.SamplePosition(agent.transform.position, out NavMeshHit hit, 1f, NavMesh.AllAreas))
@@ -75,6 +75,5 @@ public class TaskRookChargeAtPlayer : AINode {
         yield return new WaitForSeconds(chargeCooldown);
 
         chargeState = ChargeState.Idle;
-        // SetData("isOnCooldown", false);
     }
 }

@@ -123,6 +123,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &10067991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 10067993}
+  - component: {fileID: 10067992}
+  m_Layer: 0
+  m_Name: Leaderboard Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &10067992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10067991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c103eb62e3b58a49a102183c9b4df89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: scores.bin
+--- !u!4 &10067993
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10067991}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.2330265, y: 5.7461076, z: 67.08466}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &11210411
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,8 +259,8 @@ Canvas:
   m_GameObject: {fileID: 11210411}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1041108805}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -751,7 +796,7 @@ Camera:
   m_GameObject: {fileID: 1041108803}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 4
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -760,7 +805,7 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 50
+  m_FocalLength: 20.78461
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -775,7 +820,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1391,8 +1436,8 @@ Canvas:
   m_GameObject: {fileID: 2092226662}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1041108805}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1434,21 +1479,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 79234145646694554, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 79234145646694554, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 79234145646694554, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 522619491138779150, guid: 8b193af405df03f46b3cb3dc8b882e0a,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1554,36 +1584,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 894727448119903588, guid: 8b193af405df03f46b3cb3dc8b882e0a,
+    - target: {fileID: 3330208298747503147, guid: 8b193af405df03f46b3cb3dc8b882e0a,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063037846748154699, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063037846748154699, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3188920667535514148, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3188920667535514148, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3188920667535514148, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1041108805}
     - target: {fileID: 3637210233386059021, guid: 8b193af405df03f46b3cb3dc8b882e0a,
         type: 3}
       propertyPath: m_Name
@@ -1594,56 +1599,16 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1024339114}
-    - target: {fileID: 4426130438055247932, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4426130438055247932, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4426130438055247932, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5948242716245919716, guid: 8b193af405df03f46b3cb3dc8b882e0a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1642290898}
-    - target: {fileID: 7730767238765450531, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7958954414378715943, guid: 8b193af405df03f46b3cb3dc8b882e0a,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1024339114}
-    - target: {fileID: 8670673444329324874, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8670673444329324874, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9004535822276657039, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9004535822276657039, guid: 8b193af405df03f46b3cb3dc8b882e0a,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1670,13 +1635,27 @@ PrefabInstance:
     - target: {fileID: 830649750214110652, guid: edf4224ff0399e14197068fd88db6010,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 2250
+      value: 1950
       objectReference: {fileID: 0}
     - target: {fileID: 830649750214110652, guid: edf4224ff0399e14197068fd88db6010,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -250
       objectReference: {fileID: 0}
+    - target: {fileID: 1304240650097378602, guid: edf4224ff0399e14197068fd88db6010,
+        type: 3}
+      propertyPath: text
+      value: Strong against the Rook, weak against the Bishop, the Hammer's primary
+        attack is a slow, heavy weapon that will briefly stun singular enemies that
+        are hit by it. Its secondary attack will vault the player into the air, leaping
+        off enemy heads should they successfully land a hit with the hammer onto
+        them, also doing an area of effect damage.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1610806678633604731, guid: edf4224ff0399e14197068fd88db6010,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 1523247622dbe404a8daaaea7861500f, type: 2}
     - target: {fileID: 1667723055443175713, guid: edf4224ff0399e14197068fd88db6010,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1697,6 +1676,12 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -250
       objectReference: {fileID: 0}
+    - target: {fileID: 1780192277088872052, guid: edf4224ff0399e14197068fd88db6010,
+        type: 3}
+      propertyPath: m_VideoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: 128a0337fb1190f48a2cbe5fd54bd77a,
+        type: 3}
     - target: {fileID: 1842545712262181422, guid: edf4224ff0399e14197068fd88db6010,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1710,7 +1695,7 @@ PrefabInstance:
     - target: {fileID: 1842545712262181422, guid: edf4224ff0399e14197068fd88db6010,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 450
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 1842545712262181422, guid: edf4224ff0399e14197068fd88db6010,
         type: 3}
@@ -1727,6 +1712,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 786215984}
+    - target: {fileID: 2627840580080023134, guid: edf4224ff0399e14197068fd88db6010,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f03ac1e3b119d64fa1bb9df92681d09, type: 2}
     - target: {fileID: 2860413958733386679, guid: edf4224ff0399e14197068fd88db6010,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1747,6 +1737,13 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -250
       objectReference: {fileID: 0}
+    - target: {fileID: 2881663218983666402, guid: edf4224ff0399e14197068fd88db6010,
+        type: 3}
+      propertyPath: text
+      value: A basic weapon that hits multiple enemies in a 120-degree cone up to
+        1.5m away. It can also perform an upwards attack to lift enemies into the
+        air, leaving them vulnerable, also being used as a double-jump in mid-air.
+      objectReference: {fileID: 0}
     - target: {fileID: 3368096515557977375, guid: edf4224ff0399e14197068fd88db6010,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1760,13 +1757,19 @@ PrefabInstance:
     - target: {fileID: 3368096515557977375, guid: edf4224ff0399e14197068fd88db6010,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1350
+      value: 1150
       objectReference: {fileID: 0}
     - target: {fileID: 3368096515557977375, guid: edf4224ff0399e14197068fd88db6010,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -250
       objectReference: {fileID: 0}
+    - target: {fileID: 3383985350999733217, guid: edf4224ff0399e14197068fd88db6010,
+        type: 3}
+      propertyPath: m_VideoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: d77e62961029ab14ca8dc560ef21ced6,
+        type: 3}
     - target: {fileID: 6893750151684506555, guid: edf4224ff0399e14197068fd88db6010,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1867,6 +1870,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6907519071224325219, guid: edf4224ff0399e14197068fd88db6010,
+        type: 3}
+      propertyPath: text
+      value: Weakest against the Rook, strongest against the Bishop, the Spear is
+        a fast weapon that can be used to pierce armour against singular enemies.
+        It also provides a dash that will lunge the player forwards and pierce enemies
+        in its path.
+      objectReference: {fileID: 0}
     - target: {fileID: 8819421871097055824, guid: edf4224ff0399e14197068fd88db6010,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1887,6 +1898,17 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -250
       objectReference: {fileID: 0}
+    - target: {fileID: 8873794541663055225, guid: edf4224ff0399e14197068fd88db6010,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1041108805}
+    - target: {fileID: 8906493969031376328, guid: edf4224ff0399e14197068fd88db6010,
+        type: 3}
+      propertyPath: m_VideoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: 9dd6105e97d10274381afcc761cf8b65,
+        type: 3}
     - target: {fileID: 8908174947368475480, guid: edf4224ff0399e14197068fd88db6010,
         type: 3}
       propertyPath: m_Name
@@ -1897,6 +1919,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8990555103159757744, guid: edf4224ff0399e14197068fd88db6010,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: e332682ab5da0894bba87128907e21d4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1916,3 +1943,4 @@ SceneRoots:
   - {fileID: 2092226667}
   - {fileID: 1806658352}
   - {fileID: 7462405632564366136}
+  - {fileID: 10067993}
