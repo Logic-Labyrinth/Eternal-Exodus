@@ -50,7 +50,8 @@ public class HammerAbility : MonoBehaviour {
     }
 
     public void CancelCharge() {
-        StopAllCoroutines();
+        // StopAllCoroutines();
+        StopCoroutine(storedCoroutine);
         isCharging = false;
         isCharged = false;
         timer = 0;

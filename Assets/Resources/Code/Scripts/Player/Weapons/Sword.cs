@@ -20,7 +20,7 @@ public class Sword : Weapon {
             if (target.layer == enemyLayer) target.GetComponent<HealthSystem>().TakeDamage(baseDamage, WeaponDamageType.SWORD);
             if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
             CameraPositioning.Instance.InduceStress(0.05f);
-            FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.1f);
+            FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.05f);
         }
     }
 
@@ -54,7 +54,7 @@ public class Sword : Weapon {
                 target.GetComponent<NavMeshAgent>().updatePosition = false;
                 target.GetComponent<Rigidbody>().AddForce(Vector3.up * 20, ForceMode.Impulse);
                 CameraPositioning.Instance.InduceStress(0.2f);
-                FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.1f);
+                FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.1f, 0.3f);
                 
             }
 
