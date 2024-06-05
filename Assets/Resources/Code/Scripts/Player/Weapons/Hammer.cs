@@ -38,6 +38,12 @@ public class Hammer : Weapon {
     public override void SpecialRelease(Animator animator, GameObject player) {
         if (hammer == null) hammer = player.GetComponent<HammerAbility>();
 
+        if (!hammer.isCharged) {
+            animator.SetTrigger("HammerInterrupt");
+            hammer.CancelCharge();
+            return;
+        }
+
         animator.SetTrigger("HammerRelease");
         hammer.ActivateHammerAbility(baseDamage, attackRange, this);
     }
