@@ -27,7 +27,7 @@ public class BTPawn : AITree {
             new AIBranch(
                 // Success = Inside the radius, Failure = Outside the radius
                 new CheckPawnChasePointProximity(true, agent, player.transform),
-                new TaskPawnChasePlayer(animator, agent, player.transform),
+                new TaskPawnChasePlayer(animator, agent, player.transform, attackRange),
                 new AIBranch(
                     // Success = Inside the radius, Failure = Outside the radius
                     new CheckPawnChasePointProximity(false, agent, player.transform),
