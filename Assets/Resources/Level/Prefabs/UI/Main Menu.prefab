@@ -203,7 +203,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 618213054910695295}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: b8cf2526c8daab94d9edc60d0839d7ff, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: d77e62961029ab14ca8dc560ef21ced6, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -850,7 +850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 18c8e3be4bf68394ab98f9cf0e72e8f6, type: 2}
+  m_Material: {fileID: 2100000, guid: 1523247622dbe404a8daaaea7861500f, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -877,7 +877,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f68f1ac0f7092f4faae4900cf397174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: 
+  text: Weakest against the Rook, strongest against the Bishop, the Spear is a fast
+    weapon that can be used to pierce armour against singular enemies. It also provides
+    a dash that will lunge the player forwards and pierce enemies in its path.
 --- !u!1 &2431060815194899981
 GameObject:
   m_ObjectHideFlags: 0
@@ -2423,7 +2425,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f68f1ac0f7092f4faae4900cf397174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: 
+  text: A basic weapon that hits multiple enemies in a 120-degree cone up to 1.5m
+    away. It can also perform an upwards attack to lift enemies into the air, leaving
+    them vulnerable, also being used as a double-jump in mid-air.
 --- !u!114 &8990555103159757744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2436,7 +2440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 18c8e3be4bf68394ab98f9cf0e72e8f6, type: 2}
+  m_Material: {fileID: 2100000, guid: e332682ab5da0894bba87128907e21d4, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -2495,7 +2499,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4233051244313550342}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: b8cf2526c8daab94d9edc60d0839d7ff, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 9dd6105e97d10274381afcc761cf8b65, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -3274,7 +3278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 18c8e3be4bf68394ab98f9cf0e72e8f6, type: 2}
+  m_Material: {fileID: 2100000, guid: 5f03ac1e3b119d64fa1bb9df92681d09, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -3301,7 +3305,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f68f1ac0f7092f4faae4900cf397174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: 
+  text: Strong against the Rook, weak against the Bishop, the Hammer's primary attack
+    is a slow, heavy weapon that will briefly stun singular enemies that are hit
+    by it. Its secondary attack will vault the player into the air, leaping off enemy
+    heads should they successfully land a hit with the hammer onto them, also doing
+    an area of effect damage.
 --- !u!1 &6282277868011954156
 GameObject:
   m_ObjectHideFlags: 0
@@ -3346,7 +3354,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6282277868011954156}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: b8cf2526c8daab94d9edc60d0839d7ff, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 128a0337fb1190f48a2cbe5fd54bd77a, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
