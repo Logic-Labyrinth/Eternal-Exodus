@@ -31,8 +31,4 @@ public class FrameHang : MonoBehaviour {
         waiting = false;
         Time.timeScale = 1.0f;
     }
-
-    // void OnGUI() {
-    //     GUILayout.TextArea($"Time Scale: {Time.timeScale}");
-    // }
 }

@@ -17,7 +17,6 @@ public class SoulCrystalIconUI : MonoBehaviour {
 
         Vector2 posClamp = (Vector2.one * 0.5f - pos).normalized * 0.5f * radiusPercentage;
 
-        Debug.Log("Pos Clamp: " + posClamp);
         if((Vector2.one * 0.5f - pos).magnitude > posClamp.magnitude) pos = -posClamp + Vector2.one * 0.5f;
         pos.x -= 0.5f;
         pos.y -= 0.5f;
