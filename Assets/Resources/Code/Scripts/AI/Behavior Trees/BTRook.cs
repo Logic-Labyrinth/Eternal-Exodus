@@ -12,6 +12,7 @@ public class BTRook : AITree {
     [SerializeField] Animator animator;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Sound chargeSound;
+    [SerializeField] RookCharge rCharge;
 
     GameObject player;
 
@@ -22,7 +23,7 @@ public class BTRook : AITree {
         AINode root = new AISelector(new List<AINode> {
             new AISequence(new List<AINode> {
                 new CheckRookChargeAbility(agent, player.transform),
-                new TaskRookChargeAtPlayer(animator, agent, player.transform, chargeSpeed, chargeCooldown, chargeSound)
+                new TaskRookChargeAtPlayer(animator, agent, player.transform, chargeSpeed, chargeCooldown, chargeSound, rCharge)
             }),
             new AISequence(new List<AINode> {
                 new CheckAttackRange(agent, player.transform, attackRange),

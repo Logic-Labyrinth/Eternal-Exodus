@@ -14,11 +14,6 @@ public class CheckRookChargeAbility : AINode {
     }
 
     public override NodeState Evaluate() {
-        // bool x = GetData("isCharging") as bool;
-        // if ((bool)GetData("isCharging") || (bool)GetData("isOnCooldown")) {
-        //     return NodeState.FAILURE;
-        // }
-
         bool linecast = Physics.Linecast(agent.transform.position, new Vector3(
             playerTransform.position.x, agent.transform.position.y, playerTransform.position.z
         ), groundLayer);
