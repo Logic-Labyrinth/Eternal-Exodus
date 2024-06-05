@@ -34,6 +34,7 @@ public class Tooltip : MonoBehaviour {
         // follow mouse in canvas
         Vector3 mousePos = Input.mousePosition;
         mousePos.y -= screenHeight;
+        mousePos += new Vector3(25, -25, 0);
         GetComponent<RectTransform>().anchoredPosition = mousePos;
     }
 }
