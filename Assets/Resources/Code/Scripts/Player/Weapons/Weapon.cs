@@ -65,22 +65,6 @@ public class Weapon : ScriptableObject {
     [DisableIf("isLocked")]
     public string swapAnimation;
 
-    [VerticalGroup("Camera Shake")]
-    [DisableIf("isLocked")]
-    public AnimationCurve shakeMagnitude;
-
-    [VerticalGroup("Camera Shake")]
-    [DisableIf("isLocked")]
-    public float shakeDuration;
-
-    [VerticalGroup("Camera Shake")]
-    [DisableIf("isLocked")]
-    public AnimationCurve shakeMagnitudeScnd;
-
-    [VerticalGroup("Camera Shake")]
-    [DisableIf("isLocked")]
-    public float shakeDurationScnd;
-
     [VerticalGroup("Freeze Frame Anim Curve")]
     [DisableIf("isLocked")]
     public BasicFreezeFrame basicFreezeFrame;

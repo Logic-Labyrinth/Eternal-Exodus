@@ -11,16 +11,19 @@ public class FrameHang : MonoBehaviour {
         else Instance = this;
     }
 
-    public void ExecFrameHang(BasicFreezeFrame basicFreezeFrame, float duration) {
+    public void ExecFrameHang(BasicFreezeFrame basicFreezeFrame, float duration, float delay = 0) {
         if (waiting) return;
 
-        Time.timeScale = 0.0f;
-        StartCoroutine(FrameHanging(basicFreezeFrame, duration));
+        StartCoroutine(FrameHanging(basicFreezeFrame, duration, delay));
     }
 
-    IEnumerator FrameHanging(BasicFreezeFrame basicFreezeFrame, float duration) {
+    IEnumerator FrameHanging(BasicFreezeFrame basicFreezeFrame, float duration, float delay = 0) {
         waiting = true;
         float timer = 0f;
+
+        if (delay != 0) yield return new WaitForSecondsRealtime(delay);
+
+        Time.timeScale = 0.0f;
         while (timer < duration) {
 
             Time.timeScale = basicFreezeFrame.Evaluate(timer / duration);
