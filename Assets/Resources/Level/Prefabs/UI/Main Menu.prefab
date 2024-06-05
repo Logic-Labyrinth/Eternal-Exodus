@@ -131,7 +131,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 563251449206170610}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: b8cf2526c8daab94d9edc60d0839d7ff, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 6f970951bcbd6824d9435eea9184418e, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -758,7 +758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 18c8e3be4bf68394ab98f9cf0e72e8f6, type: 2}
+  m_Material: {fileID: 2100000, guid: a01fe3cd12b81c2459c33b34aa09d621, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -785,10 +785,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f68f1ac0f7092f4faae4900cf397174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: A basic, horde enemy that is easy to kill but gains strength in numbers.
-    Vulnerable to the spear and resistant to the sword, it moves directly towards
-    the player at a medium pace, using simple spear attacks when close. Pawns stop
-    to attack, giving the player a chance to strike!
+  text: "A weak individual enemy that is not much of a threat on its own, but allow
+    them to group and you'll face a much harder challenge. It moves directly towards
+    the player at a medium pace, making use of a spear attack. Pawns stop to make
+    attacks, providing a chance to strike!\r<br>\nVulnerable to: <b>Sword</b>\r\nResistant
+    to: <b>Spear</b>"
 --- !u!1 &2099400357525782143
 GameObject:
   m_ObjectHideFlags: 0
@@ -877,9 +878,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f68f1ac0f7092f4faae4900cf397174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: Weakest against the Rook, strongest against the Bishop, the Spear is a fast
-    weapon that can be used to pierce armour against singular enemies. It also provides
-    a dash that will lunge the player forwards and pierce enemies in its path.
+  text: "A fast weapon that can be used to pierce armour against singular enemies.
+    It provides a dash that will lunge the player forwards, pushing and piercing
+    enemies in its path.\r<br>\nStrong against: <b>Bishops</b>\r\nWeak against: <b>Pawns</b>"
 --- !u!1 &2431060815194899981
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,7 +981,7 @@ MonoBehaviour:
   m_fontSizeMin: 10
   m_fontSizeMax: 20
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 8
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2425,9 +2426,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f68f1ac0f7092f4faae4900cf397174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: A basic weapon that hits multiple enemies in a 120-degree cone up to 1.5m
-    away. It can also perform an upwards attack to lift enemies into the air, leaving
-    them vulnerable, also being used as a double-jump in mid-air.
+  text: "A basic weapon that hits multiple enemies in a 60-degree cone up to 1.5m
+    away. It can perform an upwards attack to lift enemies into the air, leaving
+    them vulnerable. This doubles as an additional jump in mid-air.\r<br>\nStrong
+    against: <b>Pawns<b>\r\nWeak against: <b>Rooks<b>"
 --- !u!114 &8990555103159757744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2592,7 +2594,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7ac32666641d58b418cf343ac1b15c9b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8e2434e7f94e8a149b20912f075c0156, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3305,11 +3307,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f68f1ac0f7092f4faae4900cf397174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: Strong against the Rook, weak against the Bishop, the Hammer's primary attack
-    is a slow, heavy weapon that will briefly stun singular enemies that are hit
-    by it. Its secondary attack will vault the player into the air, leaping off enemy
-    heads should they successfully land a hit with the hammer onto them, also doing
-    an area of effect damage.
+  text: "A heavy weapon with a slow attack that will briefly stun a singular enemy
+    that it hits. Its secondary attack will vault the player into the air and do
+    damage to nearby enemies. This can also be used to leap off an enemy's head.\r<br>\nStrong
+    against: <b>Rooks</b>\r\nWeak against: <b>Bishops</b>"
 --- !u!1 &6282277868011954156
 GameObject:
   m_ObjectHideFlags: 0
@@ -4005,7 +4006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 18c8e3be4bf68394ab98f9cf0e72e8f6, type: 2}
+  m_Material: {fileID: 2100000, guid: c79994359898e5f4fac5e426d79760ba, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -4032,9 +4033,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f68f1ac0f7092f4faae4900cf397174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: A summoner enemy that avoids the player while boosting and spawning other
-    enemies. Vulnerable to swords and resistant to hammers, it uses shields and projectiles
-    to protect itself and support allies.
+  text: "A summoner enemy that avoids you whilst spawning other enemies. It uses
+    shields and projectiles to protect itself and bolster allies.\r<br>\nVulnerable
+    to: <b>Spear</b>\r\nResistance to: <b>Hammer</b>"
 --- !u!1 &8001453707681033057
 GameObject:
   m_ObjectHideFlags: 0
@@ -5038,7 +5039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 18c8e3be4bf68394ab98f9cf0e72e8f6, type: 2}
+  m_Material: {fileID: 2100000, guid: 32d8914ae897ca34781cf92c7172069d, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -5065,8 +5066,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f68f1ac0f7092f4faae4900cf397174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: "A heavily-armoured enemy that moves slowly but can charge at you for a powerful
-    slam, knocking you back and destroying your shield. Weaker in motion but tougher
-    when stationary, its a tank character. Vulnerable to the hammer and resistant
-    to the spear, the Rook prioritises charging in straight lines toward the player,
-    crashing into walls if necessary, and attacks with its fists when not charging.\t"
+  text: 'A heavily-armoured and slow moving tank enemy that charges at you for a
+    powerful slam which knocks you back and destroys your shield. Weaker in motion
+    but tougher when stationary, the Rook prioritises charging directly at you, crashing
+    into walls if necessary. It will attack with its fists if you approach.<br>
+
+    Vulnerable
+    to: <b>Hammer</b>
+
+    Resistant to: <b>Sword</b>'
