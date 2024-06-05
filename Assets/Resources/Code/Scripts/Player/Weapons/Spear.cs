@@ -32,7 +32,7 @@ public class Spear : Weapon {
             CameraPositioning.Instance.InduceStress(0.2f);
             FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.05f);
         } else
-            CameraPositioning.Instance.InduceStress(0.2f);
+            CameraPositioning.Instance.InduceStress(0.1f);
 
     }
 
