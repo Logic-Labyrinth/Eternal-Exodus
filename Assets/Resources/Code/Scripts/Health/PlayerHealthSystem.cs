@@ -110,6 +110,7 @@ public class PlayerHealthSystem : MonoBehaviour {
         if (overheal > 0) Overheal(overheal);
 
         currentHealth = Math.Min(maxHealth, newHealth);
+        HealthbarController.Instance.SetProgress((float)currentHealth / maxHealth);
     }
 
     void Overheal(int overheal) {
@@ -119,17 +120,21 @@ public class PlayerHealthSystem : MonoBehaviour {
     public void ShieldTwo() {
         shieldStatus = ShieldLevel.LEVEL_TWO;
         playerShieldUIController.ShieldTwo();
+        HealthbarController.Instance.SetColor(2);
     }
 
     public void ShieldOne() {
         shieldStatus = ShieldLevel.LEVEL_ONE;
         playerShieldUIController.ShieldOne();
+        HealthbarController.Instance.SetColor(1);
     }
 
     void DamagePlayer(int damage) {
         if (shieldGatingActive) return;
         CameraPositioning.Instance.InduceStress(0.2f);
         currentHealth -= damage;
+        HealthbarController.Instance.InduceStress(0.2f);
+        HealthbarController.Instance.SetProgress((float)currentHealth / maxHealth);
         if (currentHealth <= 0) Kill();
     }
 
@@ -138,6 +143,8 @@ public class PlayerHealthSystem : MonoBehaviour {
         shieldStatus = ShieldLevel.CRACKED;
         canGetShieldTwo = true;
         playerShieldUIController.DamageShield();
+        HealthbarController.Instance.SetColor(0);
+        HealthbarController.Instance.InduceStress(0.5f);
 
         if (canShieldGate) {
             canShieldGate = false;
@@ -151,6 +158,8 @@ public class PlayerHealthSystem : MonoBehaviour {
         if (shieldGatingActive) return;
         shieldStatus = ShieldLevel.NONE;
         playerShieldUIController.BreakShield();
+        HealthbarController.Instance.SetColor(0);
+        HealthbarController.Instance.InduceStress(1f);
         StartCoroutine(ResetShieldCooldown());
 
         if (canShieldGate) {

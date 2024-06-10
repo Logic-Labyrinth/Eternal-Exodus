@@ -1,17 +1,14 @@
 using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour {
-
     [SerializeField] float sensitivityX = 5f;
     [SerializeField] float sensitivityY = 5f;
     [SerializeField] Transform orientation;
 
-  
     float rotationX;
     float rotationY;
     bool disableCameraInput = false;
     public static Vector2 lookInput;
-   
 
     private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
@@ -28,22 +25,17 @@ public class PlayerCamera : MonoBehaviour {
     }
 
     void GetInput() {
-
         float mouseX = Input.GetAxisRaw("Mouse X") + Input.GetAxisRaw("Controller X");
         float mouseY = Input.GetAxisRaw("Mouse Y") + Input.GetAxisRaw("Controller Y");
 
         rotationY += mouseX * Time.deltaTime * sensitivityX;
         rotationX -= mouseY * Time.deltaTime * sensitivityY;
-        rotationX = Mathf.Clamp(rotationX, -89f, 89);
+        rotationX = Mathf.Clamp(rotationX, -90f, 90f);
 
-        // Replace this if other var ^ can be changed easily
         lookInput.x = mouseX;
         lookInput.y = mouseY;
-
-        
     }
 
-   
     public void DisableCameraInput() {
         disableCameraInput = true;
     }
