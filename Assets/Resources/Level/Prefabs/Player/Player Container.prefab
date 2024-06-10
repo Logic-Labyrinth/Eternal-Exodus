@@ -255,17 +255,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3542714992650401860, guid: 643dfe6c38f98294a9feb80049b775d1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 643dfe6c38f98294a9feb80049b775d1, type: 3}
---- !u!65 &1454853886851417763 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 3542714992650401860, guid: 643dfe6c38f98294a9feb80049b775d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 2673710337726922471}
-  m_PrefabAsset: {fileID: 0}
 --- !u!20 &1884980137777000187 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 4553744023929344028, guid: 643dfe6c38f98294a9feb80049b775d1,
@@ -408,11 +403,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8308135938930504847, guid: aae8a987d63c9cb43aeceab5a83369e7,
         type: 3}
-      propertyPath: impactArea
-      value: 
-      objectReference: {fileID: 1454853886851417763}
-    - target: {fileID: 8308135938930504847, guid: aae8a987d63c9cb43aeceab5a83369e7,
-        type: 3}
       propertyPath: hammerChargeBar
       value: 
       objectReference: {fileID: 3777672267840369967}
@@ -468,7 +458,7 @@ PrefabInstance:
     - target: {fileID: 1351117838216121451, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 106.3
+      value: 460
       objectReference: {fileID: 0}
     - target: {fileID: 2811507857036339701, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}
@@ -509,6 +499,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395125285404470474, guid: d7bbfb7cd9582564983b2560233217b3,
+        type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395125285404470474, guid: d7bbfb7cd9582564983b2560233217b3,
+        type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395125285404470474, guid: d7bbfb7cd9582564983b2560233217b3,
+        type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 6704241499906645581, guid: d7bbfb7cd9582564983b2560233217b3,
         type: 3}

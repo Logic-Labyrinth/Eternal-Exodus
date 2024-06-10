@@ -22,13 +22,14 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance { get; private set; }
 
+    ColorAdjustments colorAdjustments;
+
     void Awake() {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        volumeProfile.TryGet(out ColorAdjustments colorAdjustments);
-        colorAdjustments.saturation.value = 0f;
+        volumeProfile.TryGet(out colorAdjustments);
+        colorAdjustments.saturation.value = 0;
     }
 
     IEnumerator LoadLevel(string sceneName) {
@@ -87,10 +88,15 @@ public class GameManager : MonoBehaviour {
         Application.Quit();
     }
 
-    public void ResetCounter() {
+    void ResetCounter() {
         KillCountPawn = 0;
         KillCountRook = 0;
         KillCountBishop = 0;
+    }
+
+    public void Reset() {
+        ResetCounter();
+        colorAdjustments.saturation.value = 0;
     }
 
     public void Kill() {
@@ -104,7 +110,6 @@ public class GameManager : MonoBehaviour {
             timer += Time.unscaledDeltaTime;
             float scale = Mathf.Clamp01(timer / slowdownTime);
             Time.timeScale = 1 - scale;
-            volumeProfile.TryGet(out ColorAdjustments colorAdjustments);
             colorAdjustments.saturation.value = scale * -100;
 
             yield return null;

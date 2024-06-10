@@ -19,7 +19,7 @@ public class EndScreenController : MonoBehaviour {
 
     public void ReloadLevel() {
         Time.timeScale = 1f;
-        GameManager.Instance.ResetCounter();
+        GameManager.Instance.Reset();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

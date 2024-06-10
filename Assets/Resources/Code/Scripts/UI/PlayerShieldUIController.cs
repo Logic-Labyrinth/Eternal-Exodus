@@ -17,6 +17,7 @@ public class PlayerShieldUIController : MonoBehaviour {
 
     void Awake() {
         shieldImage = GetComponent<Image>();
+        shieldImage.enabled = false;
     }
 
     public void ShieldTwo() {

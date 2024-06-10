@@ -67,7 +67,8 @@ public class SoulCollector : MonoBehaviour {
         Destroy(soul.gameObject);
         DEBUG_SCORE = GetScore();
         icon.SetProgress(DEBUG_SCORE / scoreNeeded);
-        crystalMesh.material.SetFloat("_emissionMultiplier", DEBUG_SCORE / scoreNeeded * 0.5f);
+        crystalMesh.materials[0].SetFloat("_emissionMultiplier", DEBUG_SCORE / scoreNeeded * 0.5f);
+        crystalMesh.materials[1].SetFloat("_emissionMultiplier", DEBUG_SCORE / scoreNeeded * 0.5f);
         orbVFX.SetFloat("sphereScaleF", DEBUG_SCORE / scoreNeeded);
         if (DEBUG_SCORE >= scoreNeeded) {
             fullyCharged = true;
@@ -105,7 +106,8 @@ public class SoulCollector : MonoBehaviour {
         icon.SetProgress(0);
         icon.StopAnimation();
         UITimer.Instance.ResetTime();
-        crystalMesh.material.SetFloat("_emissionMultiplier", 0);
+        crystalMesh.materials[0].SetFloat("_emissionMultiplier", 0);
+        crystalMesh.materials[1].SetFloat("_emissionMultiplier", 0);
         beam.transform.localScale = Vector3.zero;
         orbVFX.SetFloat("sphereScaleF", 0);
 
@@ -134,14 +136,16 @@ public class SoulCollector : MonoBehaviour {
 
     void CrystalFlash() {
         crystalLight.intensity = 100.0f;
-        crystalMesh.material.SetInt("_HitFlashBool", 1);
+        crystalMesh.materials[0].SetInt("_HitFlashBool", 1);
+        crystalMesh.materials[1].SetInt("_HitFlashBool", 1);
         StartCoroutine(CrystalFlashReset());
     }
 
     IEnumerator CrystalFlashReset() {
         yield return new WaitForSeconds(2f);
         crystalLight.intensity = 30.0f;
-        crystalMesh.material.SetInt("_HitFlashBool", 0);
+        crystalMesh.materials[0].SetInt("_HitFlashBool", 0);
+        crystalMesh.materials[1].SetInt("_HitFlashBool", 0);
     }
 
     IEnumerator ChargeCrystal() {
