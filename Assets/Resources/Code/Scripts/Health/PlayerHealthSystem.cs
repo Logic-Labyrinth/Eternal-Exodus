@@ -21,17 +21,22 @@ public class PlayerHealthSystem : MonoBehaviour {
     [SerializeField] float shieldGatingTime = 1f;
 
     PlayerMovement pm;
+    Rigidbody rb;
     bool canGetShieldOne = true;
     bool canGetShieldTwo = false;
     bool shieldGatingActive = false;
     bool canShieldGate = true;
+    bool dead = false;
 
     void Awake() {
         currentHealth = maxHealth;
-        pm = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        pm = GetComponent<PlayerMovement>();
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
     }
 
     public void TakeDamage(int damage) {
+        if (dead) return;
         switch (shieldStatus) {
             case ShieldLevel.CRACKED:
             case ShieldLevel.LEVEL_ONE:
@@ -94,7 +99,9 @@ public class PlayerHealthSystem : MonoBehaviour {
     }
 
     public void Kill() {
-        FindObjectOfType<EndScreenController>(true).gameObject.SetActive(true);
+        dead = true;
+        rb.freezeRotation = false;
+        GameManager.Instance.Kill();
     }
 
     public void Heal(int heal) {
@@ -121,16 +128,18 @@ public class PlayerHealthSystem : MonoBehaviour {
 
     void DamagePlayer(int damage) {
         if (shieldGatingActive) return;
+        CameraPositioning.Instance.InduceStress(0.2f);
         currentHealth -= damage;
         if (currentHealth <= 0) Kill();
     }
 
     public void DamageShield() {
+        CameraPositioning.Instance.InduceStress(0.1f);
         shieldStatus = ShieldLevel.CRACKED;
         canGetShieldTwo = true;
         playerShieldUIController.DamageShield();
 
-        if(canShieldGate) {
+        if (canShieldGate) {
             canShieldGate = false;
             shieldGatingActive = true;
             StartCoroutine(ResetShieldGating());
@@ -138,12 +147,13 @@ public class PlayerHealthSystem : MonoBehaviour {
     }
 
     public void BreakShield() {
+        CameraPositioning.Instance.InduceStress(0.3f);
         if (shieldGatingActive) return;
         shieldStatus = ShieldLevel.NONE;
         playerShieldUIController.BreakShield();
         StartCoroutine(ResetShieldCooldown());
 
-        if(canShieldGate) {
+        if (canShieldGate) {
             canShieldGate = false;
             shieldGatingActive = true;
             StartCoroutine(ResetShieldGating());
