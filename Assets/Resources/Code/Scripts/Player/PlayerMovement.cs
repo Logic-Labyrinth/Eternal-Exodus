@@ -3,7 +3,12 @@ using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
+
+    
     bool disableMovementInput = false;
+
+
+  
 
     [Header("Movement")]
     float moveSpeed;
@@ -32,7 +37,7 @@ public class PlayerMovement : MonoBehaviour {
     [Header("Ground Check")]
     [SerializeField] LayerMask groundMask;
     readonly float playerHeight = 2f;
-    bool isGrounded;
+    public bool isGrounded;
 
     [Header("Slope Handling")]
     [SerializeField] float maxSlopeAngle = 45f;
@@ -85,6 +90,8 @@ public class PlayerMovement : MonoBehaviour {
     // GUILayout.TextArea($"Desired speed: {desiredMoveSpeed}");
     // }
 
+
+    
     void Start() {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -143,8 +150,8 @@ public class PlayerMovement : MonoBehaviour {
         horizontalInput = Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Horizontal Controller");
         verticalInput = Input.GetAxisRaw("Vertical") + Input.GetAxisRaw("Vertical Controller");
 
-        if (Input.GetButton("Jump") && canJump && isGrounded) {
-            canJump = false;
+        if (Input.GetButtonDown("Jump") && canJump && isGrounded) {
+            // canJump = false;
             Jump();
             StartCoroutine(ResetJump());
         }
@@ -283,6 +290,7 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+
     public void Jump() {
         exitingSlope = true;
 
@@ -324,4 +332,5 @@ public class PlayerMovement : MonoBehaviour {
     public void EnableMovementInput() {
         disableMovementInput = false;
     }
+
 }

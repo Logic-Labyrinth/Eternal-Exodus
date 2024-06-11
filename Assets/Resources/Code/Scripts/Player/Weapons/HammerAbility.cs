@@ -18,7 +18,7 @@ public class HammerAbility : MonoBehaviour {
     Material hammerChargeBarMaterial;
     LayerMask enemyLayer, groundLayer;
     bool isCharging = false;
-    bool isCharged = false;
+    public bool isCharged = false;
     Rigidbody rb;
     Transform orientation;
     Coroutine storedCoroutine;
@@ -49,6 +49,17 @@ public class HammerAbility : MonoBehaviour {
         hammerChargeBar.gameObject.SetActive(true);
     }
 
+    public void CancelCharge() {
+        // StopAllCoroutines();
+        StopCoroutine(storedCoroutine);
+        isCharging = false;
+        isCharged = false;
+        timer = 0;
+        hammerChargeBarMaterial.SetColor("_Color", chargeColor);
+        hammerChargeBarMaterial.SetFloat("_Progress", 0);
+        hammerChargeBar.gameObject.SetActive(false);
+    }
+
     private void Update() {
         if (isCharging) {
             if (timer <= chargeTime) {
@@ -58,6 +69,9 @@ public class HammerAbility : MonoBehaviour {
                 hammerChargeBarMaterial.SetFloat("_Progress", 1);
                 hammerChargeBarMaterial.SetColor("_Color", Color.white);
             }
+        } else {
+            hammerChargeBarMaterial.SetColor("_Color", chargeColor);
+            hammerChargeBarMaterial.SetFloat("_Progress", 0);
         }
     }
 
@@ -70,7 +84,7 @@ public class HammerAbility : MonoBehaviour {
                 if (target.layer == groundLayer) hasGround = true;
                 else if (target.layer == enemyLayer) {
                     hasEnemy = true;
-                    target.GetComponent<HealthSystem>().TakeDamage(damage, WeaponDamageType.HAMMER);
+                    target.GetComponent<HealthSystem>()?.TakeDamage(damage, WeaponDamageType.HAMMER);
                 } else if (target.CompareTag("Soul Crystal")) {
                     hasCrystal = true;
                     target.GetComponent<SoulCollector>().Explode();
@@ -104,9 +118,11 @@ public class HammerAbility : MonoBehaviour {
                     (Vector3.up + orientation.forward * -3f) * hammerForce,
                     ForceMode.Impulse
                 );
+                CameraPositioning.Instance.InduceStress(0.3f);
                 FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.2f);
-                CameraPositioning.Instance.InduceStress(0.2f);
             }
+        } else {
+            CancelCharge();
         }
 
         StopCoroutine(storedCoroutine);

@@ -23,20 +23,20 @@ public class CameraPositioning : MonoBehaviour {
     void Update() {
         float shake = Mathf.Pow(trauma, traumaExponent);
         Shake = new Vector3(
-            maxTranslationShake.x * (Mathf.PerlinNoise(seed, Time.time * frequency) * 2 - 1),
-            maxTranslationShake.y * (Mathf.PerlinNoise(seed + 1, Time.time * frequency) * 2 - 1),
-            maxTranslationShake.z * (Mathf.PerlinNoise(seed + 2, Time.time * frequency) * 2 - 1)
+            maxTranslationShake.x * (Mathf.PerlinNoise(seed, Time.unscaledTime * frequency) * 2 - 1),
+            maxTranslationShake.y * (Mathf.PerlinNoise(seed + 1, Time.unscaledTime * frequency) * 2 - 1),
+            maxTranslationShake.z * (Mathf.PerlinNoise(seed + 2, Time.unscaledTime * frequency) * 2 - 1)
         ) * shake;
 
         CamRot = Quaternion.Euler(new Vector3(
-            maxRotationShake.x * (Mathf.PerlinNoise(seed + 3, Time.time * frequency) * 2 - 1),
-            maxRotationShake.y * (Mathf.PerlinNoise(seed + 4, Time.time * frequency) * 2 - 1),
-            maxRotationShake.z * (Mathf.PerlinNoise(seed + 5, Time.time * frequency) * 2 - 1)
+            maxRotationShake.x * (Mathf.PerlinNoise(seed + 3, Time.unscaledTime * frequency) * 2 - 1),
+            maxRotationShake.y * (Mathf.PerlinNoise(seed + 4, Time.unscaledTime * frequency) * 2 - 1),
+            maxRotationShake.z * (Mathf.PerlinNoise(seed + 5, Time.unscaledTime * frequency) * 2 - 1)
         ) * shake);
 
         transform.position = trans.position + Shake;
 
-        trauma = Mathf.Clamp01(trauma - Time.deltaTime * recoverySpeed);
+        trauma = Mathf.Clamp01(trauma - Time.unscaledDeltaTime * recoverySpeed);
     }
 
     void LateUpdate() {
