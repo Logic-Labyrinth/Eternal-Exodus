@@ -3,12 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
-
-    
     bool disableMovementInput = false;
-
-
-  
 
     [Header("Movement")]
     float moveSpeed;
@@ -90,8 +85,6 @@ public class PlayerMovement : MonoBehaviour {
     // GUILayout.TextArea($"Desired speed: {desiredMoveSpeed}");
     // }
 
-
-    
     void Start() {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
