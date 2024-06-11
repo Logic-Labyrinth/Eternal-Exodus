@@ -1,56 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2282307341986188560
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4432619922178845916}
-  - component: {fileID: 8181237396073507324}
-  m_Layer: 0
-  m_Name: Chase Points
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4432619922178845916
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2282307341986188560}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2312533256670792127}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8181237396073507324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2282307341986188560}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c16d5b3fa76009d49af5617e484c0d5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  visible: 0
-  innerPointCount: 8
-  innerPointRadius: 10
-  innerPointRadiusOffset: 1
-  outerPointCount: 4
-  outerPointRadius: 20
-  outerPointRadiusOffset: 1
 --- !u!1 &2400381505657646655
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,7 +115,7 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 2
+      - m_Value: 0
         m_Name: voronoiScaleMin
         m_Overridden: 0
       - m_Value: 0
@@ -181,9 +130,6 @@ VisualEffect:
       - m_Value: 0
         m_Name: dustSpreadMax
         m_Overridden: 0
-      - m_Value: 7.5
-        m_Name: dustSizeMax
-        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -348,7 +294,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3529116676574434807}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -409,7 +355,6 @@ GameObject:
   - component: {fileID: 6491349321539876717}
   - component: {fileID: 8308135938930504847}
   - component: {fileID: 2438922081884617105}
-  - component: {fileID: 6454485847550783151}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -432,7 +377,6 @@ Transform:
   m_Children:
   - {fileID: 3998077026103772176}
   - {fileID: 6945575724338057856}
-  - {fileID: 4432619922178845916}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 55.419, z: 0}
 --- !u!54 &7189584179493975127
@@ -609,7 +553,6 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
-  isGrounded: 0
   maxSlopeAngle: 45
   orientation: {fileID: 6945575724338057856}
   playerObj: {fileID: 3998077026103772176}
@@ -640,8 +583,8 @@ MonoBehaviour:
   dashForce: 40
   dashDuration: 0.18
   dashFOV: 105
-  dashLowerLimit: 0
-  dashUpperLimit: 0
+  dashLowerLimit: -45
+  dashUpperLimit: 45
   dashCooldown: 1
 --- !u!114 &3165440956041173618
 MonoBehaviour:
@@ -681,6 +624,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9b2de10ed1d12f54384bc7a93711427c, type: 2}
   - {fileID: 11400000, guid: bd7007531d794764f8c116154f83a3c4, type: 2}
   playerReference: {fileID: 6648451769610664350}
+  cameraReference: {fileID: 0}
+  hitVFXPrefab: {fileID: 5604076154650519880, guid: f04a576439696cd4d80e67ef3715de23,
+    type: 3}
 --- !u!114 &8308135938930504847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -700,31 +646,9 @@ MonoBehaviour:
   hammerRaycast: {fileID: 3749582245135393310}
   hammerVFX: {fileID: 185297640274218462, guid: e110e635ce3e1594787c09f8bc38d41d,
     type: 3}
-  hammerImpactSounds:
-  - audioClip: {fileID: 8300000, guid: 98801aa15f17d87419c8d576baa659ad, type: 3}
-    volume: 1
-    spacialBlend: 0.5073892
-    loop: 0
-    player: 1
-  - audioClip: {fileID: 8300000, guid: 83d4b1fb2f74a2146b389fbc4bf7d0d6, type: 3}
-    volume: 1
-    spacialBlend: 0.5047965
-    loop: 0
-    player: 1
-  - audioClip: {fileID: 8300000, guid: f8ca9a8b5d90ca54e8c371d76553ceee, type: 3}
-    volume: 1
-    spacialBlend: 0.5047965
-    loop: 0
-    player: 1
-  hammerChargeSounds:
-  - audioClip: {fileID: 8300000, guid: b83a95dfe46a14441ad5d9ed248c2bb0, type: 3}
-    volume: 1
-    spacialBlend: 0
-    loop: 0
-    player: 1
-  hammerChargeBar: {fileID: 0}
-  chargeColor: {r: 0.6156863, g: 0.6156863, b: 0.6156863, a: 1}
-  isCharged: 0
+  slider: {fileID: 0}
+  handle: {fileID: 0}
+  background: {fileID: 0}
 --- !u!114 &2438922081884617105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,20 +665,3 @@ MonoBehaviour:
   shieldStatus: 0
   playerShieldUIController: {fileID: 0}
   currentHealth: 0
-  layerOneShieldSpeed: 5
-  layerTwoShieldSpeed: 10
-  timeForShield: 3
-  shieldCooldown: 2
-  shieldGatingTime: 1
---- !u!114 &6454485847550783151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6648451769610664350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92a80ea8a8730f64c9d9f7420a85e3ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

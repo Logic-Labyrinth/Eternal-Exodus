@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 public enum EnemyType {
@@ -13,8 +11,6 @@ public enum EnemyType {
 
 public class GameManager : MonoBehaviour {
     [SerializeField] LoadingScreenController loadingScreenController;
-    [SerializeField] VolumeProfile volumeProfile;
-    [SerializeField] float slowdownTime = 3f;
 
     public int KillCountPawn { get; private set; } = 0;
     public int KillCountRook { get; private set; } = 0;
@@ -22,14 +18,10 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance { get; private set; }
 
-    ColorAdjustments colorAdjustments;
-
     void Awake() {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
         DontDestroyOnLoad(gameObject);
-        volumeProfile.TryGet(out colorAdjustments);
-        colorAdjustments.saturation.value = 0;
     }
 
     IEnumerator LoadLevel(string sceneName) {
@@ -88,39 +80,9 @@ public class GameManager : MonoBehaviour {
         Application.Quit();
     }
 
-    void ResetCounter() {
+    public void ResetCounter() {
         KillCountPawn = 0;
         KillCountRook = 0;
         KillCountBishop = 0;
-    }
-
-    public void Reset() {
-        ResetCounter();
-        colorAdjustments.saturation.value = 0;
-    }
-
-    public void Kill() {
-        StartCoroutine(SlowDownGame());
-    }
-
-    IEnumerator SlowDownGame() {
-        float timer = 0;
-
-        while (timer < slowdownTime) {
-            timer += Time.unscaledDeltaTime;
-            float scale = Mathf.Clamp01(timer / slowdownTime);
-            Time.timeScale = 1 - scale;
-            colorAdjustments.saturation.value = scale * -100;
-
-            yield return null;
-        }
-
-        Time.timeScale = 0f;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
-        DisablePlayerInput();
-        FindObjectOfType<EndScreenController>(true).gameObject.SetActive(true);
-        yield break;
     }
 }

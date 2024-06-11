@@ -1,10 +1,9 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class EndScreenController : MonoBehaviour {
+    // [SerializeField] int averageTime = 60;
     [SerializeField] TextMeshProUGUI PawnKillCountText;
     [SerializeField] TextMeshProUGUI RookKillCountText;
     [SerializeField] TextMeshProUGUI BishopKillCountText;
@@ -19,7 +18,7 @@ public class EndScreenController : MonoBehaviour {
 
     public void ReloadLevel() {
         Time.timeScale = 1f;
-        GameManager.Instance.Reset();
+        GameManager.Instance.ResetCounter();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -28,7 +27,17 @@ public class EndScreenController : MonoBehaviour {
     }
 
     void OnEnable() {
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        // int dif = averageTime - (int)Time.timeSinceLevelLoad;
+        // if (dif < averageTime / 2) dif = averageTime / 2;
+        // float percentage = (dif / averageTime / 2) + 1;
         int totalKills = GameManager.Instance.KillCountPawn + GameManager.Instance.KillCountRook + GameManager.Instance.KillCountBishop;
+        // int score = (int)(totalKills * percentage);
+
+        GameManager.Instance.DisablePlayerInput();
 
         PawnKillCountText.text = GameManager.Instance.KillCountPawn.ToString();
         RookKillCountText.text = GameManager.Instance.KillCountRook.ToString();

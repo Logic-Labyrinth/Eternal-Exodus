@@ -5,7 +5,7 @@ public class SoulCrystalIcon : MonoBehaviour {
     Material material;
     Animator animator;
 
-    void Awake() {
+    void Start() {
         animator = GetComponent<Animator>();
         material = GetComponent<Image>().material;
         material.SetFloat("_Progress", 0);

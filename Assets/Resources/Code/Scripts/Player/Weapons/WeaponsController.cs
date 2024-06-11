@@ -42,6 +42,8 @@ public class WeaponsController : MonoBehaviour {
     [TableList(AlwaysExpanded = true)] public List<Weapon> weapons;
     [SerializeField] List<WeaponObject> weaponObjects;
     [SerializeField] GameObject playerReference;
+    [SerializeField] Camera cameraReference;
+    [SerializeField] GameObject hitVFXPrefab;
 
     void Start() {
         activeWeaponIndex = 0;
@@ -70,9 +72,9 @@ public class WeaponsController : MonoBehaviour {
         if (Input.GetAxis("Cycle Weapons") > 0 || Input.GetButtonDown("Cycle Next Weapon")) CycleToNextWeapon();
         if (Input.GetAxis("Cycle Weapons") < 0 || Input.GetButtonDown("Cycle Prev Weapon")) CycleToPreviousWeapon();
 
-        if (Input.GetButtonDown("Select Weapon 1")) SetActiveWeapon(2);
+        if (Input.GetButtonDown("Select Weapon 1")) SetActiveWeapon(0);
         if (Input.GetButtonDown("Select Weapon 2")) SetActiveWeapon(1);
-        if (Input.GetButtonDown("Select Weapon 3")) SetActiveWeapon(0);
+        if (Input.GetButtonDown("Select Weapon 3")) SetActiveWeapon(2);
 
         if (Input.GetButtonDown("Basic Attack") || GetTriggerDown(false)) BasicAttack();
         if (Input.GetButtonDown("Special Attack") || GetTriggerDown(true)) SpecialAttack();
