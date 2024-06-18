@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour {
         explosionSource.GetComponent<ExplosionVFX>().Play();
 
         SpawnManager.Instance.SetSpawnerActive(false);
-        FindObjectsOfType<HealthSystem>().ToList().ForEach(x => {
+        FindObjectsByType<HealthSystem>(FindObjectsSortMode.None).ToList().ForEach(x => {
             x.gameObject.SetActive(false);
         });
     }
@@ -73,15 +73,15 @@ public class GameManager : MonoBehaviour {
     }
 
     public void DisablePlayerInput() {
-        FindObjectOfType<PlayerMovement>().DisableMovementInput();
-        FindObjectOfType<PlayerCamera>().DisableCameraInput();
-        FindObjectOfType<WeaponsController>().DisableWeaponsInput();
+        FindAnyObjectByType<PlayerMovement>().DisableMovementInput();
+        FindAnyObjectByType<PlayerCamera>().DisableCameraInput();
+        FindAnyObjectByType<WeaponsController>().DisableWeaponsInput();
     }
 
     public void EnablePlayerInput() {
-        FindObjectOfType<PlayerMovement>().EnableMovementInput();
-        FindObjectOfType<PlayerCamera>().EnableCameraInput();
-        FindObjectOfType<WeaponsController>().EnableWeaponsInput();
+        FindAnyObjectByType<PlayerMovement>().EnableMovementInput();
+        FindAnyObjectByType<PlayerCamera>().EnableCameraInput();
+        FindAnyObjectByType<WeaponsController>().EnableWeaponsInput();
     }
 
     public void Quit() {
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour {
         Cursor.visible = true;
 
         DisablePlayerInput();
-        FindObjectOfType<EndScreenController>(true).gameObject.SetActive(true);
+        FindAnyObjectByType<EndScreenController>(FindObjectsInactive.Include).gameObject.SetActive(true);
         yield break;
     }
 }

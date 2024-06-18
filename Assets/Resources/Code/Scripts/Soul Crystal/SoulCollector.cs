@@ -26,11 +26,19 @@ public class SoulCollector : MonoBehaviour {
     };
 
     float pickupSouls = 0;
-    float DEBUG_SCORE = 0;
+    float score = 0;
     bool fullyCharged = false;
 
     void Start() {
         Reset();
+    }
+
+    void Update() {
+        if (score >= scoreNeeded) {
+            fullyCharged = true;
+            icon.SetBlink(true);
+            StartCoroutine(ChargeCrystal());
+        }
     }
 
     void OnTriggerEnter(Collider other) {
@@ -65,15 +73,10 @@ public class SoulCollector : MonoBehaviour {
         }
 
         Destroy(soul.gameObject);
-        DEBUG_SCORE = GetScore();
-        icon.SetProgress(DEBUG_SCORE / scoreNeeded);
-        crystalMesh.materials[0].SetFloat("_emissionMultiplier", DEBUG_SCORE / scoreNeeded * 0.5f);
-        crystalMesh.materials[1].SetFloat("_emissionMultiplier", DEBUG_SCORE / scoreNeeded * 0.5f);
-        orbVFX.SetFloat("sphereScaleF", DEBUG_SCORE / scoreNeeded);
-        if (DEBUG_SCORE >= scoreNeeded) {
-            fullyCharged = true;
-            StartCoroutine(ChargeCrystal());
-        }
+        score = GetScore();
+        crystalMesh.materials[0].SetFloat("_emissionMultiplier", score / scoreNeeded * 0.5f);
+        crystalMesh.materials[1].SetFloat("_emissionMultiplier", score / scoreNeeded * 0.5f);
+        orbVFX.SetFloat("sphereScaleF", score / scoreNeeded);
     }
 
     void CollectPickupSoul(SoulPickupVFX soul) {
@@ -84,9 +87,7 @@ public class SoulCollector : MonoBehaviour {
 
         pickupSouls += soul.soulValue;
         Destroy(soul.gameObject);
-        DEBUG_SCORE = GetScore();
-        icon.SetProgress(DEBUG_SCORE / scoreNeeded);
-        if (DEBUG_SCORE >= scoreNeeded) fullyCharged = true;
+        score = GetScore();
     }
 
     float GetScore() {
@@ -100,11 +101,10 @@ public class SoulCollector : MonoBehaviour {
 
     void Reset() {
         pickupSouls = 0;
-        DEBUG_SCORE = 0;
+        score = 0;
         fullyCharged = false;
         beam.SetActive(false);
-        icon.SetProgress(0);
-        icon.StopAnimation();
+        icon.SetBlink(false);
         UITimer.Instance.ResetTime();
         crystalMesh.materials[0].SetFloat("_emissionMultiplier", 0);
         crystalMesh.materials[1].SetFloat("_emissionMultiplier", 0);
@@ -123,7 +123,7 @@ public class SoulCollector : MonoBehaviour {
         explosionVFX.Play();
         SpawnManager.Instance.SetSpawnerActive(false);
         CrystalFlash();
-        FindObjectsOfType<HealthSystem>().ToList().ForEach(x => x.KillWithoutSoul());
+        FindObjectsByType<HealthSystem>(FindObjectsSortMode.None).ToList().ForEach(x => x.KillWithoutSoul());
 
         StartCoroutine(RestartSpawner());
         Reset();

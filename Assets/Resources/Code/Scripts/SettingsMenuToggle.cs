@@ -4,7 +4,7 @@ public class SettingsMenuToggle : MonoBehaviour {
     SettingsMenuController controller;
 
     void Awake() {
-        controller = FindObjectOfType<SettingsMenuController>(true);
+        controller = FindAnyObjectByType<SettingsMenuController>(FindObjectsInactive.Include);
     }
 
     void Update() {

@@ -21,7 +21,6 @@ public class Tooltip : MonoBehaviour {
 
     public void ShowTooltip(string text) {
         Vector3 mousePos = Input.mousePosition;
-        Debug.Log(mousePos);
         mousePos.y -= screenHeight;
 
         mousePos.x /= xDiff;

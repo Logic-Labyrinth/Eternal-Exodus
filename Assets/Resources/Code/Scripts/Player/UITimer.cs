@@ -41,12 +41,6 @@ public class UITimer : MonoBehaviour {
         timer = 0;
     }
 
-    //IEnumerable TornadoSizeReset(){
-
-
-
-   // }
-
     void AddTime(float time) {
         timer = Mathf.Max(0, timer - time);
     }
