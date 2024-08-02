@@ -1,15 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using LexUtils.Singleton;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace TEE.Audio {
     public class SoundFXManager : Singleton<SoundFXManager> {
-        [SerializeField] AudioSource    soundFXObject;
+        [SerializeField] AudioSource soundFXObject;
 
-        readonly GameObject        mainCamera     = Camera.main.gameObject;
+        GameObject                 mainCamera;
         readonly List<GameObject>  usedSources    = new();
         readonly Queue<GameObject> standbySources = new();
+
+        void Start() {
+            mainCamera = Camera.main.gameObject;
+        }
 
         // A method to play a sound at a given location, with optional parameters for the sound source location.
         public void Play(Sound sound, Transform location = null) {

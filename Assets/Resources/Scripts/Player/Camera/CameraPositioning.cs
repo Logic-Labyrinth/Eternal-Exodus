@@ -1,6 +1,8 @@
+using System;
 using LexUtils.Singleton;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace TEE.Player.Camera {
     public class CameraPositioning : Singleton<CameraPositioning> {
@@ -12,11 +14,15 @@ namespace TEE.Player.Camera {
 
         readonly Vector3 maxTranslationShake = Vector3.one;
         readonly Vector3 maxRotationShake    = Vector3.one * 15;
-        readonly float   seed                = Random.value;
         const    float   Frequency           = 25;
         const    float   TraumaExponent      = 1;
         const    float   RecoverySpeed       = 1;
+        float            seed;
         float            trauma;
+
+        void Start() {
+            seed = Random.value;
+        }
 
         void Update() {
             float shakeAmount = Mathf.Pow(trauma, TraumaExponent);
