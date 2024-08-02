@@ -1,0 +1,14 @@
+using UnityEngine;
+
+public class EXAMPLE : MonoBehaviour {
+    private void OnEnable() {
+        EventForge.Main.Get('example').AddListener(Test);
+    }
+    private void OnDisable() {
+        EventForge.Main.Get('example').RemoveListener(Test);
+    }
+
+    void Test(Component component, string s) {
+        Debug.Log(s);
+    }
+}
