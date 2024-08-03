@@ -96,13 +96,13 @@ namespace TEE.Player.Camera {
         }
 
         void GetMouseInput() {
-            lookInput.x = Input.GetAxisRaw("Mouse X") + Input.GetAxisRaw("Controller X");
-            lookInput.y = Input.GetAxisRaw("Mouse Y") + Input.GetAxisRaw("Controller Y");
+            // lookInput.x = Input.GetAxisRaw("Mouse X") + Input.GetAxisRaw("Controller X");
+            // lookInput.y = Input.GetAxisRaw("Mouse Y") + Input.GetAxisRaw("Controller Y");
         }
 
         void GetKeyInput() {
-            walkInput.x = Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Horizontal Controller");
-            walkInput.y = Input.GetAxisRaw("Vertical")   + Input.GetAxisRaw("Vertical Controller");
+            // walkInput.x = Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Horizontal Controller");
+            // walkInput.y = Input.GetAxisRaw("Vertical")   + Input.GetAxisRaw("Vertical Controller");
         }
     }
 }

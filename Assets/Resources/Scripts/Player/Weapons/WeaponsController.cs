@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using LexUtils.Events;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace TEE.Player.Weapons {
-    class WeaponObject {
+    internal class WeaponObject {
         public readonly GameObject WeaponObj;
         public readonly Weapon     Weapon;
         public          bool       CanUseBasicAttack;
@@ -49,10 +50,8 @@ namespace TEE.Player.Weapons {
         void Start() {
             activeWeaponIndex = 0;
             weaponObjects     = new List<WeaponObject>();
-            for (int i = 0; i < weapons.Count; i++) {
-                var        weapon       = weapons[i];
-                GameObject weaponObject = Instantiate(weapon.weaponObject);
-                weaponObject.transform.SetParent(hand.transform);
+            foreach (var weapon in weapons) {
+                GameObject weaponObject = Instantiate(weapon.weaponObject, hand.transform, true);
                 weaponObject.transform.SetLocalPositionAndRotation(
                     weapon.localPosition,
                     weapon.localRotation
@@ -62,24 +61,24 @@ namespace TEE.Player.Weapons {
 
             weaponObjects[activeWeaponIndex].WeaponObj.SetActive(true);
             HighlightWeapon(activeWeaponIndex);
-        }
-
-        void Update() {
             HandleInput();
         }
 
         void HandleInput() {
             if (disableWeaponInput) return;
-            if (Input.GetAxis("Cycle Weapons") > 0 || Input.GetButtonDown("Cycle Next Weapon")) CycleToNextWeapon();
-            if (Input.GetAxis("Cycle Weapons") < 0 || Input.GetButtonDown("Cycle Prev Weapon")) CycleToPreviousWeapon();
+            // if (Input.GetAxis("Cycle Weapons") > 0 || Input.GetButtonDown("Cycle Next Weapon")) CycleToNextWeapon();
+            // if (Input.GetAxis("Cycle Weapons") < 0 || Input.GetButtonDown("Cycle Prev Weapon")) CycleToPreviousWeapon();
 
-            if (Input.GetButtonDown("Select Weapon 1")) SetActiveWeapon(2);
-            if (Input.GetButtonDown("Select Weapon 2")) SetActiveWeapon(1);
-            if (Input.GetButtonDown("Select Weapon 3")) SetActiveWeapon(0);
+            // if (Input.GetButtonDown("Select Weapon 1")) SetActiveWeapon(2);
+            // if (Input.GetButtonDown("Select Weapon 2")) SetActiveWeapon(1);
+            // if (Input.GetButtonDown("Select Weapon 3")) SetActiveWeapon(0);
 
-            if (Input.GetButtonDown("Basic Attack")   || GetTriggerDown(false)) BasicAttack();
-            if (Input.GetButtonDown("Special Attack") || GetTriggerDown(true)) SpecialAttack();
-            if (Input.GetButtonUp("Special Attack")   || GetTriggerUp(true)) SpecialRelease();
+            // if (Input.GetButtonDown("Basic Attack")   || GetTriggerDown(false)) BasicAttack();
+            // if (Input.GetButtonDown("Special Attack") || GetTriggerDown(true)) SpecialAttack();
+            // if (Input.GetButtonUp("Special Attack")   || GetTriggerUp(true)) SpecialRelease();
+            EventForge.Signal.Get("Input.Player.BasicAttack").AddListener(BasicAttack);
+            EventForge.Signal.Get("Input.Player.SpecialAttack").AddListener(SpecialAttack);
+            EventForge.Signal.Get("Input.Player.SpecialAttack.Release").AddListener(SpecialRelease);
         }
 
         void SetActiveWeapon(int index) {
@@ -107,9 +106,9 @@ namespace TEE.Player.Weapons {
             var children = weaponSelectionUI.transform.GetChildren(true);
 
             children.ForEach(x => {
-                x.GetComponent<UnityEngine.UI.Outline>().effectColor = new Color(1, 1, 1, 1f);
-                x.transform.localScale                               = Vector3.one;
-                x.GetComponent<Image>().color                        = new Color(0, 0, 0, 1f);
+                x.GetComponent<Outline>().effectColor = new Color(1, 1, 1, 1f);
+                x.transform.localScale                = Vector3.one;
+                x.GetComponent<Image>().color         = new Color(0, 0, 0, 1f);
             });
 
             weaponSelectionUI
@@ -165,39 +164,39 @@ namespace TEE.Player.Weapons {
             disableWeaponInput = true;
         }
 
-        #region Controller Input
-
-        bool isLeftTriggerDown;
-        bool isRightTriggerDown;
-
-        bool GetTriggerDown(bool left) {
-            if (left) {
-                float value = Input.GetAxisRaw("Special Attack Controller");
-                if (isLeftTriggerDown || !(value > 0)) return false;
-                isLeftTriggerDown = true;
-                return true;
-            } else {
-                float value = Input.GetAxisRaw("Basic Attack Controller");
-                if (isRightTriggerDown || !(value > 0)) return false;
-                isRightTriggerDown = true;
-                return true;
-            }
-        }
-
-        bool GetTriggerUp(bool left) {
-            if (left) {
-                float value = Input.GetAxisRaw("Special Attack Controller");
-                if (!isLeftTriggerDown || value != 0) return false;
-                isLeftTriggerDown = false;
-                return true;
-            } else {
-                float value = Input.GetAxisRaw("Basic Attack Controller");
-                if (!isRightTriggerDown || value != 0) return false;
-                isRightTriggerDown = false;
-                return true;
-            }
-        }
-
-        #endregion
+        // #region Controller Input
+        //
+        // bool isLeftTriggerDown;
+        // bool isRightTriggerDown;
+        //
+        // bool GetTriggerDown(bool left) {
+        //     if (left) {
+        //         float value = Input.GetAxisRaw("Special Attack Controller");
+        //         if (isLeftTriggerDown || !(value > 0)) return false;
+        //         isLeftTriggerDown = true;
+        //         return true;
+        //     } else {
+        //         float value = Input.GetAxisRaw("Basic Attack Controller");
+        //         if (isRightTriggerDown || !(value > 0)) return false;
+        //         isRightTriggerDown = true;
+        //         return true;
+        //     }
+        // }
+        //
+        // bool GetTriggerUp(bool left) {
+        //     if (left) {
+        //         float value = Input.GetAxisRaw("Special Attack Controller");
+        //         if (!isLeftTriggerDown || value != 0) return false;
+        //         isLeftTriggerDown = false;
+        //         return true;
+        //     } else {
+        //         float value = Input.GetAxisRaw("Basic Attack Controller");
+        //         if (!isRightTriggerDown || value != 0) return false;
+        //         isRightTriggerDown = false;
+        //         return true;
+        //     }
+        // }
+        //
+        // #endregion
     }
 }

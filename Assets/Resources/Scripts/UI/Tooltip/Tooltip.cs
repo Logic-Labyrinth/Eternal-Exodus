@@ -21,16 +21,16 @@ namespace TEE.UI.Tooltip {
         }
 
         public void ShowTooltip(string text) {
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.y -= screenHeight;
-
-            mousePos.x /= xDiff;
-            mousePos.y /= yDiff;
-
-            rectTransform.anchoredPosition = mousePos;
-
-            tooltipText.text = text;
-            gameObject.SetActive(true);
+            // Vector3 mousePos = Input.mousePosition;
+            // mousePos.y -= screenHeight;
+            //
+            // mousePos.x /= xDiff;
+            // mousePos.y /= yDiff;
+            //
+            // rectTransform.anchoredPosition = mousePos;
+            //
+            // tooltipText.text = text;
+            // gameObject.SetActive(true);
         }
 
         public void HideTooltip() {
@@ -38,14 +38,14 @@ namespace TEE.UI.Tooltip {
         }
 
         void Update() {
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.y -= screenHeight;
-
-            mousePos.x /= xDiff;
-            mousePos.y /= yDiff;
-            mousePos   += new Vector3(25, -25, 0);
-
-            rectTransform.anchoredPosition = mousePos;
+            // Vector3 mousePos = Input.mousePosition;
+            // mousePos.y -= screenHeight;
+            //
+            // mousePos.x /= xDiff;
+            // mousePos.y /= yDiff;
+            // mousePos   += new Vector3(25, -25, 0);
+            //
+            // rectTransform.anchoredPosition = mousePos;
         }
     }
 }

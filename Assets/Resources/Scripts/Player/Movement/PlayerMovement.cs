@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using LexUtils.Events;
 using TEE.VFX;
 using UnityEngine;
 
@@ -92,6 +93,8 @@ namespace TEE.Player.Movement {
             startYScale               = playerObj.localScale.y;
             wantsToUncrouch           = false;
             lastFrameVerticalVelocity = 0;
+            
+            EventForge.Vector2.Get("Input.Player.Movement").AddListener(MovePlayer);
         }
 
         void Update() {
@@ -102,7 +105,7 @@ namespace TEE.Player.Movement {
 
         void FixedUpdate() {
             GroundCheck();
-            MovePlayer();
+            // MovePlayer();
             SpeedControl();
             StateHandler();
 
@@ -141,14 +144,14 @@ namespace TEE.Player.Movement {
         void HandleInput() {
             if (disableMovementInput) return;
 
-            horizontalInput = Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Horizontal Controller");
-            verticalInput   = Input.GetAxisRaw("Vertical")   + Input.GetAxisRaw("Vertical Controller");
-
-            if (Input.GetButtonDown("Jump") && canJump && isGrounded) {
-                // canJump = false;
-                Jump();
-                StartCoroutine(ResetJump());
-            }
+            // horizontalInput = Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Horizontal Controller");
+            // verticalInput   = Input.GetAxisRaw("Vertical")   + Input.GetAxisRaw("Vertical Controller");
+            //
+            // if (Input.GetButtonDown("Jump") && canJump && isGrounded) {
+            //     // canJump = false;
+            //     Jump();
+            //     StartCoroutine(ResetJump());
+            // }
 
             TryUncrouch();
         }
@@ -182,27 +185,29 @@ namespace TEE.Player.Movement {
         void StateHandler() {
             if (dashing) {
                 desiredMoveSpeed = slideSpeed;
-            } else if (sliding) {
+            }
+            else if (sliding) {
                 state = MovementState.Slide;
                 if (OnSlope() && rb.velocity.y < 0.1f) desiredMoveSpeed = slideSpeed;
                 else desiredMoveSpeed                                   = crouchSpeed;
-            } else if (crouching) {
+            }
+            else if (crouching) {
                 state            = MovementState.Crouch;
                 desiredMoveSpeed = crouchSpeed;
-            } else
+            }
+            else
                 switch (isGrounded) {
-                    case true when Input.GetButton("Crouch"):
-                        state            = MovementState.Sprint;
-                        desiredMoveSpeed = sprintSpeed;
-                        break;
+                    // case true when Input.GetButton("Crouch"):
+                    //     state            = MovementState.Sprint;
+                    //     desiredMoveSpeed = sprintSpeed;
+                    //     break;
                     case true:
                         state            = MovementState.Walk;
                         desiredMoveSpeed = walkSpeed;
                         break;
                     default: {
-                        state = MovementState.Glide;
-                        if (desiredMoveSpeed < sprintSpeed) desiredMoveSpeed = walkSpeed;
-                        else desiredMoveSpeed                                = sprintSpeed;
+                        state            = MovementState.Glide;
+                        desiredMoveSpeed = desiredMoveSpeed < sprintSpeed ? walkSpeed : sprintSpeed;
                         break;
                     }
                 }
@@ -213,7 +218,8 @@ namespace TEE.Player.Movement {
                 if (keepMomentum) {
                     StopAllCoroutines();
                     StartCoroutine(SmoothlyLerpMoveSpeed());
-                } else {
+                }
+                else {
                     StopAllCoroutines();
                     moveSpeed = desiredMoveSpeed;
                 }
@@ -236,7 +242,8 @@ namespace TEE.Player.Movement {
                     float slopeAngleIncrease = 1 + (slopeAngle / 90f);
 
                     time += Time.deltaTime * speedIncreaseMultiplier * slopeIncreaseMultiplier * slopeAngleIncrease;
-                } else
+                }
+                else
                     time += Time.deltaTime * speedIncreaseMultiplier;
 
                 yield return null;
@@ -246,18 +253,20 @@ namespace TEE.Player.Movement {
             keepMomentum = false;
         }
 
-        void MovePlayer() {
+        void MovePlayer(Vector2 input) {
             if (disableMovementInput) return;
             if (dashing) return;
 
             // calculate movement direction
-            moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+            // moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+            moveDirection = orientation.forward * input.y + orientation.right * input.x;
 
             // on slope
             if (OnSlope() && !exitingSlope) {
                 rb.AddForce(GetSlopeMoveDirection(moveDirection) * (moveSpeed * 20f), ForceMode.Force);
                 if (rb.velocity.y > 0) rb.AddForce(Vector3.down * 80f, ForceMode.Force);
-            } else
+            }
+            else
                 switch (isGrounded) {
                     case true:
                         // on ground

@@ -12,10 +12,10 @@ namespace TEE.UI.Controllers {
         }
 
         void Update() {
-            if (!canClick) return;
-            if (Input.GetButtonDown("Basic Attack") || Input.GetButtonDown("Jump")) {
-                animator.SetBool(AnimatorBoolHasClicked, true);
-            }
+            // if (!canClick) return;
+            // if (Input.GetButtonDown("Basic Attack") || Input.GetButtonDown("Jump")) {
+            //     animator.SetBool(AnimatorBoolHasClicked, true);
+            // }
         }
 
         public void StartGame() {

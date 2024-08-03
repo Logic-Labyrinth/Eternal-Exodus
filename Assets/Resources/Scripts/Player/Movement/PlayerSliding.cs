@@ -27,20 +27,20 @@ namespace TEE.Player.Movement {
         }
 
         void Update() {
-            horizontalInput = Input.GetAxisRaw("Horizontal");
-            verticalInput   = Input.GetAxisRaw("Vertical");
+            // horizontalInput = Input.GetAxisRaw("Horizontal");
+            // verticalInput   = Input.GetAxisRaw("Vertical");
 
-            if (Input.GetButtonDown("Crouch")) {
-                pm.wantsToUncrouch = false;
-                if (rb.velocity.magnitude > pm.crouchSpeed * 1.1f) StartSlide();
-                else pm.StartCrouch();
-            }
-
-            if (Input.GetButtonUp("Crouch")) {
-                if (pm.sliding) StopSlide();
-                pm.StartCrouch();
-                pm.wantsToUncrouch = true;
-            }
+            // if (Input.GetButtonDown("Crouch")) {
+            //     pm.wantsToUncrouch = false;
+            //     if (rb.velocity.magnitude > pm.crouchSpeed * 1.1f) StartSlide();
+            //     else pm.StartCrouch();
+            // }
+            //
+            // if (Input.GetButtonUp("Crouch")) {
+            //     if (pm.sliding) StopSlide();
+            //     pm.StartCrouch();
+            //     pm.wantsToUncrouch = true;
+            // }
         }
 
         void FixedUpdate() {

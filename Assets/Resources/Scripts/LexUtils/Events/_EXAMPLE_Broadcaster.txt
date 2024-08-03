@@ -2,6 +2,6 @@ using UnityEngine;
 
 public class EXAMPLE : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
-        EventForge.Main.Get('example').Invoke(this, "Example Event Triggered!");
+        EventForge.String.Get('example').Invoke("Example Event Triggered!");
     }
 }

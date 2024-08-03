@@ -1,3 +1,4 @@
+using LexUtils.Events;
 using UnityEngine;
 
 namespace TEE.Player.Camera {
@@ -9,25 +10,20 @@ namespace TEE.Player.Camera {
         float                 rotationX;
         float                 rotationY;
         bool                  disableCameraInput;
-        public static Vector2 lookInput;
+        public static Vector2 lookInput = Vector2.zero;
 
         void Start() {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible   = false;
+
+            EventForge.Vector2.Get("Input.Player.Look").AddListener(TurnCamera);
         }
 
-        void Update() {
+        void TurnCamera(Vector2 input) {
             if (disableCameraInput) return;
 
-            GetInput();
-
-            transform.rotation   = Quaternion.Euler(rotationX, rotationY, 0);
-            orientation.rotation = Quaternion.Euler(0,         rotationY, 0);
-        }
-
-        void GetInput() {
-            float mouseX = Input.GetAxisRaw("Mouse X") + Input.GetAxisRaw("Controller X");
-            float mouseY = Input.GetAxisRaw("Mouse Y") + Input.GetAxisRaw("Controller Y");
+            float mouseX = input.x;
+            float mouseY = input.y;
 
             rotationY += mouseX * Time.deltaTime * sensitivityX;
             rotationX -= mouseY * Time.deltaTime * sensitivityY;
@@ -35,6 +31,9 @@ namespace TEE.Player.Camera {
 
             lookInput.x = mouseX;
             lookInput.y = mouseY;
+
+            transform.rotation   = Quaternion.Euler(rotationX, rotationY, 0);
+            orientation.rotation = Quaternion.Euler(0,         rotationY, 0);
         }
 
         public void DisableCameraInput() {
