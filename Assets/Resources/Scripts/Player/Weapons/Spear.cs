@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LexUtils.Events;
 using TEE.Environment;
 using TEE.Health;
 using TEE.Player.Camera;
@@ -38,10 +39,10 @@ namespace TEE.Player.Weapons {
             }
 
             if (hasEnemy) {
-                CameraPositioning.Instance.InduceStress(0.2f);
+                EventForge.Float.Get("Player.Trauma").Invoke(0.2f);
                 FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.05f);
             } else
-                CameraPositioning.Instance.InduceStress(0.1f);
+                EventForge.Float.Get("Player.Trauma").Invoke(0.1f);
         }
 
         public override void SpecialAttack(Animator animator, GameObject player) {
@@ -50,7 +51,7 @@ namespace TEE.Player.Weapons {
             animator.SetTrigger(AnimatorTriggerSpearSpecial);
             playerDash.Dash();
             PlaySpecialAttackSound();
-            CameraPositioning.Instance.InduceStress(0.2f);
+            EventForge.Float.Get("Player.Trauma").Invoke(0.2f);
         }
 
         public override void WeakpointAttack(Animator animator, Weakpoint weakpoint) {

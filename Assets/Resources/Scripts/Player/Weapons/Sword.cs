@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LexUtils.Events;
 using TEE.Environment;
 using TEE.Health;
 using TEE.Player.Camera;
@@ -9,9 +10,9 @@ using UnityEngine.AI;
 namespace TEE.Player.Weapons {
     [CreateAssetMenu(fileName = "Sword", menuName = "ExodusTools/Weapon/Sword")]
     public class Sword : Weapon {
-        PlayerMovement   playerMovement;
-        LayerMask        enemyLayer = -1;
-        List<GameObject> swordTargets;
+        OLD_PlayerMovement oldPlayerMovement;
+        LayerMask          enemyLayer = -1;
+        List<GameObject>   swordTargets;
 
         static readonly int AnimatorTriggerSwordAttack  = Animator.StringToHash("SwordAttack");
         static readonly int AnimatorTriggerSwordSpecial = Animator.StringToHash("SwordSpecial");
@@ -20,25 +21,25 @@ namespace TEE.Player.Weapons {
             if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
             animator.SetTrigger(AnimatorTriggerSwordAttack);
             PlayBasicAttackSound();
-            CameraPositioning.Instance.InduceStress(0.05f);
+            EventForge.Float.Get("Player.Trauma").Invoke(0.05f);
 
             swordTargets = CustomTriggers.ArcRaycast(UnityEngine.Camera.main.transform, 120, attackRange, 20);
 
             foreach (var target in swordTargets) {
                 if (target.layer == enemyLayer) target.GetComponent<HealthSystem>()?.TakeDamage(baseDamage, WeaponDamageType.Sword);
                 if (target.CompareTag("Breakable")) target.GetComponent<BreakableObject>().Break();
-                CameraPositioning.Instance.InduceStress(0.05f);
+                EventForge.Float.Get("Player.Trauma").Invoke(0.05f);
                 FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.05f);
             }
         }
 
         public override void SpecialAttack(Animator animator, GameObject player) {
-            if (!playerMovement) playerMovement = player.GetComponent<PlayerMovement>();
+            if (!oldPlayerMovement) oldPlayerMovement = player.GetComponent<OLD_PlayerMovement>();
 
             UppercutEnemies();
 
             animator.SetTrigger(AnimatorTriggerSwordSpecial);
-            playerMovement.SwordJump();
+            oldPlayerMovement.SwordJump();
             PlaySpecialAttackSound();
         }
 
@@ -51,7 +52,7 @@ namespace TEE.Player.Weapons {
             if (enemyLayer < 0) enemyLayer = LayerMask.NameToLayer("Enemy");
 
             swordTargets = CustomTriggers.ArcRaycast(UnityEngine.Camera.main.transform, 120, attackRange, 20);
-            CameraPositioning.Instance.InduceStress(0.1f);
+            EventForge.Float.Get("Player.Trauma").Invoke(0.1f);
 
 
             foreach (GameObject target in swordTargets) {
@@ -61,7 +62,7 @@ namespace TEE.Player.Weapons {
                     target.GetComponent<NavMeshAgent>().isStopped      = true;
                     target.GetComponent<NavMeshAgent>().updatePosition = false;
                     target.GetComponent<Rigidbody>().AddForce(Vector3.up * 20, ForceMode.Impulse);
-                    CameraPositioning.Instance.InduceStress(0.2f);
+                    EventForge.Float.Get("Player.Trauma").Invoke(0.2f);
                     FrameHang.Instance.ExecFrameHang(basicFreezeFrame, 0.1f, 0.3f);
                 }
 

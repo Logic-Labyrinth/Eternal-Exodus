@@ -11,10 +11,10 @@ namespace TEE.Player.Weapons {
         [SerializeField] VisualEffect     visualEffect;
         [SerializeField] BasicFreezeFrame basicFreezeFrame;
 
-        PlayerMovement pm;
+        OLD_PlayerMovement pm;
 
         void Start() {
-            pm = GameObject.Find("Player").GetComponent<PlayerMovement>();
+            pm = GameObject.Find("Player").GetComponent<OLD_PlayerMovement>();
         }
 
         void OnTriggerEnter(Collider other) {

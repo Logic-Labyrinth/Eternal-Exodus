@@ -238,8 +238,30 @@
         {
             "name": "Interface",
             "id": "90727371-375f-4a19-b6b6-d50c69e1131e",
-            "actions": [],
-            "bindings": []
+            "actions": [
+                {
+                    "name": "Close",
+                    "type": "Button",
+                    "id": "aedf4658-2c2f-40be-8206-ea1544bc105e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ffe97a45-2ef5-475c-8e46-7939efe220d8",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Close",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

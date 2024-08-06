@@ -1,3 +1,4 @@
+using TEE.Input;
 using TEE.Player.Movement;
 using UnityEngine;
 
@@ -13,36 +14,31 @@ namespace TEE.Player.Camera {
         Vector3     swayPos;
         Vector3     swayEulerRot;
         Vector2     lookInput;
-
-        float rotationX;
-        float rotationY;
-
-        [SerializeField] PlayerMovement pm;
-        Rigidbody                       rb;
+        float       rotationX;
+        float       rotationY;
+        Rigidbody   rb;
 
         // Bobbing
-        public float speedCurve;
-
+        float speedCurve;
         float CurveSin => Mathf.Sin(speedCurve);
         float CurveCos => Mathf.Cos(speedCurve);
 
-        public Vector3 travelLimit = Vector3.one * 0.025f;
-        public Vector3 bobLimit    = Vector3.one * 0.01f;
-        public Vector2 walkInput;
-        public Vector3 multiplier;
-        Vector3        bobEulerRotation;
-        Vector3        bobPosition;
+        [SerializeField] Vector3 travelLimit = Vector3.one * 0.025f;
+        [SerializeField] Vector3 bobLimit    = Vector3.one * 0.01f;
+        [SerializeField] Vector2 walkInput;
+        [SerializeField] Vector3 multiplier;
+        Vector3                  bobEulerRotation;
+        Vector3                  bobPosition;
 
 
         void Start() {
-            rb        = pm.GetComponent<Rigidbody>();
-            lookInput = PlayerCamera.lookInput;
+            rb        = Movement.Player.Rigidbody;
+            lookInput = InputManager.GetLookInput();
         }
 
-        // Update is called once per frame
         void Update() {
-            GetMouseInput();
-            GetKeyInput();
+            // GetMouseInput();
+            // GetKeyInput();
             Sway();
             SwayRotation();
 
@@ -79,8 +75,8 @@ namespace TEE.Player.Camera {
         }
 
         void BobOffset() {
-            speedCurve    += Time.deltaTime * (pm.isGrounded ? rb.velocity.magnitude : 1f) + 0.01f;
-            bobPosition.x =  CurveCos       * bobLimit.x * (pm.isGrounded ? 1 : 0)         - walkInput.x * travelLimit.x;
+            speedCurve    += Time.deltaTime * (Movement.Player.IsGrounded ? rb.velocity.magnitude : 1f) + 0.01f;
+            bobPosition.x =  CurveCos       * bobLimit.x * (Movement.Player.IsGrounded ? 1 : 0)         - walkInput.x * travelLimit.x;
 
             float yVal = CurveSin * bobLimit.y - rb.velocity.y * travelLimit.y;
 
@@ -95,14 +91,14 @@ namespace TEE.Player.Camera {
             bobEulerRotation.z = walkInput != Vector2.zero ? multiplier.z * CurveCos * walkInput.x : 0;
         }
 
-        void GetMouseInput() {
-            // lookInput.x = Input.GetAxisRaw("Mouse X") + Input.GetAxisRaw("Controller X");
-            // lookInput.y = Input.GetAxisRaw("Mouse Y") + Input.GetAxisRaw("Controller Y");
-        }
+        // void GetMouseInput() {
+        // lookInput.x = Input.GetAxisRaw("Mouse X") + Input.GetAxisRaw("Controller X");
+        // lookInput.y = Input.GetAxisRaw("Mouse Y") + Input.GetAxisRaw("Controller Y");
+        // }
 
-        void GetKeyInput() {
-            // walkInput.x = Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Horizontal Controller");
-            // walkInput.y = Input.GetAxisRaw("Vertical")   + Input.GetAxisRaw("Vertical Controller");
-        }
+        // void GetKeyInput() {
+        // walkInput.x = Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Horizontal Controller");
+        // walkInput.y = Input.GetAxisRaw("Vertical")   + Input.GetAxisRaw("Vertical Controller");
+        // }
     }
 }

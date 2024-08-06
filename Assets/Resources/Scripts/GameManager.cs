@@ -5,10 +5,8 @@ using LexUtils.Events;
 using LexUtils.Singleton;
 using TEE.Enemies;
 using TEE.Health;
+using TEE.Input;
 using TEE.Player;
-using TEE.Player.Camera;
-using TEE.Player.Movement;
-using TEE.Player.Weapons;
 using TEE.UI.Controllers;
 using TEE.VFX;
 using UnityEngine;
@@ -80,18 +78,6 @@ namespace TEE {
             }
         }
 
-        public static void DisablePlayerInput() {
-            FindAnyObjectByType<PlayerMovement>().DisableMovementInput();
-            FindAnyObjectByType<PlayerCamera>().DisableCameraInput();
-            FindAnyObjectByType<WeaponsController>().DisableWeaponsInput();
-        }
-
-        public static void EnablePlayerInput() {
-            FindAnyObjectByType<PlayerMovement>().EnableMovementInput();
-            FindAnyObjectByType<PlayerCamera>().EnableCameraInput();
-            FindAnyObjectByType<WeaponsController>().EnableWeaponsInput();
-        }
-
         public void Quit() {
             Application.Quit();
         }
@@ -127,7 +113,8 @@ namespace TEE {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible   = true;
 
-            DisablePlayerInput();
+            // DisablePlayerInput();
+            InputManager.Disable();
             FindAnyObjectByType<EndScreenController>(FindObjectsInactive.Include).gameObject.SetActive(true);
         }
 

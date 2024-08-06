@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using LexUtils.Events;
 using TEE.Audio;
 using TEE.Environment;
 using TEE.Health;
@@ -106,7 +107,7 @@ namespace TEE.Player.Weapons {
                         ForceMode.Impulse
                     );
                     SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
-                    CameraPositioning.Instance.InduceStress(0.2f);
+                    EventForge.Float.Get("Player.Trauma").Invoke(0.2f);
                     FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.15f);
                 } else if (hasGround) {
                     rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
@@ -117,7 +118,7 @@ namespace TEE.Player.Weapons {
                     Vector3 groundVFXPos = hammerRaycast.Raycast();
                     Instantiate(hammerVFX, groundVFXPos, Quaternion.identity);
                     SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
-                    CameraPositioning.Instance.InduceStress(0.2f);
+                    EventForge.Float.Get("Player.Trauma").Invoke(0.2f);
                     FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.01f);
                 } else if (hasCrystal) {
                     rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
@@ -125,7 +126,7 @@ namespace TEE.Player.Weapons {
                         (Vector3.up + orientation.forward * -3f) * hammerForce,
                         ForceMode.Impulse
                     );
-                    CameraPositioning.Instance.InduceStress(0.3f);
+                    EventForge.Float.Get("Player.Trauma").Invoke(0.3f);
                     FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.2f);
                 }
             } else CancelCharge();

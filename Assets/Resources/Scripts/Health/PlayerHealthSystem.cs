@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using LexUtils.Events;
 using TEE.Player.Camera;
 using TEE.Player.Movement;
 using TEE.UI;
@@ -24,8 +25,7 @@ namespace TEE.Health {
         [SerializeField] int                      shieldCooldown      = 5;
         [SerializeField] float                    shieldGatingTime    = 1f;
 
-        PlayerMovement pm;
-        Rigidbody      rb;
+        Rigidbody rb;
 
         bool canShieldGate   = true;
         bool canGetShieldOne = true;
@@ -33,11 +33,9 @@ namespace TEE.Health {
         bool shieldGatingActive;
         bool dead;
 
-        void Awake() {
+        void Start() {
             currentHealth     = maxHealth;
-            pm                = GetComponent<PlayerMovement>();
-            rb                = GetComponent<Rigidbody>();
-            rb.freezeRotation = true;
+            rb                = Player.Movement.Player.Rigidbody;
         }
 
         public void TakeDamage(int damage) {
@@ -69,7 +67,7 @@ namespace TEE.Health {
             float time   = 0;
             bool  failed = false;
             while (!failed && time < timeForShield) {
-                if (pm.rb.velocity.magnitude < layerOneShieldSpeed) {
+                if (rb.velocity.magnitude < layerOneShieldSpeed) {
                     failed = true;
                 }
 
@@ -80,7 +78,8 @@ namespace TEE.Health {
             if (!failed) {
                 ShieldOne();
                 canGetShieldTwo = true;
-            } else StartCoroutine(ResetShieldCooldown());
+            }
+            else StartCoroutine(ResetShieldCooldown());
         }
 
         IEnumerator TryGetShieldTwo() {
@@ -88,7 +87,7 @@ namespace TEE.Health {
             float time   = 0;
             bool  failed = false;
             while (!failed && time < timeForShield) {
-                if (pm.rb.velocity.magnitude < layerTwoShieldSpeed) {
+                if (rb.velocity.magnitude < layerTwoShieldSpeed) {
                     failed = true;
                 }
 
@@ -124,13 +123,13 @@ namespace TEE.Health {
             Debug.Log("Overheal: " + overheal);
         }
 
-        public void ShieldTwo() {
+        void ShieldTwo() {
             shieldStatus = ShieldLevel.LevelTwo;
             playerShieldUIController.ShieldTwo();
             HealthbarController.Instance.SetColor(2);
         }
 
-        public void ShieldOne() {
+        void ShieldOne() {
             shieldStatus = ShieldLevel.LevelOne;
             playerShieldUIController.ShieldOne();
             HealthbarController.Instance.SetColor(1);
@@ -138,15 +137,15 @@ namespace TEE.Health {
 
         void DamagePlayer(int damage) {
             if (shieldGatingActive) return;
-            CameraPositioning.Instance.InduceStress(0.2f);
+            EventForge.Float.Get("Player.Trauma").Invoke(0.2f);
             currentHealth -= damage;
             HealthbarController.Instance.InduceStress(0.2f);
             HealthbarController.Instance.SetProgress((float)currentHealth / maxHealth);
             if (currentHealth <= 0) Kill();
         }
 
-        public void DamageShield() {
-            CameraPositioning.Instance.InduceStress(0.1f);
+        void DamageShield() {
+            EventForge.Float.Get("Player.Trauma").Invoke(0.1f);
             shieldStatus    = ShieldLevel.Cracked;
             canGetShieldTwo = true;
             playerShieldUIController.DamageShield();
@@ -159,8 +158,8 @@ namespace TEE.Health {
             StartCoroutine(ResetShieldGating());
         }
 
-        public void BreakShield() {
-            CameraPositioning.Instance.InduceStress(0.3f);
+        void BreakShield() {
+            EventForge.Float.Get("Player.Trauma").Invoke(0.3f);
             if (shieldGatingActive) return;
             shieldStatus = ShieldLevel.None;
             playerShieldUIController.BreakShield();

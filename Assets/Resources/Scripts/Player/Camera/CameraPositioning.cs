@@ -1,13 +1,11 @@
-using System;
+using LexUtils.Events;
 using LexUtils.Singleton;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace TEE.Player.Camera {
     public class CameraPositioning : Singleton<CameraPositioning> {
-        [FormerlySerializedAs("trans")] [SerializeField]
-        Transform targetTransform;
+        [SerializeField] Transform targetTransform;
 
         Vector3    shake  = Vector3.zero;
         Quaternion camRot = Quaternion.identity;
@@ -22,6 +20,7 @@ namespace TEE.Player.Camera {
 
         void Start() {
             seed = Random.value;
+            EventForge.Float.Get("Player.Trauma").AddListener(stress => trauma = Mathf.Clamp01(trauma + stress));
         }
 
         void Update() {
@@ -45,10 +44,6 @@ namespace TEE.Player.Camera {
 
         void LateUpdate() {
             transform.rotation *= camRot;
-        }
-
-        public void InduceStress(float stress) {
-            trauma = Mathf.Clamp01(trauma + stress);
         }
     }
 }
