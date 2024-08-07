@@ -6,7 +6,6 @@ namespace TEE.Player.Movement {
         float     moveSpeed;
         float     desiredMoveSpeed;
         Vector2   movementInput;
-        Transform orientation;
         Rigidbody rb;
 
         [SerializeField] float walkSpeed               = 7f;
@@ -14,31 +13,31 @@ namespace TEE.Player.Movement {
         [SerializeField] float groundDrag              = 5f;
         [SerializeField] float airMultiplier           = 0.4f;
 
+#if UNITY_EDITOR
+        void OnGUI() {
+            GUILayout.Label("Movement Input: " + movementInput);
+            GUILayout.Label("Movement: "       + (Player.Transform.forward * movementInput.y + Player.Transform.right * movementInput.x) * moveSpeed);
+        }
+#endif
+
         void Awake() {
             rb            = Player.Rigidbody;
-            orientation   = Player.Orientation;
             movementInput = Vector2.zero;
-            moveSpeed     = walkSpeed; // testing
+            moveSpeed     = walkSpeed;
             EventForge.Vector2.Get("Input.Player.Movement").AddListener(input => movementInput = input);
         }
 
         void FixedUpdate() {
             MovePlayer();
-            Debug.Log(movementInput);
         }
 
         void MovePlayer() {
             if (movementInput == Vector2.zero) return;
 
-            Vector2 moveDirection = orientation.forward * movementInput.y + orientation.right * movementInput.x;
-            switch (Player.IsGrounded) {
-                case true:
-                    rb.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
-                    break;
-                case false:
-                    rb.AddForce(moveDirection.normalized * (moveSpeed * airMultiplier), ForceMode.Force);
-                    break;
-            }
+            Vector3 moveDirection = Player.Transform.forward * movementInput.y + Player.Transform.right * movementInput.x;
+
+            float speed = Player.IsGrounded ? moveSpeed : moveSpeed * airMultiplier;
+            rb.AddForce(moveDirection.normalized * speed, ForceMode.Force);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Linq;
 using LexUtils.Events;
 using LexUtils.Singleton;
-using TEE.Enemies;
+using TEE.Enemy;
 using TEE.Health;
 using TEE.Input;
 using TEE.Player;
@@ -15,12 +15,6 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 namespace TEE {
-    public enum EnemyType {
-        Pawn,
-        Bishop,
-        Rook
-    }
-
     public class GameManager : PersistentSingleton<GameManager> {
         [SerializeField] LoadingScreenController loadingScreenController;
         [SerializeField] VolumeProfile           volumeProfile;

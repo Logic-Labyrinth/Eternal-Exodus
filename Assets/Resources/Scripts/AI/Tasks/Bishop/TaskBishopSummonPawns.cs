@@ -1,5 +1,5 @@
 using System.Collections;
-using TEE.Enemies;
+using TEE.Enemy;
 using UnityEngine;
 using UnityEngine.AI;
 

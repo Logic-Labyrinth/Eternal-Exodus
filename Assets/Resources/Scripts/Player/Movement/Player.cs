@@ -5,18 +5,17 @@ using UnityEngine;
 namespace TEE.Player.Movement {
     [RequireComponent(typeof(Rigidbody))]
     public class Player : MonoBehaviour {
-        [SerializeField] Transform orientation;
         [SerializeField] Transform groundCheckOrigin;
         public static    Rigidbody Rigidbody  { get; private set; }
         public static    bool      IsGrounded { get; private set; }
-        public static    Transform Orientation;
+        public static    Transform Transform;
 
         bool previousFrameGrounded;
 
         void Awake() {
             Rigidbody                = GetComponent<Rigidbody>();
             Rigidbody.freezeRotation = true;
-            Orientation              = orientation;
+            Transform                = transform;
         }
 
         void Start() {

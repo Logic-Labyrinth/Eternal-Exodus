@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using TEE.AI;
 using TEE.Audio;
-using TEE.Enemies;
+using TEE.Enemy;
 using TEE.VFX;
 using UnityEngine;
 using UnityEngine.VFX;

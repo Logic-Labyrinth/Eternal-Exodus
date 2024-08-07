@@ -2,24 +2,34 @@
 using UnityEngine;
 
 namespace TEE.Player.Movement {
+    [RequireComponent(typeof(CapsuleCollider))]
     public class PlayerCrouching : MonoBehaviour {
-        Rigidbody rb;
-        bool      crouching;
-        bool      wantsToUncrouch;
+        Rigidbody       rb;
+        CapsuleCollider collider;
+        bool            crouching;
+        bool            wantsToUncrouch;
+        float           playerHeight;
 
         [SerializeField] float crouchSpeed  = 4f;
         [SerializeField] float crouchYScale = 0.5f;
 
         void Awake() {
-            rb = Player.Rigidbody;
+            rb           = Player.Rigidbody;
+            collider     = GetComponent<CapsuleCollider>();
+            playerHeight = collider.height;
+
             EventForge.Signal.Get("Input.Player.Crouch.Pressed").AddListener(StartCrouch);
             EventForge.Signal.Get("Input.Player.Crouch.Released").AddListener(StopCrouch);
         }
 
+        void FixedUpdate() {
+            TryUncrouch();
+        }
+
         void StartCrouch() {
             if (crouching) return;
-            crouching            = true;
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+            crouching = true;
+            collider.height = crouchYScale;
             rb.AddForce(Vector3.down * 5, ForceMode.Impulse);
         }
 
@@ -38,9 +48,9 @@ namespace TEE.Player.Movement {
             bool isObjectAbove = Physics.Raycast(transform.position, Vector3.up, 2);
             if (isObjectAbove) return;
 
-            transform.localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
-            crouching            = false;
-            wantsToUncrouch      = false;
+            collider.height = playerHeight;
+            crouching       = false;
+            wantsToUncrouch = false;
         }
     }
 }

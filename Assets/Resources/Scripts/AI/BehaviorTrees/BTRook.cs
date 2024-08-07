@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using TEE.AI.Tasks;
 using TEE.Audio;
-using TEE.Enemies;
+using TEE.Enemy;
 using TEE.Health;
 using UnityEngine;
 using UnityEngine.AI;

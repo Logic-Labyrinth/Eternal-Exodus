@@ -1,3 +1,4 @@
+using TEE.Enemy;
 using UnityEngine;
 
 namespace TEE.VFX {
@@ -5,7 +6,7 @@ namespace TEE.VFX {
         [SerializeField] float     speed    = 0.1f;
         public           EnemyType soulType = EnemyType.Pawn;
         Vector3                    target, origin;
-        float                      timer = 0;
+        float                      timer;
 
         void Start() {
             target = GameObject.Find("Soul Collector").transform.position;

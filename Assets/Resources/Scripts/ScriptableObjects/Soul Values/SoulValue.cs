@@ -1,4 +1,5 @@
 using TEE;
+using TEE.Enemy;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Soul Value", menuName = "ExodusTools/Soul Value")]
@@ -7,7 +8,7 @@ public class SoulValue : ScriptableObject {
     [SerializeField] int soulValue = 1;
     [SerializeField] EnemyType soulType;
     [SerializeField] AnimationCurve soulValueCurve;
-    int souls = 0;
+    int souls;
 
     public float GetSoulValue() {
         return soulValueCurve.Evaluate(souls / valueCap) * valueCap;

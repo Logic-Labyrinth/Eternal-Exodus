@@ -15,16 +15,16 @@ namespace TEE.Player.Camera {
         }
 
         void TurnCamera() {
-            var   input  = InputManager.GetLookInput();
-            float mouseX = input.x;
-            float mouseY = input.y;
+            Vector2 input  = InputManager.GetLookInput();
+            float   mouseX = input.x;
+            float   mouseY = input.y;
 
             rotationY += mouseX * sensitivityX * Time.deltaTime;
             rotationX -= mouseY * sensitivityY * Time.deltaTime;
             rotationX =  Mathf.Clamp(rotationX, verticalClamp.x, verticalClamp.y);
 
-            transform.rotation                   = Quaternion.Euler(rotationX, rotationY, 0);
-            Movement.Player.Orientation.rotation = Quaternion.Euler(0,         rotationY, 0);
+            transform.localRotation            = Quaternion.Euler(rotationX, 0,         0);
+            Movement.Player.Transform.rotation = Quaternion.Euler(0,         rotationY, 0);
         }
     }
 }
