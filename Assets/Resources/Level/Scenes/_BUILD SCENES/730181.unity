@@ -487623,6 +487623,48 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073432582}
   m_Mesh: {fileID: -2432090755550338912, guid: a02c745f3f60576429b2d2528a8ec139, type: 3}
+--- !u!1 &2073916970 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2187461005444350000, guid: aae8a987d63c9cb43aeceab5a83369e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 3741280509238014465}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &2073916972
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073916970}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2073916973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073916970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d6f8e3472df476e9fc322571a5471eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &2073956102
 GameObject:
   m_ObjectHideFlags: 0
@@ -511243,6 +511285,11 @@ PrefabInstance:
       propertyPath: playerShieldUIController
       value: 
       objectReference: {fileID: 1329347365307924023}
+    - target: {fileID: 2939103781253400939, guid: aae8a987d63c9cb43aeceab5a83369e7,
+        type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6167175214731165895, guid: aae8a987d63c9cb43aeceab5a83369e7,
         type: 3}
       propertyPath: m_Enabled
@@ -511270,7 +511317,15 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5319477016380939031}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2187461005444350000, guid: aae8a987d63c9cb43aeceab5a83369e7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2073916972}
+    - targetCorrespondingSourceObject: {fileID: 2187461005444350000, guid: aae8a987d63c9cb43aeceab5a83369e7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2073916973}
   m_SourcePrefab: {fileID: 100100000, guid: aae8a987d63c9cb43aeceab5a83369e7, type: 3}
 --- !u!114 &3760029051073270530
 MonoBehaviour:

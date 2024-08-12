@@ -1,14 +1,14 @@
 ﻿using TEE.Input;
 using UnityEngine;
 
-namespace TEE.Player.Movement {
+namespace TEE.Player {
     [RequireComponent(typeof(Rigidbody))]
     public class Player : MonoBehaviour {
-        [SerializeField] Transform groundCheckOrigin;
-        [SerializeField] LayerMask groundLayer;
-        public static    Rigidbody Rigidbody  { get; private set; }
-        public static    bool      IsGrounded;
-        public static    Transform Transform;
+        [SerializeField] Transform          groundCheckOrigin;
+        public static    UnityEngine.Camera MainCamera;
+        public static    Rigidbody          Rigidbody { get; private set; }
+        public static    bool               IsGrounded;
+        public static    Transform          Transform;
 
         bool previousFrameGrounded;
 

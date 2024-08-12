@@ -66,16 +66,22 @@ namespace TEE.Player.Weapons {
 
         void HandleInput() {
             if (disableWeaponInput) return;
-            // if (Input.GetAxis("Cycle Weapons") > 0 || Input.GetButtonDown("Cycle Next Weapon")) CycleToNextWeapon();
-            // if (Input.GetAxis("Cycle Weapons") < 0 || Input.GetButtonDown("Cycle Prev Weapon")) CycleToPreviousWeapon();
+            EventForge.Signal.Get("Input.Player.PreviousWeapon").AddListener(CycleToPreviousWeapon);
+            EventForge.Signal.Get("Input.Player.NextWeapon").AddListener(CycleToNextWeapon);
+            EventForge.Vector2.Get("Input.Player.WeaponCycle").AddListener(input => {
+                switch (input.y) {
+                    case > 0:
+                        CycleToNextWeapon();
+                        break;
+                    case < 0:
+                        CycleToPreviousWeapon();
+                        break;
+                }
+            });
 
-            // if (Input.GetButtonDown("Select Weapon 1")) SetActiveWeapon(2);
-            // if (Input.GetButtonDown("Select Weapon 2")) SetActiveWeapon(1);
-            // if (Input.GetButtonDown("Select Weapon 3")) SetActiveWeapon(0);
-
-            // if (Input.GetButtonDown("Basic Attack")   || GetTriggerDown(false)) BasicAttack();
-            // if (Input.GetButtonDown("Special Attack") || GetTriggerDown(true)) SpecialAttack();
-            // if (Input.GetButtonUp("Special Attack")   || GetTriggerUp(true)) SpecialRelease();
+            EventForge.Signal.Get("Input.Player.WeaponSelect1").AddListener(() => SetActiveWeapon(0));
+            EventForge.Signal.Get("Input.Player.WeaponSelect2").AddListener(() => SetActiveWeapon(1));
+            EventForge.Signal.Get("Input.Player.WeaponSelect3").AddListener(() => SetActiveWeapon(2));
             EventForge.Signal.Get("Input.Player.BasicAttack.Pressed").AddListener(BasicAttack);
             EventForge.Signal.Get("Input.Player.SpecialAttack.Pressed").AddListener(SpecialAttack);
             EventForge.Signal.Get("Input.Player.SpecialAttack.Release").AddListener(SpecialRelease);
@@ -113,7 +119,7 @@ namespace TEE.Player.Weapons {
 
             weaponSelectionUI
                 .transform.GetChild(index)
-                .GetComponent<UnityEngine.UI.Outline>()
+                .GetComponent<Outline>()
                 .effectColor = new Color(0, 0, 0, 1f);
             weaponSelectionUI.transform.GetChild(index).GetComponent<Image>().color = new Color(1, 1, 1, 1f);
             weaponSelectionUI.transform.GetChild(index).transform.localScale        = new Vector3(1.3f, 1.3f, 1.3f);
@@ -155,48 +161,5 @@ namespace TEE.Player.Weapons {
             yield return new WaitForSeconds(weaponObjects[weaponIndex].BasicAttackCooldown);
             weaponObjects[weaponIndex].CanUseBasicAttack = true;
         }
-
-        public void DisableWeaponsInput() {
-            disableWeaponInput = true;
-        }
-
-        public void EnableWeaponsInput() {
-            disableWeaponInput = true;
-        }
-
-        // #region Controller Input
-        //
-        // bool isLeftTriggerDown;
-        // bool isRightTriggerDown;
-        //
-        // bool GetTriggerDown(bool left) {
-        //     if (left) {
-        //         float value = Input.GetAxisRaw("Special Attack Controller");
-        //         if (isLeftTriggerDown || !(value > 0)) return false;
-        //         isLeftTriggerDown = true;
-        //         return true;
-        //     } else {
-        //         float value = Input.GetAxisRaw("Basic Attack Controller");
-        //         if (isRightTriggerDown || !(value > 0)) return false;
-        //         isRightTriggerDown = true;
-        //         return true;
-        //     }
-        // }
-        //
-        // bool GetTriggerUp(bool left) {
-        //     if (left) {
-        //         float value = Input.GetAxisRaw("Special Attack Controller");
-        //         if (!isLeftTriggerDown || value != 0) return false;
-        //         isLeftTriggerDown = false;
-        //         return true;
-        //     } else {
-        //         float value = Input.GetAxisRaw("Basic Attack Controller");
-        //         if (!isRightTriggerDown || value != 0) return false;
-        //         isRightTriggerDown = false;
-        //         return true;
-        //     }
-        // }
-        //
-        // #endregion
     }
 }

@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using LexUtils.Events;
-using TEE.Player.Camera;
-using TEE.Player.Movement;
 using TEE.UI;
 using UnityEngine;
 
@@ -34,8 +32,8 @@ namespace TEE.Health {
         bool dead;
 
         void Start() {
-            currentHealth     = maxHealth;
-            rb                = Player.Movement.Player.Rigidbody;
+            currentHealth = maxHealth;
+            rb            = Player.Player.Rigidbody;
         }
 
         public void TakeDamage(int damage) {

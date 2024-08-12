@@ -31,7 +31,7 @@ namespace TEE.Player.Camera {
 
 
         void Start() {
-            rb        = Movement.Player.Rigidbody;
+            rb        = Player.Rigidbody;
             lookInput = InputManager.GetLookInput();
         }
 
@@ -74,8 +74,8 @@ namespace TEE.Player.Camera {
         }
 
         void BobOffset() {
-            speedCurve    += Time.deltaTime * (Movement.Player.IsGrounded ? rb.velocity.magnitude : 1f) + 0.01f;
-            bobPosition.x =  CurveCos       * bobLimit.x * (Movement.Player.IsGrounded ? 1 : 0)         - walkInput.x * travelLimit.x;
+            speedCurve    += Time.deltaTime * (Player.IsGrounded ? rb.velocity.magnitude : 1f) + 0.01f;
+            bobPosition.x =  CurveCos       * bobLimit.x * (Player.IsGrounded ? 1 : 0)         - walkInput.x * travelLimit.x;
 
             float yVal = CurveSin * bobLimit.y - rb.velocity.y * travelLimit.y;
 
@@ -89,15 +89,5 @@ namespace TEE.Player.Camera {
             bobEulerRotation.y = walkInput != Vector2.zero ? multiplier.y * CurveCos : 0;
             bobEulerRotation.z = walkInput != Vector2.zero ? multiplier.z * CurveCos * walkInput.x : 0;
         }
-
-        // void GetMouseInput() {
-        // lookInput.x = Input.GetAxisRaw("Mouse X") + Input.GetAxisRaw("Controller X");
-        // lookInput.y = Input.GetAxisRaw("Mouse Y") + Input.GetAxisRaw("Controller Y");
-        // }
-
-        // void GetKeyInput() {
-        // walkInput.x = Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Horizontal Controller");
-        // walkInput.y = Input.GetAxisRaw("Vertical")   + Input.GetAxisRaw("Vertical Controller");
-        // }
     }
 }

@@ -24,7 +24,7 @@ namespace TEE.Player.Camera {
             rotationX =  Mathf.Clamp(rotationX, verticalClamp.x, verticalClamp.y);
 
             transform.localRotation            = Quaternion.Euler(rotationX, 0,         0);
-            Movement.Player.Transform.rotation = Quaternion.Euler(0,         rotationY, 0);
+            Player.Transform.rotation = Quaternion.Euler(0,         rotationY, 0);
         }
     }
 }

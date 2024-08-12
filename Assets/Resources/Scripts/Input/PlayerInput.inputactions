@@ -60,10 +60,28 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "WeaponSelect",
-                    "type": "Value",
+                    "name": "WeaponSelect1",
+                    "type": "Button",
                     "id": "332bd590-6ae2-4453-8e73-df0f85039d7a",
-                    "expectedControlType": "Integer",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "WeaponSelect2",
+                    "type": "Button",
+                    "id": "42ae9969-8c0a-4a39-acfd-45cbc26dc42e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "WeaponSelect3",
+                    "type": "Button",
+                    "id": "1361c56e-272f-4408-98c1-b9c2da8e4cf1",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -76,6 +94,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "PreviousWeapon",
+                    "type": "Button",
+                    "id": "280b79f4-c4bf-4a52-ab84-b435092e477b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextWeapon",
+                    "type": "Button",
+                    "id": "664245e9-9d61-4d43-83cd-9d6fa5e20480",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -185,29 +221,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "WeaponSelect",
+                    "action": "WeaponSelect1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "c4457527-ba94-40c1-83d4-67a6b4de0bef",
+                    "id": "50e3585d-c1bf-4fc8-9c8b-12724b59ca32",
                     "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "WeaponSelect",
+                    "action": "WeaponSelect2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "4f81ea32-5c47-4ce1-89f3-9d1cdefe7a18",
+                    "id": "3161c1e6-8782-455f-81f5-a97e9ec39587",
                     "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "WeaponSelect",
+                    "action": "WeaponSelect3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -230,6 +266,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "35a51200-b5d4-4e9a-9449-e80ddae759ab",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviousWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e82ce3cf-50d7-400d-9d8c-66f149b675f8",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

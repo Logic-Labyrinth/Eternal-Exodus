@@ -17,17 +17,21 @@ namespace TEE.Input {
             playerInputMap    = InputSystem.actions.FindActionMap("Player");
             interfaceInputMap = InputSystem.actions.FindActionMap("Interface");
 
-            playerInputMap["Movement"].performed += _ => EventForge.Vector2.Get("Input.Player.Movement").Invoke(playerInputMap["Movement"].ReadValue<Vector2>());
-            playerInputMap["Movement"].canceled  += _ => EventForge.Vector2.Get("Input.Player.Movement").Invoke(playerInputMap["Movement"].ReadValue<Vector2>());
-            playerInputMap["WeaponCycle"].performed  += _ => EventForge.Vector2.Get("Input.Player.WeaponCycle").Invoke(playerInputMap["WeaponCycle"].ReadValue<Vector2>());
-            playerInputMap["WeaponSelect"].performed += _ => EventForge.Integer.Get("Input.Player.WeaponSelect").Invoke(playerInputMap["WeaponSelect"].ReadValue<int>());
-            playerInputMap["Jump"].performed   += _ => EventForge.Signal.Get("Input.Player.Jump.Pressed").Invoke();
-            playerInputMap["Crouch"].performed += _ => EventForge.Signal.Get("Input.Player.Crouch.Pressed").Invoke();
-            playerInputMap["Crouch"].canceled  += _ => EventForge.Signal.Get("Input.Player.Crouch.Released").Invoke();
-            playerInputMap["BasicAttack"].performed   += _ => EventForge.Signal.Get("Input.Player.BasicAttack.Pressed").Invoke();
-            playerInputMap["SpecialAttack"].performed += _ => EventForge.Signal.Get("Input.Player.SpecialAttack.Pressed").Invoke();
-            playerInputMap["SpecialAttack"].canceled  += _ => EventForge.Signal.Get("Input.Player.SpecialAttack.Released").Invoke();
-            
+            playerInputMap["Movement"].performed       += _ => EventForge.Vector2.Get("Input.Player.Movement").Invoke(playerInputMap["Movement"].ReadValue<Vector2>());
+            playerInputMap["Movement"].canceled        += _ => EventForge.Vector2.Get("Input.Player.Movement").Invoke(playerInputMap["Movement"].ReadValue<Vector2>());
+            playerInputMap["WeaponCycle"].performed    += _ => EventForge.Vector2.Get("Input.Player.WeaponCycle").Invoke(playerInputMap["WeaponCycle"].ReadValue<Vector2>());
+            playerInputMap["PreviousWeapon"].performed += _ => EventForge.Signal.Get("Input.Player.PreviousWeapon").Invoke();
+            playerInputMap["NextWeapon"].performed     += _ => EventForge.Signal.Get("Input.Player.NextWeapon").Invoke();
+            playerInputMap["WeaponSelect1"].performed  += _ => EventForge.Signal.Get("Input.Player.WeaponSelect1").Invoke();
+            playerInputMap["WeaponSelect2"].performed  += _ => EventForge.Signal.Get("Input.Player.WeaponSelect2").Invoke();
+            playerInputMap["WeaponSelect3"].performed  += _ => EventForge.Signal.Get("Input.Player.WeaponSelect3").Invoke();
+            playerInputMap["Jump"].performed           += _ => EventForge.Signal.Get("Input.Player.Jump.Pressed").Invoke();
+            playerInputMap["Crouch"].performed         += _ => EventForge.Signal.Get("Input.Player.Crouch.Pressed").Invoke();
+            playerInputMap["Crouch"].canceled          += _ => EventForge.Signal.Get("Input.Player.Crouch.Released").Invoke();
+            playerInputMap["BasicAttack"].performed    += _ => EventForge.Signal.Get("Input.Player.BasicAttack.Pressed").Invoke();
+            playerInputMap["SpecialAttack"].performed  += _ => EventForge.Signal.Get("Input.Player.SpecialAttack.Pressed").Invoke();
+            playerInputMap["SpecialAttack"].canceled   += _ => EventForge.Signal.Get("Input.Player.SpecialAttack.Released").Invoke();
+
             interfaceInputMap["Close"].performed += _ => EventForge.Signal.Get("Input.UI.Escape.Pressed").Invoke();
         }
 
@@ -46,7 +50,6 @@ namespace TEE.Input {
             Cursor.visible   = enabled;
         }
 
-        // public static Vector2 GetMovementInput() => IsInputEnabled ? playerInputMap["Movement"].ReadValue<Vector2>() : Vector2.zero;
         public static Vector2 GetLookInput() => IsInputEnabled ? playerInputMap["Look"].ReadValue<Vector2>() : Vector2.zero;
     }
 }

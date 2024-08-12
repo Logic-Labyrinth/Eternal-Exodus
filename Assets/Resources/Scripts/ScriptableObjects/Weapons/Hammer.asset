@@ -16,7 +16,6 @@ MonoBehaviour:
     type: 3}
   baseDamage: 60
   attackRange: 4.4665856
-  speedDamageMultiplier: 1
   attackSpeed: 0.9916199
   specialAttackCooldown: 0
   localPosition: {x: 0, y: -0.00189, z: -0.00006}
@@ -26,13 +25,12 @@ MonoBehaviour:
     volume: 1
     spacialBlend: 1
     loop: 0
-    player: 0
+    player: 1
   specialAttackSounds:
   - audioClip: {fileID: 8300000, guid: b83a95dfe46a14441ad5d9ed248c2bb0, type: 3}
     volume: 1
     spacialBlend: 1
     loop: 0
-    player: 0
+    player: 1
   swapAnimation: SwapHammer
   basicFreezeFrame: {fileID: 11400000, guid: 088a1e3b9c6f136449ece3d0eaa5f857, type: 2}
-  slomoAnimCurve: {fileID: 11400000, guid: 004fa1227f4f59d4e8eaf5e921846882, type: 2}
