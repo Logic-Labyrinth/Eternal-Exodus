@@ -2,7 +2,7 @@ using System.Collections;
 using LexUtils.Singleton;
 using UnityEngine;
 
-namespace TEE.Player.Weapons {
+namespace TEE.Player.Camera {
     public class FrameHang : Singleton<FrameHang> {
         bool waiting;
 

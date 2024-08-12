@@ -107,7 +107,6 @@ namespace TEE {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible   = true;
 
-            // DisablePlayerInput();
             InputManager.Disable();
             FindAnyObjectByType<EndScreenController>(FindObjectsInactive.Include).gameObject.SetActive(true);
         }

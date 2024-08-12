@@ -1,13 +1,13 @@
-﻿using LexUtils.Events;
-using TEE.Input;
+﻿using TEE.Input;
 using UnityEngine;
 
 namespace TEE.Player.Movement {
     [RequireComponent(typeof(Rigidbody))]
     public class Player : MonoBehaviour {
         [SerializeField] Transform groundCheckOrigin;
+        [SerializeField] LayerMask groundLayer;
         public static    Rigidbody Rigidbody  { get; private set; }
-        public static    bool      IsGrounded { get; private set; }
+        public static    bool      IsGrounded;
         public static    Transform Transform;
 
         bool previousFrameGrounded;
@@ -20,30 +20,6 @@ namespace TEE.Player.Movement {
 
         void Start() {
             InputManager.SetCursorEnabled(false);
-        }
-
-        void FixedUpdate() {
-            CheckGround();
-        }
-
-        void CheckGround() {
-            bool hitGround = Physics.SphereCast(groundCheckOrigin.position, 0.5f, Vector3.down, out var hit, 0.1f, ~0, QueryTriggerInteraction.Ignore);
-
-            if (hitGround) {
-                if (previousFrameGrounded) return;
-
-                // Landed
-                EventForge.Signal.Get("Player.Landed").Invoke();
-                previousFrameGrounded = true;
-                IsGrounded            = true;
-                return;
-            }
-
-            if (!previousFrameGrounded) return;
-            // Left ground
-            EventForge.Signal.Get("Player.LeftGround").Invoke();
-            previousFrameGrounded = false;
-            IsGrounded            = false;
         }
 
         void OnDrawGizmos() {

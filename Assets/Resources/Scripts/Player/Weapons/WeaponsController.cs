@@ -76,8 +76,8 @@ namespace TEE.Player.Weapons {
             // if (Input.GetButtonDown("Basic Attack")   || GetTriggerDown(false)) BasicAttack();
             // if (Input.GetButtonDown("Special Attack") || GetTriggerDown(true)) SpecialAttack();
             // if (Input.GetButtonUp("Special Attack")   || GetTriggerUp(true)) SpecialRelease();
-            EventForge.Signal.Get("Input.Player.BasicAttack").AddListener(BasicAttack);
-            EventForge.Signal.Get("Input.Player.SpecialAttack").AddListener(SpecialAttack);
+            EventForge.Signal.Get("Input.Player.BasicAttack.Pressed").AddListener(BasicAttack);
+            EventForge.Signal.Get("Input.Player.SpecialAttack.Pressed").AddListener(SpecialAttack);
             EventForge.Signal.Get("Input.Player.SpecialAttack.Release").AddListener(SpecialRelease);
         }
 

@@ -33,10 +33,12 @@ namespace TEE.Input {
 
         void OnEnable() {
             playerInputMap.Enable();
+            interfaceInputMap.Enable();
         }
 
         void OnDisable() {
             playerInputMap.Disable();
+            interfaceInputMap.Disable();
         }
 
         public static void SetCursorEnabled(bool enabled) {

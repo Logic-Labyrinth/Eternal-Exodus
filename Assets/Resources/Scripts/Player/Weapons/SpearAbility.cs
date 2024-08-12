@@ -1,5 +1,6 @@
 using TEE.Environment;
 using TEE.Health;
+using TEE.Player.Camera;
 using TEE.Player.Movement;
 using UnityEngine;
 using UnityEngine.AI;
