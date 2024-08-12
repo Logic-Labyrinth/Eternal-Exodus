@@ -2,7 +2,6 @@ using System.Collections.Generic;
 
 namespace TEE.AI {
     public class AISelector : AINode {
-        public AISelector() : base() { }
         public AISelector(List<AINode> children) : base(children) { }
 
         public override NodeState Evaluate() {

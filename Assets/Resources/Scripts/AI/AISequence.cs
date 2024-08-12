@@ -2,7 +2,6 @@ using System.Collections.Generic;
 
 namespace TEE.AI {
     public class AISequence : AINode {
-        public AISequence() : base() { }
         public AISequence(List<AINode> children) : base(children) { }
 
         public override NodeState Evaluate() {

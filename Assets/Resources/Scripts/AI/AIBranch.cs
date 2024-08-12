@@ -6,10 +6,9 @@ namespace TEE.AI {
         readonly AINode trueNode;
         readonly AINode falseNode;
 
-        public AIBranch() : base() { }
         public AIBranch(AINode checkNode, AINode trueNode, AINode falseNode) : base(new List<AINode> { checkNode, trueNode, falseNode }) {
             this.checkNode = checkNode;
-            this.trueNode = trueNode;
+            this.trueNode  = trueNode;
             this.falseNode = falseNode;
         }
 
@@ -17,7 +16,7 @@ namespace TEE.AI {
             return checkNode.Evaluate() switch {
                 NodeState.Success => trueNode.Evaluate(),
                 NodeState.Failure => falseNode.Evaluate(),
-                _ => NodeState.Running,
+                _                 => NodeState.Running,
             };
         }
     }

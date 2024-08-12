@@ -8,12 +8,9 @@ namespace TEE.AI {
     }
 
     public class AINode {
-        protected AINode Parent;
-
-        // protected NodeState state;
-        protected readonly List<AINode> Children = new();
-
-        readonly Dictionary<string, object> data = new();
+        protected          AINode                     Parent;
+        protected readonly List<AINode>               Children = new();
+        readonly           Dictionary<string, object> data     = new();
 
         public AINode() {
             Parent = null;
