@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using LexUtils.Events;
+using LexUtils.Extensions;
 using LexUtils.Singleton;
 using TEE.Enemy;
 using TEE.Health;
@@ -18,27 +20,47 @@ namespace TEE {
     public class GameManager : PersistentSingleton<GameManager> {
         [SerializeField] LoadingScreenController loadingScreenController;
         [SerializeField] VolumeProfile           volumeProfile;
-        [SerializeField] float                   slowdownTime = 3f;
+        [SerializeField] float                   slowdownTime         = 3f;
+        [SerializeField] float                   countdownTimeSeconds = 120f;
 
-        public int KillCountPawn   { get; private set; }
-        public int KillCountRook   { get; private set; }
-        public int KillCountBishop { get; private set; }
+        const float SecondsPerPawn   = 0.5f;
+        const float SecondsPerRook   = 3f;
+        const float SecondsPerBishop = 2f;
+
+        public static readonly Dictionary<EnemyType, int> KillCounts = new() {
+            { EnemyType.Pawn, 0 },
+            { EnemyType.Rook, 0 },
+            { EnemyType.Bishop, 0 }
+        };
 
         ColorAdjustments colorAdjustments;
+        float            countdownTime = -1;
 
         protected override void Awake() {
             base.Awake();
             volumeProfile.TryGet(out colorAdjustments);
-            colorAdjustments.saturation.value = 0;
+            colorAdjustments.saturation.value = 1;
+        }
+
+        void FixedUpdate() {
+            HandleCountdown();
+        }
+
+        void HandleCountdown() {
+            if (countdownTime == -1) return;
+            countdownTime -= Time.fixedDeltaTime;
+            
+            UITimer.UpdateTornado(countdownTime, 1f - countdownTime / countdownTimeSeconds);
         }
 
         IEnumerator LoadLevel(string sceneName) {
             loadingScreenController.gameObject.SetActive(true);
 
             var sceneLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
-            while (sceneLoad is { isDone: false }) yield return null;
+            while (sceneLoad?.isDone == false) yield return null;
 
             loadingScreenController.gameObject.SetActive(false);
+            countdownTime = countdownTimeSeconds;
         }
 
         public void LoadScene(string sceneName) {
@@ -47,39 +69,32 @@ namespace TEE {
 
         public void EndLevel() {
             GameObject explosionSource = GameObject.Find("Explosion Source");
-            explosionSource.GetComponent<ExplosionVFX>().Play();
+            if (explosionSource) explosionSource.GetComponent<ExplosionVFX>().Play();
 
             SpawnManager.Instance.SetSpawnerActive(false);
             FindObjectsByType<HealthSystem>(FindObjectsSortMode.None).ToList().ForEach(x => { x.gameObject.SetActive(false); });
         }
 
         public void AddKillCount(EnemyType type) {
-            switch (type) {
-                case EnemyType.Pawn:
-                    KillCountPawn++;
-                    UITimer.Instance.AddPawnTime();
-                    break;
-                case EnemyType.Rook:
-                    KillCountRook++;
-                    UITimer.Instance.AddRookTime();
-                    break;
-                case EnemyType.Bishop:
-                    KillCountBishop++;
-                    UITimer.Instance.AddBishopTime();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
+            KillCounts[type]++;
+            float timeToAdd = type switch {
+                EnemyType.Pawn   => SecondsPerPawn,
+                EnemyType.Rook   => SecondsPerRook,
+                EnemyType.Bishop => SecondsPerBishop,
+                _                => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+
+            countdownTime = Mathf.Min(countdownTime + timeToAdd, countdownTimeSeconds);
         }
 
-        public void Quit() {
+        public static void Quit() {
             Application.Quit();
         }
 
-        void ResetCounter() {
-            KillCountPawn   = 0;
-            KillCountRook   = 0;
-            KillCountBishop = 0;
+        static void ResetCounter() {
+            foreach (var killCount in KillCounts) {
+                KillCounts[killCount.Key] = 0;
+            }
         }
 
         public void Reset() {

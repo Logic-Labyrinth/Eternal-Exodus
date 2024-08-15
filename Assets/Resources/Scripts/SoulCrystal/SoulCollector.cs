@@ -109,7 +109,6 @@ namespace TEE.SoulCrystal {
             fullyCharged = false;
             beam.SetActive(false);
             icon.SetBlink(false);
-            UITimer.Instance.ResetTime();
             crystalMesh.materials[0].SetFloat(ShaderPropertyEmissionMultiplier, 0);
             crystalMesh.materials[1].SetFloat(ShaderPropertyEmissionMultiplier, 0);
             beam.transform.localScale = Vector3.zero;

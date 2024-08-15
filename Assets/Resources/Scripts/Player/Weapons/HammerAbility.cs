@@ -51,7 +51,7 @@ namespace TEE.Player.Weapons {
 
         public void ChargeHammer() {
             isCharging = true;
-            SoundFXManager.Instance.PlayRandom(hammerChargeSounds);
+            SoundFXManager.PlayRandom(hammerChargeSounds);
             storedCoroutine = StartCoroutine(CompleteCharge());
             timer           = 0;
             hammerChargeBarMaterial.SetColor(ShaderPropertyColor, chargeColor);
@@ -106,7 +106,7 @@ namespace TEE.Player.Weapons {
                         (Vector3.up + 3f * enemyBounceMultiplier * orientation.forward) * hammerForce,
                         ForceMode.Impulse
                     );
-                    SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
+                    SoundFXManager.PlayRandom(hammerImpactSounds);
                     EventForge.Float.Get("Player.Trauma").Invoke(0.2f);
                     FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.15f);
                 } else if (hasGround) {
@@ -117,7 +117,7 @@ namespace TEE.Player.Weapons {
                     );
                     Vector3 groundVFXPos = hammerRaycast.Raycast();
                     Instantiate(hammerVFX, groundVFXPos, Quaternion.identity);
-                    SoundFXManager.Instance.PlayRandom(hammerImpactSounds);
+                    SoundFXManager.PlayRandom(hammerImpactSounds);
                     EventForge.Float.Get("Player.Trauma").Invoke(0.2f);
                     FrameHang.Instance.ExecFrameHang(hammer.basicFreezeFrame, 0.01f);
                 } else if (hasCrystal) {

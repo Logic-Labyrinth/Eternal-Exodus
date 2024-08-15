@@ -6,9 +6,10 @@ namespace TEE.UI.Controllers {
     public class PauseMenuController : Singleton<PauseMenuController> {
         GameObject  activeMenu;
         Transform[] children;
-        public bool IsOpen { get; private set; } = false;
+        public bool IsOpen { get; private set; }
 
-        void Awake() {
+        protected override void Awake() {
+            base.Awake();
             children = transform.GetChildren(true);
             children.ForEach(x => x.gameObject.SetActive(false));
         }
@@ -38,7 +39,7 @@ namespace TEE.UI.Controllers {
         }
 
         public void QuitGame() {
-            Application.Quit();
+            GameManager.Quit();
         }
     }
 }

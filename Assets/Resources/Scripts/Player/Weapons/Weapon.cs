@@ -68,11 +68,11 @@ namespace TEE.Player.Weapons {
         public virtual void Reset() { }
 
         protected void PlayBasicAttackSound() {
-            SoundFXManager.Instance.PlayRandom(basicAttackSounds);
+            SoundFXManager.PlayRandom(basicAttackSounds);
         }
 
         protected void PlaySpecialAttackSound() {
-            SoundFXManager.Instance.PlayRandom(specialAttackSounds);
+            SoundFXManager.PlayRandom(specialAttackSounds);
         }
     }
 }

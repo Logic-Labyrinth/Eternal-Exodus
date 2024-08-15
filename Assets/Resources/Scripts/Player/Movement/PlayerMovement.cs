@@ -10,8 +10,6 @@ namespace TEE.Player.Movement {
         Rigidbody  rb;
 
         [SerializeField] float walkSpeed               = 7f;
-        [SerializeField] float speedIncreaseMultiplier = 10f;
-        [SerializeField] float groundDrag              = 5f;
         [SerializeField] float airMultiplier           = 0.4f;
         [SerializeField] float maxSlopeAngle           = 45f;
 

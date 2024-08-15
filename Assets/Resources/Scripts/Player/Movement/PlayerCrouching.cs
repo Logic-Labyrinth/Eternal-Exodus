@@ -4,11 +4,11 @@ using UnityEngine;
 namespace TEE.Player.Movement {
     [RequireComponent(typeof(CapsuleCollider))]
     public class PlayerCrouching : MonoBehaviour {
-        Rigidbody       rb;
-        CapsuleCollider collider;
-        bool            crouching;
-        bool            wantsToUncrouch;
-        float           playerHeight;
+        Rigidbody           rb;
+        new CapsuleCollider collider;
+        bool                crouching;
+        bool                wantsToUncrouch;
+        float               playerHeight;
 
         [SerializeField] float crouchSpeed  = 4f;
         [SerializeField] float crouchYScale = 0.5f;
@@ -28,7 +28,7 @@ namespace TEE.Player.Movement {
 
         void StartCrouch() {
             if (crouching) return;
-            crouching = true;
+            crouching       = true;
             collider.height = crouchYScale;
             rb.AddForce(Vector3.down * 5, ForceMode.Impulse);
         }

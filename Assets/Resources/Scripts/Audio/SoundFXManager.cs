@@ -5,18 +5,17 @@ using UnityEngine;
 
 namespace TEE.Audio {
     public class SoundFXManager : Singleton<SoundFXManager> {
-        [SerializeField] AudioSource soundFXObject;
-
-        GameObject                  mainCamera;
-        readonly List<AudioSource>  usedSources    = new();
-        readonly Queue<AudioSource> standbySources = new();
+        static          AudioSource        soundFXObject;
+        static          GameObject         mainCamera;
+        static readonly List<AudioSource>  usedSources    = new();
+        static readonly Queue<AudioSource> standbySources = new();
 
         void Start() {
             mainCamera = Player.Player.MainCamera.gameObject;
         }
 
         // A method to play a sound at a given location, with optional parameters for the sound source location.
-        public void Play(Sound sound, Transform location = null) {
+        public static void Play(Sound sound, Transform location = null) {
             var audioSource = GetSource();
             audioSource.clip         = sound.audioClip;
             audioSource.volume       = sound.volume;
@@ -31,7 +30,7 @@ namespace TEE.Audio {
             }
 
             audioSource.Play();
-            StartCoroutine(SetSourceToStandby(audioSource, sound.audioClip.length));
+            Instance.StartCoroutine(SetSourceToStandby(audioSource, sound.audioClip.length));
         }
 
         /// <summary>
@@ -39,7 +38,7 @@ namespace TEE.Audio {
         /// </summary>
         /// <param name="sounds">An array of Sound objects to choose from.</param>
         /// <param name="location">An optional Transform to specify the location of the sound.</param>
-        public void PlayRandom(Sound[] sounds, Transform location = null) {
+        public static void PlayRandom(Sound[] sounds, Transform location = null) {
             if (sounds.Length == 0) return;
             int randomIndex = Random.Range(0, sounds.Length);
             Play(sounds[randomIndex], location);
@@ -50,7 +49,7 @@ namespace TEE.Audio {
         /// If the queue is empty, a new GameObject source is created and added to the used list.
         /// </summary>
         /// <returns>The retrieved GameObject source.</returns>
-        AudioSource GetSource() {
+        static AudioSource GetSource() {
             AudioSource source;
             if (standbySources.Count > 0) {
                 source = standbySources.Dequeue();
@@ -69,13 +68,13 @@ namespace TEE.Audio {
         /// <param name="audioSource">The AudioSource to set to standby.</param>
         /// <param name="delay">The delay, in seconds, before setting the AudioSource to standby. Default is 0.</param>
         /// <returns>An IEnumerator that waits for the specified delay before setting the AudioSource to standby.</returns>
-        IEnumerator SetSourceToStandby(AudioSource audioSource, float delay = 0) {
+        static IEnumerator SetSourceToStandby(AudioSource audioSource, float delay = 0) {
             yield return new WaitForSeconds(delay);
             audioSource.Stop();
             audioSource.clip = null;
             usedSources.Remove(audioSource);
             standbySources.Enqueue(audioSource);
-            audioSource.transform.SetParent(transform);
+            audioSource.transform.SetParent(Instance.transform);
         }
 
         // Called when the sfx manager becomes disabled or inactive.

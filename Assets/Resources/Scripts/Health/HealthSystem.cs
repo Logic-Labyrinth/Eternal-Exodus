@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using LexUtils.Extensions;
 using TEE.AI;
 using TEE.Audio;
 using TEE.Enemy;
@@ -31,13 +32,24 @@ namespace TEE.Health {
         [SerializeField]                Sound[]          hammerHitSounds;
         [SerializeField]                HealthBar        healthBar;
 
-        int                 currentHealth;
-        static readonly int ShaderPropertyShieldAmount   = Shader.PropertyToID("_ShieldAmount");
-        static readonly int ShaderPropertyHitFlashBool   = Shader.PropertyToID("_HitFlashBool");
-        static readonly int ShaderPropertyDissolveAmount = Shader.PropertyToID("_Dissolve_Amount");
+        int                   currentHealth;
+        SkinnedMeshRenderer[] skinnedMeshes;
+        Collider              enemyCollider;
+        AITree                aiTree;
+        static readonly int   ShaderPropertyShieldAmount   = Shader.PropertyToID("_ShieldAmount");
+        static readonly int   ShaderPropertyHitFlashBool   = Shader.PropertyToID("_HitFlashBool");
+        static readonly int   ShaderPropertyDissolveAmount = Shader.PropertyToID("_Dissolve_Amount");
+
+        void Start() {
+            aiTree        = enemyMainGameObject.GetComponent<AITree>();
+            skinnedMeshes = enemyMainGameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+            enemyCollider = enemyMainGameObject.GetComponent<Collider>();
+        }
 
         void OnEnable() {
             currentHealth = maxHealth;
+            enemyCollider.enabled = true;
+            aiTree.SetActive(true);
         }
 
         public void TakeDamage(int damage, WeaponDamageType? damageType) {
@@ -51,7 +63,8 @@ namespace TEE.Health {
             var dam = damage;
             if (damageType == weakness) {
                 dam += (int)Math.Floor(dam * weaknessFactor / 100.0f);
-            } else if (damageType == resistance) {
+            }
+            else if (damageType == resistance) {
                 dam -= (int)Math.Floor(dam * resistanceFactor / 100.0f);
             }
 
@@ -64,16 +77,16 @@ namespace TEE.Health {
             if (currentHealth <= 0) Kill();
         }
 
-        public void PlayHitSound(WeaponDamageType damageType) {
+        void PlayHitSound(WeaponDamageType damageType) {
             switch (damageType) {
                 case WeaponDamageType.Spear:
-                    SoundFXManager.Instance.PlayRandom(spearHitSounds);
+                    SoundFXManager.PlayRandom(spearHitSounds);
                     break;
                 case WeaponDamageType.Sword:
-                    SoundFXManager.Instance.PlayRandom(swordHitSounds);
+                    SoundFXManager.PlayRandom(swordHitSounds);
                     break;
                 case WeaponDamageType.Hammer:
-                    SoundFXManager.Instance.PlayRandom(hammerHitSounds);
+                    SoundFXManager.PlayRandom(hammerHitSounds);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(damageType), damageType, null);
@@ -84,9 +97,8 @@ namespace TEE.Health {
             GameManager.Instance.AddKillCount(type);
             var soul = Instantiate(Resources.Load("Level/Prefabs/VFX/Soul"), transform.position + Vector3.up, Quaternion.identity) as GameObject;
             soul.GetComponent<SoulVFX>().soulType = type;
-            enemyMainGameObject.GetComponent<AITree>().SetActive(false);
 
-            StartCoroutine(Disolve());
+            KillWithoutSoul();
         }
 
         public void KillWithoutSoul() {
@@ -110,62 +122,49 @@ namespace TEE.Health {
         public void Shield() {
             hasShield = true;
             if (meshes == null) return;
-            foreach (var mesh in meshes) {
-                mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat(ShaderPropertyShieldAmount, 0.5f);
-            }
+            
+            skinnedMeshes.ForEach(skinnedMesh => skinnedMesh.materials[1].SetFloat(ShaderPropertyShieldAmount, 0.5f));
         }
 
         public void BreakShield() {
             hasShield = false;
             if (meshes == null) return;
 
-            foreach (var mesh in meshes) {
-                mesh.GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat(ShaderPropertyShieldAmount, 0);
-            }
+            skinnedMeshes.ForEach(skinnedMesh => skinnedMesh.materials[1].SetFloat(ShaderPropertyShieldAmount, 0));
         }
 
         void HitFlash() {
             if (meshes == null) return;
-            foreach (var mesh in meshes) {
-                mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt(ShaderPropertyHitFlashBool, 1);
-            }
+            skinnedMeshes.ForEach(skinnedMesh => skinnedMesh.materials[1].SetFloat(ShaderPropertyShieldAmount, 1));
 
             StartCoroutine(ResetHitFlash());
         }
 
         IEnumerator ResetHitFlash() {
             yield return new WaitForSeconds(0.05f);
-            foreach (var mesh in meshes) {
-                mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt(ShaderPropertyHitFlashBool, 0);
-            }
+            skinnedMeshes.ForEach(skinnedMesh => skinnedMesh.materials[1].SetFloat(ShaderPropertyShieldAmount, 0));
         }
 
-        private void OnDisable() {
+        void OnDisable() {
             enemyMainGameObject.SetActive(false);
         }
 
         IEnumerator Disolve() {
-            GetComponent<Collider>().enabled = false;
+            enemyCollider.enabled = false;
             smokeVFX.Play();
 
             float time = 2f;
             while (time >= 0) {
                 float prog = 1 - time / 2f;
-                foreach (var mesh in meshes) {
-                    mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat(ShaderPropertyDissolveAmount, prog);
-                }
+                skinnedMeshes.ForEach(skinnedMesh => skinnedMesh.materials[1].SetFloat(ShaderPropertyShieldAmount, prog));
 
                 time -= Time.deltaTime;
                 yield return null;
             }
 
-            foreach (var mesh in meshes) {
-                mesh.GetComponent<SkinnedMeshRenderer>().materials[0].SetFloat(ShaderPropertyDissolveAmount, 0f);
-            }
+            skinnedMeshes.ForEach(skinnedMesh => skinnedMesh.materials[1].SetFloat(ShaderPropertyShieldAmount, 0));
 
-            enemyMainGameObject.GetComponent<AITree>().SetActive(true);
             enemyMainGameObject.SetActive(false);
-            GetComponent<Collider>().enabled = true;
             SpawnManager.Instance.EnqueueEnemy(enemyMainGameObject);
         }
     }

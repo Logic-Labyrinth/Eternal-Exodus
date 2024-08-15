@@ -1,3 +1,5 @@
+using LexUtils.Extensions;
+using TEE.Enemy;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,15 +25,16 @@ namespace TEE.UI.Controllers {
         }
 
         public void Quit() {
-            Application.Quit();
+            GameManager.Quit();
         }
 
         void OnEnable() {
-            int totalKills = GameManager.Instance.KillCountPawn + GameManager.Instance.KillCountRook + GameManager.Instance.KillCountBishop;
+            int totalKills = 0;
+            GameManager.KillCounts.ForEach(killCount => totalKills += killCount.Value);
 
-            PawnKillCountText.text   = GameManager.Instance.KillCountPawn.ToString();
-            RookKillCountText.text   = GameManager.Instance.KillCountRook.ToString();
-            BishopKillCountText.text = GameManager.Instance.KillCountBishop.ToString();
+            PawnKillCountText.text   = GameManager.KillCounts[EnemyType.Pawn].ToString();
+            BishopKillCountText.text = GameManager.KillCounts[EnemyType.Bishop].ToString();
+            RookKillCountText.text   = GameManager.KillCounts[EnemyType.Rook].ToString();
             SoulCountText.text       = totalKills.ToString();
             ScoreText.text           = ((totalKills + Time.timeSinceLevelLoad) * 100).ToString("00");
 
