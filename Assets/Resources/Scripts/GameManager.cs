@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using LexUtils.Events;
-using LexUtils.Extensions;
 using LexUtils.Singleton;
 using TEE.Enemy;
 using TEE.Health;
@@ -49,7 +48,7 @@ namespace TEE {
         void HandleCountdown() {
             if (countdownTime == -1) return;
             countdownTime -= Time.fixedDeltaTime;
-            
+
             UITimer.UpdateTornado(countdownTime, 1f - countdownTime / countdownTimeSeconds);
         }
 
@@ -92,9 +91,8 @@ namespace TEE {
         }
 
         static void ResetCounter() {
-            foreach (var killCount in KillCounts) {
+            foreach (var killCount in KillCounts)
                 KillCounts[killCount.Key] = 0;
-            }
         }
 
         public void Reset() {
