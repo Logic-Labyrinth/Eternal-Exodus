@@ -3,8 +3,8 @@ using System.Threading;
 
 namespace TEE.AI {
     public class AIRepeater : AINode {
-        int   milliseconds;
-        Timer timer;
+        readonly int milliseconds;
+        Timer        timer;
 
         public AIRepeater(int evalsPerSecond, List<AINode> children) : base(children) {
             milliseconds = 1000 / evalsPerSecond;
